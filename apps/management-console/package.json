@@ -1,5 +1,5 @@
 {
-  "name": "ui-omninode-management-console-v2",
+  "name": "management-console",
   "version": "0.1.0",
   "private": true,
   "scripts": {
