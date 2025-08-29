@@ -1,0 +1,113 @@
+import { FeProject } from "@/types/weclapp/project";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ProjectMembersList } from "./ProjectMembersList";
+import { ProjectDocumentsList } from "./ProjectDocumentsList";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+
+interface ProjectDetailsPopupProps {
+  project?: FeProject;
+  onClose: () => void;
+}
+
+export const ProjectDetailsPopup = ({
+  project,
+  onClose,
+}: ProjectDetailsPopupProps) => {
+  // Early return if no project
+
+  console.log("project", project);
+  if (!project) {
+    return null;
+  }
+  return (
+    <Dialog open={!!project} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-4xl">
+        <DialogHeader>
+          <div className="flex members-center justify-between">
+            <div>
+              <DialogTitle className="text-xl font-semibold">
+                Project Details
+              </DialogTitle>
+              <DialogDescription className="text-sm text-muted-foreground mt-1">
+                Details of the selected project, including members and documents.
+              </DialogDescription>
+            </div>
+          </div>
+        </DialogHeader>
+
+        <div className="space-y-6">
+          {/* Project Summary */}
+          <div className="flex justify-between members-center gap-4 p-4 bg-muted/50 rounded-lg">
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                Number
+              </p>
+              <p className="text-sm">{project.number}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                Customer
+              </p>
+              <p className="text-sm">{project.customer}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                Start Date
+              </p>
+              <p className="text-sm">{project.startDate}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                End Date
+              </p>
+              <p className="text-sm">{project.endDate}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                Project Leader
+              </p>
+              <p className="text-sm">
+                {(() => {
+                  const projectLeader = project.members.find(member => member.role === "PL");
+                  return projectLeader 
+                    ? `${projectLeader.firstName} ${projectLeader.lastName}`
+                    : "Not assigned";
+                })()}
+              </p>
+            </div>
+            <div className="flex justify-end items-center">
+              <Badge variant="outline" >{project.status}</Badge>
+            </div>
+          </div>
+          <Tabs defaultValue="members">
+            <TabsList>
+              <TabsTrigger value="members">Members</TabsTrigger>
+              <TabsTrigger value="documents">Documents</TabsTrigger>
+            </TabsList>
+            <TabsContent value="members">
+              <ProjectMembersList project={project} />
+            </TabsContent>
+            <TabsContent value="documents">
+              <ProjectDocumentsList projectId={project.id} />
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            Close
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
