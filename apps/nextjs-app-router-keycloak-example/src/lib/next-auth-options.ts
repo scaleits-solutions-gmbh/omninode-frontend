@@ -13,7 +13,7 @@ export const authOptions: AuthOptions = {
       issuer: process.env.OIDC_ISSUER,
       authorization: {
         params: {
-          scope: "openid profile organization organization:*",
+          scope: "openid organization:*",
         },
       },
       // Modify the user profile
