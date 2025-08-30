@@ -1,1 +1,1 @@
-export * from "./envUtils";
+export * from "./env-utils";

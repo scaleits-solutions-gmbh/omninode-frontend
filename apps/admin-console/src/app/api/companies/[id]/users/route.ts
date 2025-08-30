@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { UserCompanyService, ResultType,PaginatedResponse} from "@scaleits-solutions-gmbh/services";
-import { FeUser } from "@/types/fe/feUser";
+import {
+  UserCompanyService,
+  ResultType,
+  PaginatedResponse,
+} from "@scaleits-solutions-gmbh/services";
+import { FeUser } from "@/types/fe/fe-user";
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
-import { feUserTransformerSchema } from "@/schemas/transformers/feUserTransformer";
+import { feUserTransformerSchema } from "@/schemas/transformers/fe-user-transformer";
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }): Promise<NextResponse<PaginatedResponse<FeUser>|unknown>> {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<NextResponse<PaginatedResponse<FeUser> | unknown>> {
   const { id } = await params;
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search") || "";
@@ -12,7 +19,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const pageSize = parseInt(searchParams.get("pageSize") || "10");
 
   const userCompanyService = new UserCompanyService();
-  const {result,resultType} = await userCompanyService.fetchUserCompanies({
+  const { result, resultType } = await userCompanyService.fetchUserCompanies({
     companyId: id,
     search: search,
     page: page,
@@ -24,7 +31,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
 
   if (!result) {
-    return handleServiceError(ResultType.INTERNAL_SERVER_ERROR, "fetchUserCompanies");
+    return handleServiceError(
+      ResultType.INTERNAL_SERVER_ERROR,
+      "fetchUserCompanies",
+    );
   }
 
   try {
@@ -41,6 +51,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json(mappedResult);
   } catch (error) {
     console.error("Error transforming user data:", error);
-    return handleServiceError(ResultType.RESPONSE_PARSE_ERROR, "Data parsing failed");
+    return handleServiceError(
+      ResultType.RESPONSE_PARSE_ERROR,
+      "Data parsing failed",
+    );
   }
 }

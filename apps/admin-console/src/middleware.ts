@@ -1,4 +1,4 @@
-import { getSessionTokenPayload } from "./lib/utils/misc/sessionToken";
+import { getSessionTokenPayload } from "./lib/utils/misc/session-token";
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
@@ -9,18 +9,17 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!_next/static|_next/image|favicon.ico|assets).*)',
+    "/((?!_next/static|_next/image|favicon.ico|assets).*)",
   ],
 };
 
-const publicRoutes: string[] = [
-  "/login",
-  "/api/auth/login",
-];
+const publicRoutes: string[] = ["/login", "/api/auth/login"];
 
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
   if (isPublicRoute) {
     return NextResponse.next();
   }
@@ -34,8 +33,9 @@ export default async function middleware(req: NextRequest) {
     }
     return NextResponse.next();
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+
     if (errorMessage === "Session token not found") {
       // Missing token - redirect to login
     } else if (errorMessage === "Session token expired") {

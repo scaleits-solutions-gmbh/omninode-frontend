@@ -1,3 +1,4 @@
 @import "tailwindcss";
-@source "../../node_modules/@scaleits-solutions-gmbh/omninode-frontend-common-kit/dist";
-@import "../../node_modules/@scaleits-solutions-gmbh/omninode-frontend-common-kit/dist/styles/globals.css";
+@source "../../node_modules/frontend-common-kit/dist";
+/* Test */
+@import "../../node_modules/frontend-common-kit/dist/styles/globals.css";

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@scaleits-solutions-gmbh/omninode-frontend-common-kit/components";
+import { Card, CardContent, CardHeader, CardTitle } from "frontend-common-kit/components";
 import { TrendingUp, MessageSquare, CheckCircle } from "lucide-react";
 
 export default function Stats() {

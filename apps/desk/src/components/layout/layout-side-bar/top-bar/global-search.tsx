@@ -10,7 +10,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut
-} from "@scaleits-solutions-gmbh/omninode-frontend-common-kit/components";
+} from "frontend-common-kit/components";
 import { Search } from "lucide-react";
 import * as React from "react";
 

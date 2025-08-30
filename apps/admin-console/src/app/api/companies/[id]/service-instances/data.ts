@@ -1,4 +1,4 @@
-import { FeCompanyServiceInstance } from "@/types/fe/feCompanyServiceInstance";
+import { FeCompanyServiceInstance } from "@/types/fe/fe-company-service-instance";
 import {
   PaginatedResponse,
   Service,
@@ -116,7 +116,7 @@ export const getMockData = ({
           instance.sourceCompanyName
             .toLowerCase()
             .includes(search.toLowerCase()) ||
-          instance.status.toLowerCase().includes(search.toLowerCase())
+          instance.status.toLowerCase().includes(search.toLowerCase()),
       )
     : mockData;
 

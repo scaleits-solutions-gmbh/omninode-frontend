@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3010",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3010",
     "lint": "next lint"
   },
   "dependencies": {
-    "@scaleits-solutions-gmbh/omninode-frontend-common-kit": "workspace:*",
+    "frontend-common-kit": "workspace:*",
     "axios": "^1.11.0",
     "next": "^14.2.6",
     "next-auth": "^4.24.7",

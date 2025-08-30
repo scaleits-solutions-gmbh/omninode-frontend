@@ -1,0 +1,19 @@
+{
+    "routes": [
+      {
+        "src": "^/user-portal($|/.*)",
+        "dest": "https://<user-portal-project>.vercel.app/user-portal$1"
+      },
+      {
+        "src": "^/management-console($|/.*)",
+        "dest": "https://<management-console-project>.vercel.app/management-console$1"
+      },
+      {
+        "src": "^/service-portal($|/.*)",
+        "dest": "https://<service-portal-project>.vercel.app/service-portal$1"
+      },
+      
+      { "src": "^/api/auth/.*", "dest": "/api/auth/index" },
+      { "src": "^/auth-flows/.*", "dest": "/auth-flows/index" }
+    ]
+  }

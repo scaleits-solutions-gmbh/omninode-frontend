@@ -1,5 +1,5 @@
-import SideBarLayout from "@/components/layout/layoutSideBar/LayoutSideBar";
-import PageContent from "@/features/companies/list/PageContent";
+import SideBarLayout from "@/components/layout/layout-side-bar/layout-side-bar";
+import PageContent from "@/features/companies/list/page-content";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
