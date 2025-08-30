@@ -2,12 +2,15 @@ import { NextResponse } from "next/server";
 import {
   CompanyService,
   PaginatedResponse,
-  sanitizeArrayWithZod,
-  ResultType
+  ResultType,
 } from "@scaleits-solutions-gmbh/services";
-import "@/schemas/companySchema";
-import { Company } from "@/types/company";
-import { handleServiceError, handleJsonParsingError, handleUnexpectedError } from "@/lib/utils/misc/api-error-handler";
+import "@/schemas/company-schema";
+import { FeCompany } from "@/types/fe/fe-company";
+import {
+  handleServiceError,
+  handleJsonParsingError,
+  handleUnexpectedError,
+} from "@/lib/utils/misc/api-error-handler";
 
 export async function GET(request: Request) {
   try {
@@ -31,8 +34,8 @@ export async function GET(request: Request) {
       return handleServiceError(resultType, "Failed to fetch companies");
     }
 
-    const sanitizedResponse: PaginatedResponse<Company> = {
-      items: sanitizeArrayWithZod<Company>(result.items, "Company"),
+    const sanitizedResponse: PaginatedResponse<FeCompany> = {
+      items: result.items,
       total: result.total,
       page: result.page,
       pageSize: result.pageSize,
@@ -57,14 +60,13 @@ export async function POST(request: Request) {
       return handleServiceError(resultType, "Failed to create company");
     }
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json(result);
   } catch (error) {
     // Check if it's a JSON parsing error first
     if (error instanceof SyntaxError) {
       return handleJsonParsingError(error);
     }
-    
+
     return handleUnexpectedError(error, "creating company");
   }
 }
-

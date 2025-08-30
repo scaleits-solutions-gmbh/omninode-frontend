@@ -1,4 +1,4 @@
-import { BaseProvidersAggregate } from "@scaleits-solutions-gmbh/omninode-frontend-common-kit/";
+import { BaseProvidersAggregate } from "frontend-common-kit";
 
 export default function ProvidersAggregate({
   children,

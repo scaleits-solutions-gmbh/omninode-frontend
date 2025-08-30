@@ -59,7 +59,7 @@ importers:
       '@scaleits-solutions-gmbh/api-client':
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.80.10(react@19.1.0))
-      '@scaleits-solutions-gmbh/omninode-frontend-common-kit':
+      'frontend-common-kit':
         specifier: 0.1.2-feat.setup-essentials.20250807233434
         version: 0.1.2-feat.setup-essentials.20250807233434(@scaleits-solutions-gmbh/services@0.0.1-beta.20250630092238(typescript@5.8.3)(zod@3.25.67))(@tanstack/react-query-devtools@5.80.10(@tanstack/react-query@5.80.10(react@19.1.0))(react@19.1.0))(@tanstack/react-query@5.80.10(react@19.1.0))(@tanstack/react-table@8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(js-cookie@3.0.5)(next-themes@0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.10)
       '@scaleits-solutions-gmbh/services':
@@ -1069,8 +1069,8 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
 
-  '@scaleits-solutions-gmbh/omninode-frontend-common-kit@0.1.2-feat.setup-essentials.20250807233434':
-    resolution: {integrity: sha512-fEW3ts827mfEIxJEZ171+Mqr9MglaWZHSeiVrfcOS7GEkiB1h2Zq754zD0L6zQur70aNo74Jb5/5M19Mpq3a6Q==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-frontend-common-kit/0.1.2-feat.setup-essentials.20250807233434/a3e3b8a6374501d5cfa78da19d259eaf8e95cc8b}
+  'frontend-common-kit@0.1.2-feat.setup-essentials.20250807233434':
+    resolution: {integrity: sha512-fEW3ts827mfEIxJEZ171+Mqr9MglaWZHSeiVrfcOS7GEkiB1h2Zq754zD0L6zQur70aNo74Jb5/5M19Mpq3a6Q==, tarball: https://npm.pkg.github.com/download/frontend-common-kit/0.1.2-feat.setup-essentials.20250807233434/a3e3b8a6374501d5cfa78da19d259eaf8e95cc8b}
     peerDependencies:
       '@scaleits-solutions-gmbh/services': 0.0.1-beta.20250630092238
       '@tanstack/react-query': ^5.0.0
@@ -4081,7 +4081,7 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.80.10(react@19.1.0)
 
-  '@scaleits-solutions-gmbh/omninode-frontend-common-kit@0.1.2-feat.setup-essentials.20250807233434(@scaleits-solutions-gmbh/services@0.0.1-beta.20250630092238(typescript@5.8.3)(zod@3.25.67))(@tanstack/react-query-devtools@5.80.10(@tanstack/react-query@5.80.10(react@19.1.0))(react@19.1.0))(@tanstack/react-query@5.80.10(react@19.1.0))(@tanstack/react-table@8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(js-cookie@3.0.5)(next-themes@0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.10)':
+  'frontend-common-kit@0.1.2-feat.setup-essentials.20250807233434(@scaleits-solutions-gmbh/services@0.0.1-beta.20250630092238(typescript@5.8.3)(zod@3.25.67))(@tanstack/react-query-devtools@5.80.10(@tanstack/react-query@5.80.10(react@19.1.0))(react@19.1.0))(@tanstack/react-query@5.80.10(react@19.1.0))(@tanstack/react-table@8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(js-cookie@3.0.5)(next-themes@0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.10)':
     dependencies:
       '@radix-ui/react-accordion': 1.2.11(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-avatar': 1.1.10(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)

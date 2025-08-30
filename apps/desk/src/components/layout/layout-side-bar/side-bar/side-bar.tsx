@@ -32,7 +32,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@scaleits-solutions-gmbh/omninode-frontend-common-kit/components";
+} from "frontend-common-kit/components";
 import {AppLogoDescriptive} from "@/components/custom/app-logo-descriptive";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

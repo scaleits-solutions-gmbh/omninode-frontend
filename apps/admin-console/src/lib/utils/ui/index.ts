@@ -1,2 +1,2 @@
-export * from "./colorUtils";
-export * from "./tableUtils";
+export * from "./color-utils";
+export * from "./table-utils";

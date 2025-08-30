@@ -1,4 +1,4 @@
-import { Badge, Card, CardTitle, CardHeader, CardContent } from "@scaleits-solutions-gmbh/omninode-frontend-common-kit/components";
+import { Badge, Card, CardTitle, CardHeader, CardContent } from "frontend-common-kit/components";
 import {
   Calendar,
   Code,

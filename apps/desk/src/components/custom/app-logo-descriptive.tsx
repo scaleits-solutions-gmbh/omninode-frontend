@@ -1,4 +1,4 @@
-import { AppLogoDescriptive as AppLogoDescriptiveCommon } from "@scaleits-solutions-gmbh/omninode-frontend-common-kit/components";
+import { AppLogoDescriptive as AppLogoDescriptiveCommon } from "frontend-common-kit/components";
 
 export function AppLogoDescriptive() {
   return (
