@@ -1,6 +1,6 @@
-import LayoutCenteredXY from "@/components/layout/layoutCenteredXY/LayoutCenteredXY";
-import PageContent from "@/features/login/pageContent";
-import { getSessionTokenPayload } from "@/lib/utils/misc/sessionToken";
+import { LayoutCenteredXY } from "frontend-common-kit/components";
+import PageContent from "@/features/login/page-content";
+import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -9,21 +9,21 @@ export const metadata: Metadata = {
 };
 
 export default async function LoginPage() {
-    let hasValidSession = false;
-    try {
-        const sessionTokenPayload = await getSessionTokenPayload();
-        if(sessionTokenPayload.exp > Date.now() / 1000){
-            hasValidSession = true;
-        }
-    }catch{}
-
-    if(hasValidSession){
-        redirect("/");
+  let hasValidSession = false;
+  try {
+    const sessionTokenPayload = await getSessionTokenPayload();
+    if (sessionTokenPayload.exp > Date.now() / 1000) {
+      hasValidSession = true;
     }
+  } catch {}
 
-    return (
-        <LayoutCenteredXY>
-            <PageContent />
-        </LayoutCenteredXY>
-    )
+  if (hasValidSession) {
+    redirect("/");
+  }
+
+  return (
+    <LayoutCenteredXY>
+      <PageContent />
+    </LayoutCenteredXY>
+  );
 }

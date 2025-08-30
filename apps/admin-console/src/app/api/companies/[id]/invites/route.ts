@@ -1,57 +1,46 @@
-/* Mock Implementation */
-import { NextRequest, NextResponse } from "next/server";
-import { FeUserInvite } from "@/types/fe/feUserInvite";
-import { PaginatedResponse } from "@scaleits-solutions-gmbh/services";
-import { getMockData } from "./data";
-
-export async function GET(request: NextRequest): Promise<NextResponse<PaginatedResponse<FeUserInvite>|unknown>> {
-  const { searchParams } = new URL(request.url);
-  const search = searchParams.get("search") || undefined;
-  const page = parseInt(searchParams.get("page") || "1");
-  const pageSize = parseInt(searchParams.get("pageSize") || "10");
-
-  return NextResponse.json(getMockData({page, pageSize, search}));
-}
-
-export async function POST(): Promise<NextResponse<null|unknown>> {
-    return NextResponse.json(null);
-}
-
-
 /* Real Implementation */
-/*import { NextRequest, NextResponse } from "next/server";
-import { UserInviteService, ResultType,PaginatedResponse} from "@scaleits-solutions-gmbh/services";
-import { FeUserInvite } from "@/types/fe/FeUserInvite";
+import { NextRequest, NextResponse } from "next/server";
+import {
+  CompanyUserInviteService,
+  ResultType,
+  PaginatedResponse,
+} from "@scaleits-solutions-gmbh/services";
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
-import { FeUserInviteTransformerSchema } from "@/schemas/transformers/FeUserInviteTransformer";
+import { feCompanyUserInviteSchema } from "@/schemas/transformers/fe-company-user-invite-transformer";
+import { FeCompanyUserInvite } from "@/types/fe/fe-company-user-invite";
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }): Promise<NextResponse<PaginatedResponse<FeUserInvite>|unknown>> {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<NextResponse<PaginatedResponse<FeCompanyUserInvite> | unknown>> {
   const { id } = await params;
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search") || "";
   const page = parseInt(searchParams.get("page") || "1");
   const pageSize = parseInt(searchParams.get("pageSize") || "10");
 
-  const UserInviteService = new UserInviteService();
-  const {result,resultType} = await UserInviteService.fetchUserInvites({
-    companyId: id,
-    search: search,
-    page: page,
-    pageSize: pageSize,
-  });
+  const companyUserInviteService = new CompanyUserInviteService();
+  const { result, resultType } =
+    await companyUserInviteService.getCompanyUserInvites({
+      companyId: id,
+      search: search,
+      page: page,
+      pageSize: pageSize,
+    });
 
   if (resultType != ResultType.SUCCESS) {
+    console.error("Error fetching user invites:", result);
     return handleServiceError(resultType, "fetchUserInvites");
   }
 
   if (!result) {
-    return handleServiceError(ResultType.INTERNAL_SERVER_ERROR, "fetchUserInvites");
+    return handleServiceError(ResultType.UNHANDLED_ERROR, "fetchUserInvites");
   }
 
   try {
-    const mappedResult: PaginatedResponse<FeUserInvite> = {
+    const mappedResult: PaginatedResponse<FeCompanyUserInvite> = {
       items: result.items.map((item) => {
-        return FeUserInviteTransformerSchema.parse(item);
+        return feCompanyUserInviteSchema.parse(item);
       }),
       page: result.page,
       pageSize: result.pageSize,
@@ -62,26 +51,33 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json(mappedResult);
   } catch (error) {
     console.error("Error transforming user invite data:", error);
-    return handleServiceError(ResultType.RESPONSE_PARSE_ERROR, "Data parsing failed");
+    return handleServiceError(
+      ResultType.RESPONSE_PARSE_ERROR,
+      "Data parsing failed",
+    );
   }
 }
-  
-export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }): Promise<NextResponse<null|unknown>> {
-    const { id } = await params;
-    const body = await request.json();
-    const { email, managementConsoleAccess } = body;
 
-    const UserInviteService = new UserInviteService();
-    const {result,resultType} = await UserInviteService.sendUserInvite({
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<NextResponse<null | unknown>> {
+  const { id } = await params;
+  const body = await request.json();
+  const { email, managementConsoleAccess } = body;
+
+  const companyUserInviteService = new CompanyUserInviteService();
+  const { resultType } = await companyUserInviteService.createCompanyUserInvite(
+    {
       companyId: id,
       email: email,
       managementConsoleAccess: managementConsoleAccess,
-    });
+    },
+  );
 
-    if (resultType != ResultType.SUCCESS) {
-        return handleServiceError(resultType, "sendUserInvite");
-    }
+  if (resultType != ResultType.SUCCESS) {
+    return handleServiceError(resultType, "sendUserInvite");
+  }
 
-    return NextResponse.json(null);
+  return NextResponse.json(null);
 }
-*/

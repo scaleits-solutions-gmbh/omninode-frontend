@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@scaleits-solutions-gmbh/omninode-frontend-common-kit/styles/globals.css";
+import "frontend-common-kit/styles/globals.css";
 import "./globals.css";
 import ProvidersAggregate from "@/providers/providers-aggregate";
 

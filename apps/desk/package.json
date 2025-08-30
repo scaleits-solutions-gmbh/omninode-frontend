@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 3004",
-    "build": "next build --turbopack",
-    "start": "next start -p 3004",
     "lint": "next lint"
   },
   "dependencies": {
@@ -26,7 +23,7 @@
     "@radix-ui/react-tabs": "^1.1.12",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@scaleits-solutions-gmbh/api-client": "1.0.0-beta.20250601143734",
-    "@scaleits-solutions-gmbh/omninode-frontend-common-kit": "workspace:*",
+    "frontend-common-kit": "workspace:*",
     "@scaleits-solutions-gmbh/services": "0.0.1-beta.20250630092238",
     "@tanstack/react-form": "^1.12.3",
     "@tanstack/react-query": "^5.80.10",
