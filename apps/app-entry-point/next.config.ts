@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = () => {
+  console.warn("nextConfig", process.env.STAGE);
   return {
     async rewrites() {
       const stage = process.env.STAGE;
