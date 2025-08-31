@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   Skeleton
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 
 export function SidebarSkeleton() {
   return (

@@ -15,7 +15,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { AcmpFilterType } from "@scaleits-solutions-gmbh/services";
 import { useForm } from "@tanstack/react-form";
 import { useEffect, useState } from "react";

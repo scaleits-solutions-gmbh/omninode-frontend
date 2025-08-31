@@ -16,8 +16,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SearchInput,
-} from "@repo/pkg-frontend-common-kit/components";
-import { useIsMobile } from "@repo/pkg-frontend-common-kit/hooks";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
+import { useIsMobile } from "../../../../../../../packages/frontend-common-kit/dist/hooks";
 
 type Organization = {
   id: string;

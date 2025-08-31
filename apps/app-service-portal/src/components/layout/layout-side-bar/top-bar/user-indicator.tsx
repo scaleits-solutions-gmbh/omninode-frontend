@@ -14,7 +14,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   Skeleton
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 
 import { logout } from "@/lib/api-client/auth/login";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";

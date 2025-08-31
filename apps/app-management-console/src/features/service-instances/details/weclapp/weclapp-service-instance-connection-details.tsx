@@ -4,7 +4,7 @@ import {
   CardContent,
   Badge,
   Button,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import {
   Info,
   KeyRound,

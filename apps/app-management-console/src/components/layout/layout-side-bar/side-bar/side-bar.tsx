@@ -14,7 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { Users, Smile, Layers2, Lock } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

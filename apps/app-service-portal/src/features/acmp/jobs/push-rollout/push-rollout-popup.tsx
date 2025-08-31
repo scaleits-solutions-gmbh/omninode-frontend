@@ -8,7 +8,7 @@ import {
   DialogDescription,
   DialogTrigger,
   DropdownMenuItem
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { MonitorUp } from "lucide-react";
 import { useState } from "react";
 import PushRolloutPopupStep1 from "./push-rollout-popup-step1";

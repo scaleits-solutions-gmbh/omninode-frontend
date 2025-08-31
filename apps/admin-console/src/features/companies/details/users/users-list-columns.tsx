@@ -5,7 +5,7 @@ import {
   AvatarFallback,
   AvatarImage,
   Badge,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 
 export const usersListColumns: ColumnDef<FeUser>[] = [
   {

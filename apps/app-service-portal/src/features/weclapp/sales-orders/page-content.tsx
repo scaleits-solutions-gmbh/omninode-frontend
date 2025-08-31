@@ -1,4 +1,4 @@
-import { PageHeader } from "@repo/pkg-frontend-common-kit/components";
+import { PageHeader } from "../../../../../../packages/frontend-common-kit/dist/components";
 import { SalesOrderList } from "./list/sales-order-list";
 
 export default function SalesOrdersPageContent() {

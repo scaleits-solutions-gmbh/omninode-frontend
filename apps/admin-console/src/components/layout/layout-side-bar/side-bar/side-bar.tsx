@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { AppLogoDescriptive } from "@/components/custom/app-logo-descriptive";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

@@ -4,7 +4,7 @@ import TopBar from "./top-bar/top-bar";
 import {
   SidebarInset,
   SidebarProvider,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../packages/frontend-common-kit/dist/components";
 
 type SideBarLayoutProps = {
   children: React.ReactNode;

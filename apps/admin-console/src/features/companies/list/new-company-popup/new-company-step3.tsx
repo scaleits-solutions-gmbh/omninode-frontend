@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
   ScrollArea,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { useForm } from "@tanstack/react-form";
 import { Plus, Loader2 } from "lucide-react";
 import {

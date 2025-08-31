@@ -3,7 +3,7 @@ import { FeServiceInstance } from "@/types/fe/fe-service-instance";
 import {
   Badge,
   Button,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { Service } from "@scaleits-solutions-gmbh/services";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { Eye } from "lucide-react";

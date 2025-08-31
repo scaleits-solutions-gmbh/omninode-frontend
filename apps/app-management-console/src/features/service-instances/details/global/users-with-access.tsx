@@ -21,7 +21,7 @@ import {
   TabsTrigger,
   SearchInput,
   DataTablePagination,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 import { useQuery } from "@tanstack/react-query";
 import {
   flexRender,

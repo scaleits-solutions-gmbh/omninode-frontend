@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
   Skeleton,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../packages/frontend-common-kit/dist/components";
 import {
   PaginatedResponse,
   Service,

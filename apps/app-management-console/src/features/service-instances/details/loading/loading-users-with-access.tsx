@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
   DataTablePaginationLoading,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 
 export default function LoadingUserWithAccess() {
   return (

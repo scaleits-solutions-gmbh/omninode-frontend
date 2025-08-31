@@ -13,7 +13,7 @@ import {
   AvatarImage,
   Badge,
   Button,
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../packages/frontend-common-kit/dist/components";
 import { CompanyStatus, CompanyType } from "@scaleits-solutions-gmbh/services";
 import { ColumnDef } from "@tanstack/react-table";
 import { EyeIcon } from "lucide-react";

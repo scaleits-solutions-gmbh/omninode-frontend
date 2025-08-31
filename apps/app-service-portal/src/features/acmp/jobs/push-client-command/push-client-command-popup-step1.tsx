@@ -22,7 +22,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination
-} from "@repo/pkg-frontend-common-kit/components";
+} from "../../../../../../../packages/frontend-common-kit/dist/components";
 
 interface PushClientCommandPopupStep1Props {
   initialSelectedClientCommand: FeClientCommand | undefined;
