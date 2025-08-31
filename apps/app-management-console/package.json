@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "pnpm -w --filter frontend-common-kit run build",
     "dev": "next dev -p 3002",
-    "build": "pnpm -C ../../packages/frontend-common-kit run build && next build",
+    "build": "pnpm -w --filter frontend-common-kit run build && next build",
     "start": "next start --port 3002",
     "lint": "next lint"
   },
