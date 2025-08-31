@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { libFrontendCommonKitVersion } from "@repo/pkg-frontend-common-kit/components";
+import { libFrontendCommonKitVersion } from "@repo/pkg-frontend-common-kit";
 
 export default function Home() {
   return (
