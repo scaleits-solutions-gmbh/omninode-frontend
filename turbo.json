@@ -6,7 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": ["NODE_AUTH_TOKEN"]
+      "env": ["NODE_AUTH_TOKEN", "OMNINODE_API_URL", "OMNINODE_API_KEY", "OIDC_CLIENT_ID", "OIDC_CLIENT_SECRET", "OIDC_ISSUER"]
     },
     "lint": {
       "dependsOn": ["^lint"]
