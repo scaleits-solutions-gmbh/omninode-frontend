@@ -1,4 +1,4 @@
-import {PageHeader} from "../../../../../../packages/frontend-common-kit/dist/components";
+import {PageHeader} from "@repo/pkg-frontend-common-kit/components";
 import { TicketList } from "./list/ticket-list";
 
 export default function TicketsPageContent() {

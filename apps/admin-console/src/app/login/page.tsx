@@ -1,4 +1,4 @@
-import { LayoutCenteredXY } from "../../../../../packages/frontend-common-kit/dist/components";
+import { LayoutCenteredXY } from "@repo/pkg-frontend-common-kit/components";
 import PageContent from "@/features/login/page-content";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
 import { Metadata } from "next";

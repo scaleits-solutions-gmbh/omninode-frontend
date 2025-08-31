@@ -1,6 +1,6 @@
 import UserDetailsCard from "./user-details-card";
 import UserServiceInstances from "./user-service-instances";
-import { PageHeader } from "../../../../../../packages/frontend-common-kit/dist/components";
+import { PageHeader } from "@repo/pkg-frontend-common-kit/components";
 export default function PageContent() {
   return (
     <>
