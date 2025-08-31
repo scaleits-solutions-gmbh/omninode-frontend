@@ -1,12 +1,32 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": ["NODE_AUTH_TOKEN"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": ["NODE_AUTH_TOKEN", "OMNINODE_API_URL", "OMNINODE_API_KEY", "OIDC_CLIENT_ID", "OIDC_CLIENT_SECRET", "OIDC_ISSUER"]
+      "env": [
+        "__COMMENT__: Build Configuration",
+        "NODE_AUTH_TOKEN",
+
+        "__COMMENT__: Environment Configuration",
+        "STAGE",
+
+        "__COMMENT__: Omninode API Configuration",
+        "OMNINODE_API_URL",
+        "OMNINODE_API_KEY",
+        
+        "__COMMENT__: OIDC Configuration",
+        "OIDC_CLIENT_ID",
+        "OIDC_CLIENT_SECRET",
+        "OIDC_ISSUER",
+        
+        "__COMMENT__: NextAuth Configuration",
+        "NEXTAUTH_URL",
+        "NEXTAUTH_SECRET"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
