@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "frontend-common-kit/components";
+import { Card, CardContent, CardHeader, CardTitle } from "frontend-common-kit";
 import { TrendingUp, MessageSquare, CheckCircle } from "lucide-react";
 
 export default function Stats() {

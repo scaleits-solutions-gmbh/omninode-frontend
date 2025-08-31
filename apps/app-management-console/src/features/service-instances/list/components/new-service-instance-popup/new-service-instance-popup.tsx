@@ -7,7 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useEffect, useState } from "react";
 
 export default function NewServiceInstancePopup() {

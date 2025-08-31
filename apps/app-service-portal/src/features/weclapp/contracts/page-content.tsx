@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import { ContractList } from "./list/contract-list";
 
 export default function ContractsPageContent() {

@@ -2,7 +2,7 @@ import {
   Card,
   CardContent,
   Skeleton,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 export default function LoadingConnectionDetailsCard() {
   return (

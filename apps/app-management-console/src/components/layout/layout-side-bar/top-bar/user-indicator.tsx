@@ -16,7 +16,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   Skeleton,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Settings, LogOut } from "lucide-react";
 import Link from "next/link";

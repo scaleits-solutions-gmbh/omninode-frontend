@@ -2,7 +2,7 @@ import {
   ScrollArea,
   Checkbox,
   Label,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 interface AcmpPermissionsForm {
   canViewDashboard: boolean;

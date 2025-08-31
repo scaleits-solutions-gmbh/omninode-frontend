@@ -6,7 +6,7 @@ import {
   Card,
   CardContent,
   CardTitle
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import {
   TerminalIcon,
   MonitorUp,

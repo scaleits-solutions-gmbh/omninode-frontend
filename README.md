@@ -133,3 +133,19 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
 - [Configuration Options](https://turborepo.com/docs/reference/configuration)
 - [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+
+## Vercel Deployment
+
+- Option A: One project per app
+  - Project Root: set to the app folder (e.g., `apps/app-service-portal`).
+  - Install Command: `pnpm install`.
+  - Build Command: `pnpm build`.
+  - Requirements: each app’s `next.config.ts` includes `transpilePackages: ['frontend-common-kit']`.
+
+- Option B: Single project at repo root
+  - Build only the selected app and its deps: `turbo run build --filter=<app-name>...` (e.g., `--filter=service-portal...`).
+  - Ensures `frontend-common-kit` is built before the app via Turbo’s `^build` dependency.
+
+Notes
+- Do not keep a per-package `pnpm-lock.yaml` under `packages/frontend-common-kit/`.
+- The shared package exports built files from `dist/`; if deploying per-app (Option A), rely on the root build or publish the package instead of ad-hoc prebuild hooks.

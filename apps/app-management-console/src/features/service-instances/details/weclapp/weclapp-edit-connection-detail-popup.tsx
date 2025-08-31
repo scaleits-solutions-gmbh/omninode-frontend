@@ -9,7 +9,7 @@ import {
   Button,
   Input,
   Label,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useForm } from "@tanstack/react-form";
 import { useQuery } from "@tanstack/react-query";
 import { RefreshCcw, Pencil } from "lucide-react";

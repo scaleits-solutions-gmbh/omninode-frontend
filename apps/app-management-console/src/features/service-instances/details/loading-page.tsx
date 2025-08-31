@@ -2,7 +2,7 @@ import LoadingCompaniesWithAccess from "./loading/loading-companies-with-access"
 import LoadingConnectionDetailsCard from "./loading/loading-connection-details-card";
 import LoadingDetailsCard from "./loading/loading-details-card";
 import LoadingUserWithAccess from "./loading/loading-users-with-access";
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 
 export default function LoadingPage() {
   return (

@@ -5,7 +5,7 @@ import {
   BreadcrumbPage,
   BreadcrumbItem,
   BreadcrumbList,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import Link from "next/link";
 import React from "react";
 

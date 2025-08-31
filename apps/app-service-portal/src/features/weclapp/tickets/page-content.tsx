@@ -1,4 +1,4 @@
-import {PageHeader} from "frontend-common-kit/components";
+import {PageHeader} from "frontend-common-kit";
 import { TicketList } from "./list/ticket-list";
 
 export default function TicketsPageContent() {

@@ -9,7 +9,7 @@ import {
   Button,
   Input,
   Label,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useQuery } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
 import { useParams } from "next/navigation";
