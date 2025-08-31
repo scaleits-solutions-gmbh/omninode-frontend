@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthUrl } from "@repo/pkg-frontend-common-kit/utils";
 
 export const config = {
   matcher: [
@@ -32,10 +33,8 @@ export default async function middleware(request: NextRequest) {
   if (!isPublic(pathname)) {
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
     if (!token) {
-      const origin = process.env.AUTH_URL || "http://localhost:3000";
-      const redirectUrl = new URL("/authflows/signin", origin);
-      redirectUrl.searchParams.set("callbackUrl", "/service-portal" + request.nextUrl.pathname + request.nextUrl.search);
-      return NextResponse.redirect(redirectUrl);
+      const path = "service-portal" + request.nextUrl.pathname + request.nextUrl.search;
+      return NextResponse.redirect(getAuthUrl(path));
     }
   }
   return NextResponse.next();
