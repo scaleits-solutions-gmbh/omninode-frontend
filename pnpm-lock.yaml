@@ -70,7 +70,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/api-client':
         specifier: ^1.0.0
         version: 1.0.0(@tanstack/react-query@5.85.6(react@19.1.0))
@@ -176,7 +176,7 @@ importers:
     dependencies:
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       axios:
         specifier: ^1.11.0
         version: 1.11.0
@@ -270,7 +270,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/api-client':
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.85.6(react@19.1.0))
@@ -430,7 +430,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/api-client':
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.85.6(react@19.1.0))
@@ -578,7 +578,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/api-client':
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.85.6(react@19.1.0))
@@ -741,7 +741,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/api-client':
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.85.6(react@19.1.0))
@@ -847,7 +847,7 @@ importers:
     dependencies:
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
+        version: link:../../packages/frontend-common-kit
       next:
         specifier: 15.3.5
         version: 15.3.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -879,49 +879,6 @@ importers:
       eslint-config-next:
         specifier: 15.3.5
         version: 15.3.5(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2)
-      tailwindcss:
-        specifier: ^4
-        version: 4.1.12
-      typescript:
-        specifier: ^5
-        version: 5.9.2
-
-  apps/lib-kit-demo:
-    dependencies:
-      '@repo/pkg-frontend-common-kit':
-        specifier: workspace:*
-        version: link:../../packages/lib-frontend-common-kit
-      next:
-        specifier: 15.5.2
-        version: 15.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: 19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: 19.1.0
-        version: 19.1.0(react@19.1.0)
-    devDependencies:
-      '@eslint/eslintrc':
-        specifier: ^3
-        version: 3.3.1
-      '@tailwindcss/postcss':
-        specifier: ^4
-        version: 4.1.12
-      '@types/node':
-        specifier: ^20
-        version: 20.19.11
-      '@types/react':
-        specifier: ^19
-        version: 19.1.0
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.1.1(@types/react@19.1.0)
-      eslint:
-        specifier: ^9
-        version: 9.33.0(jiti@2.5.1)
-      eslint-config-next:
-        specifier: 15.5.2
-        version: 15.5.2(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2)
       tailwindcss:
         specifier: ^4
         version: 4.1.12
@@ -965,7 +922,7 @@ importers:
         specifier: ^8.40.0
         version: 8.40.0(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2)
 
-  packages/lib-frontend-common-kit:
+  packages/frontend-common-kit:
     dependencies:
       '@radix-ui/react-accordion':
         specifier: ^1.2.11
