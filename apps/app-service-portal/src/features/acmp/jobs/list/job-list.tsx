@@ -22,7 +22,7 @@ import {
   CardContent,
   Skeleton,
   DataTablePagination
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useState } from "react";
 //import { JobDetailsPopup } from "../detailsPopup/JobDetailsPopup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";

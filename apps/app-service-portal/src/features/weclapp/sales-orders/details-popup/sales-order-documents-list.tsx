@@ -24,7 +24,7 @@ import {
   SearchInput,
     DataTableViewOptions,
   DataTablePagination
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 
 interface SalesOrderDocumentsListProps {
   salesOrderId: string;

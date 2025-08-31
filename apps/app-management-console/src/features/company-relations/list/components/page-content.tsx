@@ -1,6 +1,6 @@
 import CompanyRelationsList from "./company-relations-list";
 import InviteCompanyPopup from "./invite-company-popup";
-import { PageHeader } from "../../../../../../../packages/frontend-common-kit/dist/components";
+import { PageHeader } from "@repo/pkg-frontend-common-kit/components";
 
 export default function PageContent() {
   return (

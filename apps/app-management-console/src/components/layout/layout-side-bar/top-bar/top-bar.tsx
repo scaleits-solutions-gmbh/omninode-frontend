@@ -5,7 +5,7 @@ import {
   Separator,
   SidebarTrigger,
   HelpIndicator
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import Link from "next/link";
 
 export default function TopBar({

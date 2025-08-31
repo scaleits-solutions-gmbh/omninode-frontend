@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DropdownMenuItem
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 
 import { TerminalIcon } from "lucide-react";
 import { useState } from "react";

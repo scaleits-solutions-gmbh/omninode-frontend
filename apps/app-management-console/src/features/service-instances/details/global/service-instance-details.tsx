@@ -5,7 +5,7 @@ import {
   Card,
   CardContent,
   Badge,
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useQuery } from "@tanstack/react-query";
 import { Clock, Calendar } from "lucide-react";
 import Image from "next/image";

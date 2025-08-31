@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
   Skeleton,
   SearchInput
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
 import { ChevronsUpDown} from "lucide-react";
 

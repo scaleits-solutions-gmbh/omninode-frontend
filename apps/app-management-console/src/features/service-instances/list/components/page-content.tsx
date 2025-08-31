@@ -1,6 +1,6 @@
 import NewServiceInstancePopup from "./new-service-instance-popup/new-service-instance-popup";
 import ServiceInstanceList from "./service-instance-list";
-import { PageHeader } from "../../../../../../../packages/frontend-common-kit/dist/components";
+import { PageHeader } from "@repo/pkg-frontend-common-kit/components";
 
 export default function PageContent() {
   return (

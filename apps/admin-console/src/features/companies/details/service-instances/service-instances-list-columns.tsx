@@ -1,6 +1,6 @@
 import { formatDate } from "@/lib/utils/misc/date-utils";
 import { FeCompanyServiceInstance } from "@/types/fe/fe-company-service-instance";
-import { Badge } from "../../../../../../../packages/frontend-common-kit/dist/components";
+import { Badge } from "@repo/pkg-frontend-common-kit/components";
 import {
   Service,
   ServiceInstanceStatus,

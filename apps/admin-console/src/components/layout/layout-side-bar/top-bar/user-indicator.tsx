@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
   Skeleton,
   Button,
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";

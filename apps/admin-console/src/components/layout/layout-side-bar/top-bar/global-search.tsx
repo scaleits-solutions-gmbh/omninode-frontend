@@ -11,7 +11,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { Search } from "lucide-react";
 import * as React from "react";
 

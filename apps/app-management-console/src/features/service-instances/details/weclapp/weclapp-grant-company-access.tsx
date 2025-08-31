@@ -17,7 +17,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { WeclappFilterType } from "@scaleits-solutions-gmbh/services";
 import { useForm } from "@tanstack/react-form";
 import * as React from "react";

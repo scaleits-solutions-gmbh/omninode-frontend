@@ -6,7 +6,7 @@ import {
   Card,
   CardContent,
   CardTitle
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import {
   TerminalIcon,
   MonitorUp,

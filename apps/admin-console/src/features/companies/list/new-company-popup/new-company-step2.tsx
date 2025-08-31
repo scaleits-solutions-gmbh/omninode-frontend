@@ -4,7 +4,7 @@ import {
   Input,
   Label,
   ScrollArea,
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useForm } from "@tanstack/react-form";
 import { ArrowRight } from "lucide-react";
 

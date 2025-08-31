@@ -17,7 +17,7 @@ import {
   Badge,
   Button,
   Skeleton,
-} from "../../../../../../../packages/frontend-common-kit/dist/components";
+} from "@repo/pkg-frontend-common-kit/components";
 import { CompanyStatus, CompanyType } from "@scaleits-solutions-gmbh/services";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, RefreshCw } from "lucide-react";
