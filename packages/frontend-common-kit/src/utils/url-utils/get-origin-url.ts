@@ -8,5 +8,5 @@ export function getOriginUrl() {
     if(stage === "prod") {
         return `https://app.omninode.one`;
     }
-    return `https://${stage}-app.omninode.one`;
+    return `https://${stage}.app.omninode.one`;
 }
