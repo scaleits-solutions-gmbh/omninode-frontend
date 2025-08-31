@@ -5,7 +5,7 @@ import { EyeIcon, FolderOpen } from "lucide-react";
 import {
   Badge,
   Button
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 
 export interface ColumnProps {

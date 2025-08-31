@@ -14,7 +14,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 
 

@@ -11,7 +11,7 @@ import {
   Separator,
   SidebarTrigger,
   HelpIndicator
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 interface TopBarProps extends AutoBreadCrumbsProps {
   forceTopbarLoading?: boolean;

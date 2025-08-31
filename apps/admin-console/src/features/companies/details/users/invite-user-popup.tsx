@@ -17,7 +17,7 @@ import {
   SelectValue,
   Label,
   Input,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import {
   getManagementConsoleAccessOptions,
   ManagementConsoleAccess,

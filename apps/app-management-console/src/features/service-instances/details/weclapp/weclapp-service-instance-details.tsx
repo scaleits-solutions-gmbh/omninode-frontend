@@ -3,7 +3,7 @@ import {
   Button,
   Card,
   CardContent,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { Calendar, Clock, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 

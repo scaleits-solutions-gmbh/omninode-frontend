@@ -14,7 +14,7 @@ import {
   AlertDescription,
   AlertTitle,
   Skeleton,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useForm } from "@tanstack/react-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle, Pencil } from "lucide-react";

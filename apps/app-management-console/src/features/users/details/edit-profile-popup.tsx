@@ -19,7 +19,7 @@ import {
   SelectValue,
   SelectContent,
   SelectItem,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import {
   ManagementConsoleAccess,
   UserCompanyStatus,

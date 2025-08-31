@@ -1,4 +1,4 @@
-import { BaseProvidersAggregate } from "frontend-common-kit";
+import { BaseProvidersAggregate } from "@repo/pkg-frontend-common-kit/components";
 
 export default function ProvidersAggregate({
   children,

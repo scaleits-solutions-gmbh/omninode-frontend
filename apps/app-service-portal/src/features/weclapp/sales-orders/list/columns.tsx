@@ -6,7 +6,7 @@ import { FeSalesOrder } from "@/types/weclapp/sales-order";
 import {
   Badge,
   Button
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 
 export interface ColumnProps {

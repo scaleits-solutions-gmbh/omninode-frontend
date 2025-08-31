@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit";
+import { PageHeader } from "@repo/pkg-frontend-common-kit/components";
 import CompanyList from "./company-list";
 import NewCompanyPopup from "./new-company-popup/new-company-popup";
 export default function PageContent() {

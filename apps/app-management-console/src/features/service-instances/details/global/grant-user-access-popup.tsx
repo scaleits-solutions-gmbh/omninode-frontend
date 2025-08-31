@@ -16,7 +16,7 @@ import {
   DataTablePagination,
   TableCell,
   Checkbox,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useQuery } from "@tanstack/react-query";
 import {
   flexRender,
