@@ -1,0 +1,7 @@
+/* Tailwind v4: define class-based dark and light variants globally */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+
+/* Hint native UI color-scheme */
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }

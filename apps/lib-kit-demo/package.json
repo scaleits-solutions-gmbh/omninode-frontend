@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@repo/lib-frontend-common-kit": "workspace:*",
+    "@repo/pkg-frontend-common-kit": "workspace:*",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "next": "15.5.2"

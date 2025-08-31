@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "frontend-common-kit": "workspace:*",
+    "@repo/pkg-frontend-common-kit": "workspace:*",
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
