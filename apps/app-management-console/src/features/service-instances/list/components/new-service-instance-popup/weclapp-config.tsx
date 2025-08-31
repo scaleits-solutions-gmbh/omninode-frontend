@@ -91,7 +91,7 @@ export default function WeclappConfig({
           <CardHeader className="flex flex-row items-center gap-4 pb-2">
             <div className="relative h-14 w-14 rounded-lg bg-background p-2 border">
               <Image
-                src="/assets/weclapp.svg"
+                src="/management-console/assets/weclapp.svg"
                 alt="Weclapp"
                 fill
                 className="object-contain p-1"

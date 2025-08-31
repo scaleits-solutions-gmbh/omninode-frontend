@@ -41,8 +41,8 @@ export default function AppSelector() {
             {tAppSelector("title").replace("OmniNode", "")}
           </h1>
           <AppWordmarkLogo
-            srcDark="/assets/logo-wordmark-dark.svg"
-            srcLight="/assets/logo-wordmark-light.svg"
+            srcDark="/user-portal/assets/logo-wordmark-dark.svg"
+            srcLight="/user-portal/assets/logo-wordmark-light.svg"
             customSize={64}
           />
         </div>

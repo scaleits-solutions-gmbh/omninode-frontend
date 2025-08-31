@@ -28,13 +28,13 @@ const serviceOptions = [
   {
     label: "Weclapp",
     value: "weclapp",
-    icon: "/assets/weclapp.svg",
+    icon: "/management-console/assets/weclapp.svg",
     category: serviceCategories[0],
   },
   {
     label: "ACMP",
     value: "acmp",
-    icon: "/assets/acmp.svg",
+    icon: "/management-console/assets/acmp.svg",
     category: serviceCategories[1],
   },
 ];
