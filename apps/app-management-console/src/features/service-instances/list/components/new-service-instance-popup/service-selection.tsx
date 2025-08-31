@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
   SearchInput,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import Image from "next/image";
 import { useState } from "react";
 

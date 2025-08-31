@@ -32,7 +32,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import {AppLogoDescriptive} from "@/components/custom/app-logo-descriptive";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

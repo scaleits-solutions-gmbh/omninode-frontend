@@ -1,4 +1,4 @@
-import { Badge, Card, CardTitle, CardHeader, CardContent } from "frontend-common-kit";
+import { Badge, Card, CardTitle, CardHeader, CardContent } from "@repo/pkg-frontend-common-kit/components";
 import {
   Calendar,
   Code,

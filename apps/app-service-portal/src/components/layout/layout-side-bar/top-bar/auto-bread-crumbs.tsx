@@ -8,7 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 export type AutoBreadCrumbsProps = {
   category: string;

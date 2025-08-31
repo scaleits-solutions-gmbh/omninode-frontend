@@ -5,7 +5,7 @@ import {
   AvatarFallback,
   AvatarImage,
   Badge,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { type ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";

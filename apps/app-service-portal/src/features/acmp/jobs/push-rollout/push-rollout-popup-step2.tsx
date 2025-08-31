@@ -26,7 +26,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 interface PushClientCommandPopupStep2Props {
   initialSelectedClients: FeClient[];

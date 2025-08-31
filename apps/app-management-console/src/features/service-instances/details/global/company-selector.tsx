@@ -15,7 +15,7 @@ import {
   Avatar,
   AvatarImage,
   AvatarFallback,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 

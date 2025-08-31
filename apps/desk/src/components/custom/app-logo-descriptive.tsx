@@ -1,4 +1,4 @@
-import { AppLogoDescriptive as AppLogoDescriptiveCommon } from "frontend-common-kit";
+import { AppLogoDescriptive as AppLogoDescriptiveCommon } from "@repo/pkg-frontend-common-kit/components";
 
 export function AppLogoDescriptive() {
   return (

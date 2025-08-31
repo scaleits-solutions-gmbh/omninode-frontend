@@ -13,7 +13,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 import {
   getCompanyByIdQueryKey,

@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit";
+import { PageHeader } from "@repo/pkg-frontend-common-kit/components";
 import Roadmap from "./components/roadmap";
 import Stats from "./components/stats";
 

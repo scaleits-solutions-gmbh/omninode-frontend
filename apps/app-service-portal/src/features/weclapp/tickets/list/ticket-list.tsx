@@ -14,7 +14,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { fetchWeclappTickets } from "@/lib/api-client/weclapp/ticket";
 import { useQuery } from "@tanstack/react-query";
 import {

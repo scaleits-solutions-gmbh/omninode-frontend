@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   PageHeader
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 export default function JobsPageContent() {
   return (

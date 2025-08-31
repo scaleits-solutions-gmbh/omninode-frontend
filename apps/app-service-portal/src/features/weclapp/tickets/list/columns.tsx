@@ -7,7 +7,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import {
   Badge,
   Button
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 function ActionsColumn({ 
   row, 
