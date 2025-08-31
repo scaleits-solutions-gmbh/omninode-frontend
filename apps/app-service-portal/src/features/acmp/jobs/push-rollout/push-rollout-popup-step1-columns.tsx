@@ -3,7 +3,7 @@ import { FeRollout } from "@/types/acmp/rollout";
 import {
   Badge,
   Checkbox
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 
 // Define the table meta interface for proper typing

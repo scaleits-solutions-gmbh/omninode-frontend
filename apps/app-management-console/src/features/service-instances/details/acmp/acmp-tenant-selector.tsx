@@ -13,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Skeleton,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useQuery } from "@tanstack/react-query";
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";

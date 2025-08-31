@@ -6,7 +6,7 @@ import { FeSalesInvoice } from "@/types/weclapp/sales-invoice";
 import {
   Badge,
   Button
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 
 export interface ColumnProps {

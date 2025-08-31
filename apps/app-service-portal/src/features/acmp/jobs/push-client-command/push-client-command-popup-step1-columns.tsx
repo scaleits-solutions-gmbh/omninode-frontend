@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { FeClientCommand } from "@/types/acmp/client-command";
 import {
   Checkbox
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 
 // Define the table meta interface for proper typing

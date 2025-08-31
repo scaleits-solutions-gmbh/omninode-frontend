@@ -10,7 +10,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 import * as React from "react";
 import type { DialogProps } from "@radix-ui/react-dialog";

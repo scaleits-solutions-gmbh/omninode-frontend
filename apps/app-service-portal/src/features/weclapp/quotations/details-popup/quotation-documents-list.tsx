@@ -16,7 +16,7 @@ import {
   Skeleton,
   Table,
   DataTablePagination,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { quotationDocumentsColumns } from "./quotation-documents-columns";
 import { useQuery } from "@tanstack/react-query";

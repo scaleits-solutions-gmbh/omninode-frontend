@@ -124,7 +124,7 @@
 [00:56:21.494] service-portal:build: Failed to compile.
 [00:56:21.494] service-portal:build: 
 [00:56:21.494] service-portal:build: ./src/components/custom/app-logo-descriptive.tsx
-[00:56:21.494] service-portal:build: Module not found: Can't resolve 'frontend-common-kit/components'
+[00:56:21.494] service-portal:build: Module not found: Can't resolve 'frontend-common-kit'
 [00:56:21.494] service-portal:build: 
 [00:56:21.494] service-portal:build: https://nextjs.org/docs/messages/module-not-found
 [00:56:21.494] service-portal:build: 
@@ -132,7 +132,7 @@
 [00:56:21.494] service-portal:build: ./src/components/layout/layout-side-bar/side-bar/sidebar.tsx
 [00:56:21.494] service-portal:build: 
 [00:56:21.494] service-portal:build: ./src/components/layout/layout-side-bar/side-bar/company-switcher.tsx
-[00:56:21.494] service-portal:build: Module not found: Can't resolve 'frontend-common-kit/components'
+[00:56:21.494] service-portal:build: Module not found: Can't resolve 'frontend-common-kit'
 [00:56:21.494] service-portal:build: 
 [00:56:21.494] service-portal:build: https://nextjs.org/docs/messages/module-not-found
 [00:56:21.494] service-portal:build: 
@@ -140,7 +140,7 @@
 [00:56:21.495] service-portal:build: ./src/components/layout/layout-side-bar/side-bar/sidebar.tsx
 [00:56:21.495] service-portal:build: 
 [00:56:21.495] service-portal:build: ./src/components/layout/layout-side-bar/side-bar/side-bar-skeleton.tsx
-[00:56:21.495] service-portal:build: Module not found: Can't resolve 'frontend-common-kit/components'
+[00:56:21.495] service-portal:build: Module not found: Can't resolve 'frontend-common-kit'
 [00:56:21.495] service-portal:build: 
 [00:56:21.495] service-portal:build: https://nextjs.org/docs/messages/module-not-found
 [00:56:21.495] service-portal:build: 
@@ -148,12 +148,12 @@
 [00:56:21.495] service-portal:build: ./src/components/layout/layout-side-bar/side-bar/sidebar.tsx
 [00:56:21.495] service-portal:build: 
 [00:56:21.495] service-portal:build: ./src/components/layout/layout-side-bar/side-bar/sidebar.tsx
-[00:56:21.495] service-portal:build: Module not found: Can't resolve 'frontend-common-kit/components'
+[00:56:21.495] service-portal:build: Module not found: Can't resolve 'frontend-common-kit'
 [00:56:21.495] service-portal:build: 
 [00:56:21.495] service-portal:build: https://nextjs.org/docs/messages/module-not-found
 [00:56:21.495] service-portal:build: 
 [00:56:21.495] service-portal:build: ./src/components/layout/layout-side-bar/top-bar/global-search.tsx
-[00:56:21.495] service-portal:build: Module not found: Can't resolve 'frontend-common-kit/components'
+[00:56:21.495] service-portal:build: Module not found: Can't resolve 'frontend-common-kit'
 [00:56:21.495] service-portal:build: 
 [00:56:21.495] service-portal:build: https://nextjs.org/docs/messages/module-not-found
 [00:56:21.495] service-portal:build: 

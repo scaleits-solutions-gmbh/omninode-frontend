@@ -15,7 +15,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 
 

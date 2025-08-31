@@ -7,7 +7,7 @@ import {
   Checkbox,
   Input,
   Label,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";

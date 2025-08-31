@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import { QuotationList } from "./list/quotation-list";
 
 export default function QuotationsPageContent() {

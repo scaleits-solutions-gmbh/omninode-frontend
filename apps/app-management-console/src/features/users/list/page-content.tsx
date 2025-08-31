@@ -1,7 +1,7 @@
 import InviteList from "./invite-list";
 import InviteUserPopup from "./invite-user-popup";
 import UserList from "./user-list";
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 export default function PageContent() {
   return (
     <>

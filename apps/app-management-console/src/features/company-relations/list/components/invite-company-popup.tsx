@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
   Label,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { CompanyRelationshipType } from "@scaleits-solutions-gmbh/services";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";

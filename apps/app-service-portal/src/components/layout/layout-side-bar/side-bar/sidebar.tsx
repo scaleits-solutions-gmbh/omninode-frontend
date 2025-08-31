@@ -21,7 +21,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import * as React from "react";
 import { Service } from "@scaleits-solutions-gmbh/services";
 import { Minus, Plus } from "lucide-react";

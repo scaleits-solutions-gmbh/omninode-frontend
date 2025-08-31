@@ -17,7 +17,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import {
   flexRender,

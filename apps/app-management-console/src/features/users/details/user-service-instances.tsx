@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
   Skeleton,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import {
   PaginatedResponse,
   Service,

@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   Skeleton
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 export function SidebarSkeleton() {
   return (
