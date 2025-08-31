@@ -35,6 +35,14 @@
       "types": "./dist/hooks/*",
       "import": "./dist/hooks/*"
     },
+    "./constants": {
+      "types": "./dist/constants/index.d.ts",
+      "import": "./dist/constants/index.js"
+    },
+    "./constants/*": {
+      "types": "./dist/constants/*",
+      "import": "./dist/constants/*"
+    },
     "./styles/*": "./dist/styles/*"
   },
   "files": [
@@ -51,8 +59,9 @@
     "@tanstack/react-query": "^5.0.0",
     "@tanstack/react-query-devtools": "^5.0.0",
     "@tanstack/react-table": "^8.0.0",
+    "next": "^15.0.0",
+    "next-auth": "^4.24.11",
     "next-themes": "^0.4.0",
-    "next": "^14.0.0 || ^15.0.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
@@ -83,16 +92,17 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.15.3",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "@tanstack/react-query": "^5.0.0",
     "@tanstack/react-query-devtools": "^5.0.0",
     "@tanstack/react-table": "^8.0.0",
-    "next-themes": "^0.4.0",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "eslint": "^9.33.0",
-    "tsc-alias": "^1.8.10",
+    "next-auth": "^4.24.11",
+    "next-themes": "^0.4.0",
     "rimraf": "^6.0.0",
+    "tsc-alias": "^1.8.10",
     "typescript": "5.9.2"
   }
 }

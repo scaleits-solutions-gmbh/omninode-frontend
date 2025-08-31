@@ -11,7 +11,8 @@ const userCompanyService = new UserCompanyService();
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { params }: any,
 ): Promise<NextResponse<FeUser | unknown>> {
   const { id } = await params;
 
@@ -31,7 +32,8 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ userCompanyId: string }> },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { params }: any,
 ): Promise<NextResponse<null | unknown>> {
   const { userCompanyId } = await params;
   const body = await request.json();
