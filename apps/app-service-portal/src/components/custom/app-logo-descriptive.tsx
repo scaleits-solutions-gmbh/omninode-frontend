@@ -4,8 +4,8 @@ export function AppLogoDescriptive() {
   return (
     <AppLogoCommon
       customSize={64}
-      srcLight="/assets/logo-light.svg"
-      srcDark="/assets/logo-dark.svg"
+      srcLight="/service-portal/assets/logo-light.svg"
+      srcDark="/service-portal/assets/logo-dark.svg"
     />
   );
 }

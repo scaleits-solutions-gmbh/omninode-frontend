@@ -197,7 +197,7 @@ export default function LoginCard({ redirectUrl }: LoginCardParams) {
           }}
         >
           <Image
-            src="/assets/microsoft.svg"
+            src="/user-portal/assets/microsoft.svg"
             alt={t('microsoftLogoAlt')}
             width={16}
             height={16}

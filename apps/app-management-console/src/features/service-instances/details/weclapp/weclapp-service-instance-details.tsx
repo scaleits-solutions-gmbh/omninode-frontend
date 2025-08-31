@@ -14,7 +14,7 @@ export default function WeclappServiceInstanceDetails() {
         <div className="flex items-center gap-4">
           <div className="flex items-center justify-center border rounded-lg p-2 bg-muted/50">
             <Image
-              src="/assets/weclapp.svg"
+              src="/management-console/assets/weclapp.svg"
               alt="Weclapp"
               width={48}
               height={48}
