@@ -1,0 +1,305 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "language": "Langue",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "required": "requis",
+    "active": "Actif",
+    "error": "Erreur",
+    "updating": "Mise à jour...",
+    "noChanges": "Aucune modification apportée"
+  },
+  "components": {
+    "layout": {
+      "header": {
+        "managementConsole": "Console de gestion",
+        "servicePortal": "Portail de services"
+      },
+      "userIndicator": {
+        "personalSettings": "Paramètres personnels",
+        "logOut": "Se déconnecter",
+        "loggingOut": "Déconnexion en cours...",
+        "loggedOutSuccessfully": "Déconnexion réussie",
+        "failedToLogOut": "Échec de la déconnexion"
+      },
+      "companySwitcher": {
+        "failedToLoad": "Échec du chargement",
+        "switchingCompany": "Changement d'entreprise...",
+        "companySwitchedSuccessfully": "Entreprise changée avec succès",
+        "failedToSwitchCompany": "Échec du changement d'entreprise"
+      },
+      "mobileHeader": {
+        "toggleMenu": "Basculer le menu"
+      }
+    },
+    "custom": {
+      "appLogo": {
+        "alt": "Logo Omninode"
+      }
+    },
+    "ui": {}
+  },
+
+  "features": {
+    "home": {
+      "pageContent": {},
+      "appSelector": {
+        "title": "Bienvenue sur OmniNode",
+        "subtitle": "Choisissez l'application à laquelle vous souhaitez accéder",
+        "helpText": "Besoin d'aide ? Contactez votre administrateur système",
+        "managementConsole": {
+          "title": "Console de gestion",
+          "description": "Administrez et gérez votre organisation",
+          "accessConsole": "Accéder à la console",
+          "accessRestricted": "Accès restreint",
+          "restrictedDescription": "Accès restreint - contactez votre administrateur",
+          "noPermissionTooltip": "Vous n'avez pas la permission d'accéder à la Console de gestion. Veuillez contacter votre administrateur pour demander l'accès."
+        },
+        "servicePortal": {
+          "title": "Portail de services",
+          "description": "Accédez et gérez vos services",
+          "accessPortal": "Accéder au portail"
+        },
+        "noAppsAvailable": "Aucune application disponible"
+      }
+    },
+    "login": {
+      "pageContent": {},
+      "loginCard": {
+        "title": "Bon retour",
+        "subtitle": "Connectez-vous à votre compte pour continuer",
+        "signIn": "Se connecter",
+        "signingIn": "Connexion en cours...",
+        "rememberMe": "Se souvenir de moi",
+        "forgotPassword": "Mot de passe oublié ?",
+        "orContinueWith": "Ou continuer avec",
+        "signInWithMicrosoft": "Se connecter avec Microsoft",
+        "microsoftNotAvailable": "Cette fonctionnalité n'est pas encore disponible",
+        "microsoftLogoAlt": "Microsoft"
+      }
+    },
+    "forgotPassword": {
+      "pageContent": {},
+      "forgotPasswordCard": {
+        "title": "Mot de passe oublié ?",
+        "subtitle": "Pas de souci ! Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+        "resetPassword": "Réinitialiser le mot de passe",
+        "resettingPassword": "Réinitialisation du mot de passe...",
+        "backToLogin": "Retour à la connexion"
+      }
+    },
+    "personalSettings": {
+      "pageContent": {
+        "title": "Paramètres personnels",
+        "subtitle": "Gérez vos informations de profil et préférences de compte"
+      },
+      "profileCard": {
+        "fullName": "Nom complet",
+        "position": "Poste",
+        "memberSince": "Membre depuis",
+        "failedToLoadUserDetails": "Échec du chargement des détails utilisateur. Veuillez réessayer plus tard."
+      },
+      "editProfilePopup": {
+        "editProfile": "Modifier le profil",
+        "firstName": "Prénom",
+        "middleNames": "Noms du milieu",
+        "lastName": "Nom de famille",
+        "position": "Poste",
+        "editProfileTitle": "Modifier le profil",
+        "updateProfile": "Mettre à jour le profil",
+        "profileUpdatedSuccessfully": "Profil mis à jour avec succès",
+        "failedToUpdateProfile": "Échec de la mise à jour du profil",
+        "enterFirstName": "Entrez votre prénom",
+        "enterMiddleNames": "Entrez vos noms du milieu (optionnel)",
+        "enterLastName": "Entrez votre nom de famille",
+        "enterPosition": "Entrez votre poste",
+        "firstNameRequired": "Le prénom est requis",
+        "lastNameRequired": "Le nom de famille est requis",
+        "positionRequired": "Le poste est requis"
+      },
+      "personalSettingsCard": {
+        "settings": "Paramètres"
+      },
+      "themePersonalSettings": {
+        "updatingThemePreference": "Mise à jour de la préférence de thème...",
+        "themePreference": "Préférence de thème",
+        "selectTheme": "Sélectionnez votre thème préféré",
+        "light": "Clair",
+        "dark": "Sombre",
+        "system": "Système",
+        "defaultTheme": "Thème par défaut",
+        "beautifulDarkColors": "Belles couleurs sombres",
+        "followSystemSettings": "Suivre les paramètres système",
+        "themePreferenceUpdated": "Préférence de thème mise à jour avec succès",
+        "failedToUpdateTheme": "Échec de la mise à jour de la préférence de thème"
+      },
+      "localePersonalSettings": {
+        "locale": "Langue",
+        "selectLanguage": "Sélectionnez votre langue préférée",
+        "updatingLanguage": "Mise à jour de la préférence de langue...",
+        "languageUpdated": "Préférence de langue mise à jour avec succès",
+        "failedToUpdateLanguage": "Échec de la mise à jour de la préférence de langue"
+      }
+    },
+    "userInvite": {
+      "pageContent": {},
+      "userInviteStep1": {
+        "title": "Invitation d'entreprise",
+        "subtitle": "Vous avez été invité à rejoindre une entreprise",
+        "noInvitationFound": "Aucune invitation trouvée",
+        "unableToLoadInvitation": "Impossible de charger les détails de l'invitation",
+        "invited": "Invité",
+        "acceptInvitation": "Accepter l'invitation",
+        "acceptingInvitation": "Acceptation de l'invitation..."
+      },
+      "userInviteStep2": {
+        "next": "Suivant",
+        "createPassword": "Créer un mot de passe",
+        "createPasswordSubtitle": "Configurez un mot de passe sécurisé pour votre compte",
+        "confirmPassword": "Confirmer le mot de passe",
+        "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+        "creating": "Création..."
+      },
+      "userInviteStep3": {
+        "continue": "Continuer",
+        "back": "Retour",
+        "completeProfile": "Compléter votre profil",
+        "completeProfileSubtitle": "Parlez-nous un peu de vous",
+        "firstName": "Prénom",
+        "enterFirstName": "Entrez votre prénom",
+        "middleNames": "Noms du milieu",
+        "enterMiddleNames": "Entrez vos noms du milieu (optionnel)",
+        "lastName": "Nom de famille",
+        "enterLastName": "Entrez votre nom de famille",
+        "position": "Poste",
+        "enterJobTitle": "Entrez votre titre de poste",
+        "activateAccount": "Activer le compte",
+        "activatingAccount": "Activation du compte..."
+      }
+    },
+    "companyInvite": {
+      "pageContent": {},
+      "companyInviteCard": {
+        "title": "Invitation d'entreprise",
+        "subtitle": "Votre entreprise vous a invité à une collaboration",
+        "customer": "Client",
+        "serviceProvider": "Fournisseur de services",
+        "partner": "Partenaire",
+        "wantsYouToBe": "veut que vous soyez son",
+        "acceptInvitation": "Accepter l'invitation",
+        "accepting": "Acceptation..."
+      }
+    },
+    "resetPassword": {
+      "pageContent": {},
+      "resetPasswordCard": {
+        "title": "Réinitialiser le mot de passe",
+        "subtitle": "Entrez votre nouveau mot de passe ci-dessous",
+        "newPassword": "Nouveau mot de passe",
+        "enterNewPassword": "Entrez votre nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "confirmNewPassword": "Confirmez votre nouveau mot de passe",
+        "resetPassword": "Réinitialiser le mot de passe",
+        "resetting": "Réinitialisation...",
+        "backToLogin": "Retour à la connexion"
+      }
+    }
+  },
+  "validation": {
+    "emailRequired": "L'e-mail est requis",
+    "emailInvalid": "Veuillez entrer une adresse e-mail valide",
+    "passwordRequired": "Le mot de passe est requis",
+    "passwordMinLength": "Le mot de passe doit contenir au moins 8 caractères",
+    "passwordMaxLength": "Le mot de passe doit contenir moins de 100 caractères",
+    "passwordUppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+    "passwordLowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+    "passwordNumber": "Le mot de passe doit contenir au moins un chiffre",
+    "passwordSpecialChar": "Le mot de passe doit contenir au moins un caractère spécial",
+    "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+    "firstNameRequired": "Le prénom est requis",
+    "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
+    "firstNameMaxLength": "Le prénom doit contenir moins de 50 caractères",
+    "lastNameRequired": "Le nom de famille est requis",
+    "lastNameMinLength": "Le nom de famille doit contenir au moins 2 caractères",
+    "lastNameMaxLength": "Le nom de famille doit contenir moins de 50 caractères",
+    "positionRequired": "Le poste est requis",
+    "positionMinLength": "Le poste doit contenir au moins 2 caractères",
+    "positionMaxLength": "Le poste doit contenir moins de 100 caractères"
+  },
+  "notifications": {
+    "loginSuccess": "Connexion réussie",
+    "loginError": "Échec de la connexion",
+    "passwordResetSent": "E-mail de réinitialisation du mot de passe envoyé",
+    "passwordResetSentDescription": "Veuillez vérifier votre e-mail, y compris le dossier spam",
+    "passwordResetError": "Échec de l'envoi de l'e-mail de réinitialisation du mot de passe",
+    "passwordResetSuccess": "Mot de passe réinitialisé avec succès",
+    "passwordResetFailed": "Échec de la réinitialisation du mot de passe",
+    "inviteAccepted": "Invitation acceptée",
+    "inviteActivated": "Invitation activée",
+    "invitationAcceptedSuccessfully": "Invitation acceptée avec succès !",
+    "failedToAcceptInvitation": "Échec de l'acceptation de l'invitation"
+  },
+  "errors": {
+    "title": "Quelque chose s'est mal passé !",
+    "description": "Une erreur inattendue s'est produite. Veuillez réessayer ou contacter le support si le problème persiste.",
+    "tryAgain": "Réessayer",
+    "goHome": "Aller à l'accueil",
+    "technicalDetails": "Détails techniques",
+    "notFound": {
+      "title": "Page non trouvée",
+      "description": "La page que vous recherchez n'existe pas ou a été déplacée."
+    },
+    "noToken": "Aucun jeton trouvé",
+    "noTokenDescription": "Veuillez vérifier votre e-mail pour le lien d'invitation",
+    "noData": "Aucune donnée",
+    "noDataDescription": "Aucune donnée trouvée",
+    "generalError": "Erreur",
+    "expiredInvite": "Expiré",
+    "expiredInviteDescription": "Le lien d'invitation a expiré",
+    "incorrectUser": "Utilisateur incorrect",
+    "incorrectUserDescription": "Le lien d'invitation ne vous est pas destiné",
+    "incorrectCompany": "Entreprise incorrecte",
+    "incorrectCompanyDescription": "Le lien d'invitation ne s'adresse pas à votre entreprise",
+    "tokenExpired": "Jeton expiré",
+    "tokenExpiredDescription": "Ce lien de réinitialisation a expiré",
+    "tokenUsed": "Jeton déjà utilisé",
+    "tokenUsedDescription": "Ce lien de réinitialisation a déjà été utilisé"
+  },
+  "metadata": {
+    "home": {
+      "title": "Accueil | OmniNode",
+      "description": "Page d'accueil du portail utilisateur OmniNode"
+    },
+    "login": {
+      "title": "Connexion | OmniNode",
+      "description": "Connectez-vous à votre compte OmniNode"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié | OmniNode",
+      "description": "Réinitialisez le mot de passe de votre compte OmniNode"
+    },
+    "personalSettings": {
+      "title": "Paramètres personnels | OmniNode",
+      "description": "Gérez vos paramètres personnels et préférences"
+    },
+    "userInvite": {
+      "title": "Invitation utilisateur | OmniNode",
+      "description": "Acceptez votre invitation utilisateur pour rejoindre OmniNode"
+    },
+    "companyInvite": {
+      "title": "Invitation d'entreprise | OmniNode",
+      "description": "Acceptez votre invitation d'entreprise pour rejoindre OmniNode"
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe | OmniNode",
+      "description": "Réinitialisez le mot de passe de votre compte OmniNode"
+    }
+  }
+}
