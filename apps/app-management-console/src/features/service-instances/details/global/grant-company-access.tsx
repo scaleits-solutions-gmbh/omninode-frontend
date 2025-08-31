@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
   Button,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import * as React from "react";
 
 interface GrantCompanyAccessProps {

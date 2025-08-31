@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import { ProjectList } from "./list/project-list";
 
 export default function ProjectsPageContent() {

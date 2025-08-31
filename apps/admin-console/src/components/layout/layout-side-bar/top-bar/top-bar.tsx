@@ -1,7 +1,7 @@
 import {
   Separator,
   SidebarTrigger,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { AutoBreadCrumbs, AutoBreadCrumbsProps } from "./auto-bread-crumbs";
 import GlobalSearch from "./global-search";
 import UserIndicator from "./user-indicator";

@@ -3,7 +3,7 @@ import { FeWeclappDocument } from "@/types/weclapp/document";
 import { Download } from "lucide-react";
 import {
   Button
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 
 export const salesOrderDocumentsColumns: ColumnDef<FeWeclappDocument>[] = [

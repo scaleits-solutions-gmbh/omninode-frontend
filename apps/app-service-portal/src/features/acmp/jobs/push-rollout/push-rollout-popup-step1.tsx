@@ -19,7 +19,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import {
   useReactTable,
   getCoreRowModel,

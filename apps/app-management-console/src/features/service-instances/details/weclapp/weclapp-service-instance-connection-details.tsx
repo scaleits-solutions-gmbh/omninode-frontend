@@ -4,7 +4,7 @@ import {
   CardContent,
   Badge,
   Button,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import {
   Info,
   KeyRound,

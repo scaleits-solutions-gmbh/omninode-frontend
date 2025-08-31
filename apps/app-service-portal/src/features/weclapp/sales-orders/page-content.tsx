@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import { SalesOrderList } from "./list/sales-order-list";
 
 export default function SalesOrdersPageContent() {

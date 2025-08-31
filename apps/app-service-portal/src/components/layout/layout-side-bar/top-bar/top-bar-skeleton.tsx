@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import {
   Separator,
   Skeleton
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 
 export default function TopBarSkeleton() {
   return (

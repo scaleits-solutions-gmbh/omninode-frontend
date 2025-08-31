@@ -10,7 +10,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { type ColumnDef } from "@tanstack/react-table";
 
 export const createColumns = (): ColumnDef<FeUser>[] => [

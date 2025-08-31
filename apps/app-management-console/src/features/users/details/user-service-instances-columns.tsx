@@ -3,7 +3,7 @@ import { FeServiceInstance } from "@/types/fe/fe-service-instance";
 import {
   Button,
   Badge,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
 import { EyeIcon } from "lucide-react";
 import { useRouter } from "next/navigation";

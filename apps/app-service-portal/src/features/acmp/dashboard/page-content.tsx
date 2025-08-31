@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 
 export default function PageContent() {
   return (

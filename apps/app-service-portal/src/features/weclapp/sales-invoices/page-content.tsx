@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import { SalesInvoiceList } from "./list/sales-invoice-list";
 
 export default function SalesInvoicesPageContent() {

@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import Roadmap from "./components/roadmap";
 import Stats from "./components/stats";
 

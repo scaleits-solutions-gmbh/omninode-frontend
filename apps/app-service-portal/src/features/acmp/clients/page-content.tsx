@@ -1,4 +1,4 @@
-import { PageHeader } from "frontend-common-kit/components";
+import { PageHeader } from "frontend-common-kit";
 import { ClientList } from "./list/client-list";
 
 export default function ClientsPageContent() {

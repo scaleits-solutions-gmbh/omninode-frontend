@@ -24,7 +24,7 @@ import {
   CardHeader,
   CardContent,
   CardFooter,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { useQuery } from "@tanstack/react-query";
 import {
   fetchCompanyServiceInstances,

@@ -1,7 +1,7 @@
 import {
   SidebarInset,
   SidebarProvider,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { AppSidebar } from "./side-bar/side-bar";
 import { AutoBreadCrumbsProps } from "./top-bar/auto-bread-crumbs";
 import TopBar from "./top-bar/top-bar";

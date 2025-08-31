@@ -14,7 +14,7 @@ import {
   CardHeader,
   Table,
   DataTablePagination,
-} from "frontend-common-kit/components";
+} from "frontend-common-kit";
 import { 
   getCoreRowModel, 
   getFilteredRowModel, 
