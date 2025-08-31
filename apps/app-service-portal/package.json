@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prebuild": "pnpm --dir ../../packages/frontend-common-kit run build",
+    "prebuild": "pnpm -w --filter frontend-common-kit run build",
     "dev": "next dev -p 3003",
     "build": "next build",
     "start": "next start -p 3003",
