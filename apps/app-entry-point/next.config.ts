@@ -71,29 +71,29 @@ const nextConfig: NextConfig = () => {
         // User Portal → stage domain
         {
           source: "/user-portal",
-          destination: `https://${stage}-user-portal.omninode.one/user-portal`,
+          destination: `https://${stage}.user-portal.omninode.one/user-portal`,
         },
         {
           source: "/user-portal/:path*",
-          destination: `https://${stage}-user-portal.omninode.one/user-portal/:path*`,
+          destination: `https://${stage}.user-portal.omninode.one/user-portal/:path*`,
         },
         // Management Console → stage domain
         {
           source: "/management-console",
-          destination: `https://${stage}-management-console.omninode.one/management-console`,
+          destination: `https://${stage}.management-console.omninode.one/management-console`,
         },
         {
           source: "/management-console/:path*",
-          destination: `https://${stage}-management-console.omninode.one/management-console/:path*`,
+          destination: `https://${stage}.management-console.omninode.one/management-console/:path*`,
         },
         // Service Portal → stage domain
         {
           source: "/service-portal",
-          destination: `https://${stage}-service-portal.omninode.one/service-portal`,
+          destination: `https://${stage}.service-portal.omninode.one/service-portal`,
         },
         {
           source: "/service-portal/:path*",
-          destination: `https://${stage}-service-portal.omninode.one/service-portal/:path*`,
+          destination: `https://${stage}.service-portal.omninode.one/service-portal/:path*`,
         },
       ];
     },
