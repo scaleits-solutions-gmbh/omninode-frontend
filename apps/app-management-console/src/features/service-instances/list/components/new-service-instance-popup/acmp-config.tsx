@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   Badge,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useForm } from "@tanstack/react-form";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";

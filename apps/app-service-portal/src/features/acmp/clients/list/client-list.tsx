@@ -14,7 +14,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 import { fetchAcmpClients } from "@/lib/api-client/acmp/client";
 import { useQuery } from "@tanstack/react-query";

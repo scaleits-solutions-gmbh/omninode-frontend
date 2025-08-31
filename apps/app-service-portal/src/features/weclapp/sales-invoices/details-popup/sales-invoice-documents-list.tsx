@@ -16,7 +16,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { salesInvoiceDocumentsColumns } from "./sales-invoice-documents-columns";
 import { useQuery } from "@tanstack/react-query";

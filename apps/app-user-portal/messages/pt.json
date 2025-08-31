@@ -1,0 +1,305 @@
+{
+  "common": {
+    "loading": "A carregar...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "language": "Idioma",
+    "email": "Endereço de e-mail",
+    "password": "Palavra-passe",
+    "required": "obrigatório",
+    "active": "Ativo",
+    "error": "Erro",
+    "updating": "A atualizar...",
+    "noChanges": "Nenhuma alteração efetuada"
+  },
+  "components": {
+    "layout": {
+      "header": {
+        "managementConsole": "Consola de gestão",
+        "servicePortal": "Portal de serviços"
+      },
+      "userIndicator": {
+        "personalSettings": "Definições pessoais",
+        "logOut": "Terminar sessão",
+        "loggingOut": "A terminar sessão...",
+        "loggedOutSuccessfully": "Sessão terminada com sucesso",
+        "failedToLogOut": "Falha ao terminar sessão"
+      },
+      "companySwitcher": {
+        "failedToLoad": "Falha ao carregar",
+        "switchingCompany": "A trocar empresa...",
+        "companySwitchedSuccessfully": "Empresa trocada com sucesso",
+        "failedToSwitchCompany": "Falha ao trocar empresa"
+      },
+      "mobileHeader": {
+        "toggleMenu": "Alternar menu"
+      }
+    },
+    "custom": {
+      "appLogo": {
+        "alt": "Logo Omninode"
+      }
+    },
+    "ui": {}
+  },
+
+  "features": {
+    "home": {
+      "pageContent": {},
+      "appSelector": {
+        "title": "Bem-vindo ao OmniNode",
+        "subtitle": "Escolha a aplicação que pretende aceder",
+        "helpText": "Precisa de ajuda? Contacte o seu administrador do sistema",
+        "managementConsole": {
+          "title": "Consola de gestão",
+          "description": "Administre e gere a sua organização",
+          "accessConsole": "Aceder à consola",
+          "accessRestricted": "Acesso restrito",
+          "restrictedDescription": "Acesso restrito - contacte o seu administrador",
+          "noPermissionTooltip": "Não tem permissão para aceder à Consola de gestão. Contacte o seu administrador para solicitar acesso."
+        },
+        "servicePortal": {
+          "title": "Portal de serviços",
+          "description": "Aceda e gere os seus serviços",
+          "accessPortal": "Aceder ao portal"
+        },
+        "noAppsAvailable": "Nenhuma aplicação disponível"
+      }
+    },
+    "login": {
+      "pageContent": {},
+      "loginCard": {
+        "title": "Bem-vindo de volta",
+        "subtitle": "Entre na sua conta para continuar",
+        "signIn": "Entrar",
+        "signingIn": "A entrar...",
+        "rememberMe": "Lembrar-me",
+        "forgotPassword": "Esqueceu-se da palavra-passe?",
+        "orContinueWith": "Ou continuar com",
+        "signInWithMicrosoft": "Entrar com Microsoft",
+        "microsoftNotAvailable": "Esta funcionalidade ainda não está disponível",
+        "microsoftLogoAlt": "Microsoft"
+      }
+    },
+    "forgotPassword": {
+      "pageContent": {},
+      "forgotPasswordCard": {
+        "title": "Esqueceu-se da palavra-passe?",
+        "subtitle": "Não se preocupe! Introduza o seu endereço de e-mail e enviaremos um link para redefinir a sua palavra-passe.",
+        "resetPassword": "Redefinir palavra-passe",
+        "resettingPassword": "A redefinir palavra-passe...",
+        "backToLogin": "Voltar ao início de sessão"
+      }
+    },
+    "personalSettings": {
+      "pageContent": {
+        "title": "Definições pessoais",
+        "subtitle": "Gerencie as suas informações de perfil e preferências da conta"
+      },
+      "profileCard": {
+        "fullName": "Nome completo",
+        "position": "Cargo",
+        "memberSince": "Membro desde",
+        "failedToLoadUserDetails": "Falha ao carregar detalhes do utilizador. Tente novamente mais tarde."
+      },
+      "editProfilePopup": {
+        "editProfile": "Editar perfil",
+        "firstName": "Nome",
+        "middleNames": "Nomes do meio",
+        "lastName": "Apelido",
+        "position": "Cargo",
+        "editProfileTitle": "Editar perfil",
+        "updateProfile": "Atualizar perfil",
+        "profileUpdatedSuccessfully": "Perfil atualizado com sucesso",
+        "failedToUpdateProfile": "Falha ao atualizar o perfil",
+        "enterFirstName": "Introduza o seu nome",
+        "enterMiddleNames": "Introduza os seus nomes do meio (opcional)",
+        "enterLastName": "Introduza o seu apelido",
+        "enterPosition": "Introduza o seu cargo",
+        "firstNameRequired": "Nome é obrigatório",
+        "lastNameRequired": "Apelido é obrigatório",
+        "positionRequired": "Cargo é obrigatório"
+      },
+      "personalSettingsCard": {
+        "settings": "Definições"
+      },
+      "themePersonalSettings": {
+        "updatingThemePreference": "A atualizar preferência de tema...",
+        "themePreference": "Preferência de tema",
+        "selectTheme": "Selecione o seu tema preferido",        
+        "light": "Claro",
+        "dark": "Escuro",
+        "system": "Sistema",
+        "defaultTheme": "Tema predefinido",
+        "beautifulDarkColors": "Belas cores escuras",
+        "followSystemSettings": "Seguir definições do sistema",
+        "themePreferenceUpdated": "Preferência de tema atualizada com sucesso",
+        "failedToUpdateTheme": "Falha ao atualizar a preferência de tema"
+      },
+      "localePersonalSettings": {
+        "locale": "Idioma",
+        "selectLanguage": "Selecione o seu idioma preferido",
+        "updatingLanguage": "A atualizar preferência de idioma...",
+        "languageUpdated": "Preferência de idioma atualizada com sucesso",
+        "failedToUpdateLanguage": "Falha ao atualizar a preferência de idioma"
+      }
+    },
+    "userInvite": {
+      "pageContent": {},
+      "userInviteStep1": {
+        "title": "Convite da empresa",
+        "subtitle": "Foi convidado para se juntar a uma empresa",
+        "noInvitationFound": "Nenhum convite encontrado",
+        "unableToLoadInvitation": "Não foi possível carregar os detalhes do convite",
+        "invited": "Convidado",
+        "acceptInvitation": "Aceitar convite",
+        "acceptingInvitation": "A aceitar convite..."
+      },
+      "userInviteStep2": {
+        "next": "Seguinte",
+        "createPassword": "Criar palavra-passe",
+        "createPasswordSubtitle": "Configure uma palavra-passe segura para a sua conta",
+        "confirmPassword": "Confirmar palavra-passe",
+        "passwordsDoNotMatch": "As palavras-passe não coincidem",
+        "creating": "A criar..."
+      },
+      "userInviteStep3": {
+        "continue": "Continuar",
+        "back": "Voltar",
+        "completeProfile": "Complete o seu perfil",
+        "completeProfileSubtitle": "Conte-nos um pouco sobre si",
+        "firstName": "Nome",
+        "enterFirstName": "Introduza o seu nome",
+        "middleNames": "Nomes do meio",
+        "enterMiddleNames": "Introduza os seus nomes do meio (opcional)",
+        "lastName": "Apelido",
+        "enterLastName": "Introduza o seu apelido",
+        "position": "Cargo",
+        "enterJobTitle": "Introduza o seu cargo",
+        "activateAccount": "Ativar conta",
+        "activatingAccount": "A ativar conta..."
+      }
+    },
+    "companyInvite": {
+      "pageContent": {},
+      "companyInviteCard": {
+        "title": "Convite da empresa",
+        "subtitle": "A sua empresa convidou-o para uma colaboração",
+        "customer": "Cliente",
+        "serviceProvider": "Prestador de serviços",
+        "partner": "Parceiro",
+        "wantsYouToBe": "quer que seja o seu",
+        "acceptInvitation": "Aceitar convite",
+        "accepting": "A aceitar..."
+      }
+    },
+    "resetPassword": {
+      "pageContent": {},
+      "resetPasswordCard": {
+        "title": "Redefinir palavra-passe",
+        "subtitle": "Introduza a sua nova palavra-passe abaixo",
+        "newPassword": "Nova palavra-passe",
+        "enterNewPassword": "Introduza a sua nova palavra-passe",
+        "confirmPassword": "Confirmar palavra-passe",
+        "confirmNewPassword": "Confirme a sua nova palavra-passe",
+        "resetPassword": "Redefinir palavra-passe",
+        "resetting": "A redefinir...",
+        "backToLogin": "Voltar ao início de sessão"
+      }
+    }
+  },
+  "validation": {
+    "emailRequired": "E-mail é obrigatório",
+    "emailInvalid": "Por favor, introduza um endereço de e-mail válido",
+    "passwordRequired": "Palavra-passe é obrigatória",
+    "passwordMinLength": "A palavra-passe deve ter pelo menos 8 caracteres",
+    "passwordMaxLength": "A palavra-passe deve ter menos de 100 caracteres",
+    "passwordUppercase": "A palavra-passe deve conter pelo menos uma letra maiúscula",
+    "passwordLowercase": "A palavra-passe deve conter pelo menos uma letra minúscula",
+    "passwordNumber": "A palavra-passe deve conter pelo menos um número",
+    "passwordSpecialChar": "A palavra-passe deve conter pelo menos um caractere especial",
+    "confirmPasswordRequired": "Por favor confirme a sua palavra-passe",
+    "passwordsDoNotMatch": "As palavras-passe não coincidem",
+    "firstNameRequired": "Nome é obrigatório",
+    "firstNameMinLength": "Nome deve ter pelo menos 2 caracteres",
+    "firstNameMaxLength": "Nome deve ter menos de 50 caracteres",
+    "lastNameRequired": "Apelido é obrigatório",
+    "lastNameMinLength": "Apelido deve ter pelo menos 2 caracteres",
+    "lastNameMaxLength": "Apelido deve ter menos de 50 caracteres",
+    "positionRequired": "Cargo é obrigatório",
+    "positionMinLength": "Cargo deve ter pelo menos 2 caracteres",
+    "positionMaxLength": "Cargo deve ter menos de 100 caracteres"
+  },
+  "notifications": {
+    "loginSuccess": "Início de sessão realizado com sucesso",
+    "loginError": "Falha ao iniciar sessão",
+    "passwordResetSent": "E-mail de redefinição de palavra-passe enviado",
+    "passwordResetSentDescription": "Verifique o seu e-mail incluindo a pasta de spam",
+    "passwordResetError": "Falha ao enviar e-mail de redefinição de palavra-passe",
+    "passwordResetSuccess": "Palavra-passe redefinida com sucesso",
+    "passwordResetFailed": "Falha ao redefinir a palavra-passe",
+    "inviteAccepted": "Convite aceite",
+    "inviteActivated": "Convite ativado",
+    "invitationAcceptedSuccessfully": "Convite aceite com sucesso!",
+    "failedToAcceptInvitation": "Falha ao aceitar o convite"
+  },
+  "errors": {
+    "title": "Algo correu mal!",
+    "description": "Ocorreu um erro inesperado. Por favor, tente novamente ou contacte o suporte se o problema persistir.",
+    "tryAgain": "Tentar novamente",
+    "goHome": "Ir para o início",
+    "technicalDetails": "Detalhes técnicos",
+    "notFound": {
+      "title": "Página não encontrada",
+      "description": "A página que está a procurar não existe ou foi movida."
+    },
+    "noToken": "Nenhum token encontrado",
+    "noTokenDescription": "Por favor verifique o seu e-mail para o link de convite",
+    "noData": "Sem dados",
+    "noDataDescription": "Nenhum dado encontrado",
+    "generalError": "Erro",
+    "expiredInvite": "Expirado",
+    "expiredInviteDescription": "O link de convite expirou",
+    "incorrectUser": "Utilizador incorreto",
+    "incorrectUserDescription": "O link de convite não é para si",
+    "incorrectCompany": "Empresa incorreta",
+    "incorrectCompanyDescription": "O link de convite não é para a sua empresa",
+    "tokenExpired": "Token expirado",
+    "tokenExpiredDescription": "Este link de redefinição expirou",
+    "tokenUsed": "Token já utilizado",
+    "tokenUsedDescription": "Este link de redefinição já foi utilizado"
+  },
+  "metadata": {
+    "home": {
+      "title": "Início | OmniNode",
+      "description": "Página inicial do portal do utilizador OmniNode"
+    },
+    "login": {
+      "title": "Início de sessão | OmniNode",
+      "description": "Entre na sua conta OmniNode"
+    },
+    "forgotPassword": {
+      "title": "Esqueci-me da palavra-passe | OmniNode",
+      "description": "Redefina a palavra-passe da sua conta OmniNode"
+    },
+    "personalSettings": {
+      "title": "Definições pessoais | OmniNode",
+      "description": "Gerencie as suas definições pessoais e preferências"
+    },
+    "userInvite": {
+      "title": "Convite de utilizador | OmniNode",
+      "description": "Aceite o seu convite de utilizador para se juntar ao OmniNode"
+    },
+    "companyInvite": {
+      "title": "Convite da empresa | OmniNode",
+      "description": "Aceite o seu convite da empresa para se juntar ao OmniNode"
+    },
+    "resetPassword": {
+      "title": "Redefinir palavra-passe | OmniNode",
+      "description": "Redefina a palavra-passe da sua conta OmniNode"
+    }
+  }
+}

@@ -20,7 +20,7 @@ import {
   SearchInput,
   DataTableViewOptions,
   DataTablePagination,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useEffect, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";

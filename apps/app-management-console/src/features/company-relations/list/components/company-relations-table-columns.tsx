@@ -4,7 +4,7 @@ import {
   Badge,
   Avatar,
   AvatarFallback,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { CompanyRelationshipType } from "@scaleits-solutions-gmbh/services";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 

@@ -6,7 +6,7 @@ import { FeContract } from "@/types/weclapp/contract";
 import {
   Badge,
   Button
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 
 export interface ColumnProps {

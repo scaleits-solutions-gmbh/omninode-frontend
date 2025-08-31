@@ -3,7 +3,7 @@ import { FeProjectMember } from "@/types/weclapp/project";
 import {
   Avatar,
   AvatarFallback
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 
 export const projectMembersColumns: ColumnDef<FeProjectMember>[] = [

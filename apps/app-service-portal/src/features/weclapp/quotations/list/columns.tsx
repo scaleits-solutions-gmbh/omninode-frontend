@@ -6,7 +6,7 @@ import { FeQuotation } from "@/types/weclapp/quotation";
 import {
   Badge,
   Button
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 export interface ColumnProps {
   onViewDetails: (quotation: FeQuotation) => void;

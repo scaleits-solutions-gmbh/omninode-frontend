@@ -1,4 +1,4 @@
 @import "tailwindcss";
 @source "../../node_modules/frontend-common-kit/dist";
 /* Test */
-@import "../../node_modules/frontend-common-kit/dist/styles/globals.css";
+@import "../../node_modules/@repo/pkg-frontend-common-kit/dist/styles/globals.css";

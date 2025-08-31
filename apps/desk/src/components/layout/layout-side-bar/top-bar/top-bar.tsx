@@ -1,4 +1,4 @@
-import { Button, Separator, SidebarTrigger } from "frontend-common-kit";
+import { Button, Separator, SidebarTrigger } from "@repo/pkg-frontend-common-kit/components";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 import { AutoBreadCrumbs, AutoBreadCrumbsProps } from "./auto-bread-crumbs";

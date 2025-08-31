@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
   Progress,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";

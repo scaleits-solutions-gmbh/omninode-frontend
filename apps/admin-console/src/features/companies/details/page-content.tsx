@@ -5,7 +5,7 @@ import {
   TabsList,
   TabsTrigger,
   PageHeader,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 import { useState } from "react";
 import OrganizationInfo from "./company-details/company-info";
 import CompanyDetails from "./company-details/company-details";

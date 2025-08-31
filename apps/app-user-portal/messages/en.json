@@ -1,0 +1,305 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "language": "Language",
+    "email": "Email Address",
+    "password": "Password",
+    "required": "required",
+    "active": "Active",
+    "error": "Error",
+    "updating": "Updating...",
+    "noChanges": "No changes made"
+  },
+  "components": {
+    "layout": {
+      "header": {
+        "managementConsole": "Management Console",
+        "servicePortal": "Service Portal"
+      },
+      "userIndicator": {
+        "personalSettings": "Personal settings",
+        "logOut": "Log out",
+        "loggingOut": "Logging out...",
+        "loggedOutSuccessfully": "Logged out successfully",
+        "failedToLogOut": "Failed to log out"
+      },
+      "companySwitcher": {
+        "failedToLoad": "Failed to load",
+        "switchingCompany": "Switching company...",
+        "companySwitchedSuccessfully": "Company switched successfully",
+        "failedToSwitchCompany": "Failed to switch company"
+      },
+      "mobileHeader": {
+        "toggleMenu": "Toggle menu"
+      }
+    },
+    "custom": {
+      "appLogo": {
+        "alt": "Omninode Logo"
+      }
+    },
+    "ui": {}
+  },
+
+  "features": {
+    "home": {
+      "pageContent": {},
+      "appSelector": {
+        "title": "Welcome to OmniNode",
+        "subtitle": "Choose the application you'd like to access",
+        "helpText": "Need help? Contact your system administrator",
+        "managementConsole": {
+          "title": "Management Console",
+          "description": "Administer and manage your organization",
+          "accessConsole": "Access Console",
+          "accessRestricted": "Access Restricted",
+          "restrictedDescription": "Access restricted - contact your administrator",
+          "noPermissionTooltip": "You don't have permission to access the Management Console. Please contact your administrator to request access."
+        },
+        "servicePortal": {
+          "title": "Service Portal",
+          "description": "Access and manage your services",
+          "accessPortal": "Access Portal"
+        },
+        "noAppsAvailable": "No apps available"
+      }
+    },
+    "login": {
+      "pageContent": {},
+      "loginCard": {
+        "title": "Welcome back",
+        "subtitle": "Sign in to your account to continue",
+        "signIn": "Sign in",
+        "signingIn": "Signing in...",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "orContinueWith": "Or continue with",
+        "signInWithMicrosoft": "Sign in with Microsoft",
+        "microsoftNotAvailable": "This feature is not available yet",
+        "microsoftLogoAlt": "Microsoft"
+      }
+    },
+    "forgotPassword": {
+      "pageContent": {},
+      "forgotPasswordCard": {
+        "title": "Forgot Password?",
+        "subtitle": "No worries! Enter your email address and we'll send you a link to reset your password.",
+        "resetPassword": "Reset Password",
+        "resettingPassword": "Resetting Password...",
+        "backToLogin": "Back to Login"
+      }
+    },
+    "personalSettings": {
+      "pageContent": {
+        "title": "Personal Settings",
+        "subtitle": "Manage your profile information and account preferences"       
+      },
+      "profileCard": {
+        "fullName": "Full Name",
+        "position": "Position",
+        "memberSince": "Member Since",
+        "failedToLoadUserDetails": "Failed to load user details. Please try again later."
+      },
+      "editProfilePopup": {
+        "editProfile": "Edit profile",
+        "firstName": "First Name",
+        "middleNames": "Middle Names",
+        "lastName": "Last Name",
+        "position": "Position",
+        "editProfileTitle": "Edit Profile",
+        "updateProfile": "Update Profile",
+        "profileUpdatedSuccessfully": "Profile updated successfully",
+        "failedToUpdateProfile": "Failed to update profile",
+        "enterFirstName": "Enter your first name",
+        "enterMiddleNames": "Enter your middle names (optional)",
+        "enterLastName": "Enter your last name",
+        "enterPosition": "Enter your position",
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "positionRequired": "Position is required"
+      },
+      "personalSettingsCard": {
+        "settings": "Settings"
+      },
+      "themePersonalSettings": {
+        "updatingThemePreference": "Updating theme preference...",
+        "themePreference": "Theme Preference",
+        "selectTheme": "Select your preferred theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System",
+        "defaultTheme": "Default Theme",
+        "beautifulDarkColors": "Beautiful dark colors",
+        "followSystemSettings": "Follow system settings",
+        "themePreferenceUpdated": "Theme preference updated successfully",
+        "failedToUpdateTheme": "Failed to update theme preference"
+      },
+      "localePersonalSettings": {
+        "locale": "Language",
+        "selectLanguage": "Select your preferred language",
+        "updatingLanguage": "Updating language preference...",
+        "languageUpdated": "Language preference updated successfully",
+        "failedToUpdateLanguage": "Failed to update language preference"
+      }
+    },
+    "userInvite": {
+      "pageContent": {},
+      "userInviteStep1": {
+        "title": "Company Invitation",
+        "subtitle": "You've been invited to join a company",
+        "noInvitationFound": "No invitation found",
+        "unableToLoadInvitation": "Unable to load invitation details",
+        "invited": "Invited",
+        "acceptInvitation": "Accept Invitation",
+        "acceptingInvitation": "Accepting Invitation..."
+      },
+      "userInviteStep2": {
+        "next": "Next",
+        "createPassword": "Create Password",
+        "createPasswordSubtitle": "Set up a secure password for your account",
+        "confirmPassword": "Confirm Password",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "creating": "Creating..."
+      },
+      "userInviteStep3": {
+        "continue": "Continue",
+        "back": "Back",
+        "completeProfile": "Complete Your Profile",
+        "completeProfileSubtitle": "Tell us a bit about yourself",
+        "firstName": "First Name",
+        "enterFirstName": "Enter your first name",
+        "middleNames": "Middle Names",
+        "enterMiddleNames": "Enter your middle names (optional)",
+        "lastName": "Last Name",
+        "enterLastName": "Enter your last name",
+        "position": "Position",
+        "enterJobTitle": "Enter your job title",
+        "activateAccount": "Activate Account",
+        "activatingAccount": "Activating Account..."
+      }
+    },
+    "companyInvite": {
+      "pageContent": {},
+      "companyInviteCard": {
+        "title": "Company Invitation",
+        "subtitle": "Your company has invited for a collaboration",
+        "customer": "Customer",
+        "serviceProvider": "Service Provider",
+        "partner": "Partner",
+        "wantsYouToBe": "wants you to be your",
+        "acceptInvitation": "Accept Invitation",
+        "accepting": "Accepting..."
+      }
+    },
+    "resetPassword": {
+      "pageContent": {},
+      "resetPasswordCard": {
+        "title": "Reset Password",
+        "subtitle": "Enter your new password below",
+        "newPassword": "New Password",
+        "enterNewPassword": "Enter your new password",
+        "confirmPassword": "Confirm Password",
+        "confirmNewPassword": "Confirm your new password",
+        "resetPassword": "Reset Password",
+        "resetting": "Resetting...",
+        "backToLogin": "Back to Login"
+      }
+    }
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "passwordMaxLength": "Password must be less than 100 characters",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
+    "passwordLowercase": "Password must contain at least one lowercase letter",
+    "passwordNumber": "Password must contain at least one number",
+    "passwordSpecialChar": "Password must contain at least one special character",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "firstNameRequired": "First name is required",
+    "firstNameMinLength": "First name must be at least 2 characters",
+    "firstNameMaxLength": "First name must be less than 50 characters",
+    "lastNameRequired": "Last name is required",
+    "lastNameMinLength": "Last name must be at least 2 characters",
+    "lastNameMaxLength": "Last name must be less than 50 characters",
+    "positionRequired": "Position is required",
+    "positionMinLength": "Position must be at least 2 characters",
+    "positionMaxLength": "Position must be less than 100 characters"
+  },
+  "notifications": {
+    "loginSuccess": "Logged in successfully",
+    "loginError": "Failed to log in",
+    "passwordResetSent": "Password reset email sent",
+    "passwordResetSentDescription": "Please check your email including the spam folder",
+    "passwordResetError": "Failed to send password reset email",
+    "passwordResetSuccess": "Password reset successfully",
+    "passwordResetFailed": "Failed to reset password",
+    "inviteAccepted": "Invite accepted",
+    "inviteActivated": "Invite activated",
+    "invitationAcceptedSuccessfully": "Invitation accepted successfully!",
+    "failedToAcceptInvitation": "Failed to accept invitation"
+  },
+  "errors": {
+    "title": "Something went wrong!",
+    "description": "An unexpected error occurred. Please try again or contact support if the problem persists.",
+    "tryAgain": "Try again",
+    "goHome": "Go to Home",
+    "technicalDetails": "Technical Details",
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist or has been moved."
+    },
+    "noToken": "No token found",
+    "noTokenDescription": "Please check your email for the invite link",
+    "noData": "No data",
+    "noDataDescription": "No data found",
+    "generalError": "Error",
+    "expiredInvite": "Expired",
+    "expiredInviteDescription": "The invite link has expired",
+    "incorrectUser": "Incorrect user",
+    "incorrectUserDescription": "The invite link is not for you",
+    "incorrectCompany": "Incorrect company",
+    "incorrectCompanyDescription": "The invite link is not for your company",
+    "tokenExpired": "Token expired",
+    "tokenExpiredDescription": "This reset link has expired",
+    "tokenUsed": "Token already used",
+    "tokenUsedDescription": "This reset link has already been used"
+  },
+  "metadata": {
+    "home": {
+      "title": "Home | OmniNode",
+      "description": "Home page for OmniNode user portal"
+    },
+    "login": {
+      "title": "Login | OmniNode",
+      "description": "Sign in to your OmniNode account"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password | OmniNode",
+      "description": "Reset your OmniNode account password"
+    },
+    "personalSettings": {
+      "title": "Personal Settings | OmniNode",
+      "description": "Manage your personal settings and preferences"
+    },
+    "userInvite": {
+      "title": "User Invitation | OmniNode",
+      "description": "Accept your user invitation to join OmniNode"
+    },
+    "companyInvite": {
+      "title": "Company Invitation | OmniNode",
+      "description": "Accept your company invitation to join OmniNode"
+    },
+    "resetPassword": {
+      "title": "Reset Password | OmniNode",
+      "description": "Reset your OmniNode account password"
+    }
+  }
+}

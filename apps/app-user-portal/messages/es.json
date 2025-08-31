@@ -1,0 +1,305 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "language": "Idioma",
+    "email": "Dirección de correo electrónico",
+    "password": "Contraseña",
+    "required": "requerido",
+    "active": "Activo",
+    "error": "Error",
+    "updating": "Actualizando...",
+    "noChanges": "No se realizaron cambios"
+  },
+  "components": {
+    "layout": {
+      "header": {
+        "managementConsole": "Consola de administración",
+        "servicePortal": "Portal de servicios"
+      },
+      "userIndicator": {
+        "personalSettings": "Configuración personal",
+        "logOut": "Cerrar sesión",
+        "loggingOut": "Cerrando sesión...",
+        "loggedOutSuccessfully": "Sesión cerrada exitosamente",
+        "failedToLogOut": "Error al cerrar sesión"
+      },
+      "companySwitcher": {
+        "failedToLoad": "Error al cargar",
+        "switchingCompany": "Cambiando empresa...",
+        "companySwitchedSuccessfully": "Empresa cambiada exitosamente",
+        "failedToSwitchCompany": "Error al cambiar empresa"
+      },
+      "mobileHeader": {
+        "toggleMenu": "Alternar menú"
+      }
+    },
+    "custom": {
+      "appLogo": {
+        "alt": "Logo Omninode"
+      }
+    },
+    "ui": {}
+  },
+
+  "features": {
+    "home": {
+      "pageContent": {},
+      "appSelector": {
+        "title": "Bienvenido a OmniNode",
+        "subtitle": "Elija la aplicación a la que desea acceder",
+        "helpText": "¿Necesita ayuda? Contacte a su administrador del sistema",
+        "managementConsole": {
+          "title": "Consola de administración",
+          "description": "Administre y gestione su organización",
+          "accessConsole": "Acceder a la consola",
+          "accessRestricted": "Acceso restringido",
+          "restrictedDescription": "Acceso restringido - contacte a su administrador",
+          "noPermissionTooltip": "No tiene permisos para acceder a la Consola de administración. Por favor, contacte a su administrador para solicitar acceso."
+        },
+        "servicePortal": {
+          "title": "Portal de servicios",
+          "description": "Acceda y administre sus servicios",
+          "accessPortal": "Acceder al portal"
+        },
+        "noAppsAvailable": "No hay aplicaciones disponibles"
+      }
+    },
+    "login": {
+      "pageContent": {},
+      "loginCard": {
+        "title": "Bienvenido de nuevo",
+        "subtitle": "Inicie sesión en su cuenta para continuar",
+        "signIn": "Iniciar sesión",
+        "signingIn": "Iniciando sesión...",
+        "rememberMe": "Recordarme",
+        "forgotPassword": "¿Olvidó su contraseña?",
+        "orContinueWith": "O continuar con",
+        "signInWithMicrosoft": "Iniciar sesión con Microsoft",
+        "microsoftNotAvailable": "Esta función aún no está disponible",
+        "microsoftLogoAlt": "Microsoft"
+      }
+    },
+    "forgotPassword": {
+      "pageContent": {},
+      "forgotPasswordCard": {
+        "title": "¿Olvidó su contraseña?",
+        "subtitle": "¡No se preocupe! Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña.",
+        "resetPassword": "Restablecer contraseña",
+        "resettingPassword": "Restableciendo contraseña...",
+        "backToLogin": "Volver al inicio de sesión"
+      }
+    },
+    "personalSettings": {
+      "pageContent": {
+        "title": "Configuración personal",
+        "subtitle": "Administre su información de perfil y preferencias de cuenta"
+      },
+      "profileCard": {
+        "fullName": "Nombre completo",
+        "position": "Cargo",
+        "memberSince": "Miembro desde",
+        "failedToLoadUserDetails": "Error al cargar los detalles del usuario. Por favor, inténtelo de nuevo más tarde."
+      },
+      "editProfilePopup": {
+        "editProfile": "Editar perfil",
+        "firstName": "Nombre",
+        "middleNames": "Nombres del medio",
+        "lastName": "Apellido",
+        "position": "Cargo",
+        "editProfileTitle": "Editar perfil",
+        "updateProfile": "Actualizar perfil",
+        "profileUpdatedSuccessfully": "Perfil actualizado exitosamente",
+        "failedToUpdateProfile": "Error al actualizar el perfil",
+        "enterFirstName": "Ingrese su nombre",
+        "enterMiddleNames": "Ingrese sus nombres del medio (opcional)",
+        "enterLastName": "Ingrese su apellido",
+        "enterPosition": "Ingrese su cargo",
+        "firstNameRequired": "El nombre es requerido",
+        "lastNameRequired": "El apellido es requerido",
+        "positionRequired": "El cargo es requerido"
+      },
+      "personalSettingsCard": {
+        "settings": "Configuración"
+      },
+      "themePersonalSettings": {
+        "updatingThemePreference": "Actualizando preferencia de tema...",
+        "themePreference": "Preferencia de tema",
+        "selectTheme": "Seleccione su tema preferido",
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Sistema",
+        "defaultTheme": "Tema predeterminado",
+        "beautifulDarkColors": "Hermosos colores oscuros",
+        "followSystemSettings": "Seguir configuración del sistema",
+        "themePreferenceUpdated": "Preferencia de tema actualizada exitosamente",
+        "failedToUpdateTheme": "Error al actualizar la preferencia de tema"
+      },
+      "localePersonalSettings": {
+        "locale": "Idioma",
+        "selectLanguage": "Seleccione su idioma preferido",
+        "updatingLanguage": "Actualizando preferencia de idioma...",
+        "languageUpdated": "Preferencia de idioma actualizada exitosamente",
+        "failedToUpdateLanguage": "Error al actualizar la preferencia de idioma"
+      }
+    },
+    "userInvite": {
+      "pageContent": {},
+      "userInviteStep1": {
+        "title": "Invitación de empresa",
+        "subtitle": "Ha sido invitado a unirse a una empresa",
+        "noInvitationFound": "No se encontró invitación",
+        "unableToLoadInvitation": "No se pudieron cargar los detalles de la invitación",
+        "invited": "Invitado",
+        "acceptInvitation": "Aceptar invitación",
+        "acceptingInvitation": "Aceptando invitación..."
+      },
+      "userInviteStep2": {
+        "next": "Siguiente",
+        "createPassword": "Crear contraseña",
+        "createPasswordSubtitle": "Configure una contraseña segura para su cuenta",
+        "confirmPassword": "Confirmar contraseña",
+        "passwordsDoNotMatch": "Las contraseñas no coinciden",
+        "creating": "Creando..."
+      },
+      "userInviteStep3": {
+        "continue": "Continuar",
+        "back": "Atrás",
+        "completeProfile": "Complete su perfil",
+        "completeProfileSubtitle": "Cuéntenos un poco sobre usted",
+        "firstName": "Nombre",
+        "enterFirstName": "Ingrese su nombre",
+        "middleNames": "Nombres del medio",
+        "enterMiddleNames": "Ingrese sus nombres del medio (opcional)",
+        "lastName": "Apellido",
+        "enterLastName": "Ingrese su apellido",
+        "position": "Cargo",
+        "enterJobTitle": "Ingrese su cargo",
+        "activateAccount": "Activar cuenta",
+        "activatingAccount": "Activando cuenta..."
+      }
+    },
+    "companyInvite": {
+      "pageContent": {},
+      "companyInviteCard": {
+        "title": "Invitación de empresa",
+        "subtitle": "Su empresa lo ha invitado a una colaboración",
+        "customer": "Cliente",
+        "serviceProvider": "Proveedor de servicios",
+        "partner": "Socio",
+        "wantsYouToBe": "quiere que usted sea su",
+        "acceptInvitation": "Aceptar invitación",
+        "accepting": "Aceptando..."
+      }
+    },
+    "resetPassword": {
+      "pageContent": {},
+      "resetPasswordCard": {
+        "title": "Restablecer contraseña",
+        "subtitle": "Ingrese su nueva contraseña a continuación",
+        "newPassword": "Nueva contraseña",
+        "enterNewPassword": "Ingrese su nueva contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "confirmNewPassword": "Confirme su nueva contraseña",
+        "resetPassword": "Restablecer contraseña",
+        "resetting": "Restableciendo...",
+        "backToLogin": "Volver al inicio de sesión"
+      }
+    }
+  },
+  "validation": {
+    "emailRequired": "El correo electrónico es requerido",
+    "emailInvalid": "Por favor ingrese una dirección de correo electrónico válida",
+    "passwordRequired": "La contraseña es requerida",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMaxLength": "La contraseña debe tener menos de 100 caracteres",
+    "passwordUppercase": "La contraseña debe contener al menos una letra mayúscula",
+    "passwordLowercase": "La contraseña debe contener al menos una letra minúscula",
+    "passwordNumber": "La contraseña debe contener al menos un número",
+    "passwordSpecialChar": "La contraseña debe contener al menos un carácter especial",
+    "confirmPasswordRequired": "Por favor confirme su contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "firstNameRequired": "El nombre es requerido",
+    "firstNameMinLength": "El nombre debe tener al menos 2 caracteres",
+    "firstNameMaxLength": "El nombre debe tener menos de 50 caracteres",
+    "lastNameRequired": "El apellido es requerido",
+    "lastNameMinLength": "El apellido debe tener al menos 2 caracteres",
+    "lastNameMaxLength": "El apellido debe tener menos de 50 caracteres",
+    "positionRequired": "El cargo es requerido",
+    "positionMinLength": "El cargo debe tener al menos 2 caracteres",
+    "positionMaxLength": "El cargo debe tener menos de 100 caracteres"
+  },
+  "notifications": {
+    "loginSuccess": "Sesión iniciada exitosamente",
+    "loginError": "Error al iniciar sesión",
+    "passwordResetSent": "Correo de restablecimiento de contraseña enviado",
+    "passwordResetSentDescription": "Por favor revise su correo electrónico incluyendo la carpeta de spam",
+    "passwordResetError": "Error al enviar correo de restablecimiento de contraseña",
+    "passwordResetSuccess": "Contraseña restablecida exitosamente",
+    "passwordResetFailed": "Error al restablecer la contraseña",
+    "inviteAccepted": "Invitación aceptada",
+    "inviteActivated": "Invitación activada",
+    "invitationAcceptedSuccessfully": "¡Invitación aceptada exitosamente!",
+    "failedToAcceptInvitation": "Error al aceptar la invitación"
+  },
+  "errors": {
+    "title": "¡Algo salió mal!",
+    "description": "Ocurrió un error inesperado. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.",
+    "tryAgain": "Intentar de nuevo",
+    "goHome": "Ir al inicio",
+    "technicalDetails": "Detalles técnicos",
+    "notFound": {
+      "title": "Página no encontrada",
+      "description": "La página que está buscando no existe o ha sido movida."
+    },
+    "noToken": "No se encontró token",
+    "noTokenDescription": "Por favor revise su correo electrónico para el enlace de invitación",
+    "noData": "Sin datos",
+    "noDataDescription": "No se encontraron datos",
+    "generalError": "Error",
+    "expiredInvite": "Expirado",
+    "expiredInviteDescription": "El enlace de invitación ha expirado",
+    "incorrectUser": "Usuario incorrecto",
+    "incorrectUserDescription": "El enlace de invitación no es para usted",
+    "incorrectCompany": "Empresa incorrecta",
+    "incorrectCompanyDescription": "El enlace de invitación no es para su empresa",
+    "tokenExpired": "Token expirado",
+    "tokenExpiredDescription": "Este enlace de restablecimiento ha expirado",
+    "tokenUsed": "Token ya usado",
+    "tokenUsedDescription": "Este enlace de restablecimiento ya ha sido usado"
+  },
+  "metadata": {
+    "home": {
+      "title": "Inicio | OmniNode",
+      "description": "Página de inicio del portal de usuario OmniNode"
+    },
+    "login": {
+      "title": "Iniciar sesión | OmniNode",
+      "description": "Inicie sesión en su cuenta OmniNode"
+    },
+    "forgotPassword": {
+      "title": "Olvidé mi contraseña | OmniNode",
+      "description": "Restablezca la contraseña de su cuenta OmniNode"
+    },
+    "personalSettings": {
+      "title": "Configuración personal | OmniNode",
+      "description": "Administre su configuración personal y preferencias"
+    },
+    "userInvite": {
+      "title": "Invitación de usuario | OmniNode",
+      "description": "Acepte su invitación de usuario para unirse a OmniNode"
+    },
+    "companyInvite": {
+      "title": "Invitación de empresa | OmniNode",
+      "description": "Acepte su invitación de empresa para unirse a OmniNode"
+    },
+    "resetPassword": {
+      "title": "Restablecer contraseña | OmniNode",
+      "description": "Restablezca la contraseña de su cuenta OmniNode"
+    }
+  }
+}

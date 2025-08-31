@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
   Skeleton,
-} from "frontend-common-kit";
+} from "@repo/pkg-frontend-common-kit/components";
 
 export default function CompanyDetailsLoading() {
   return (
