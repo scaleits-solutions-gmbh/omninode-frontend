@@ -27,6 +27,14 @@
       "types": "./dist/utils/*",
       "import": "./dist/utils/*"
     },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js"
+    },
+    "./hooks/*": {
+      "types": "./dist/hooks/*",
+      "import": "./dist/hooks/*"
+    },
     "./styles/*": "./dist/styles/*"
   },
   "files": [
