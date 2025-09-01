@@ -16,12 +16,27 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | OmniNode",
-    default: "OmniNode",
+    default: "OmniNode Management Console",
+    template: "%s | OmniNode Management Console",
   },
-  description:
-    "OmniNode is a platform for managing your organization's resources.",
+  description: "OmniNode Management Console",
+  icons: {
+    icon: [
+      {
+        url: "/user-portal/assets/favicons/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/user-portal/assets/favicons/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: [
+      { url: "/user-portal/assets/favicons/apple-touch-icon.png", sizes: "180x180" },
+    ],
+  },
 };
+
 
 export default async function RootLayout({
   children,

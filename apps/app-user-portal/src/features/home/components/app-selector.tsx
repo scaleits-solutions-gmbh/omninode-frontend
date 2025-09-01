@@ -16,6 +16,8 @@ import { Settings, Globe, ArrowRight, Lock } from "lucide-react";
 import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
 import { useManagementConsoleAccess } from "@/hooks/use-session";
 import { useTranslations } from "next-intl";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import { MANAGEMENT_CONSOLE_BASE_URL, SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 
 export default function AppSelector() {
   // All hooks must be called before any conditional logic
@@ -23,12 +25,8 @@ export default function AppSelector() {
   const tAppSelector = useTranslations("features.home.appSelector");
   //const tAppLogo = useTranslations("components.custom.appLogo");
 
-  const managementConsoleUrl = process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL;
-  const servicePortalUrl = process.env.NEXT_PUBLIC_SERVICE_PORTAL_URL;
-
-  if (!managementConsoleUrl || !servicePortalUrl) {
-    return <div>{tAppSelector("noAppsAvailable")}</div>;
-  }
+  const managementConsoleUrl = getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL;
+  const servicePortalUrl = getOriginUrl() + SERVICE_PORTAL_BASE_URL;
 
   const canAccessManagementConsole =
     managementConsoleAccess !== ManagementConsoleAccess.None;
