@@ -18,6 +18,7 @@ export default function HomePageClient() {
       outerLoop: for (const serviceGroup of data) {
         if (serviceGroup.serviceInstances.length > 0) {
           for (const serviceInstance of serviceGroup.serviceInstances) {
+            /*
             if (serviceInstance.service === Service.Weclapp) {
               console.log(serviceInstance);
               if (serviceInstance.canViewDashboard) {
@@ -43,7 +44,7 @@ export default function HomePageClient() {
                 router.push(`/service-instances/${serviceInstance.id}/tickets`);
                 break outerLoop;
               }
-            } else if (serviceInstance.service === Service.Acmp) {
+            } else */ if (serviceInstance.service === Service.Acmp) {
               if (serviceInstance.canViewClients) {
                 router.push(`/service-instances/${serviceInstance.id}/clients`);
                 break outerLoop;
@@ -65,7 +66,7 @@ export default function HomePageClient() {
       </div>
     );
   }
-  
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -78,8 +79,5 @@ export default function HomePageClient() {
     );
   }
 
-  return (
-    <div className="flex-1 flex items-center justify-center">
-    </div>
-  );
-} 
+  return <div className="flex-1 flex items-center justify-center"></div>;
+}

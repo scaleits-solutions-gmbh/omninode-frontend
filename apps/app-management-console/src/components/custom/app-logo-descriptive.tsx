@@ -3,7 +3,7 @@ import { AppLogo as AppLogoCommon } from "@repo/pkg-frontend-common-kit/componen
 export function AppLogoDescriptive() {
   return (
     <AppLogoCommon
-      customSize={64}
+      customSize={53}
       srcLight="/management-console/assets/logo-light.svg"
       srcDark="/management-console/assets/logo-dark.svg"
     />
