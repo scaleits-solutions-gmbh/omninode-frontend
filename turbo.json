@@ -11,7 +11,7 @@
         "NODE_AUTH_TOKEN",
 
         "__COMMENT__: Environment Configuration",
-        "STAGE",
+        "NEXT_PUBLIC_STAGE",
 
         "__COMMENT__: Omninode API Configuration",
         "OMNINODE_API_URL",
