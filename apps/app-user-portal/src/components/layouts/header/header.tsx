@@ -12,6 +12,7 @@ import UserIndicator from "./user-indicator";
 import {
   MANAGEMENT_CONSOLE_BASE_URL,
   SERVICE_PORTAL_BASE_URL,
+  USER_PORTAL_BASE_URL,
 } from "@repo/pkg-frontend-common-kit/constants";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 
@@ -28,7 +29,7 @@ export default function Header() {
       {/* Desktop Header */}
       <div className="hidden md:block p-4 bg-card border-b">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/">
+          <Link href={getOriginUrl()}>
             <AppLogo customSize={48} />
           </Link>
           <div className="flex items-center gap-6">
