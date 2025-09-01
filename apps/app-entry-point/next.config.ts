@@ -1,10 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = () => {
-  console.warn("nextConfig", process.env.STAGE);
   return {
     async rewrites() {
-      const stage = process.env.STAGE;
+      const stage = process.env.NEXT_PUBLIC_STAGE;
       if (!stage || stage === "local") {
         return [
           // User Portal → local domain

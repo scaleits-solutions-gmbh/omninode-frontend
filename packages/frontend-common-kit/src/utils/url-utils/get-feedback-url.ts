@@ -1,5 +1,5 @@
 export function getFeedbackUrl() {
-    const stage = process.env.STAGE;
+    const stage = process.env.NEXT_PUBLIC_STAGE;
     if(!stage || stage === "local") {
         return `http://localhost:3005`;
     }
