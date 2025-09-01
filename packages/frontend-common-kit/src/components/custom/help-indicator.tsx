@@ -16,8 +16,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui";
 import { HelpCircle, MessageSquare, CircleHelp, Headphones, Mail, Phone, Clock } from "lucide-react";
-import { toast } from "sonner";
 import { useState } from "react";
+import { getFeedbackUrl } from "@/utils/url-utils/get-feedback-url";
+import Link from "next/link";
 
 function FAQsPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const faqs = [
@@ -145,19 +146,13 @@ export function HelpIndicator() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
-          <DropdownMenuItem 
-            className="cursor-pointer" 
-            onClick={() => {
-              if (!process.env.NEXT_PUBLIC_FEEDBACK_URL) {
-                toast.error("Feedback URL is not set");
-                return;
-              }
-              window.open(process.env.NEXT_PUBLIC_FEEDBACK_URL, "_blank");
-            }}
-          >
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Give Feedback
-          </DropdownMenuItem>
+          <Link href={getFeedbackUrl()}>
+            <DropdownMenuItem className="cursor-pointer">
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Give Feedback
+            </DropdownMenuItem>
+          </Link>
+
           <DropdownMenuItem 
             className="cursor-pointer"
             onClick={() => setFaqsOpen(true)}
