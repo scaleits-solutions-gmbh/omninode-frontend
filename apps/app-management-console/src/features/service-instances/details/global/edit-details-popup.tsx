@@ -22,6 +22,8 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import { MANAGEMENT_CONSOLE_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 
 export default function EditPopup() {
   const { id } = useParams();
@@ -107,7 +109,7 @@ export default function EditPopup() {
             <Label>Service</Label>
             <div className="text-sm bg-muted/50 p-2 rounded-md flex gap-2 items-center">
               <Image
-                src={`/assets/${data?.service}.svg`}
+                src={`${getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL}/assets/${data?.service}.svg`}
                 alt={data?.service}
                 width={20}
                 height={20}
