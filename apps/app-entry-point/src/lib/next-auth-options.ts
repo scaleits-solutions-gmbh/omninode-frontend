@@ -4,6 +4,22 @@ import KeycloakProvider from "next-auth/providers/keycloak";
 import { JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";
 
+// Handle user sign-in: receive userId and log it
+async function HandleUserSignIn(token: string): Promise<void> {
+  console.log("Handling user sign-in", token);
+  const response = await fetch(`https://dev.api.omninode.one/handle-sign-in`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status !== 200) {
+    console.error("Failed to handle user sign-in", response.status);
+    throw new Error("Failed to handle user sign-in");
+  }
+}
+
 export const authOptions: AuthOptions = {
   providers: [
     // Configure the Keycloak provider
@@ -24,14 +40,26 @@ export const authOptions: AuthOptions = {
     }),
   ],
   events: {
-    async signIn({ user }) {
-      console.log("signIn", user);
-    },
     async signOut({ token }) {
       await logoutRequest(token.refresh_token);
     },
   },
   callbacks: {
+    async signIn({ account }) {
+      // Gate login based on handler success
+      try {
+        if (account?.access_token) {
+          await HandleUserSignIn(account.access_token);
+        }
+        else {
+          throw new Error("No access token found");
+        }
+        return true; // allow sign-in
+      } catch (error) {
+        console.error("Error in HandleUserSignIn, denying login:", error);
+        return false; // block sign-in on exception
+      }
+    },
     async jwt({
       token,
       account,
