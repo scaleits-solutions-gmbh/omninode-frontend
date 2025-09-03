@@ -1,6 +1,0 @@
-0000000000000000000000000000000000000000 04010a063a272391482836369dacd451fd4033d8 Salif Faustino <salif.faustino@scaleits-solutions.com> 1756925395 +0100	commit (initial): Initial commit from Create Next App
-04010a063a272391482836369dacd451fd4033d8 a43e73cdb0f165cf89437ce2ca42711a1ce77c79 Salif Faustino <salif.faustino@scaleits-solutions.com> 1756938569 +0100	commit: feat(home): first commit
-a43e73cdb0f165cf89437ce2ca42711a1ce77c79 a43e73cdb0f165cf89437ce2ca42711a1ce77c79 Salif Faustino <salif.faustino@scaleits-solutions.com> 1756939078 +0100	checkout: moving from main to landing-page
-a43e73cdb0f165cf89437ce2ca42711a1ce77c79 0000000000000000000000000000000000000000 Salif Faustino <salif.faustino@scaleits-solutions.com> 1756939283 +0100	Branch: renamed refs/heads/landing-page to refs/heads/landing-page
-a43e73cdb0f165cf89437ce2ca42711a1ce77c79 a43e73cdb0f165cf89437ce2ca42711a1ce77c79 Salif Faustino <salif.faustino@scaleits-solutions.com> 1756939283 +0100	Branch: renamed refs/heads/landing-page to refs/heads/landing-page
-a43e73cdb0f165cf89437ce2ca42711a1ce77c79 787d67b909f097dfcbf6439dc04004bb9774ef33 Salif Faustino <salif.faustino@scaleits-solutions.com> 1756943332 +0100	commit: feat(landing-page):first commit
