@@ -889,7 +889,7 @@ importers:
         specifier: ^5
         version: 5.9.2
 
-  apps/home:
+  apps/landing:
     dependencies:
       next:
         specifier: 15.5.2
