@@ -1,103 +1,167 @@
+"use client";
+import {
+  Button,
+  Input,
+  Card,
+  CardContent,
+  LayoutCenteredXY,
+  Textarea,
+  Label,
+} from "@repo/pkg-frontend-common-kit/components";
 import Image from "next/image";
-
+import { useState } from "react";
+import { cn, getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import Link from "next/link";
+import { Plus, Bug, MessageSquare } from "lucide-react";
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [selectedFeedbackType, setSelectedFeedbackType] = useState<
+    "featureRequest" | "bugReport" | "other"
+  >("featureRequest");
+  const [subject, setSubject] = useState("");
+  const [description, setDescription] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const isValid = subject.trim().length > 0 && description.trim().length > 0;
+
+  const handleKeySelect = (event: React.KeyboardEvent<HTMLDivElement>, type: "featureRequest" | "bugReport" | "other") => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setSelectedFeedbackType(type);
+    }
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isValid) return;
+    // TODO: wire up submit to backend when available
+  };
+  return (
+    <LayoutCenteredXY showHeader={false}>
+      <div className="flex flex-col gap-4 items-center w-full max-w-xl">
+        <div className="flex flex-col gap-3 items-center">
+          <Image
+            src="/assets/logo-light.svg"
+            alt="OmniNode"
+            height={100}
+            width={150}
+            className="dark:hidden"
+          />
+          <Image
+            src="/assets/logo-dark.svg"
+            alt="OmniNode"
+            height={100}
+            width={150}
+            className="hidden dark:block"
+          />
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">We value your feedback</h1>
+            <p className="text-muted-foreground text-sm">Tell us what to improve, fix, or consider next.</p>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <Card className="w-full">
+          <CardContent className="flex flex-col gap-5">
+            <form className="flex flex-col gap-5" onSubmit={onSubmit}>
+              <div className="flex flex-col gap-2">
+                <div id="type" className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <Card
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedFeedbackType === "featureRequest"}
+                    className={cn(
+                      "flex-1 cursor-pointer transition-all",
+                      selectedFeedbackType === "featureRequest"
+                        ? "ring-2 ring-green-400 border-green-400"
+                        : "hover:border-foreground/30"
+                    )}
+                    onClick={() => setSelectedFeedbackType("featureRequest")}
+                    onKeyDown={(e) => handleKeySelect(e, "featureRequest")}
+                  >
+                    <CardContent className="h-full py-3 flex flex-col gap-3 items-center justify-center">
+                      <Plus className="size-6 text-green-400" />
+                      <span className="text-sm font-medium">Feature Request</span>
+                    </CardContent>
+                  </Card>
+                  <Card
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedFeedbackType === "bugReport"}
+                    className={cn(
+                      "flex-1 cursor-pointer transition-all",
+                      selectedFeedbackType === "bugReport"
+                        ? "ring-2 ring-red-400 border-red-400"
+                        : "hover:border-foreground/30"
+                    )}
+                    onClick={() => setSelectedFeedbackType("bugReport")}
+                    onKeyDown={(e) => handleKeySelect(e, "bugReport")}
+                  >
+                    <CardContent className="h-full py-3 flex flex-col gap-3 items-center justify-center">
+                      <Bug className="size-6 text-red-400" />
+                      <span className="text-sm font-medium">Bug Report</span>
+                    </CardContent>
+                  </Card>
+                  <Card
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedFeedbackType === "other"}
+                    className={cn(
+                      "flex-1 cursor-pointer transition-all",
+                      selectedFeedbackType === "other"
+                        ? "ring-2 ring-blue-400 border-blue-400"
+                        : "hover:border-foreground/30"
+                    )}
+                    onClick={() => setSelectedFeedbackType("other")}
+                    onKeyDown={(e) => handleKeySelect(e, "other")}
+                  >
+                    <CardContent className="h-full py-3 flex flex-col gap-3 items-center justify-center">
+                      <MessageSquare className="size-6 text-blue-400" />
+                      <span className="text-sm font-medium">Other</span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="subject">Subject</Label>
+                <Input
+                  id="subject"
+                  placeholder="Brief summary"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  placeholder="Share details, steps to reproduce, or ideas..."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={6}
+                />
+                <div className="text-xs text-muted-foreground text-right">
+                  {description.length} characters
+                </div>
+              </div>
+
+              <div className="flex flex-col justify-end gap-3 items-center">
+                <Button className="w-full" type="submit" disabled={!isValid}>
+                  Submit
+                </Button>
+                <Link href={getOriginUrl()}>
+                  <Button
+                    className="p-0 h-fit text-sm text-foreground hover:text-primary"
+                    variant="link"
+                    type="button"
+                  >
+                    Back to Platform
+                  </Button>
+                </Link>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </LayoutCenteredXY>
   );
 }

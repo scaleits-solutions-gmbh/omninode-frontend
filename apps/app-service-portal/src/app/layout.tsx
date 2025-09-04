@@ -21,11 +21,11 @@ export const metadata: Metadata = {
   description: "OmniNode Service Portal",
   icons: {
     icon: [
-      { url: "/assets/favicons/favicon-light.svg", media: "(prefers-color-scheme: light)" },
-      { url: "/assets/favicons/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
+      { url: "/service-portal/assets/favicons/favicon-light.svg", media: "(prefers-color-scheme: light)" },
+      { url: "/service-portal/assets/favicons/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
     ],
     apple: [
-      { url: "/assets/favicons/apple-touch-icon.png", sizes: "180x180" },
+      { url: "/service-portal/assets/favicons/apple-touch-icon.png", sizes: "180x180" },
     ],
   },
 };

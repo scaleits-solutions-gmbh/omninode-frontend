@@ -22,16 +22,16 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/assets/favicons/favicon-light.svg",
+        url: "/management-console/assets/favicons/favicon-light.svg",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/assets/favicons/favicon-dark.svg",
+        url: "/management-console/assets/favicons/favicon-dark.svg",
         media: "(prefers-color-scheme: dark)",
       },
     ],
     apple: [
-      { url: "/assets/favicons/apple-touch-icon.png", sizes: "180x180" },
+      { url: "/management-console/assets/favicons/apple-touch-icon.png", sizes: "180x180" },
     ],
   },
 };

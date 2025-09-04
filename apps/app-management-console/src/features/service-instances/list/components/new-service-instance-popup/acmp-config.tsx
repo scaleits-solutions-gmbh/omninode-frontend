@@ -89,7 +89,7 @@ export default function AcmpConfig({ onBack, onFinish }: AcmpConfigProps) {
           <CardHeader className="flex flex-row items-center gap-4 pb-2">
             <div className="relative h-14 w-14 rounded-lg bg-background p-2 border">
               <Image
-                src="/assets/acmp.svg"
+                src="/management-console/assets/acmp.svg"
                 alt="ACMP"
                 fill
                 className="object-contain p-1"

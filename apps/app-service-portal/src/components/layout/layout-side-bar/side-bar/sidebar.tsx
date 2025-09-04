@@ -36,6 +36,8 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { SidebarSkeleton } from "./side-bar-skeleton";
 import { getServiceInstances } from "@/lib/api-client/service-instances";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import { SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   forceSidebarLoading?: boolean;
@@ -108,7 +110,7 @@ export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarPr
                         >
                           <div className="flex items-center gap-2">
                             <Image
-                              src={`/assets/services/${serviceInstance.service}.svg`}
+                              src={`${getOriginUrl()+ SERVICE_PORTAL_BASE_URL}/assets/services/${serviceInstance.service}.svg`}
                               alt={serviceInstance.label}
                               width={16}
                               height={16}
@@ -137,7 +139,6 @@ export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarPr
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            )*/}
                             {serviceInstance.canViewQuotations && (
                               <SidebarMenuSubItem key="quotations">
                                 <SidebarMenuSubButton

@@ -22,6 +22,8 @@ import { Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import { USER_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 
 export default function UserIndicator() {
   const router = useRouter();
@@ -83,7 +85,7 @@ export default function UserIndicator() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link
-            href={`${process.env.NEXT_PUBLIC_USER_PORTAL_URL}/personal-settings`}
+            href={`${getOriginUrl()+USER_PORTAL_BASE_URL}/personal-settings`}
           >
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />

@@ -51,11 +51,11 @@ export const columns: ColumnDef<FeServiceInstance>[] = [
       const ServiceIcon = (): string => {
         switch (row.getValue("service")) {
           case Service.Weclapp:
-            return "/assets/weclapp.svg";
+            return "/management-console/assets/weclapp.svg";
           case Service.Acmp:
-            return "/assets/acmp.svg";
+            return "/management-console/assets/acmp.svg";
           default:
-            return "/assets/service-placeholder.svg";
+            return "/management-console/assets/service-placeholder.svg";
         }
       };
       return (
