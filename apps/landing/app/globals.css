@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+  --background: #060609;
+  --foreground: #e6e6eb;
+  --muted: #a1a1aa;
+  --surface: #0f0f16;
+  --primary: #4340dd;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  scroll-behavior: smooth;
+}
+
+.container-xl {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Modern accents */
+.bg-grid {
+  background-image: radial-gradient(rgba(67, 64, 221, 0.2) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.heading-gradient {
+  background: linear-gradient(90deg, #ffffff, #b8b2ff 30%, var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow {
+  position: relative;
+}
+.glow::after {
+  content: "";
+  position: absolute;
+  inset: -40px -60px;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(67,64,221,0.15), rgba(67,64,221,0));
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms ease var(--reveal-delay, 0ms), transform 500ms ease var(--reveal-delay, 0ms);
+}
+
+/* Enhanced cards inspired by Neon */
+.neon-tile {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+.neon-pill {
+  background: transparent;
+  border: 1px solid rgba(67,64,221,0.45);
+}
+.neon-pill:hover { background: rgba(67,64,221,0.08); }
+
+.neon-button {
+  background: var(--primary);
+  border: 1px solid rgba(67,64,221,0.6);
+  box-shadow: 0 10px 24px rgba(67,64,221,0.15);
+}
+
+/* Compliance-style gradient cards */
+.gradient-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.gradient-card-strong {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.icon-badge {
+  background: rgba(67,64,221,0.1);
+  border: 1px solid rgba(67,64,221,0.35);
+}
