@@ -13,13 +13,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OmniNode - The Integration Platform",
-  description: "Connect and manage all your systems with ease.",
-  icons: {
-    icon: "/favicon.ico",
+  title: {
+    default: "OmniNode Platform",
+    template: "%s | OmniNode Platform",
   },
-  openGraph: {
-    images: "/og-image.png",
+  description: "OmniNode Platform",
+  icons: {
+    icon: [
+      {
+        url: "/assets/favicons/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/assets/favicons/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: [{ url: "/assets/favicons/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
 
