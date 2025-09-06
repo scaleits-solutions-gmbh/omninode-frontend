@@ -1,0 +1,401 @@
+/* Omninode Keycloak login theme overrides */
+
+/* ------------------- */
+/* Variables & Globals */
+/* ------------------- */
+:root {
+  --pf-global--primary-color--100: #4340dd;
+  --pf-global--primary-color--200: #3936c6;
+  --pf-global--active-color--100: #4340dd;
+  --pf-global--link--Color: #4340dd;
+  --pf-global--link--Color--hover: #3936c6;
+}
+
+html, body {
+  background-color: #0a0a0a;
+  line-height: 1.15;
+}
+
+/* --------------- */
+/* Layout & Page   */
+/* --------------- */
+
+/* Centering container */
+#kc-container-wrapper {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #171717;
+  padding: 24px;
+}
+
+/* Login page layout */
+.pf-c-login, .login-pf-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #0a0a0a;
+  padding: 24px;
+  gap: 16px;
+  
+}
+
+#kc-container, #kc-content, #kc-content-wrapper {
+  width: 100%;
+  justify-content: center;
+
+}
+
+#kc-content-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.login-pf-page .login-pf-page-header {
+    margin-bottom: 0px;
+}
+
+/* --------------- */
+/* Card & Forms    */
+/* --------------- */
+
+/* Login card */
+#kc-form, #kc-form-wrapper, .pf-c-card, .login-pf-page .card-pf {
+  background-color: #171717;
+  border-radius: 12px;
+  box-shadow: none;
+  max-width: 400px;
+  width: 100%;
+  color: #e5e7eb;
+  gap: 8px;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* Hide small logo inside card */
+.pf-c-card:first-of-type::before,
+.login-pf-page .card-pf:first-of-type::before {
+  display: none;
+}
+
+/* Form title */
+#kc-page-title, .kc-page-title {
+   margin: 5px;
+   font-size: 0; /* hides original text */
+   text-align: center;
+   color: #e5e7eb;
+ }
+ 
+body[data-page-id="login-register"] #kc-page-title,
+body[data-page-id="login-register"] .kc-page-title {
+  margin-left: 60px;
+}
+
+#kc-page-title::after, .kc-page-title::after {
+   content: "Welcome Back";
+   display: inline-block;
+   font-size: 20px;
+   font-weight: bold;
+   color: white;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+.pf-c-form-control {
+  border-radius: 8px;
+  border: 1px solid #282828;
+  background: #343434;
+  color: #e5e7eb;
+  height: 35px;
+}
+
+input::placeholder, .pf-c-form-control::placeholder {
+  color: #9ca3af;
+}
+
+/* Input group for password */
+.pf-c-input-group {
+  --pf-c-input-group--BackgroundColor: #343434;
+  --pf-c-input-group__item--BackgroundColor: #343434;
+  --pf-c-input-group__item--BorderColor: #282828;
+  background-color: #171717;
+}
+
+#kc-form .pf-c-input-group .pf-c-form-control {
+  margin-left: 0;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+/* Remember me & Forgot password */
+#kc-form-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+#kc-form-options .checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+  margin-top: 0.4px;
+}
+
+.checkbox label, .radio label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e5e7eb;
+  font-family: var(--pf-global--FontFamily--sans-serif);
+}
+
+/* --------------- */
+/* Header          */
+/* --------------- */
+
+#kc-header {
+  display: flex;
+  justify-content: center;
+}
+
+#kc-header-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-indent: -9999px; /* hide any default header text */
+}
+
+#kc-header-wrapper::before {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url('../img/logo.svg') no-repeat center/contain;
+  text-indent: 0;
+}
+
+#kc-header-wrapper::after {
+  content: "OMNINODE";
+  display: inline-block;
+  text-indent: 0;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #e5e7eb;
+  font-size: 16px;
+}
+
+.login-pf-page .login-pf-header {
+  font-size: 10px;
+  font-weight: 400;
+  color: #9ca3af;
+  font-family: var(--pf-global--FontFamily--sans-serif);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.login-pf-page .login-pf-header::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 8px;
+  border-radius: 8px;
+  background: #1f2937 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23e5e7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>') no-repeat center/24px 24px;
+}
+
+.login-pf-page .login-pf-header::after {
+  content: "Sign in to your account to continue";
+  display: block;
+  margin-top: 4px;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.42857;
+}
+
+/* --------------- */
+/* Buttons         */
+/* --------------- */
+
+.pf-c-button.pf-m-primary {
+  background-color: var(--pf-global--primary-color--100);
+  border-color: var(--pf-global--primary-color--100);
+}
+
+.pf-c-button.pf-m-primary:hover,
+.pf-c-button.pf-m-primary:focus {
+  background-color: var(--pf-global--primary-color--200);
+  border-color: var(--pf-global--primary-color--200);
+}
+
+.pf-c-button.pf-m-primary.pf-m-block.btn-lg {
+    height: 30px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #e5e7eb;
+    font-family: var(--pf-global--FontFamily--sans-serif);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.pf-c-button.pf-m-block {
+    display:flex;
+}
+
+.pf-c-button.pf-m-control {
+  background-color: #343434;
+  border-color: #282828;
+  color: #e5e7eb;
+}
+
+.pf-c-button:after {
+  border: 1px solid #282828;
+}
+
+.pf-c-button.pf-m-control:after {
+ border-radius: 8px;
+}
+
+#kc-form .pf-c-input-group .pf-c-button.pf-m-control {
+  background-color: #343434;
+  color: #e5e7eb;
+  border-radius: 12px;
+}
+
+/* --------------- */
+/* Links           */
+/* --------------- */
+
+a, a:visited {
+  color: white;
+}
+
+a:hover, a:focus {
+  color: var(--pf-global--link--Color--hover);
+}
+
+#kc-registration a {
+  color: var(--pf-global--primary-color--100);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#kc-registration a:hover {
+  color: var(--pf-global--primary-color--200);
+}
+
+#kc-form-options a:hover {
+  color: #cbd5e1;
+}
+
+.login-pf-page .login-pf-signup {
+    margin: 16px 0 0;
+    font-size: 13px;
+    text-align: center;
+}
+
+
+/* --------------- */
+/* Social          */
+/* --------------- */
+
+.kc-social-links, .login-pf-social-section {
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+#kc-social-providers hr {
+  display: none;
+}
+
+#kc-social-providers h2 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+}
+
+#kc-social-providers h2::before,
+#kc-social-providers h2::after {
+  content: "";
+  display: inline-block;
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+  vertical-align: middle;
+  margin: 0 12px;
+}
+
+.kc-social-links { 
+  list-style: none; 
+  padding: 0; 
+  margin: 12px 0 0; 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: 12px; 
+}
+
+.kc-social-links li {
+  list-style: none;
+}
+
+.kc-social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 35px;
+  border-radius: 4px;
+  background: #343434;
+  border: 1px solid #282828;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 12px;
+  font-family: var(--pf-global--FontFamily--sans-serif);
+}
+
+.kc-social-links a:hover {
+  border-color: #282828;
+}
+
+/* --------------- */
+/* Miscellaneous   */
+/* --------------- */
+
+#kc-locale {
+  color: #a3a3a3;
+}
+
+.login-pf-page .login-pf-settings {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#kc-page-title .kc-page-title  {
+    margin: 0 auto !important;
+}
+
