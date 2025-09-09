@@ -1,22 +1,26 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { FeClient } from "@/types/acmp/client";
-import { Monitor, Eye } from "lucide-react";
+import { AcmpClientListItem } from "@repo/lib-api-client";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
+import { ColumnDef } from "@tanstack/react-table";
+import { Eye, Monitor } from "lucide-react";
 
-export const createColumns = (): ColumnDef<FeClient>[] => {
+export interface ColumnProps {
+  onViewDetails: (client: AcmpClientListItem) => void;
+}
+
+export const createColumns = (props: ColumnProps): ColumnDef<AcmpClientListItem>[] => {
   return [
     {
       size: 30,
       minSize: 100,
       header: "Computer Name",
-      accessorKey: "computerName",
+      accessorKey: "name",
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-2">
             <div className="size-8 bg-muted rounded-md flex items-center justify-center">
               <Monitor className="size-4" />
             </div>
-            <div>{row.original.computerName}</div>
+            <div>{row.original.name}</div>
           </div>
         );
       },
@@ -25,13 +29,19 @@ export const createColumns = (): ColumnDef<FeClient>[] => {
       size: 35,
       minSize: 100,
       header: "Tenant",
-      accessorKey: "name",
+      accessorKey: "tenantName",
+      cell: ({ row }) => {
+        return <div>{row.original.tenantName}</div>;
+      },
     },
     {
       size: 30,
       minSize: 100,
       header: "Last Update",
       accessorKey: "lastUpdate",
+      cell: ({ row }) => {
+        return <div>{row.original.lastUpdate ? new Date(row.original.lastUpdate).toLocaleString() : "Never"}</div>;
+      },
     },
     {
       size: 5,
@@ -44,9 +54,7 @@ export const createColumns = (): ColumnDef<FeClient>[] => {
               variant="secondary"
               size="icon"
               className="cursor-pointer"
-              onClick={() => {
-                /*() => onViewDetails(row.original)*/
-              }}
+              onClick={() => props.onViewDetails(row.original)}
             >
               <Eye />
             </Button>

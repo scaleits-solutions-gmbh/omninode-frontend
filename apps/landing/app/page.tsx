@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { FeaturesDiagram } from "@/components/FeaturesDiagram";
-import { Overview, Vision, Pillars } from "@/components/ContentSections";
+import { Pillars } from "@/components/ContentSections";
 import { CallToAction } from "@/components/CallToAction";
 import { IntegrationsCarousel } from "@/components/IntegrationsCarousel";
 import { Evolution } from "@/components/Evolution";

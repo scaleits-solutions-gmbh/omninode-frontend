@@ -4,8 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function baseMiddleware(request: NextRequest,baseUrl: string, publicRoutes: string[] = [] ) {
   const { pathname } = request.nextUrl;
+  const apiPrefix = `${baseUrl}/api`;
+  const authApiPrefix = `${baseUrl}/api/auth`;
   // For non-public API requests, return 401 instead of redirect
-  if (pathname.startsWith("/api") && !pathname.startsWith("/api/auth")) {
+  if (pathname.startsWith(apiPrefix) && !pathname.startsWith(authApiPrefix)) {
     const token = await getToken({
       req: request,
       secret: process.env.NEXTAUTH_SECRET,

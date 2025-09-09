@@ -15,9 +15,10 @@ import {
   DataTableViewOptions,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-
-import { fetchAcmpClients } from "@/lib/api-client/acmp/client";
-import { useQuery } from "@tanstack/react-query";
+import {
+  useAuthedQuery,
+  useValidSession,
+} from "@repo/pkg-frontend-common-kit/hooks";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -28,21 +29,28 @@ import { createColumns } from "./columns";
 
 import { useState } from "react";
 
-//import { ClientDetailsPopup } from "../detailsPopup/ClientDetailsPopup";
+import { ClientDetailsPopup } from "../details-popup/client-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
+import { ApiClient, AcmpClientListItem } from "@repo/lib-api-client";
 
 export const ClientList = () => {
   const { viewId } = useParams();
-  //const [client, setClient] = useState<FeClient | undefined>(undefined);
+  const [client, setClient] = useState<AcmpClientListItem | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
 
-  const { data: clients, isLoading, error } = useQuery({
+  const {
+    data: clients,
+    isLoading: isQueryLoading,
+    isFetching: isQueryFetching,
+    error,
+  } = useAuthedQuery({
     queryKey: [
       "clients",
       viewId,
@@ -50,17 +58,24 @@ export const ClientList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchAcmpClients(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpClients(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
   });
 
+  const isLoading = isSessionLoading || isQueryLoading;
+  const isFetchingPage = isQueryFetching;
+
   const table = useReactTable({
-    data: clients?.items || [],
-    columns: createColumns(),
+    data: clients?.data || [],
+    columns: createColumns({
+      onViewDetails: (selected) => setClient(selected),
+    }),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -80,10 +95,10 @@ export const ClientList = () => {
 
   return (
     <>
-      {/* <ClientDetailsPopup
+      <ClientDetailsPopup
         client={client}
         onClose={() => setClient(undefined)}
-      /> */}
+      />
       <Card>
         <CardHeader className="flex justify-between">
           <SearchInput
@@ -94,7 +109,7 @@ export const ClientList = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="border rounded-md">
-            {isLoading ? (
+            {isFetchingPage || isLoading ? (
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -107,12 +122,12 @@ export const ClientList = () => {
                           {header.isPlaceholder
                             ? null
                             : typeof header.column.columnDef.header === "string"
-                            ? header.column.columnDef.header
-                            : header.column.columnDef.header?.({
-                                column: header.column,
-                                header,
-                                table,
-                              })}
+                              ? header.column.columnDef.header
+                              : header.column.columnDef.header?.({
+                                  column: header.column,
+                                  header,
+                                  table,
+                                })}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -160,12 +175,12 @@ export const ClientList = () => {
                           {header.isPlaceholder
                             ? null
                             : typeof header.column.columnDef.header === "string"
-                            ? header.column.columnDef.header
-                            : header.column.columnDef.header?.({
-                                column: header.column,
-                                header,
-                                table,
-                              })}
+                              ? header.column.columnDef.header
+                              : header.column.columnDef.header?.({
+                                  column: header.column,
+                                  header,
+                                  table,
+                                })}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -211,7 +226,13 @@ export const ClientList = () => {
               </Table>
             )}
           </div>
-          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false}/>
+          <DataTablePagination
+            table={table}
+            isLoading={isLoading}
+            showPageCount={false}
+            showRowsPerPage={false}
+            totalRowsOverride={clients?.total}
+          />
         </CardContent>
       </Card>
     </>

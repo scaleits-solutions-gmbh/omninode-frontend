@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 import { Button, Card, CardContent } from "@repo/pkg-frontend-common-kit/components";
 import { AlertCircle } from 'lucide-react';
 import LayoutCenteredXY from '@/components/layouts/layout-centered-xy/layout-centered-xy';
@@ -12,8 +11,6 @@ interface ErrorProps {
 }
 
 export default function Error({ error, reset }: ErrorProps) {
-  const t = useTranslations('errors');
-
   useEffect(() => {
     // Log the error to an error reporting service
     console.error('Application error:', error);
@@ -30,10 +27,10 @@ export default function Error({ error, reset }: ErrorProps) {
 
             <div className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">
-                {t('title')}
+                Something went wrong
               </h2>
               <p className="text-sm text-muted-foreground">
-                {t('description')}
+                An unexpected error occurred. Please try again.
               </p>
             </div>
 
@@ -42,7 +39,7 @@ export default function Error({ error, reset }: ErrorProps) {
                 onClick={reset}
                 className="w-full sm:w-auto"
               >
-                {t('tryAgain')}
+                Try again
               </Button>
               
               <Button
@@ -50,14 +47,14 @@ export default function Error({ error, reset }: ErrorProps) {
                 variant="outline"
                 className="w-full sm:w-auto"
               >
-                {t('goHome')}
+                Go home
               </Button>
             </div>
             
             {process.env.NODE_ENV === 'development' && (
               <details className="w-full text-left">
                 <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
-                  {t('technicalDetails')}
+                  Technical details
                 </summary>
                 <pre className="mt-2 text-xs text-muted-foreground bg-muted p-3 rounded-md overflow-auto">
                   {error.message}

@@ -17,8 +17,6 @@ export default function UsersPage() {
           },
         ],
       }}
-      forceSidebarLoading={true}
-      forceTopbarLoading={true}
     >
       <HomePageClient />
     </SideBarLayout>

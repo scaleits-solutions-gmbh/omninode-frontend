@@ -1,6 +1,4 @@
 "use client";
-import { fetchAcmpJobs } from "@/lib/api-client/acmp/job";
-import { useQuery } from "@tanstack/react-query";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -21,23 +19,25 @@ import {
   CardHeader,
   CardContent,
   Skeleton,
-  DataTablePagination
+  DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
+import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
 import { useState } from "react";
-//import { JobDetailsPopup } from "../detailsPopup/JobDetailsPopup";
+import { JobDetailsPopup } from "../details-popup/job-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-
+import { ApiClient, AcmpJobListItem } from "@repo/lib-api-client";
 export const JobList = () => {
   const { viewId } = useParams();
-  //const [job, setJob] = useState<FeJob | undefined>(undefined);
+  const [job, setJob] = useState<AcmpJobListItem | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
 
-  const { data: jobs, isLoading, error } = useQuery({
+  const { data: jobs, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
       "jobs",
       viewId,
@@ -45,17 +45,23 @@ export const JobList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchAcmpJobs(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpJobs(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
+
   });
 
+  const isLoading = isSessionLoading || isQueryLoading;
+  const isFetchingPage = isQueryFetching;
+
   const table = useReactTable({
-    data: jobs?.items || [],
-    columns: createColumns(),
+    data: jobs?.data || [],
+    columns: createColumns({ onViewDetails: (selected) => setJob(selected) }),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -75,10 +81,10 @@ export const JobList = () => {
 
   return (
     <>
-      {/* <JobDetailsPopup
+      <JobDetailsPopup
         job={job}
         onClose={() => setJob(undefined)}
-      /> */}
+      />
       <Card>
         <CardHeader className="flex justify-between">
           <SearchInput
@@ -89,7 +95,7 @@ export const JobList = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="border rounded-md">
-            {isLoading ? (
+            {isFetchingPage || isLoading ? (
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -102,12 +108,12 @@ export const JobList = () => {
                           {header.isPlaceholder
                             ? null
                             : typeof header.column.columnDef.header === "string"
-                            ? header.column.columnDef.header
-                            : header.column.columnDef.header?.({
-                                column: header.column,
-                                header,
-                                table,
-                              })}
+                              ? header.column.columnDef.header
+                              : header.column.columnDef.header?.({
+                                  column: header.column,
+                                  header,
+                                  table,
+                                })}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -155,12 +161,12 @@ export const JobList = () => {
                           {header.isPlaceholder
                             ? null
                             : typeof header.column.columnDef.header === "string"
-                            ? header.column.columnDef.header
-                            : header.column.columnDef.header?.({
-                                column: header.column,
-                                header,
-                                table,
-                              })}
+                              ? header.column.columnDef.header
+                              : header.column.columnDef.header?.({
+                                  column: header.column,
+                                  header,
+                                  table,
+                                })}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -206,7 +212,13 @@ export const JobList = () => {
               </Table>
             )}
           </div>
-          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false}/>
+          <DataTablePagination
+            table={table}
+            isLoading={isLoading}
+            showPageCount={false}
+            showRowsPerPage={false}
+            totalRowsOverride={jobs?.total}
+          />
         </CardContent>
       </Card>
     </>

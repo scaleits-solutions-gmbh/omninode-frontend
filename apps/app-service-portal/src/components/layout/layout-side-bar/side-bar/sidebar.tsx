@@ -38,12 +38,9 @@ import { SidebarSkeleton } from "./side-bar-skeleton";
 import { getServiceInstances } from "@/lib/api-client/service-instances";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
 
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  forceSidebarLoading?: boolean;
-}
-
-export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarProps) {
+export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({});
 
@@ -54,12 +51,10 @@ export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarPr
     }));
   };
 
-  const {data, isLoading, error} = useQuery({
-    queryKey: ["sideMenu"],
-    queryFn: getServiceInstances,
-  });
-  
-  if (isLoading || forceSidebarLoading) {
+
+const {selectedCompany, isLoading, error} = useGetCurrentCompany();
+
+  if (isLoading) {
     return <SidebarSkeleton />;
   }
   if (error) {
@@ -78,44 +73,43 @@ export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarPr
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {data?.map((company) => (
-          <SidebarGroup key={company.companyId}>
-            <SidebarGroupLabel className="flex items-center gap-2 p-0">
+        {selectedCompany?.serviceInstanceHosts.map((company) => (
+          <SidebarGroup key={company.hostCompanyId}>
+            <SidebarGroupLabel className="flex items-center gap-2 p-0 pb-1 text-sm">
               <Avatar className="rounded-md w-6 h-6">
-                <AvatarImage src={company.imageUrl} />
-                <AvatarFallback seed={company.companyId}>
-                  {company.company.charAt(0)}
+                <AvatarImage src={""} />
+                <AvatarFallback seed={company.hostCompanyId}>
+                  {company.hostCompanyName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              {company.company}
+              {company.hostCompanyName}
             </SidebarGroupLabel>
-            <SidebarGroupContent>
+            <SidebarGroupContent className="pl-1">
               <SidebarMenu>
-                {company.serviceInstances.map((serviceInstance) => (
+                {company.instances.map((serviceInstance) => (
                   <Collapsible
-                    key={serviceInstance.id}
-                    open={openItems[serviceInstance.id]}
-                    onOpenChange={() => toggleItem(serviceInstance.id)}
+                    key={serviceInstance.serviceInstanceId}
+                    open={openItems[serviceInstance.serviceInstanceId]}
+                    onOpenChange={() => toggleItem(serviceInstance.serviceInstanceId)}
                     className="group/collapsible"
-                    defaultOpen={pathname.startsWith(
-                      `/service-instances/${serviceInstance.id}`
-                    )}
+                    //can you make it so * is a wildcard for any service
+                    defaultOpen={new RegExp(`^/service-instances/[^/]+/${serviceInstance.serviceInstanceId}(?:/|$)`).test(pathname)}
                   >
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
                           isActive={pathname.startsWith(
-                            `/service-instances/${serviceInstance.id}`
+                            `/service-instances/${serviceInstance.serviceInstanceId}`
                           )}
                         >
                           <div className="flex items-center gap-2">
                             <Image
                               src={`${getOriginUrl()+ SERVICE_PORTAL_BASE_URL}/assets/services/${serviceInstance.service}.svg`}
-                              alt={serviceInstance.label}
+                              alt={serviceInstance.name}
                               width={16}
                               height={16}
                             />
-                            <span>{serviceInstance.label}</span>
+                            <span>{serviceInstance.name}</span>
                           </div>
                           <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
                           <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
@@ -124,70 +118,71 @@ export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarPr
                       {serviceInstance.service === Service.Weclapp ? (
                         <CollapsibleContent>
                           <SidebarMenuSub>
-                            {/*serviceInstance.canViewDashboard && (
+                            {serviceInstance.permissions.canViewDashboard && (
                               <SidebarMenuSubItem key="dashboard">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/dashboard`
+                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/dashboard`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/dashboard`}
+                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/dashboard`}
                                   >
                                     Dashboard
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            {serviceInstance.canViewQuotations && (
+                            )}
+                            {serviceInstance.permissions.canViewQuotes && (
                               <SidebarMenuSubItem key="quotations">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/quotations`
+                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/quotations`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/quotations`}
+                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/quotations`}
                                   >
                                     Quotations
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.canViewSalesOrders && (
+                            {serviceInstance.permissions.canViewSalesOrders && (
                               <SidebarMenuSubItem key="sales-orders">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/sales-orders`
+                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-orders`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/sales-orders`}
+                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-orders`}
                                   >
                                     Sales Orders
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.canViewSalesInvoices && (
+                            {serviceInstance.permissions.canViewInvoices && (
                               <SidebarMenuSubItem key="sales-invoices">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/sales-invoices`
+                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-invoices`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/sales-invoices`}
+                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-invoices`}
                                   >
                                     Sales Invoices
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            )}
-                            {serviceInstance.canViewContracts && (
+                            )}{/*
+                            {serviceInstance.permissions.canVicaewContracts && (
                               <SidebarMenuSubItem key="contracts">
                                 <SidebarMenuSubButton
                                   asChild
@@ -202,88 +197,120 @@ export function AppSidebar({forceSidebarLoading = false, ...props}: AppSidebarPr
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            )}
-                            {serviceInstance.canViewProjects && (
+                            )}*/}
+                            {serviceInstance.permissions.canViewProjects && (
                               <SidebarMenuSubItem key="projects">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/projects`
+                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/projects`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/projects`}
+                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/projects`}
                                   >
                                     Projects
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {/*serviceInstance.canViewTickets && (
+                            {serviceInstance.permissions.canViewTickets && (
                               <SidebarMenuSubItem key="tickets">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/tickets`
+                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/tickets`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/tickets`}
+                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/tickets`}
                                   >
                                     Tickets
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            )*/}
+                            )}
                           </SidebarMenuSub>
                         </CollapsibleContent>
                       ) : serviceInstance.service === Service.Acmp ? (
                         <CollapsibleContent>
                           <SidebarMenuSub>
-                            {/*serviceInstance.canViewDashboard && (
+                            {serviceInstance.permissions.canViewDashboard && (
                               <SidebarMenuSubItem key="dashboard">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/dashboard`
+                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/dashboard`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/dashboard`}
+                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/dashboard`}
                                   >
                                     Dashboard
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            )*/}
-                            {serviceInstance.canViewJobs && (
+                            )}
+                            {serviceInstance.permissions.canViewJobs && (
                               <SidebarMenuSubItem key="jobs">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/jobs`
+                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/jobs`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/jobs`}
+                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/jobs`}
                                   >
                                     Jobs
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.canViewClients && (
+                            {serviceInstance.permissions.canViewDevices && (
                               <SidebarMenuSubItem key="clients">
                                 <SidebarMenuSubButton
                                   asChild
                                   isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/clients`
+                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/clients`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/${serviceInstance.id}/clients`}
+                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/clients`}
                                   >
                                     Clients
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            )}
+                            {/*serviceInstance.permissions.canviewTickets*/ true && (
+                              <SidebarMenuSubItem key="tickets">
+                                <SidebarMenuSubButton
+                                  asChild
+                                  isActive={pathname.startsWith(
+                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/tickets`
+                                  )}
+                                >
+                                  <Link
+                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/tickets`}
+                                  >
+                                    Tickets
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            )}
+                            {/*serviceInstance.permissions.canViewAssets*/ true && (
+                              <SidebarMenuSubItem key="assets">
+                                <SidebarMenuSubButton
+                                  asChild
+                                  isActive={pathname.startsWith(
+                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/assets`
+                                  )}
+                                >
+                                  <Link
+                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/assets`}
+                                  >
+                                    Assets
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
