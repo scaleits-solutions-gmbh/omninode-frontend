@@ -8,7 +8,7 @@ import {
 import { GetUserCompaniesResponseDto } from "./types/user-companies";
 
 export class ApiClient {
-  private static readonly baseUrl: string = process.env.NEXT_PUBLIC_API_URL!;
+  private static readonly baseUrl: string = process.env.NEXT_PUBLIC_API_URL || "Not configured";
 
   public static async handleUserSignIn(accessToken: string): Promise<void> {
     return await handleUserSignIn(this.baseUrl, accessToken);
