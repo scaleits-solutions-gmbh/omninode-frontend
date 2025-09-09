@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next"; 
 import LayoutCenteredXY from "@/components/layouts/layout-centered-xy/layout-centered-xy";
 import PageContent from "@/features/home/page-content";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/next-auth-options";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("metadata.home");
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title: "Home",
+    description: "Home",
   };
 }
 

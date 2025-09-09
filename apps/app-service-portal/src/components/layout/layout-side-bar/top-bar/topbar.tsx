@@ -12,6 +12,7 @@ import {
   SidebarTrigger,
   HelpIndicator
 } from "@repo/pkg-frontend-common-kit/components";
+import ManagementConsoleLink from "./management-console-link";
 
 interface TopBarProps extends AutoBreadCrumbsProps {
   forceTopbarLoading?: boolean;
@@ -38,14 +39,7 @@ export default async function TopBar({
       </div>
 
       <div className="flex items-center gap-8">
-        {ManagementConsoleAccess.Owner === ManagementConsoleAccess.Owner ? (
-          <Link href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}>Management Console</Link>
-        ):(
-          <div className="flex items-center gap-2">
-            <Lock className="size-4 text-muted-foreground" />
-            <span className="text-muted-foreground">Management Console</span>
-          </div>
-        )}
+        <ManagementConsoleLink />
         <HelpIndicator />
         <div className="hidden">
           <GlobalSearch />

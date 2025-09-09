@@ -1,10 +1,16 @@
 import { logoutRequest, refreshTokenRequest } from "@/lib/oidc";
+import { ApiClient } from "@repo/lib-api-client";
 import type { Account, AuthOptions, User } from "next-auth";
-import KeycloakProvider from "next-auth/providers/keycloak";
 import { JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";
+import KeycloakProvider from "next-auth/providers/keycloak";
 
 export const authOptions: AuthOptions = {
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/authflows/signin",
+  },
   providers: [
     // Configure the Keycloak provider
     KeycloakProvider({
@@ -13,7 +19,7 @@ export const authOptions: AuthOptions = {
       issuer: process.env.OIDC_ISSUER,
       authorization: {
         params: {
-          scope: "openid organization:*",
+          scope: "openid",
         },
       },
       // Modify the user profile
@@ -23,15 +29,19 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  events: {
-    async signIn({ user }) {
-      console.log("signIn", user);
-    },
-    async signOut({ token }) {
-      await logoutRequest(token.refresh_token);
-    },
-  },
   callbacks: {
+    async signIn({ account }) {
+      try {
+        if (account?.access_token) {
+          await ApiClient.handleUserSignIn(account.access_token);
+          return true;
+        }
+        return false;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
     async jwt({
       token,
       account,
@@ -81,6 +91,11 @@ export const authOptions: AuthOptions = {
       session.error = token.error;
       session.access_token = token.access_token;
       return session;
+    },
+  },
+  events: {
+    async signOut({ token }) {
+      await logoutRequest(token.refresh_token);
     },
   },
 };

@@ -10,20 +10,16 @@ import {
 type SideBarLayoutProps = {
   children: React.ReactNode;
   autoBreadCrumbs: AutoBreadCrumbsProps;
-  forceSidebarLoading?: boolean;
-  forceTopbarLoading?: boolean;
 };
 export default function SideBarLayout({
   children,
   autoBreadCrumbs,
-  forceSidebarLoading,
-  forceTopbarLoading,
 }: SideBarLayoutProps) {
   return (
     <SidebarProvider>
-      <AppSidebar forceSidebarLoading={forceSidebarLoading} />
+      <AppSidebar />
       <SidebarInset>
-        <TopBar {...autoBreadCrumbs} forceTopbarLoading={forceTopbarLoading} />
+        <TopBar {...autoBreadCrumbs} />
         <div className="container mx-auto flex flex-1 flex-col gap-6 p-6">
           {children}
         </div>
