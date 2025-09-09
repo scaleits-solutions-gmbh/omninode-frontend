@@ -14,8 +14,10 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { ClientInstalledSoftwareList } from "./client-installed-software-list";
 import { ClientNetworkList } from "./client-network-list";
-import { ClientHardwareList } from "./client-hardware-list";
+import { ClientHardwareList } from "./client-hard-drive-list";
 import { ClientGeneralTab } from "./client-general-tab";
+import { ClientHardwareTab } from "./client-hardware-tab";
+import { ClientNetworkTab } from "./client-network-tab";
 
 interface ClientDetailsPopupProps {
   client?: AcmpClientListItem;
@@ -79,10 +81,16 @@ export const ClientDetailsPopup = ({ client, onClose }: ClientDetailsPopupProps)
               <ClientGeneralTab client={client} />
             </TabsContent>
             <TabsContent value="hardware">
-              <ClientHardwareList clientId={client.id} />
+              <div className="space-y-6">
+                <ClientHardwareTab client={client} />
+                <ClientHardwareList clientId={client.id} />
+              </div>
             </TabsContent>
             <TabsContent value="network">
-              <ClientNetworkList clientId={client.id} />
+              <div className="space-y-6">
+                <ClientNetworkTab client={client} />
+                <ClientNetworkList clientId={client.id} />
+              </div>
             </TabsContent>
             <TabsContent value="software">
               <ClientInstalledSoftwareList clientId={client.id} />

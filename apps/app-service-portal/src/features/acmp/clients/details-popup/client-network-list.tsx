@@ -29,7 +29,7 @@ interface ClientNetworkListProps {
 
 export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
   const [search, setSearch] = useState("");
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const { viewId } = useParams();
   const { isValid, isLoading: isSessionLoading } = useValidSession();
 
