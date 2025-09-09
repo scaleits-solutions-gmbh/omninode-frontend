@@ -8,33 +8,30 @@ import {
 import { GetUserCompaniesResponseDto } from "./types/user-companies";
 
 export class ApiClient {
+  private static readonly baseUrl: string = process.env.NEXT_PUBLIC_API_URL || "Not configured";
 
   public static async handleUserSignIn(accessToken: string): Promise<void> {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await handleUserSignIn(baseURL, accessToken);
+    return await handleUserSignIn(this.baseUrl, accessToken);
   }
 
   public static async getUserCompanies(
     accessToken: string
   ): Promise<GetUserCompaniesResponseDto> {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getUserCompanies(baseURL, accessToken);
+    return await getUserCompanies(this.baseUrl, accessToken);
   }
 
   public static async getAcmpClients(
     accessToken: string,
     params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getAcmpClients(baseURL, accessToken, params);
+    return await getAcmpClients(this.baseUrl, accessToken, params);
   }
 
   public static async getAcmpJobs(
     accessToken: string,
     params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-      return await getAcmpJobs(baseURL, accessToken, params);
+    return await getAcmpJobs(this.baseUrl, accessToken, params);
   }
 
   public static async getAcmpClientHardDrives(
@@ -47,8 +44,7 @@ export class ApiClient {
       search?: string;
     }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getAcmpClientHardDrives(baseURL, accessToken, params);
+    return await getAcmpClientHardDrives(this.baseUrl, accessToken, params);
   }
 
   public static async getAcmpClientNetworkCards(
@@ -61,8 +57,7 @@ export class ApiClient {
       search?: string;
     }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getAcmpClientNetworkCards(baseURL, accessToken, params);
+    return await getAcmpClientNetworkCards(this.baseUrl, accessToken, params);
   }
 
   public static async getAcmpClientInstalledSoftware(
@@ -75,23 +70,20 @@ export class ApiClient {
       search?: string;
     }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getAcmpClientInstalledSoftware(baseURL, accessToken, params);
+    return await getAcmpClientInstalledSoftware(this.baseUrl, accessToken, params);
   }
 
   public static async getAcmpAssets(
     accessToken: string,
     params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getAcmpAssets(baseURL, accessToken, params);
+    return await getAcmpAssets(this.baseUrl, accessToken, params);
   }
 
   public static async getAcmpTickets(
     accessToken: string,
     params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
   ) {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || "Not configured";
-    return await getAcmpTickets(baseURL, accessToken, params);
+    return await getAcmpTickets(this.baseUrl, accessToken, params);
   }
 }
