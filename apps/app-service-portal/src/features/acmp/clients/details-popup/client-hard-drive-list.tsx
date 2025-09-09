@@ -18,7 +18,7 @@ import {
 import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
 import { getCoreRowModel, getPaginationRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
-import { clientHardwareColumns } from "./client-hardware-columns";
+import { clientHardwareColumns } from "./client-hard-drive-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
 import { ApiClient } from "@repo/lib-api-client";
@@ -29,7 +29,7 @@ interface ClientHardwareListProps {
 
 export const ClientHardwareList = ({ clientId }: ClientHardwareListProps) => {
   const [search, setSearch] = useState("");
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const { viewId } = useParams();
   const { isValid, isLoading: isSessionLoading } = useValidSession();
 
