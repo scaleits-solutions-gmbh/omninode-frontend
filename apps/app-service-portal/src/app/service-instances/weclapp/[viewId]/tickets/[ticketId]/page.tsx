@@ -4,8 +4,11 @@ export default function TicketDetailsPage() {
   return (
     <SideBarLayout
     autoBreadCrumbs={{
-      category: "Weclapp",
+      category: "Service Portal",
       breadcrumbs: [
+        {
+          label: "Weclapp",
+        },
         {
           label: "Tickets"
         },

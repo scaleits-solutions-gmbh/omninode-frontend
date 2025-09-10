@@ -10,8 +10,11 @@ export default function TicketsPage() {
   return (
     <SideBarLayout
     autoBreadCrumbs={{
-      category: "ACMP",
+      category: "Service Portal",
       breadcrumbs: [
+        {
+          label: "ACMP",
+        },
         {
           label: "Tickets"
         },

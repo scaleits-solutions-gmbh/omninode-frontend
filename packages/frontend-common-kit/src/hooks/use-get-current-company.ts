@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { ApiClient, Company } from "@repo/lib-api-client";
 import { useAuthedQuery } from "./use-authed-query";
+import { useMounted } from "./use-mounted";
+import { useValidSession } from "./use-valid-session";
 
 const CURRENT_COMPANY_ID_KEY = "currentCompanyId";
 const CURRENT_COMPANY_CHANGE_EVENT = "currentCompanyIdChange";
@@ -40,6 +42,8 @@ export type UseGetCurrentCompanyResult = {
 };
 
 export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
+  const mounted = useMounted();
+  const { isValid: isSessionValid, status: sessionStatus } = useValidSession();
   const query = useAuthedQuery<Company[]>({
     queryKey: ["user-companies"],
     queryFn: async ({ accessToken }) => {
@@ -114,7 +118,12 @@ export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
     companies: query.data,
     selectedCompany,
     selectedCompanyId,
-    isLoading: query.isLoading || query.isFetching,
+    isLoading:
+      !mounted ||
+      sessionStatus !== "authenticated" ||
+      query.isLoading ||
+      query.isFetching ||
+      (isSessionValid && typeof query.data === "undefined"),
     error: query.error,
     refetch: () => {
       void query.refetch();

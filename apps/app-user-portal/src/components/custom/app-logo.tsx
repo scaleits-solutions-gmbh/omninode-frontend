@@ -10,7 +10,9 @@ interface AppLogoProps {
 export function AppLogo({ size = "md", customSize }: AppLogoProps) {
   return (
     <AppLogoCommon
-      srcLight={getOriginUrl() + USER_PORTAL_BASE_URL + "/assets/logo-light.svg"}
+      srcLight={
+        getOriginUrl() + USER_PORTAL_BASE_URL + "/assets/logo-light.svg"
+      }
       srcDark={getOriginUrl() + USER_PORTAL_BASE_URL + "/assets/logo-dark.svg"}
       alt={"OmniNode User Portal Logo"}
       size={size}

@@ -10,8 +10,11 @@ export default function JobsPage() {
   return (
     <SideBarLayout
     autoBreadCrumbs={{
-      category: "ACMP",
+      category: "Service Portal",
       breadcrumbs: [
+        {
+          label: "ACMP",
+        },
         {
           label: "Jobs"
         },

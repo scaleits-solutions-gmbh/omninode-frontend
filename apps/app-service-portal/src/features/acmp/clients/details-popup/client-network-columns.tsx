@@ -56,3 +56,4 @@ export const clientNetworkColumns: ColumnDef<AcmpClientNetworkCardListItem>[] = 
     accessorKey: "addressType",
   },
 ];
+

@@ -10,8 +10,11 @@ export default function AssetsPage() {
   return (
     <SideBarLayout
     autoBreadCrumbs={{
-      category: "ACMP",
+      category: "Service Portal",
       breadcrumbs: [
+        {
+          label: "ACMP",
+        },
         {
           label: "Assets"
         },

@@ -21,7 +21,7 @@ export function SidebarSkeleton() {
     <Sidebar>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem className="p-0 flex justify-center">
+          <SidebarMenuItem className="mt-2 flex justify-center">
             <Link href="/">
               <AppLogoDescriptive />
             </Link>
@@ -38,7 +38,7 @@ export function SidebarSkeleton() {
           <SidebarGroupContent>
             <SidebarMenu>
               {/* First Service Instance */}
-              <SidebarMenuItem>
+              <SidebarMenuItem className="ml-1">
                 <div className="flex items-center gap-2 w-full p-2">
                   <Skeleton className="w-4 h-4" />
                   <Skeleton className="w-24 h-4" />
@@ -58,7 +58,7 @@ export function SidebarSkeleton() {
                 </div>
               </SidebarMenuItem>
               {/* Second Service Instance */}
-              <SidebarMenuItem>
+              <SidebarMenuItem className="ml-1">
                 <div className="flex items-center gap-2 w-full p-2">
                   <Skeleton className="w-4 h-4" />
                   <Skeleton className="w-20 h-4" />
@@ -78,7 +78,7 @@ export function SidebarSkeleton() {
           <SidebarGroupContent>
             <SidebarMenu>
               {/* Third Service Instance */}
-              <SidebarMenuItem>
+              <SidebarMenuItem className="ml-1">
                 <div className="flex items-center gap-2 w-full p-2">
                   <Skeleton className="w-4 h-4" />
                   <Skeleton className="w-24 h-4" />
@@ -86,7 +86,7 @@ export function SidebarSkeleton() {
                 </div>
               </SidebarMenuItem>
               {/* Fourth Service Instance */}
-              <SidebarMenuItem>
+              <SidebarMenuItem className="ml-1">
                 <div className="flex items-center gap-2 w-full p-2">
                   <Skeleton className="w-4 h-4" />
                   <Skeleton className="w-20 h-4" />

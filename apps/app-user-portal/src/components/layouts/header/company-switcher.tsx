@@ -46,6 +46,11 @@ export default function CompanySwitcher() {
     return <div className="text-sm text-muted-foreground">Failed to load</div>;
   }
 
+  // After loading, if there are no companies, render nothing
+  if (companies.length === 0) {
+    return null;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

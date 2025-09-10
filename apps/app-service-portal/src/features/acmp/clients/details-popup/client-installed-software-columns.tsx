@@ -31,3 +31,4 @@ export const installedSoftwareColumns: ColumnDef<AcmpClientInstalledSoftwareList
     },
   },
 ];
+

@@ -39,7 +39,6 @@ import { getServiceInstances } from "@/lib/api-client/service-instances";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
-
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({});
@@ -65,7 +64,7 @@ const {selectedCompany, isLoading, error} = useGetCurrentCompany();
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem className="p-0 flex justify-center">
+          <SidebarMenuItem className="mt-2 flex justify-center">
             <Link href="/">
               <AppLogoDescriptive />
             </Link>
