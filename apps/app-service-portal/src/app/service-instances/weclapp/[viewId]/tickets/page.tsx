@@ -10,8 +10,11 @@ export default function UsersPage() {
   return (
     <SideBarLayout
     autoBreadCrumbs={{
-      category: "Weclapp",
+      category: "Service Portal",
       breadcrumbs: [
+        {
+          label: "Weclapp",
+        },
         {
           label: "Tickets"
         },

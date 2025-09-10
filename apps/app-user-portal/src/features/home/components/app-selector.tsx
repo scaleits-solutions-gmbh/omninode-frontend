@@ -1,53 +1,52 @@
 "use client";
-import Link from "next/link";
 import {
+  AppWordmarkLogo,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  Button,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-  AppWordmarkLogo,
   Skeleton,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
 } from "@repo/pkg-frontend-common-kit/components";
-import { Settings, Globe, ArrowRight, Lock } from "lucide-react";
-import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import {
   MANAGEMENT_CONSOLE_BASE_URL,
   SERVICE_PORTAL_BASE_URL,
 } from "@repo/pkg-frontend-common-kit/constants";
 import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-
+import { ArrowRight, Globe, Lock, Settings } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 export default function AppSelector() {
   const managementConsoleUrl = getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL;
   const servicePortalUrl = getOriginUrl() + SERVICE_PORTAL_BASE_URL;
 
   const { selectedCompany, companies, isLoading } = useGetCurrentCompany();
-  const isCardsLoading = isLoading && !companies;
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
       <div className="text-center space-y-2">
-        <div className="flex items-center justify-center">
-          <h1 className="text-3xl tracking-tight">Welcome to</h1>
-          <AppWordmarkLogo
-            srcDark="/user-portal/assets/logo-wordmark-dark.svg"
-            srcLight="/user-portal/assets/logo-wordmark-light.svg"
-            customSize={64}
-          />
+        <div className="flex items-center justify-center items-end gap-2">
+          <h1 className="text-3xl leading-none">Welcome to</h1>
+          <div className="mb-0.5">
+            <AppWordmarkLogo
+              srcDark="/user-portal/assets/logo-wordmark-dark.svg"
+              srcLight="/user-portal/assets/logo-wordmark-light.svg"
+              customSize={48}
+            />
+          </div>
         </div>
 
         <p className="text-muted-foreground text-lg">Choose where to go next</p>
       </div>
 
-      <div
-        className={`grid gap-6 md:grid-cols-2 ${!isCardsLoading && companies?.length === 0 ? "grid-cols-1" : ""}`}
-      >
-        {isCardsLoading ? (
+      <div className={`grid gap-6 md:grid-cols-2`}>
+        {isLoading ? (
           <>
             <Card>
               <CardHeader className="pb-4">
@@ -175,11 +174,13 @@ export default function AppSelector() {
           </>
         )}
       </div>
-      {!isCardsLoading && companies?.length === 0 && (
+      {!isLoading && companies?.length === 0 && (
         <Card className="w-full max-w-md mx-auto -mt-8">
           <CardHeader className="pb-4">
             <CardTitle className="">No companies found</CardTitle>
-            <CardDescription className="">Please contact your administrator to request access.</CardDescription>
+            <CardDescription className="">
+              Please contact your administrator to request access.
+            </CardDescription>
           </CardHeader>
         </Card>
       )}

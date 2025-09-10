@@ -109,3 +109,4 @@ export const JobDetailsPopup = ({ job, onClose }: JobDetailsPopupProps) => {
     </Dialog>
   );
 };
+

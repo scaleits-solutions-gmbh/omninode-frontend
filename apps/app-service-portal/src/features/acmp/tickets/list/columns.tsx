@@ -1,29 +1,24 @@
-
-
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Ticket } from "lucide-react";
 import { FeTicket } from "@/types/weclapp/ticket";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import {
-  Badge,
-  Button
-} from "@repo/pkg-frontend-common-kit/components";
+import { Badge, Button } from "@repo/pkg-frontend-common-kit/components";
 
-function ActionsColumn({ 
-  row, 
-  router, 
-  pathname 
-}: { 
-  row: FeTicket; 
-  router: AppRouterInstance; 
-  pathname: string; 
+function ActionsColumn({
+  row,
+  router,
+  pathname,
+}: {
+  row: FeTicket;
+  router: AppRouterInstance;
+  pathname: string;
 }) {
   return (
     <div className="flex justify-end">
-      <Button 
-        variant="secondary" 
-        size="icon" 
-        className="cursor-pointer" 
+      <Button
+        variant="secondary"
+        size="icon"
+        className="cursor-pointer"
         onClick={() => router.push(`${pathname}/${row.id}`)}
       >
         <Eye />
@@ -32,7 +27,10 @@ function ActionsColumn({
   );
 }
 
-export const createColumns = (router: AppRouterInstance, pathname: string): ColumnDef<FeTicket>[] => [
+export const createColumns = (
+  router: AppRouterInstance,
+  pathname: string
+): ColumnDef<FeTicket>[] => [
   {
     size: 20,
     minSize: 100,
@@ -77,7 +75,7 @@ export const createColumns = (router: AppRouterInstance, pathname: string): Colu
       return `${firstName} ${lastName}`;
     },
   },
-  { 
+  {
     size: 15,
     minSize: 100,
     header: "Status",
@@ -91,8 +89,13 @@ export const createColumns = (router: AppRouterInstance, pathname: string): Colu
     size: 5,
     minSize: 60,
     id: "actions",
-    cell: ({ row }) => {
-      return <ActionsColumn row={row.original} router={router} pathname={pathname} />;
+    cell: (/*{ row }*/) => {
+      //return <ActionsColumn row={row.original} router={router} pathname={pathname} />;
+      <div className="flex justify-end">
+        <Button variant="secondary" size="icon" className="cursor-default">
+          <Eye />
+        </Button>
+      </div>;
     },
   },
 ];
