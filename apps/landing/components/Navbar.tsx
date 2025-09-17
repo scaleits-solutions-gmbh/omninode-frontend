@@ -31,14 +31,14 @@ export function Navbar() {
             Registrieren
           </Link>
         </div>
-        {/* Mobile menu button */}
+        {/* Mobile menu button (hidden for now) */}
         <input id="menu-toggle" type="checkbox" className="peer sr-only" />
-        <label htmlFor="menu-toggle" className="md:hidden ml-3 inline-flex h-9 w-9 items-center justify-center rounded border border-white/15 text-white/80">
+        <label htmlFor="menu-toggle" className="hidden">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2"/></svg>
         </label>
       </div>
-      {/* Mobile drawer */}
-      <div className="md:hidden peer-checked:block hidden border-t border-white/5 bg-background/95">
+      {/* Mobile drawer (hidden for now) */}
+      <div className="hidden border-t border-white/5 bg-background/95">
         <div className="container-xl py-3 flex flex-col gap-3 text-white/90">
           <Link href="#overview">Produkt</Link>
           <Link href="#vision">Lösungen</Link>
