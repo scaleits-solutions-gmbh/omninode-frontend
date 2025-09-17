@@ -7,7 +7,7 @@ import { Evolution } from "@/components/Evolution";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 
-export default function Home() {
+export default function ACMPPage() {
   return (
     <main className="font-sans">
       <Navbar />
