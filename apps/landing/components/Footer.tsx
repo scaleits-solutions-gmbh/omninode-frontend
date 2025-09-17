@@ -10,7 +10,7 @@ export function Footer() {
             <span className="font-semibold text-white">OMNINODE</span>
           </div>
           <p className="mt-3 text-xs text-white/60 max-w-xs">
-            The integration platform for modern service providers and their customers.
+            Die Integrationsplattform für moderne Dienstleister und ihre Kunden.
           </p>
           <div className="mt-4 flex gap-3">
             <a aria-label="Twitter" className="inline-flex h-8 w-8 items-center justify-center rounded border border-white/10 text-white/70 hover:bg-white/10" href="#">
@@ -23,37 +23,37 @@ export function Footer() {
         </div>
 
         <div>
-          <div className="font-medium text-white">Company</div>
+          <div className="font-medium text-white">Unternehmen</div>
           <ul className="mt-3 space-y-2">
-            <li><a href="#" className="hover:text-white">About</a></li>
-            <li><a href="#" className="hover:text-white">Careers</a></li>
+            <li><a href="#" className="hover:text-white">Über uns</a></li>
+            <li><a href="#" className="hover:text-white">Karriere</a></li>
             <li><a href="#" className="hover:text-white">Blog</a></li>
           </ul>
         </div>
 
         <div>
-          <div className="font-medium text-white">Product</div>
+          <div className="font-medium text-white">Produkt</div>
           <ul className="mt-3 space-y-2">
-            <li><a href="#" className="hover:text-white">Features</a></li>
-            <li><a href="#" className="hover:text-white">Pricing</a></li>
-            <li><a href="#" className="hover:text-white">Changelog</a></li>
+            <li><a href="#" className="hover:text-white">Funktionen</a></li>
+            <li><a href="#" className="hover:text-white">Preise</a></li>
+            <li><a href="#" className="hover:text-white">Änderungslog</a></li>
           </ul>
         </div>
 
         <div>
-          <div className="font-medium text-white">Documentation</div>
+          <div className="font-medium text-white">Dokumentation</div>
           <ul className="mt-3 space-y-2">
-            <li><a href="#" className="hover:text-white">API Reference</a></li>
-            <li><a href="#" className="hover:text-white">Guides</a></li>
-            <li><a href="#" className="hover:text-white">Terms of Service</a></li>
+            <li><a href="#" className="hover:text-white">API‑Referenz</a></li>
+            <li><a href="#" className="hover:text-white">Anleitungen</a></li>
+            <li><a href="#" className="hover:text-white">Nutzungsbedingungen</a></li>
           </ul>
         </div>
       </div>
 
       <div className="container-xl mt-10 py-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-white/60">
-        <div>© {new Date().getFullYear()} OmniNode Inc. All rights reserved.</div>
+        <div>© {new Date().getFullYear()} OmniNode Inc. Alle Rechte vorbehalten.</div>
         <div className="mt-2 sm:mt-0">
-          Built with Next.js + Tailwind
+          Erstellt mit Next.js + Tailwind
         </div>
       </div>
     </footer>

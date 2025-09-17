@@ -18,70 +18,22 @@ import {
   DropdownMenuTrigger,
   SearchInput,
 } from "@repo/pkg-frontend-common-kit/components";
-import { fetchCompanies } from "@/lib/api-client/company";
 import { FeCompany } from "@/types/fe-company";
 import { switchCompany } from "@/lib/api-client/auth/switch-company";
 import { toast } from "sonner";
-import { useCompanyId } from "@/hooks/use-session";
-import { useTranslations } from "next-intl";
+import { ApiClient } from "@repo/lib-api-client";
+import { useSession } from "next-auth/react";
+import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+
 
 export default function CompanySwitcher() {
   // Move all hooks to the top before any conditional logic
-  const t = useTranslations('components.layout.companySwitcher');
-  const queryClient = useQueryClient();
   const [search, setSearch] = React.useState("");
   const isMobile = useIsMobile();
-  const [activeOrganization, setActiveOrganization] = React.useState<
-    FeCompany | undefined
-  >(undefined);
+  const { companies,selectedCompanyId, isLoading, error, setSelectedCompanyId, selectedCompany } = useGetCurrentCompany();
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["companies"],
-    queryFn: fetchCompanies,
-  });
-  const currentCompanyId = useCompanyId();
 
-  // Mutation for switching companies
-  const switchCompanyMutation = useMutation({
-    mutationFn: (companyId: string) => switchCompany(companyId),
-    onSettled: () => {
-      toast.dismiss("switch-company");
-    },
-    onSuccess: (_, companyId) => {
-      toast.success(t('companySwitchedSuccessfully'));
-      // Update the company ID in the Zustand store
-      queryClient.invalidateQueries({ queryKey: ["sessionData"] });
-      // Find and set the active organization
-      const company = data?.items.find((c) => c.id === companyId);
-      if (company) {
-        setActiveOrganization(company);
-      }
-    },
-    onError: () => {
-      toast.error(t('failedToSwitchCompany'));
-    },
-  });
-
-  // Use useEffect to set the active organization when data is loaded
-  React.useEffect(() => {
-    const companies = data?.items;
-    if (companies && companies.length > 0 && !activeOrganization) {
-      setActiveOrganization(
-        companies.find((c) => c.id === currentCompanyId) || companies[0]
-      );
-    }
-  }, [data, activeOrganization, currentCompanyId]);
-
-  const handleCompanySwitch = (company: FeCompany) => {
-    if (company.id !== activeOrganization?.id) {
-      toast.loading(t('switchingCompany'), {
-        id: "switch-company",
-      });
-      switchCompanyMutation.mutate(company.id);
-    }
-  };
-
-  if (isLoading) {
+  if (isLoading || !companies) {
     return (
       <div className="flex items-center gap-2 px-2">
         <Skeleton className="h-8 w-8 rounded-md" />
@@ -90,11 +42,12 @@ export default function CompanySwitcher() {
     );
   }
 
-  if (error || !data) {
-    return <div className="text-sm text-muted-foreground">{t('failedToLoad')}</div>;
+  if (error) {
+    return <div className="text-sm text-muted-foreground">Failed to load</div>;
   }
 
-  if (!activeOrganization) {
+  // After loading, if there are no companies, render nothing
+  if (companies.length === 0) {
     return null;
   }
 
@@ -105,16 +58,15 @@ export default function CompanySwitcher() {
           variant="ghost"
           size="sm"
           className="h-8 px-2 gap-2 hover:bg-accent hover:text-accent-foreground"
-          disabled={switchCompanyMutation.isPending}
         >
           <Avatar className="h-6 w-6 rounded-sm">
             <AvatarImage />
-            <AvatarFallback seed={activeOrganization.id}>
-              {activeOrganization.name.charAt(0)}
+            <AvatarFallback seed={selectedCompanyId ?? undefined}>
+              {selectedCompany?.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <span className="text-sm font-medium truncate max-w-24">
-            {activeOrganization.name}
+            {selectedCompany?.name}
           </span>
           <ChevronDown className="h-3 w-3 text-muted-foreground" />
         </Button>
@@ -125,12 +77,11 @@ export default function CompanySwitcher() {
         side={isMobile ? "top" : "bottom"}
       >
         <ScrollArea className="max-h-[300px]">
-          {data?.items.map((company: FeCompany) => (
+          {companies.map((company: FeCompany) => (
             <DropdownMenuItem
               key={company.id}
-              onClick={() => handleCompanySwitch(company)}
+              onClick={() => setSelectedCompanyId(company.id)}
               className="gap-2 p-2"
-              disabled={switchCompanyMutation.isPending}
             >
               <Avatar className="size-6 rounded-sm">
                 <AvatarImage />
@@ -144,14 +95,9 @@ export default function CompanySwitcher() {
                   {company.type}
                 </span>
               </div>
-              {company.id === currentCompanyId && (
+              {company.id === selectedCompanyId && (
                 <Check className="h-4 w-4 text-primary" />
               )}
-              {/* Show loading indicator for the company being switched to */}
-              {switchCompanyMutation.isPending &&
-                company.id === switchCompanyMutation.variables && (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                )}
             </DropdownMenuItem>
           ))}
         </ScrollArea>

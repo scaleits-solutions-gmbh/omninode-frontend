@@ -1,17 +1,17 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeClientCommand } from "@/types/acmp/client-command";
 import {
   Checkbox
 } from "@repo/pkg-frontend-common-kit/components";
+import { AcmpClientCommandListItem } from "@repo/lib-api-client";
 
 
 // Define the table meta interface for proper typing
 interface TableMeta {
-  selectedClientCommand: FeClientCommand | undefined;
-  onSelectionChange: (clientCommand: FeClientCommand | undefined) => void;
+  selectedClientCommand: AcmpClientCommandListItem | undefined;
+  onSelectionChange: (clientCommand: AcmpClientCommandListItem | undefined) => void;
 }
 
-export const columns: ColumnDef<FeClientCommand>[] = [
+export const columns: ColumnDef<AcmpClientCommandListItem>[] = [
   {
     size: 50,
     header: "Name",
@@ -20,7 +20,24 @@ export const columns: ColumnDef<FeClientCommand>[] = [
   {
     size: 50,
     header: "Version",
-    accessorKey: "version",
+    // Generate consistent pseudo-random number 1-4 based on ID mocked for now
+    cell: ({ row }) => {
+      // Generate consistent pseudo-random number 1-4 based on ID
+      const generateVersionFromId = (id: string): number => {
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+          const char = id.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // Convert to 32-bit integer
+        }
+        // Ensure positive number and map to 1-4 range
+        const positiveHash = Math.abs(hash);
+        return (positiveHash % 4) + 1;
+      };
+
+      const version = generateVersionFromId(row.original.id);
+      return <div>{version}</div>;
+    },
   },
   {
     id: "select",

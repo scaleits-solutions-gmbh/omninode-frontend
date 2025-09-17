@@ -28,7 +28,7 @@ export function AppLogo({
         src={srcLight}
         alt={alt || "Omninode Logo"}
         height={customSize || sizes[size].imageSize}
-        width={customSize ? customSize * 3 : sizes[size].imageSize * 3}
+        width={customSize ? customSize * 4.25 : sizes[size].imageSize * 4.25}
       />
       {srcDark && (
         <Image
@@ -36,7 +36,7 @@ export function AppLogo({
           src={srcDark}
           alt={alt || "Omninode Logo"}
           height={customSize || sizes[size].imageSize}
-          width={customSize ? customSize * 3 : sizes[size].imageSize * 3}
+          width={customSize ? customSize * 4.25 : sizes[size].imageSize * 4.25}
         />
       )}
     </>

@@ -37,13 +37,13 @@ export function DataTablePagination<TData>({
   const to =
     totalRows === 0 ? 0 : Math.min((pageIndex + 1) * pageSize, totalRows);
 
-  // Hide pagination controls when totalRows > pageSize
-  const shouldHidePaginationControls = totalRows > pageSize;
+  // Show navigation only when there are multiple pages
+  const hasMultiplePages = table.getPageCount() > 1;
 
   return (
-    <div
+    <nav
       className="w-full flex items-center justify-center sm:justify-between px-2"
-      aria-label="Pagination navigation"
+      aria-label="Pagination"
     >
       {isLoading ? (
         <DataTablePaginationLoading showRowsPerPage={showRowsPerPage} />
@@ -54,38 +54,44 @@ export function DataTablePagination<TData>({
               ? `Showing ${from} to ${to} of ${totalRows} rows`
               : "0 rows"}
           </div>
-          {!shouldHidePaginationControls && (
-            <div className="flex items-center space-x-6 lg:space-x-8">
-              {showRowsPerPage && (
-                <div className="items-center space-x-2 hidden sm:flex">
-                  <p className="text-sm font-medium">Rows per page</p>
-                  <Select
-                    value={`${table.getState().pagination.pageSize}`}
-                    onValueChange={(value) => {
-                      table.setPageSize(Number(value));
-                    }}
+          <div className="flex items-center space-x-6 lg:space-x-8">
+            {showRowsPerPage && (
+              <div className="items-center space-x-2 hidden sm:flex">
+                <p id="rows-per-page-label" className="text-sm font-medium">
+                  Rows per page
+                </p>
+                <Select
+                  value={`${table.getState().pagination.pageSize}`}
+                  onValueChange={(value) => {
+                    table.setPageSize(Number(value));
+                  }}
+                >
+                  <SelectTrigger
+                    className="h-8 w-[70px]"
+                    aria-labelledby="rows-per-page-label"
+                    aria-label="Rows per page"
                   >
-                    <SelectTrigger className="h-8 w-[70px]">
-                      <SelectValue
-                        placeholder={table.getState().pagination.pageSize}
-                      />
-                    </SelectTrigger>
-                    <SelectContent side="top">
-                      {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <SelectItem key={pageSize} value={`${pageSize}`}>
-                          {pageSize}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-              {showPageCount && (
-                <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-                  Page {table.getState().pagination.pageIndex + 1} of{" "}
-                  {table.getPageCount()}
-                </div>
-              )}
+                    <SelectValue
+                      placeholder={`${table.getState().pagination.pageSize}`}
+                    />
+                  </SelectTrigger>
+                  <SelectContent side="top">
+                    {[10, 20, 30, 40, 50].map((pageSize) => (
+                      <SelectItem key={pageSize} value={`${pageSize}`}>
+                        {pageSize}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            {showPageCount && (
+              <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+                Page {table.getState().pagination.pageIndex + 1} of{" "}
+                {table.getPageCount()}
+              </div>
+            )}
+            {hasMultiplePages && (
               <div className="flex items-center space-x-2">
                 <Button
                   variant="outline"
@@ -124,10 +130,10 @@ export function DataTablePagination<TData>({
                   <ChevronsRight />
                 </Button>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </>
       )}
-    </div>
+    </nav>
   );
 }

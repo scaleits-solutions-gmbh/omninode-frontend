@@ -13,11 +13,14 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { FeClientCommand } from "@/types/acmp/client-command";
-import { FeClient } from "@/types/acmp/client";
+import { AcmpClientListItem, ApiClient } from "@repo/lib-api-client";
+import { useAuthedMutation, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
 
 interface PushClientCommandPopupStep3Props {
   clientCommand: FeClientCommand;
-  clients: FeClient[];
+  clients: AcmpClientListItem[];
   onFinish: () => void;
   onBack: () => void;
 }
@@ -28,6 +31,46 @@ export default function PushClientCommandPopupStep3({
   onFinish,
   onBack,
 }: PushClientCommandPopupStep3Props) {
+  // Generate consistent pseudo-random number 1-4 based on ID
+  const generateVersionFromId = (id: string): number => {
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      const char = id.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    // Ensure positive number and map to 1-4 range
+    const positiveHash = Math.abs(hash);
+    return (positiveHash % 4) + 1;
+  };
+
+  const commandVersion = generateVersionFromId(clientCommand.id);
+
+  const { viewId } = useParams();
+  const { accessToken } = useValidSession();
+
+  const pushMutation = useAuthedMutation<void, { commandId: string; clientIds: string[] }>({
+    mutationFn: async ({ accessToken, variables }) => {
+      return ApiClient.pushAcmpClientCommands(accessToken, {
+        serviceInstanceId: viewId as string,
+      }, variables);
+    },
+  });
+
+  const handlePush = async () => {
+    // Close popup in parent
+    onFinish();
+    const promise = pushMutation.mutateAsync({
+      commandId: clientCommand.id,
+      clientIds: clients.map(c => c.id),
+    });
+    toast.promise(promise, {
+      loading: "Pushing client command...",
+      success: "Client command pushed successfully",
+      error: (err: unknown) => (err as { message?: string })?.message ?? "Failed to push client command",
+    });
+  };
+
   return (
     <div className="space-y-6">
       {/* Summary Header */}
@@ -58,7 +101,7 @@ export default function PushClientCommandPopupStep3({
                 Command details and description
               </p>
             </div>
-            <Badge variant="secondary">v{clientCommand.version}</Badge>
+            <Badge variant="secondary">v{commandVersion}</Badge>
           </div>
         </CardContent>
       </Card>
@@ -93,16 +136,14 @@ export default function PushClientCommandPopupStep3({
                       <MonitorIcon className="w-3 h-3 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-sm">
-                        {client.computerName}
-                      </p>
+                      <p className="font-medium text-sm">{client.name}</p>
                       <p className="text-xs text-muted-foreground">
                         Client #{client.clientNo}
                       </p>
                     </div>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    {client.name}
+                    {client.tenantName}
                   </Badge>
                 </div>
               ))}
@@ -126,7 +167,7 @@ export default function PushClientCommandPopupStep3({
         <Button variant="outline" onClick={onBack}>
           Back
         </Button>
-        <Button onClick={onFinish}>Push Command</Button>
+        <Button onClick={handlePush}>Push Command</Button>
       </div>
     </div>
   );

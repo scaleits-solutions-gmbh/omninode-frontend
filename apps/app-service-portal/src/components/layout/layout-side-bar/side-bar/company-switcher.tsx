@@ -17,40 +17,21 @@ import {
   SearchInput
 } from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
-import { ChevronsUpDown} from "lucide-react";
+import { ChevronsUpDown, Check} from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-
-import { useQuery } from "@tanstack/react-query";
-
-import { fetchCompanies } from "@/lib/api-client/company";
-import { FeCompany } from "@/types/fe-company";
+import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
 
 
 
 export default function TenantSwitcher() {
   // Move all hooks to the top before any conditional logic
   const [search, setSearch] = React.useState("");
-  const isMobile = useIsMobile();  
-  const [activeOrganization, setActiveOrganization] = React.useState<FeCompany | undefined>(undefined);
-  
-  const { data: companies, isLoading, error } = useQuery({
-    queryKey: ["companies"],
-    queryFn: async () => {
-      const companies = (await fetchCompanies()).items;
-      return companies;
-    },
-  });
+  const isMobile = useIsMobile();
+  const { companies, selectedCompanyId, isLoading, error, setSelectedCompanyId, selectedCompany } = useGetCurrentCompany();
 
-  // Use useEffect to set the active organization when data is loaded
-  React.useEffect(() => {
-    if (companies && companies.length > 0 && !activeOrganization) {
-      setActiveOrganization(companies[0]);
-      localStorage.setItem("currentCompanyId", companies[0].id);
-    }
-  }, [companies, activeOrganization]);
 
-  if (isLoading) {
+  if (isLoading || !companies) {
     return (
       <div className="flex items-center w-full gap-2 p-2">
         <Skeleton className="h-8 w-8 rounded-md" />
@@ -61,13 +42,9 @@ export default function TenantSwitcher() {
       </div>
     );
   }
-  
-  if (error || !companies) {
-    return <div>Failed to fetch companies</div>;
-  }
 
-  if (!activeOrganization) {
-    return null;
+  if (error) {
+    return <div className="text-sm text-muted-foreground">Failed to load</div>;
   }
 
   return (
@@ -81,16 +58,16 @@ export default function TenantSwitcher() {
             >
               <Avatar className="rounded-sm">
                 <AvatarImage />
-                <AvatarFallback seed={activeOrganization.id}>
-                  {activeOrganization.name.charAt(0)}
+                <AvatarFallback seed={selectedCompany?.id}>
+                  {selectedCompany?.name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {activeOrganization.name}
+                  {selectedCompany?.name}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  {activeOrganization.type}
+                  {"Company"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -102,10 +79,10 @@ export default function TenantSwitcher() {
             side={isMobile ? "top" : "right"}
           >
             <ScrollArea className="max-h-[300px]">
-              {companies.map((company: FeCompany) => (
+              {companies?.map((company) => (
                 <DropdownMenuItem
                   key={company.id}
-                  onClick={() => setActiveOrganization(company)}
+                  onClick={() => setSelectedCompanyId(company.id)}
                   className="gap-2 p-2"
                 >
                   <Avatar className="size-6 rounded-sm">
@@ -119,9 +96,12 @@ export default function TenantSwitcher() {
                       {company.name}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      {company.type}
+                      {"Company"}
                     </span>
                   </div>
+                  {company.id === selectedCompanyId && (
+                    <Check className="h-4 w-4 text-primary" />
+                  )}
                 </DropdownMenuItem>
               ))}
             </ScrollArea>

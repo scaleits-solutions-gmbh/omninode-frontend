@@ -10,15 +10,13 @@ export default function UsersPage() {
   return (
     <SideBarLayout
       autoBreadCrumbs={{
-        category: "Home",
+        category: "Service Portal",
         breadcrumbs: [
           {
             label: "Home",
           },
         ],
       }}
-      forceSidebarLoading={true}
-      forceTopbarLoading={true}
     >
       <HomePageClient />
     </SideBarLayout>

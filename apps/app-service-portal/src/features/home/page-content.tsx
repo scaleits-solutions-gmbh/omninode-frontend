@@ -1,23 +1,19 @@
 "use client";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { getServiceInstances } from "@/lib/api-client/service-instances";
 import { Service } from "@scaleits-solutions-gmbh/services";
 import { useEffect } from "react";
+import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
 
 export default function HomePageClient() {
   const router = useRouter();
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["sideMenu"],
-    queryFn: getServiceInstances,
-  });
+  const { isLoading, error, selectedCompany } = useGetCurrentCompany();
 
   useEffect(() => {
-    if (!isLoading && !error && data) {
-      outerLoop: for (const serviceGroup of data) {
-        if (serviceGroup.serviceInstances.length > 0) {
-          for (const serviceInstance of serviceGroup.serviceInstances) {
+    if (!isLoading && !error && selectedCompany) {
+      outerLoop: for (const serviceInstanceHost of selectedCompany.serviceInstanceHosts) {
+        if (serviceInstanceHost.instances.length > 0) {
+          for (const serviceInstance of serviceInstanceHost.instances) {
             /*
             if (serviceInstance.service === Service.Weclapp) {
               console.log(serviceInstance);
@@ -45,11 +41,15 @@ export default function HomePageClient() {
                 break outerLoop;
               }
             } else */ if (serviceInstance.service === Service.Acmp) {
-              if (serviceInstance.canViewClients) {
-                router.push(`/service-instances/${serviceInstance.id}/clients`);
+              if (serviceInstance.permissions.canViewJobs) {
+                router.replace(
+                  `/service-instances/acmp/${serviceInstance.serviceInstanceId}/jobs`
+                );
                 break outerLoop;
-              } else if (serviceInstance.canViewJobs) {
-                router.push(`/service-instances/${serviceInstance.id}/jobs`);
+              } else if (serviceInstance.permissions.canViewDevices) {
+                router.replace(
+                  `/service-instances/acmp/${serviceInstance.serviceInstanceId}/devices`
+                );
                 break outerLoop;
               }
             }
@@ -57,7 +57,7 @@ export default function HomePageClient() {
         }
       }
     }
-  }, [data, isLoading, error, router]);
+  }, [selectedCompany, isLoading, error, router]);
 
   if (isLoading) {
     return (
@@ -68,10 +68,10 @@ export default function HomePageClient() {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Failed to load service instances</div>;
   }
 
-  if (!data) {
+  if (!selectedCompany) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <p>No service instances found</p>

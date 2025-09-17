@@ -6,7 +6,6 @@ import UserIndicator from "./user-indicator";
 import { Lock, Menu, X } from "lucide-react";
 import CompanySwitcher from "./company-switcher";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 
 interface MobileHeaderProps {
   canAccessManagementConsole: boolean;
@@ -15,8 +14,6 @@ interface MobileHeaderProps {
 export default function MobileHeader({
   canAccessManagementConsole,
 }: MobileHeaderProps) {
-  const t = useTranslations('components.layout.header');
-  const tMobileHeader = useTranslations('components.layout.mobileHeader');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -33,7 +30,7 @@ export default function MobileHeader({
         <button
           onClick={toggleMenu}
           className="p-2 hover:bg-muted rounded-md transition-colors"
-          aria-label={tMobileHeader('toggleMenu')}
+          aria-label={"Toggle menu"}
         >
           {isMenuOpen ? (
             <X className="w-5 h-5" />
@@ -55,12 +52,12 @@ export default function MobileHeader({
                   className="block py-2 text-sm hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {t('managementConsole')}
+                  Management Console
                 </Link>
               ) : (
                 <div className="flex gap-2 text-muted-foreground items-center py-2">
                   <Lock className="w-4 h-4" />
-                  <span className="text-sm">{t('managementConsole')}</span>
+                  <span className="text-sm">Management Console</span>
                 </div>
               )}
               <Link
@@ -68,7 +65,7 @@ export default function MobileHeader({
                 className="block py-2 text-sm hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t('servicePortal')}
+                Service Portal
               </Link>
             </div>
 
