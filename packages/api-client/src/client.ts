@@ -1,9 +1,17 @@
 import {
   getAcmpAssets,
   getAcmpClientHardDrives,
-  getAcmpClientNetworkCards, getAcmpClients, getAcmpClientInstalledSoftware, getAcmpJobs,
+  getAcmpClientNetworkCards,
+  getAcmpClients,
+  getAcmpClientInstalledSoftware,
+  getAcmpJobs,
   getAcmpTickets,
-  getUserCompanies, handleUserSignIn
+  getUserCompanies,
+  handleUserSignIn,
+  getAcmpClientCommands,
+  getAcmpRolloutTemplates,
+  pushAcmpClientCommands,
+  pushAcmpRolloutTemplate,
 } from "./methods";
 import { GetUserCompaniesResponseDto } from "./types/user-companies";
 
@@ -85,5 +93,35 @@ export class ApiClient {
     params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
   ) {
     return await getAcmpTickets(this.baseUrl, accessToken, params);
+  }
+
+  public static async getAcmpClientCommands(
+    accessToken: string,
+    params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
+  ) {
+    return await getAcmpClientCommands(this.baseUrl, accessToken, params);
+  }
+
+  public static async getAcmpRolloutTemplates(
+    accessToken: string,
+    params: { serviceInstanceId: string; page?: number; pageSize?: number; search?: string }
+  ) {
+    return await getAcmpRolloutTemplates(this.baseUrl, accessToken, params);
+  }
+
+  public static async pushAcmpClientCommands(
+    accessToken: string,
+    params: { serviceInstanceId: string; organizationId?: string },
+    body: { commandId: string; clientIds: string[] },
+  ) {
+    return await pushAcmpClientCommands(this.baseUrl, accessToken, params, body);
+  }
+
+  public static async pushAcmpRolloutTemplate(
+    accessToken: string,
+    params: { serviceInstanceId: string },
+    body: { rolloutId: string; clients: { id: string; newName: string; newDescription: string }[] },
+  ) {
+    return await pushAcmpRolloutTemplate(this.baseUrl, accessToken, params, body);
   }
 }

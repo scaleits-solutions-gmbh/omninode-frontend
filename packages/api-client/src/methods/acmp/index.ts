@@ -5,3 +5,7 @@ export * from "./get-acmp-client-network-cards.methods";
 export * from "./get-acmp-client-installed-software.methods";
 export * from "./get-acmp-tickets.methods";
 export * from "./get-acmp-assets.methods";
+export * from "./get-acmp-rollout-templates.method";
+export * from "./get-acmp-client-commands.method";
+export * from "./push-acmp-client-commands.method";
+export * from "./push-acmp-rollout-template.method";

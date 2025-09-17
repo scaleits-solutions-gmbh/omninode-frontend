@@ -16,12 +16,13 @@ import PushClientCommandPopupStep1 from "./push-client-command-popup-step1";
 import PushClientCommandPopupStep2 from "./push-client-command-popup-step2";
 import PushClientCommandPopupStep3 from "./push-client-command-popup-step3";
 import { FeClientCommand } from "@/types/acmp/client-command";
-import { FeClient } from "@/types/acmp/client";
+import { AcmpClientListItem } from "@repo/lib-api-client";
 
 export default function PushClientCommandPopup() {
+  const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [clientCommand, setClientCommand] = useState<FeClientCommand | undefined>(undefined);
-  const [clients, setClients] = useState<FeClient[]>([]);
+  const [clients, setClients] = useState<AcmpClientListItem[]>([]);
   
 
   const handleNextStep1 = (clientCommand: FeClientCommand) => {
@@ -29,21 +30,22 @@ export default function PushClientCommandPopup() {
     setStep(2);
   };
 
-  const handleNextStep2 = (clients: FeClient[]) => {
+  const handleNextStep2 = (clients: AcmpClientListItem[]) => {
     setClients(clients);
     setStep(3);
   };
 
   const handleFinishStep3 = () => {
-    console.log(clientCommand, clients);
+    setOpen(false);
   };
   
   const handleBack = () => {
     setStep(step - 1);
   }
 
-  const handleOpenChange = (open: boolean) => {
-    if (!open) {
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
       setStep(1);
       setClientCommand(undefined);
       setClients([]);
@@ -51,7 +53,7 @@ export default function PushClientCommandPopup() {
   };
 
   return (
-    <Dialog onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <DropdownMenuItem onSelect={(event) => event.preventDefault()}>
           <TerminalIcon className="w-4 h-4" />

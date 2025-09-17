@@ -5,7 +5,15 @@ import {
   Button,
   Card,
   CardContent,
-  CardTitle
+  CardTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  Input,
+  Textarea,
 } from "@repo/pkg-frontend-common-kit/components";
 import {
   TerminalIcon,
@@ -13,12 +21,16 @@ import {
   MonitorIcon,
   CheckCircle,
 } from "lucide-react";
-import { FeRollout } from "@/types/acmp/rollout";
-import { FeClient } from "@/types/acmp/client";
+import { AcmpRolloutTemplateListItem, AcmpClientListItem, ApiClient } from "@repo/lib-api-client";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
+import { Pencil } from "lucide-react";
+import { useState } from "react";
 
 interface PushRolloutPopupStep3Props {
-  rollout: FeRollout;
-  clients: FeClient[];
+  rollout: AcmpRolloutTemplateListItem;
+  clients: AcmpClientListItem[];
   onFinish: () => void;
   onBack: () => void;
 }
@@ -29,6 +41,58 @@ export default function PushRolloutPopupStep3({
   onFinish,
   onBack,
 }: PushRolloutPopupStep3Props) {
+  const { viewId } = useParams();
+
+  const [overrides, setOverrides] = useState<Record<string, { newName?: string; newDescription?: string }>>({});
+  const [editingClientId, setEditingClientId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+
+  const pushMutation = useAuthedMutation<void, { rolloutId: string; clients: { id: string; newName: string; newDescription: string }[] }>({
+    mutationFn: async ({ accessToken, variables }) =>
+      ApiClient.pushAcmpRolloutTemplate(accessToken, { serviceInstanceId: viewId as string }, variables),
+  });
+
+  const handlePush = async () => {
+    onFinish();
+    const payload = {
+      rolloutId: rollout.id,
+      clients: clients.map(c => {
+        const ov = overrides[c.id] || {};
+        const newName = (ov.newName ?? "").trim() || c.name;
+        const newDescription = (ov.newDescription ?? "").trim() || c.name;
+        return { id: c.id, newName, newDescription };
+      }),
+    };
+    const promise = pushMutation.mutateAsync(payload);
+    toast.promise(promise, {
+      loading: "Pushing rollout template...",
+      success: "Rollout template pushed successfully",
+      error: (err: unknown) => (err as { message?: string })?.message ?? "Failed to push rollout template",
+    });
+  };
+
+  const openEdit = (client: AcmpClientListItem) => {
+    setEditingClientId(client.id);
+    const ov = overrides[client.id] || {};
+    setEditName(ov.newName ?? "");
+    setEditDescription(ov.newDescription ?? "");
+  };
+
+  const closeEdit = () => {
+    setEditingClientId(null);
+    setEditName("");
+    setEditDescription("");
+  };
+
+  const saveEdit = () => {
+    if (!editingClientId) return;
+    setOverrides(prev => ({
+      ...prev,
+      [editingClientId]: { newName: editName, newDescription: editDescription },
+    }));
+    closeEdit();
+  };
   return (
     <div className="space-y-6">
       {/* Summary Header */}
@@ -59,7 +123,7 @@ export default function PushRolloutPopupStep3({
                 Rollout Template details and description
               </p>
             </div>
-            <Badge variant="secondary">{rollout.osEdition}</Badge>
+            <Badge variant="secondary">{rollout.os}</Badge>
           </div>
         </CardContent>
       </Card>
@@ -83,8 +147,11 @@ export default function PushRolloutPopupStep3({
             </div>
 
             {/* Client List */}
-            <div className="max-h-48 overflow-y-auto space-y-2">
-              {clients.map((client) => (
+            <div className="max-h-64 overflow-y-auto space-y-2">
+              {clients.map((client) => {
+                const ov = overrides[client.id];
+                const hasOverride = Boolean((ov?.newName ?? "").trim() || (ov?.newDescription ?? "").trim());
+                return (
                 <div
                   key={client.id}
                   className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
@@ -94,23 +161,56 @@ export default function PushRolloutPopupStep3({
                       <MonitorIcon className="w-3 h-3 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-sm">
-                        {client.computerName}
-                      </p>
+                      <p className="font-medium text-sm">{client.name}</p>
+                      {hasOverride && (
+                        <div className="text-xs text-muted-foreground mt-0.5">
+                          {ov?.newName?.trim() && (<span>New name: <span className="font-medium">{ov.newName}</span></span>)}
+                          {ov?.newName?.trim() && ov?.newDescription?.trim() && <span> • </span>}
+                          {ov?.newDescription?.trim() && (<span>Desc set</span>)}
+                        </div>
+                      )}
                       <p className="text-xs text-muted-foreground">
                         Client #{client.clientNo}
                       </p>
                     </div>
+                    <Button variant="ghost" size="icon" onClick={() => openEdit(client)}>
+                      <Pencil className="w-4 h-4" />
+                    </Button>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    {client.name}
+                    {client.tenantName}
                   </Badge>
                 </div>
-              ))}
+              );})}
             </div>
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={Boolean(editingClientId)} onOpenChange={(open) => !open && closeEdit()}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit rollout target name and description</DialogTitle>
+            <DialogDescription>
+              Set a custom name and description for this client in the rollout.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <label className="text-sm font-medium">New name</label>
+              <Input value={editName} onChange={(e) => setEditName(e.target.value)} placeholder="Leave empty to use client name" />
+            </div>
+            <div className="space-y-1">
+              <label className="text-sm font-medium">New description</label>
+              <Textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} placeholder="Leave empty to use client name" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={closeEdit}>Cancel</Button>
+            <Button onClick={saveEdit}>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Confirmation Alert */}
       <Alert variant="default">
@@ -127,7 +227,7 @@ export default function PushRolloutPopupStep3({
         <Button variant="outline" onClick={onBack}>
           Back
         </Button>
-        <Button onClick={onFinish}>Push Rollout Template</Button>
+        <Button onClick={handlePush}>Push Rollout Template</Button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeRollout } from "@/types/acmp/rollout";
+import { AcmpRolloutTemplateListItem } from "@repo/lib-api-client";
 import {
   Badge,
   Checkbox
@@ -8,10 +8,10 @@ import {
 
 // Define the table meta interface for proper typing
 interface TableMeta {
-  selectedRollout: FeRollout | undefined;
-  onSelectionChange: (rollout: FeRollout | undefined) => void;
+  selectedRollout: AcmpRolloutTemplateListItem | undefined;
+  onSelectionChange: (rollout: AcmpRolloutTemplateListItem | undefined) => void;
 }
-export const columns: ColumnDef<FeRollout>[] = [
+export const columns: ColumnDef<AcmpRolloutTemplateListItem>[] = [
   {
     size: 40,
     header: "Name",
@@ -19,16 +19,11 @@ export const columns: ColumnDef<FeRollout>[] = [
   },
   {
     size: 40,
-    header: "OS Edition",
-    accessorKey: "osEdition",
+    header: "OS",
+    accessorKey: "os",
     cell: ({ row }) => {
-      return <Badge variant="secondary">{row.original.osEdition}</Badge>;
+      return <Badge variant="secondary">{row.original.os}</Badge>;
     },
-  },
-  {
-    size: 15,
-    header: "Language",
-    accessorKey: "language",
   },
   {
     size: 5,

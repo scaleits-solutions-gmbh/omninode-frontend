@@ -15,8 +15,8 @@ import {
   DataTableViewOptions,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-import { fetchWeclappTickets } from "@/lib/api-client/weclapp/ticket";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { ApiClient } from "@repo/lib-api-client";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -29,12 +29,10 @@ import { useState } from "react";
 
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
-import { useRouter, usePathname, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export const TicketList = () => {
   const { viewId } = useParams();
-  const router = useRouter();
-  const pathname = usePathname();
   //const [ticket, setTicket] = useState<FeTicket | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
@@ -42,7 +40,18 @@ export const TicketList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
+    intId: false,
+    categoryEn: false,
+    categoryDe: false,
+    ticketContact: false,
+    assignee: false,
+    impactEn: false,
+    impactDe: false,
+  });
+
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
+  const { data: tickets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
       "tickets",
       viewId,
@@ -50,33 +59,40 @@ export const TicketList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappTickets(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpTickets(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
   });
 
+  const isLoading = isSessionLoading || isQueryLoading;
+  const isFetchingPage = isQueryFetching;
+
   const table = useReactTable({
-    data: data?.items || [],
-    columns: createColumns(router, pathname),
+    data: tickets?.data || [],
+    columns: createColumns(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       pagination,
       globalFilter: search,
+      columnVisibility,
     },
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
+    onColumnVisibilityChange: setColumnVisibility,
     manualPagination: true,
-    pageCount: data?.totalPages || 0,
+    pageCount: tickets?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
 
-  if (!isLoading && !data) return <div>No data</div>;
+  if (!isLoading && !tickets) return <div>No data</div>;
 
   return (
     <Card>
@@ -89,7 +105,7 @@ export const TicketList = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="border rounded-md">
-          {isLoading ? (
+          {isFetchingPage || isLoading ? (
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -212,7 +228,7 @@ export const TicketList = () => {
             </Table>
           )}
         </div>
-        <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.total}/>
+        <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={tickets?.total}/>
       </CardContent>
     </Card>
   );

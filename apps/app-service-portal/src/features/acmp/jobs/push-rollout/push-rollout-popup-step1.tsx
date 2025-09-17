@@ -1,8 +1,6 @@
 "use client";
 
 import { columns } from "./push-rollout-popup-step1-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAcmpRollouts } from "@/lib/api-client/acmp/rollout";
 import { useState } from "react";
 import {
   Button,
@@ -26,20 +24,21 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-
-import { FeRollout } from "@/types/acmp/rollout";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
+import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { ApiClient, AcmpRolloutTemplateListItem } from "@repo/lib-api-client";
+import { useParams } from "next/navigation";
 
 interface PushRolloutPopupStep1Props {
-  initialSelectedRollout: FeRollout | undefined;
-  onNext: (rollout: FeRollout) => void;
+  initialSelectedRollout: AcmpRolloutTemplateListItem | undefined;
+  onNext: (rollout: AcmpRolloutTemplateListItem) => void;
 }
 
 export default function PushRolloutPopupStep1({
   initialSelectedRollout,
   onNext,
 }: PushRolloutPopupStep1Props) {
-  const [selectedRollout, setSelectedRollout] = useState<FeRollout | undefined>(
+  const [selectedRollout, setSelectedRollout] = useState<AcmpRolloutTemplateListItem | undefined>(
     initialSelectedRollout
   );
   const [search, setSearch] = useState("");
@@ -48,14 +47,24 @@ export default function PushRolloutPopupStep1({
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["rollouts", search, pagination.pageIndex, pagination.pageSize],
-    queryFn: () =>
-      fetchAcmpRollouts(search, pagination.pageIndex + 1, pagination.pageSize),
+  const { viewId } = useParams();
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
+  const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
+    queryKey: ["rollout-templates", viewId, search, pagination.pageIndex, pagination.pageSize],
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpRolloutTemplates(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
   });
 
+  const isLoading = isSessionLoading || isQueryLoading;
+
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -250,8 +259,7 @@ export default function PushRolloutPopupStep1({
         <div className="text-sm text-muted-foreground">
           {selectedRollout && (
             <>
-              Selected:{" "}
-              <span className="font-medium">{selectedRollout.name}</span>
+              Selected: <span className="font-medium">{selectedRollout.name}</span>
             </>
           )}
         </div>

@@ -28,16 +28,8 @@ export default function JobsPageContent() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onSelect={(event) => {event.preventDefault(); toast.info("Will be available ASAP"); }}>
-                <TerminalIcon className="w-4 h-4" />
-                Push Client Command
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={(event) => {event.preventDefault(); toast.info("Will be available ASAP"); }}>
-                <MonitorUp className="w-4 h-4" />
-                Push Rollout Template
-              </DropdownMenuItem>
-              {/* <PushClientCommandPopup />
-              <PushRolloutPopup /}>*/}
+              <PushClientCommandPopup />
+              <PushRolloutPopup />
             </DropdownMenuContent>
           </DropdownMenu>
         }

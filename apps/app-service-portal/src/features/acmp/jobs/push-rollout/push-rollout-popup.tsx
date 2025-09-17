@@ -14,35 +14,36 @@ import { useState } from "react";
 import PushRolloutPopupStep1 from "./push-rollout-popup-step1";
 import PushRolloutPopupStep2 from "./push-rollout-popup-step2";
 import PushRolloutPopupStep3 from "./push-rollout-popup-step3";
-import { FeRollout } from "@/types/acmp/rollout";
-import { FeClient } from "@/types/acmp/client";
+import { AcmpRolloutTemplateListItem, AcmpClientListItem } from "@repo/lib-api-client";
 
 export default function PushRolloutPopup() {
+  const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [rollout, setRollout] = useState<FeRollout | undefined>(undefined);
-  const [clients, setClients] = useState<FeClient[]>([]);
+  const [rollout, setRollout] = useState<AcmpRolloutTemplateListItem | undefined>(undefined);
+  const [clients, setClients] = useState<AcmpClientListItem[]>([]);
   
 
-  const handleNextStep1 = (rollout: FeRollout) => {
+  const handleNextStep1 = (rollout: AcmpRolloutTemplateListItem) => {
     setRollout(rollout);
     setStep(2);
   };
 
-  const handleNextStep2 = (clients: FeClient[]) => {
+  const handleNextStep2 = (clients: AcmpClientListItem[]) => {
     setClients(clients);
     setStep(3);
   };
 
   const handleFinishStep3 = () => {
-    console.log(rollout, clients);
+    setOpen(false);
   };
   
   const handleBack = () => {
     setStep(step - 1);
   }
 
-  const handleOpenChange = (open: boolean) => {
-    if (!open) {
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
       setStep(1);
       setRollout(undefined);
       setClients([]);
@@ -50,7 +51,7 @@ export default function PushRolloutPopup() {
   };
 
   return (
-    <Dialog onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <DropdownMenuItem onSelect={(event) => event.preventDefault()}>
           <MonitorUp className="w-4 h-4" />

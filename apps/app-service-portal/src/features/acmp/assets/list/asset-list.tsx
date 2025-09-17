@@ -22,41 +22,14 @@ import {
   useReactTable,
   ColumnDef,
 } from "@tanstack/react-table";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
-import { AssetListItem } from "./types";
 import { createColumns } from "./columns";
+import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { ApiClient } from "@repo/lib-api-client";
+import { useParams } from "next/navigation";
 
-const mockedAssets: AssetListItem[] = [
-  {
-    id: "1",
-    name: "Laptop-DEV-001",
-    type: "Laptop",
-    tenantName: "Acme Corp",
-    lastUpdate: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    name: "Server-PROD-01",
-    type: "Server",
-    tenantName: "Acme Corp",
-    lastUpdate: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-  },
-  {
-    id: "3",
-    name: "Switch-03",
-    type: "Network",
-    tenantName: "Globex",
-    lastUpdate: null,
-  },
-  {
-    id: "4",
-    name: "Workstation-DESIGN-07",
-    type: "Workstation",
-    tenantName: "Initech",
-    lastUpdate: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-  },
-];
+// removed mock data; using real API
 
 export const AssetList = () => {
   const [search, setSearch] = useState("");
@@ -64,17 +37,46 @@ export const AssetList = () => {
     pageIndex: 0,
     pageSize: 10,
   });
+  const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
+    location: false,
+    costCenter: false,
+    department: false,
+    vendor: false,
+    manufacturer: false,
+    servicePartner: false,
+    stateEn: false,
+    stateDe: false,
+    inventoryNumber: false,
+    serialNumber: false,
+    model: false,
+    creationDate: false,
+    isLent: true,
+  });
+  const { viewId } = useParams();
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
+  const { data: assets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
+    queryKey: [
+      "assets",
+      viewId,
+      search,
+      pagination.pageIndex,
+      pagination.pageSize,
+    ],
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpAssets(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
+  });
 
-  const filteredData = useMemo(() => {
-    const term = search.trim().toLowerCase();
-    if (!term) return mockedAssets;
-    return mockedAssets.filter((a) =>
-      [a.name, a.type, a.tenantName].some((v) => v.toLowerCase().includes(term))
-    );
-  }, [search]);
+  const isLoading = isSessionLoading || isQueryLoading;
+  const isFetchingPage = isQueryFetching;
 
   const table = useReactTable({
-    data: filteredData,
+    data: assets?.data || [],
     columns: createColumns(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -82,15 +84,17 @@ export const AssetList = () => {
     state: {
       pagination,
       globalFilter: search,
+      columnVisibility,
     },
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
+    onColumnVisibilityChange: setColumnVisibility,
     manualPagination: true,
-    pageCount: Math.ceil(filteredData.length / pagination.pageSize),
+    pageCount: assets?.totalPages || 0,
   });
 
-  const isLoading = false;
-  const isFetchingPage = false;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!isLoading && !assets) return <div>No data</div>;
 
   return (
     <Card>
@@ -206,7 +210,7 @@ export const AssetList = () => {
           isLoading={isLoading}
           showPageCount={false}
           showRowsPerPage={false}
-          totalRowsOverride={filteredData.length}
+          totalRowsOverride={assets?.total}
         />
       </CardContent>
     </Card>
