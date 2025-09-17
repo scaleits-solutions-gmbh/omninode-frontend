@@ -1,8 +1,9 @@
 "use client";
 
 import { columns } from "./push-client-command-popup-step1-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAcmpCommands } from "@/lib/api-client/acmp/client-command";
+import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { ApiClient, AcmpClientCommandListItem } from "@repo/lib-api-client";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getFilteredRowModel } from "@tanstack/react-table";
 import { FeClientCommand } from "@/types/acmp/client-command";
@@ -37,15 +38,31 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
       pageSize: 10,
     });
   
-    const { data, isLoading, error } = useQuery({
-      queryKey: ["clientCommands", search, pagination.pageIndex, pagination.pageSize],
-      queryFn: () =>
-        fetchAcmpCommands(search, pagination.pageIndex + 1, pagination.pageSize),
-    });
+  const { viewId } = useParams();
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
+  const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
+    queryKey: [
+      "clientCommands",
+      viewId,
+      search,
+      pagination.pageIndex,
+      pagination.pageSize,
+    ],
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpClientCommands(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
+  });
   
   
+    const isLoading = isSessionLoading || isQueryLoading;
+
     const table = useReactTable({
-      data: data?.items || [],
+      data: data?.data || [],
       columns: columns,
       getCoreRowModel: getCoreRowModel(),
       getPaginationRowModel: getPaginationRowModel(),

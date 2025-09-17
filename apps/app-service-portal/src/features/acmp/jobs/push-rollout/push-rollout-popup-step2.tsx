@@ -1,6 +1,6 @@
 import { columns } from "./push-rollout-popup-step2-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAcmpClients } from "@/lib/api-client/acmp/client";
+import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { ApiClient, AcmpClientListItem } from "@repo/lib-api-client";
 import { useState } from "react";
 import {
   useReactTable,
@@ -9,7 +9,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 
-import { FeClient } from "@/types/acmp/client";
+import { useParams } from "next/navigation";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import {
   Button,
@@ -29,8 +29,8 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 
 interface PushClientCommandPopupStep2Props {
-  initialSelectedClients: FeClient[];
-  onNext: (clients: FeClient[]) => void;
+  initialSelectedClients: AcmpClientListItem[];
+  onNext: (clients: AcmpClientListItem[]) => void;
   onBack: () => void;
 }
 
@@ -39,7 +39,7 @@ export default function PushClientCommandPopupStep2({
   onNext,
   onBack,
 }: PushClientCommandPopupStep2Props) {
-  const [selectedClients, setSelectedClients] = useState<FeClient[]>(
+  const [selectedClients, setSelectedClients] = useState<AcmpClientListItem[]>(
     initialSelectedClients
   );
   const [search, setSearch] = useState("");
@@ -48,14 +48,23 @@ export default function PushClientCommandPopupStep2({
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["clients", search, pagination.pageIndex, pagination.pageSize],
-    queryFn: () =>
-      fetchAcmpClients(search, pagination.pageIndex + 1, pagination.pageSize),
+  const { viewId } = useParams();
+  const { isValid, isLoading: isSessionLoading } = useValidSession();
+  const { data, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
+    queryKey: ["clients", viewId, search, pagination.pageIndex, pagination.pageSize],
+    enabled: isValid && Boolean(viewId),
+    queryFn: async ({ accessToken }) =>
+      ApiClient.getAcmpClients(accessToken, {
+        serviceInstanceId: viewId as string,
+        page: pagination.pageIndex + 1,
+        pageSize: pagination.pageSize,
+        search: search,
+      }),
   });
+  const isLoading = isSessionLoading || isQueryLoading;
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

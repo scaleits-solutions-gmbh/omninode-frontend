@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, HardDrive } from "lucide-react";
-import { AssetListItem } from "./types";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
+import { AcmpAssetListItem } from "@repo/lib-api-client";
 
-export const createColumns = (): ColumnDef<AssetListItem>[] => [
+export const createColumns = (): ColumnDef<AcmpAssetListItem>[] => [
   {
     size: 30,
     minSize: 100,
@@ -25,12 +25,7 @@ export const createColumns = (): ColumnDef<AssetListItem>[] => [
     minSize: 80,
     header: "Type",
     accessorKey: "type",
-  },
-  {
-    size: 35,
-    minSize: 100,
-    header: "Tenant",
-    accessorKey: "tenantName",
+    cell: ({ row }) => <div>{row.original.type ?? "-"}</div>,
   },
   {
     size: 30,
@@ -43,6 +38,35 @@ export const createColumns = (): ColumnDef<AssetListItem>[] => [
         : "Never";
       return <div>{value}</div>;
     },
+  },
+  // Hidden by default via columnVisibility in table state
+  { header: "Location", accessorKey: "location", minSize: 100 },
+  { header: "Cost Center", accessorKey: "costCenter", minSize: 120 },
+  { header: "Department", accessorKey: "department", minSize: 120 },
+  { header: "Vendor", accessorKey: "vendor", minSize: 100 },
+  { header: "Manufacturer", accessorKey: "manufacturer", minSize: 120 },
+  { header: "Service Partner", accessorKey: "servicePartner", minSize: 140 },
+  { header: "State (EN)", accessorKey: "stateEn", minSize: 120 },
+  { header: "State (DE)", accessorKey: "stateDe", minSize: 120 },
+  { header: "Inventory #", accessorKey: "inventoryNumber", minSize: 120 },
+  { header: "Serial #", accessorKey: "serialNumber", minSize: 120 },
+  { header: "Model", accessorKey: "model", minSize: 120 },
+  {
+    header: "Creation Date",
+    accessorKey: "creationDate",
+    minSize: 140,
+    cell: ({ row }) => {
+      const value = row.original.creationDate
+        ? new Date(row.original.creationDate).toLocaleString()
+        : "-";
+      return <div>{value}</div>;
+    },
+  },
+  {
+    header: "Is Lent",
+    accessorKey: "isLent",
+    minSize: 80,
+    cell: ({ row }) => <div>{row.original.isLent ? "Yes" : "No"}</div>,
   },
   {
     size: 5,
