@@ -9,11 +9,11 @@ export function FeaturesDiagram() {
     >
       <div>
         <h2 className="text-3xl sm:text-4xl font-semibold">
-          Seamless System Integration
+          Erweiterte Client‑Management‑Plattform (ACMP)
         </h2>
         <p className="mt-4 text-white/70 max-w-xl">
-          OmniNode simplifies connecting your various systems, providing a
-          unified platform to streamline operations.
+          Die ACMP‑Integration von OmniNode bietet umfassendes Befehlsmanagement für Clients,
+          automatisierte Rollouts und zentrale Kontrolle über Ihr gesamtes Client‑Ökosystem.
         </p>
 
         <div className="mt-8">
@@ -21,7 +21,7 @@ export function FeaturesDiagram() {
             href="#get-started"
             className="inline-flex items-center justify-center rounded-full bg-primary text-white px-4 py-2 font-medium transition-shadow duration-300 hover:opacity-90 shadow-[0_0_16px_6px_rgba(124,92,255,0.28),_0_0_0_4px_rgba(124,92,255,0.15)_inset]"
           >
-            Get Started
+            Jetzt starten
           </Link>
         </div>
       </div>

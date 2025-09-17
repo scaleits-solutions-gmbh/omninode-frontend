@@ -2,48 +2,51 @@ export function Evolution() {
   const bars = [2, 3, 4, 3, 5, 6, 7, 8];
   return (
     <section className="container-xl py-14">
-      <h3 className="text-2xl font-semibold">Continuous Evolution & Adaptability</h3>
+      <h3 className="text-2xl font-semibold">ACMP‑Entwicklung & Intelligenz</h3>
       <div className="mt-6 grid gap-8 lg:grid-cols-2 items-center">
         <div className="space-y-5 text-white/80">
           <p>
-            OmniNode grows with your business via continuous feedback mechanisms and adaptive features to meet
-            evolving needs.
+            ACMP entwickelt sich kontinuierlich weiter – durch intelligentes Lernen aus Ihren Bereitstellungsmustern,
+            Client‑Verhalten und Betriebsfeedback – für optimale Leistung und Zuverlässigkeit.
           </p>
           <div className="flex items-start gap-3">
             <span className="inline-grid h-9 w-9 place-items-center rounded-full bg-black/40 border border-primary/50 text-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M20 4v6h-6" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M9 12l2 2 4-4" stroke="var(--color-primary)" strokeWidth="2" />
+                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="var(--color-primary)" strokeWidth="2" opacity=".7" />
               </svg>
             </span>
             <div>
-              <div className="font-medium text-white">Continuous Updates</div>
-              <div className="text-sm">Regular platform updates with new features and integrations based on user feedback.</div>
+              <div className="font-medium text-white">Intelligente Befehlsoptimierung</div>
+              <div className="text-sm">KI‑gestützte Zeitplanung und Ausführungsoptimierung auf Basis historischer Leistungsdaten.</div>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <span className="inline-grid h-9 w-9 place-items-center rounded-full bg-black/40 border border-primary/50 text-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <rect x="4" y="4" width="6" height="6" stroke="var(--color-primary)" strokeWidth="2" />
-                <rect x="14" y="4" width="6" height="6" stroke="var(--color-primary)" strokeWidth="2" />
-                <rect x="4" y="14" width="6" height="6" stroke="var(--color-primary)" strokeWidth="2" />
-                <rect x="14" y="14" width="6" height="6" stroke="var(--color-primary)" strokeWidth="2" />
+                <circle cx="12" cy="12" r="8" stroke="var(--color-primary)" strokeWidth="2" />
+                <path d="M12 8v4l3 2" stroke="var(--color-primary)" strokeWidth="2" opacity=".7" />
+                <path d="M12 2v2" stroke="var(--color-primary)" strokeWidth="2" />
+                <path d="M12 20v2" stroke="var(--color-primary)" strokeWidth="2" />
               </svg>
             </span>
             <div>
-              <div className="font-medium text-white">Scalable Architecture</div>
-              <div className="text-sm">Seamlessly scales as your organization grows and requirements evolve.</div>
+              <div className="font-medium text-white">Prädiktive Rollouts</div>
+              <div className="text-sm">Machine‑Learning‑Algorithmen prognostizieren optimale Rollout‑Fenster und passen Zeitpläne automatisch an.</div>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <span className="inline-grid h-9 w-9 place-items-center rounded-full bg-black/40 border border-primary/50 text-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M20 14a6 6 0 0 1-6 6H9l-4 3v-6a6 6 0 0 1-3-5V8a6 6 0 0 1 6-6h6a6 6 0 0 1 6 6v6Z" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <rect x="2" y="3" width="20" height="14" rx="2" stroke="var(--color-primary)" strokeWidth="2" />
+                <circle cx="9" cy="9" r="1" fill="var(--color-primary)" />
+                <circle cx="12" cy="9" r="1" fill="var(--color-primary)" />
+                <circle cx="15" cy="9" r="1" fill="var(--color-primary)" />
               </svg>
             </span>
             <div>
-              <div className="font-medium text-white">Feedback Integration</div>
-              <div className="text-sm">Built-in feedback mechanisms help the platform adapt to demands over time.</div>
+              <div className="font-medium text-white">Adaptives Monitoring</div>
+              <div className="text-sm">Echtzeit‑Überwachung, die aus Mustern lernt und Alarmgrenzen automatisch anpasst.</div>
             </div>
           </div>
         </div>

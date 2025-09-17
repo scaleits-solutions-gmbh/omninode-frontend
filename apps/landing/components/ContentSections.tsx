@@ -37,45 +37,50 @@ export function Vision() {
 export function Pillars() {
   return (
     <section id="pillars" className="container-xl py-10">
-      <h3 className="text-2xl font-semibold">Key Functional Pillars</h3>
+      <h3 className="text-2xl font-semibold">Wesentliche ACMP‑Funktionen</h3>
       <div className="mt-8 grid gap-16 lg:grid-cols-2">
         {/* Feature 1 */}
         <div className="grid md:grid-cols-[160px_1fr] gap-6 items-start gradient-card rounded-2xl p-6">
           <div className="h-24 w-24 icon-badge rounded-xl grid place-items-center">
             <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4Z" stroke="var(--color-primary)" strokeWidth="2"/>
-              <path d="M12 10a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z" stroke="var(--color-primary)" strokeWidth="2" opacity=".8"/>
+              <path d="M9 12l2 2 4-4" stroke="var(--color-primary)" strokeWidth="2" />
+              <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="var(--color-primary)" strokeWidth="2" opacity=".7" />
             </svg>
           </div>
           <div>
-            <h4 className="text-xl font-semibold">User Management and Security</h4>
+            <h4 className="text-xl font-semibold">Command‑ & Control‑Center</h4>
             <p className="mt-2 text-white/70">
-              Uses Microsoft Entra ID for robust identity, secure authentication, and policy controls—driving
-              safety and operational efficiency across the platform.
+              Zentrales Befehlsmanagement mit Versionskontrolle, Zeitplanung und Stapelausführung
+              für nahtlose Client‑Operationen.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Microsoft Entra ID</span>
-              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">SSO / OAuth2</span>
-              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">MFA & RBAC</span>
+              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Stapelbefehle</span>
+              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Versionskontrolle</span>
+              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Audit‑Protokolle</span>
             </div>
           </div>
         </div>
-        {/* Feature 2 */}
-        <div className="grid md:grid-cols-[1fr_220px] gap-6 items-center gradient-card-strong rounded-2xl p-6">
+        {/* Feature 3 */}
+        <div className="grid md:grid-cols-[160px_1fr] gap-6 items-start gradient-card rounded-2xl p-6">
+          <div className="h-24 w-24 icon-badge rounded-xl grid place-items-center">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke="var(--color-primary)" strokeWidth="2" />
+              <circle cx="9" cy="9" r="1" fill="var(--color-primary)" />
+              <circle cx="12" cy="9" r="1" fill="var(--color-primary)" />
+              <circle cx="15" cy="9" r="1" fill="var(--color-primary)" />
+            </svg>
+          </div>
           <div>
-            <h4 className="text-xl font-semibold">Customizable and Accessible Interface</h4>
+            <h4 className="text-xl font-semibold">Echtzeit‑Client‑Monitoring</h4>
             <p className="mt-2 text-white/70">
-              Designed for platform managers, partners, and customers with intuitive navigation and accessible
-              features for inclusive use.
+              Live‑Dashboard zur Überwachung von Client‑Zustand, Befehlsstatus und Systemleistung
+              mit Sofortbenachrichtigungen und detaillierten Berichten.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Role-based views</span>
-              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">WCAG-friendly</span>
-              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Themeable UI</span>
+              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Live‑Dashboard</span>
+              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Sofort‑Alerts</span>
+              <span className="rounded-full neon-pill px-3 py-1 text-sm text-white/90">Leistungsmetriken</span>
             </div>
-          </div>
-          <div className="h-40 rounded-xl grid place-items-center neon-tile">
-            <button className="rounded-full neon-button text-white px-6 py-2">Explore Interface</button>
           </div>
         </div>
       </div>
