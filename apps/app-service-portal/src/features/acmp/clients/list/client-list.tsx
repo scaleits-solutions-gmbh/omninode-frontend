@@ -27,7 +27,7 @@ import {
 } from "@tanstack/react-table";
 import { createColumns } from "./columns";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ClientDetailsPopup } from "../details-popup/client-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
@@ -69,7 +69,7 @@ export const ClientList = () => {
   });
 
   const isLoading = isSessionLoading || isQueryLoading;
-  const isFetchingPage = isQueryFetching;
+  const [isFetchingPage, setIsFetchingPage] = useState(false);
 
   const table = useReactTable({
     data: clients?.data || [],
@@ -83,11 +83,20 @@ export const ClientList = () => {
       pagination,
       globalFilter: search,
     },
-    onPaginationChange: setPagination,
+    onPaginationChange: (updater) => {
+      setIsFetchingPage(true);
+      setPagination(updater);
+    },
     onGlobalFilterChange: setSearch,
     manualPagination: true,
     pageCount: clients?.totalPages || 0,
   });
+
+  useEffect(() => {
+    if (isFetchingPage && !isQueryLoading && !isQueryFetching) {
+      setIsFetchingPage(false);
+    }
+  }, [isFetchingPage, isQueryLoading, isQueryFetching]);
 
   if (error) return <div>Error: {error.message}</div>;
 

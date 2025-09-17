@@ -24,7 +24,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
 import { Service } from "@scaleits-solutions-gmbh/services";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Lock } from "lucide-react";
 
 
 
@@ -120,16 +120,20 @@ const {selectedCompany, isLoading, error} = useGetCurrentCompany();
                             {serviceInstance.permissions.canViewDashboard && (
                               <SidebarMenuSubItem key="dashboard">
                                 <SidebarMenuSubButton
-                                  asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/dashboard`
-                                  )}
+                                  aria-disabled
+                                  className="pointer-events-none opacity-60"
                                 >
+                                  <div className="flex items-center gap-2">
+                                    <Lock className="h-4 w-4" />
+                                    <span>Dashboard</span>
+                                  </div>
+                                  {/*
                                   <Link
                                     href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/dashboard`}
                                   >
                                     Dashboard
                                   </Link>
+                                  */}
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
@@ -237,16 +241,20 @@ const {selectedCompany, isLoading, error} = useGetCurrentCompany();
                             {serviceInstance.permissions.canViewDashboard && (
                               <SidebarMenuSubItem key="dashboard">
                                 <SidebarMenuSubButton
-                                  asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/dashboard`
-                                  )}
+                                  aria-disabled
+                                  className="pointer-events-none opacity-60"
                                 >
+                                  <div className="flex items-center gap-2">
+                                    <Lock className="h-4 w-4" />
+                                    <span>Dashboard</span>
+                                  </div>
+                                  {/*
                                   <Link
                                     href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/dashboard`}
                                   >
                                     Dashboard
                                   </Link>
+                                  */}
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}

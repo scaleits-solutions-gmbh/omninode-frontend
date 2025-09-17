@@ -22,7 +22,7 @@ import {
   useReactTable,
   ColumnDef,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { createColumns } from "./columns";
 import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
@@ -54,6 +54,7 @@ export const AssetList = () => {
   });
   const { viewId } = useParams();
   const { isValid, isLoading: isSessionLoading } = useValidSession();
+  const [isFetchingPage, setIsFetchingPage] = useState(false);
   const { data: assets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
       "assets",
@@ -73,7 +74,6 @@ export const AssetList = () => {
   });
 
   const isLoading = isSessionLoading || isQueryLoading;
-  const isFetchingPage = isQueryFetching;
 
   const table = useReactTable({
     data: assets?.data || [],
@@ -86,12 +86,21 @@ export const AssetList = () => {
       globalFilter: search,
       columnVisibility,
     },
-    onPaginationChange: setPagination,
+    onPaginationChange: (updater) => {
+      setIsFetchingPage(true);
+      setPagination(updater);
+    },
     onGlobalFilterChange: setSearch,
     onColumnVisibilityChange: setColumnVisibility,
     manualPagination: true,
     pageCount: assets?.totalPages || 0,
   });
+
+  useEffect(() => {
+    if (isFetchingPage && !isQueryLoading && !isQueryFetching) {
+      setIsFetchingPage(false);
+    }
+  }, [isFetchingPage, isQueryLoading, isQueryFetching]);
 
   if (error) return <div>Error: {error.message}</div>;
   if (!isLoading && !assets) return <div>No data</div>;
