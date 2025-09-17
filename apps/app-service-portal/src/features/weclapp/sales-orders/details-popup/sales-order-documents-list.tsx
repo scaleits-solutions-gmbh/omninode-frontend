@@ -138,7 +138,7 @@ export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsLis
                 </TableBody>
               </Table>
             </div>
-            <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false}/>
+            <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
           </CardContent>
         </Card>
       </div>
@@ -239,7 +239,7 @@ export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsLis
           </p>
         </div>
       )}
-      <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false}/>
+      <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
       </CardContent>
     </Card>
     </div>

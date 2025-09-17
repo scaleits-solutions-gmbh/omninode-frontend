@@ -135,7 +135,7 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
               </TableBody>
             </Table>
           </div>
-          <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false}/>
+          <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
     );
@@ -216,7 +216,7 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
               </TableBody>
             </Table>
           </div>
-          <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false}/>
+          <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
       <div className="flex justify-between items-center">

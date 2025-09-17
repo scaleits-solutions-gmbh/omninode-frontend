@@ -143,7 +143,7 @@ export const ContractDocumentsList = ({
                 </TableBody>
               </Table>
             </div>
-            <DataTablePagination table={table} isLoading={true} showPageCount={false} showRowsPerPage={false}/>
+            <DataTablePagination table={table} isLoading={true} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.total}/>
           </CardContent>
         </Card>
       </div>
@@ -253,7 +253,7 @@ export const ContractDocumentsList = ({
               </p>
             </div>
           )}
-          <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false}/>
+          <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
     </div>
