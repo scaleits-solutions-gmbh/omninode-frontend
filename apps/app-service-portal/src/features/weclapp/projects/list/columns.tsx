@@ -6,6 +6,7 @@ import {
   Badge,
   Button
 } from "@repo/pkg-frontend-common-kit/components";
+import { formatDateDe } from "@/lib/utils/ui/date-format";
 
 
 export interface ColumnProps {
@@ -41,12 +42,14 @@ export const createColumns = (props: ColumnProps): ColumnDef<FeProject>[] => {
         minSize: 100,
         header: "Start Date",
         accessorKey: "startDate",
+        cell: ({ row }) => formatDateDe(row.original.startDate),
     },
     {
         size: 20,
         minSize: 100,
         header: "End Date",
         accessorKey: "endDate",
+        cell: ({ row }) => formatDateDe(row.original.endDate),
     },
     {
         size: 20,

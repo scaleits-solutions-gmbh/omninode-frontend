@@ -2,6 +2,7 @@ import { AcmpClientListItem } from "@repo/lib-api-client";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Monitor } from "lucide-react";
+import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 
 export interface ColumnProps {
   onViewDetails: (client: AcmpClientListItem) => void;
@@ -40,7 +41,7 @@ export const createColumns = (props: ColumnProps): ColumnDef<AcmpClientListItem>
       header: "Last Update",
       accessorKey: "lastUpdate",
       cell: ({ row }) => {
-        return <div>{row.original.lastUpdate ? new Date(row.original.lastUpdate).toLocaleString() : "Never"}</div>;
+        return <div>{formatDateTimeDe(row.original.lastUpdate, "Never")}</div>;
       },
     },
     {
