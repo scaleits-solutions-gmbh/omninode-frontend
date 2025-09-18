@@ -137,7 +137,7 @@ export default function PushClientCommandPopupStep2({
             </TableBody>
           </Table>
         </div>
-        <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
+        <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false} />
       </CardContent>
     </Card>
   );

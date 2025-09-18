@@ -142,7 +142,7 @@ export const QuotationDocumentsList = ({ quotationId }: QuotationDocumentsListPr
                 </TableBody>
               </Table>
             </div>
-            <DataTablePagination table={table} isLoading={true} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.total}/>
+            <DataTablePagination table={table} isLoading={true} showPageCount={false} showRowsPerPage={false}/>
           </CardContent>
         </Card>
       </div>

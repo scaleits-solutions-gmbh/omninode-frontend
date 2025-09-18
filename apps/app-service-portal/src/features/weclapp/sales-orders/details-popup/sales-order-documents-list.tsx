@@ -138,7 +138,7 @@ export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsLis
                 </TableBody>
               </Table>
             </div>
-            <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
+            <DataTablePagination table={table} isLoading={true} showRowsPerPage={false} showPageCount={false} />
           </CardContent>
         </Card>
       </div>
