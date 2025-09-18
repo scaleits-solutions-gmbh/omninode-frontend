@@ -8,7 +8,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/70 backdrop-blur">
       <a href="#overview" className="sr-only focus:not-sr-only focus:absolute left-2 top-2 bg-white text-black px-3 py-2 rounded">Zum Inhalt springen</a>
       <div className="container-xl flex h-16 items-center justify-between">
-        <Link href="#" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image src="/omninode-logo.svg" alt="OMNINODE" width={24} height={24} />
           <span className="text-sm font-semibold tracking-wide">OMNINODE</span>
         </Link>
