@@ -46,9 +46,7 @@ export function AutoBreadCrumbs({
                     <Link href={item.href}>{item.label}</Link>
                   </BreadcrumbLink>
                 ) : (
-                  <BreadcrumbItem>
-                    <span>{item.label}</span>
-                  </BreadcrumbItem>
+                  <span>{item.label}</span>
                 )}
               </BreadcrumbItem>
             </React.Fragment>

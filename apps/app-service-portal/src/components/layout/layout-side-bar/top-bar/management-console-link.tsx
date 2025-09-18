@@ -9,14 +9,14 @@ export default function ManagementConsoleLink() {
 
   if (selectedCompany?.managementConsoleAccess !== ManagementConsoleAccess.User) {
     return (
-      <Link href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}>
+      <Link className="hidden md:flex" href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}>
         Management Console
       </Link>
     );
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="items-center gap-2 hidden md:flex">
       <Lock className="size-4 text-muted-foreground" />
       <span className="text-muted-foreground">Management Console</span>
     </div>
