@@ -265,7 +265,7 @@ export const SalesInvoiceDocumentsList = ({
               </p>
             </div>
           )}
-          <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false}/>
+          <DataTablePagination table={table} showRowsPerPage={false} showPageCount={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
     </div>

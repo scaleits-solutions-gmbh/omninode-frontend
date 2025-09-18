@@ -146,6 +146,7 @@ export default function PushClientCommandPopupStep2({
             isLoading={true}
             showRowsPerPage={false}
             showPageCount={false}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>
@@ -239,6 +240,7 @@ export default function PushClientCommandPopupStep2({
             table={table}
             showRowsPerPage={false}
             showPageCount={false}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

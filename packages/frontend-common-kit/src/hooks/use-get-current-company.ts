@@ -36,6 +36,7 @@ export type UseGetCurrentCompanyResult = {
   selectedCompany: Company | undefined;
   selectedCompanyId: string | null;
   isLoading: boolean;
+  isFetching: boolean;
   error: unknown;
   refetch: () => void;
   setSelectedCompanyId: (companyId: string | null) => void;
@@ -122,8 +123,8 @@ export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
       !mounted ||
       sessionStatus !== "authenticated" ||
       query.isLoading ||
-      query.isFetching ||
       (isSessionValid && typeof query.data === "undefined"),
+    isFetching: query.isFetching,
     error: query.error,
     refetch: () => {
       void query.refetch();

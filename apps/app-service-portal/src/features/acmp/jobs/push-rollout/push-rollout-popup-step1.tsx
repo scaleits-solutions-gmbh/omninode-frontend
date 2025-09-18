@@ -152,6 +152,7 @@ export default function PushRolloutPopupStep1({
               isLoading={true}
               showRowsPerPage={false}
               showPageCount={false}
+              totalRowsOverride={data?.total}
             />
           </CardContent>
         </Card>
@@ -252,6 +253,7 @@ export default function PushRolloutPopupStep1({
             table={table}
             showRowsPerPage={false}
             showPageCount={false}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

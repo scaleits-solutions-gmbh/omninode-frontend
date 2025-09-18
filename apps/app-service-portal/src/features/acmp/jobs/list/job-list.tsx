@@ -22,7 +22,7 @@ import {
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { JobDetailsPopup } from "../details-popup/job-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
@@ -57,7 +57,7 @@ export const JobList = () => {
   });
 
   const isLoading = isSessionLoading || isQueryLoading;
-  const isFetchingPage = isQueryFetching;
+  const [isFetchingPage, setIsFetchingPage] = useState(false);
 
   const table = useReactTable({
     data: jobs?.data || [],
@@ -69,11 +69,20 @@ export const JobList = () => {
       pagination,
       globalFilter: search,
     },
-    onPaginationChange: setPagination,
+    onPaginationChange: (updater) => {
+      setIsFetchingPage(true);
+      setPagination(updater);
+    },
     onGlobalFilterChange: setSearch,
     manualPagination: true,
     pageCount: jobs?.totalPages || 0,
   });
+
+  useEffect(() => {
+    if (isFetchingPage && !isQueryLoading && !isQueryFetching) {
+      setIsFetchingPage(false);
+    }
+  }, [isFetchingPage, isQueryLoading, isQueryFetching]);
 
   if (error) return <div>Error: {error.message}</div>;
 
