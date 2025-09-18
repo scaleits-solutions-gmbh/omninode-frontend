@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Ticket } from "lucide-react";
 import { Badge, Button } from "@repo/pkg-frontend-common-kit/components";
+import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 import { AcmpTicketListItem } from "@repo/lib-api-client";
 
 function ActionsColumn() {
@@ -45,14 +46,14 @@ export const createColumns = (): ColumnDef<AcmpTicketListItem>[] => [
     minSize: 120,
     header: "Created",
     accessorKey: "creationDate",
-    cell: ({ row }) => new Date(row.original.creationDate).toLocaleString(),
+    cell: ({ row }) => formatDateTimeDe(row.original.creationDate),
   },
   {
     size: 20,
     minSize: 120,
     header: "Last Modified",
     accessorKey: "lastModified",
-    cell: ({ row }) => new Date(row.original.lastModified).toLocaleString(),
+    cell: ({ row }) => formatDateTimeDe(row.original.lastModified),
   },
   {
     size: 20,

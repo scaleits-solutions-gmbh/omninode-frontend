@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import type { AcmpClientInstalledSoftwareListItem } from "@repo/lib-api-client";
+import { formatDateDe } from "@/lib/utils/ui/date-format";
 
 export const installedSoftwareColumns: ColumnDef<AcmpClientInstalledSoftwareListItem>[] = [
   {
@@ -25,10 +26,7 @@ export const installedSoftwareColumns: ColumnDef<AcmpClientInstalledSoftwareList
     minSize: 140,
     header: "Installed",
     accessorKey: "installDate",
-    cell: ({ row }) => {
-      const value = row.original.installDate;
-      return <>{value ? new Date(value).toLocaleDateString() : "—"}</>;
-    },
+    cell: ({ row }) => formatDateDe(row.original.installDate, "—"),
   },
 ];
 

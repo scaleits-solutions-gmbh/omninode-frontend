@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { AcmpJobListItem } from "@repo/lib-api-client";
 import { Eye, Zap } from "lucide-react";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
+import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 
 export interface ColumnProps {
   onViewDetails: (job: AcmpJobListItem) => void;
@@ -49,7 +50,7 @@ export const createColumns = (props: ColumnProps): ColumnDef<AcmpJobListItem>[] 
       header: "Date Time",
       accessorKey: "dateTime",
       cell: ({ row }) => {
-        return <>{row.original.dateTime ? new Date(row.original.dateTime).toLocaleString() : "N/A"}</>;
+        return <>{formatDateTimeDe(row.original.dateTime, "N/A")}</>;
       },
     },
     {
