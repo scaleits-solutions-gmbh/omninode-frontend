@@ -8,6 +8,7 @@ import {
   Badge,
   Button
 } from "@repo/pkg-frontend-common-kit/components";
+import { formatDateDe } from "@/lib/utils/ui/date-format";
 
 function ActionsColumn({ 
   row, 
@@ -50,12 +51,14 @@ export const createColumns = (router: AppRouterInstance, pathname: string): Colu
     minSize: 100,
     header: "Date",
     accessorKey: "date",
+    cell: ({ row }) => formatDateDe(row.original.date),
   },
   {
     size: 20,
     minSize: 100,
     header: "Finished Date",
     accessorKey: "finishedDate",
+    cell: ({ row }) => formatDateDe(row.original.finishedDate),
   },
   {
     size: 25,

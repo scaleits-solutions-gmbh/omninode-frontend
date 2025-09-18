@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, HardDrive } from "lucide-react";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
+import { formatDateDe, formatDateTimeDe } from "@/lib/utils/ui/date-format";
 import { AcmpAssetListItem } from "@repo/lib-api-client";
 
 export const createColumns = (): ColumnDef<AcmpAssetListItem>[] => [
@@ -33,9 +34,7 @@ export const createColumns = (): ColumnDef<AcmpAssetListItem>[] => [
     header: "Last Update",
     accessorKey: "lastUpdate",
     cell: ({ row }) => {
-      const value = row.original.lastUpdate
-        ? new Date(row.original.lastUpdate).toLocaleString()
-        : "Never";
+      const value = formatDateTimeDe(row.original.lastUpdate, "Never");
       return <div>{value}</div>;
     },
   },
@@ -56,9 +55,7 @@ export const createColumns = (): ColumnDef<AcmpAssetListItem>[] => [
     accessorKey: "creationDate",
     minSize: 140,
     cell: ({ row }) => {
-      const value = row.original.creationDate
-        ? new Date(row.original.creationDate).toLocaleString()
-        : "-";
+      const value = formatDateTimeDe(row.original.creationDate, "-");
       return <div>{value}</div>;
     },
   },
