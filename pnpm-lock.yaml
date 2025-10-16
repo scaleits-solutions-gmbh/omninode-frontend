@@ -1063,7 +1063,7 @@ importers:
         version: link:../api-client
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
-        version: 0.0.1-beta.20250630092238(typescript@5.9.2)(zod@4.1.5)
+        version: 0.0.1-beta.20250630092238(typescript@5.9.2)(zod@4.1.12)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1135,6 +1135,46 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
+  packages/omninode-api-client:
+    dependencies:
+      '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
+        specifier: 0.0.14
+        version: 0.0.14(drizzle-orm@0.44.5)
+      '@scaleits-solutions-gmbh/org-lib-backend-common-kit':
+        specifier: ^0.0.49
+        version: 0.0.49(drizzle-orm@0.44.5)(zod@4.1.12)
+      '@scaleits-solutions-gmbh/org-lib-backend-serverless-common-kit':
+        specifier: ^0.0.7
+        version: 0.0.7(drizzle-orm@0.44.5)(zod@4.1.12)
+      '@scaleits-solutions-gmbh/org-lib-global-common-kit':
+        specifier: ^0.0.5
+        version: 0.0.5(drizzle-orm@0.44.5)
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^24.3.1
+        version: 24.3.1
+      eslint:
+        specifier: ^9.33.0
+        version: 9.33.0(jiti@2.5.1)
+      rimraf:
+        specifier: ^6.0.0
+        version: 6.0.1
+      tsc-alias:
+        specifier: ^1.8.10
+        version: 1.8.16
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+
   packages/typescript-config: {}
 
   packages/ui:
@@ -1173,6 +1213,11 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@asteasolutions/zod-to-openapi@8.1.0':
+    resolution: {integrity: sha512-tQFxVs05J/6QXXqIzj6rTRk3nj1HFs4pe+uThwE95jL5II2JfpVXkK+CqkO7aT0Do5AYqO6LDrKpleLUFXgY+g==}
+    peerDependencies:
+      zod: ^4.0.0
 
   '@aws-crypto/sha256-browser@5.2.0':
     resolution: {integrity: sha512-AXfN/lGotSQwu6HNcEsIASo7kWXZ5HYWvfOmSNKDsEqC4OashTp8alTmaz+F7TC2L083SFv5RdB+qU3Vs1kZqw==}
@@ -2100,11 +2145,35 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
 
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.14':
+    resolution: {integrity: sha512-MIJOrb6VxS9vdP4vk8KZ66HrYJqzwUhTtCKmi6z1UIU3ja8O5flhzFSv+0IggHr2gCLws0xrA9/tyhTPJulB9w==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.14/a4d70a237ef45932db8502e8849dc1741f64b84e}
+
   '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.6':
     resolution: {integrity: sha512-VYfrLmLVANZrah0Y5i4SHWL4+BE3dN33S5uI5q5kcpjP7+5kxIjcLfE3QK6Gwfxryp01cieTUMZP12kqJQLpuw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.6/6a2011ee975f595d5413d3c1266f3138c76d70d0}
 
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.41':
+    resolution: {integrity: sha512-z9j91Uz3lkX06wh7vpPTpU6JR+TLnd3JdWKnYNkZf31BBJJdpUI1uBLAGS1zr/uAb40R691ITViThwkQm1jWlg==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.41/06be18ed6f09da5433e8cefd2ad296d9ae5594cd}
+    peerDependencies:
+      drizzle-orm: ^0.44.3
+
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.49':
+    resolution: {integrity: sha512-XkV9nlQi2du3oX8HQr07rQtAhLIy3y6da63NTrnCgTiv9cld73BAwWmqhgezJatFRTBVvI4GDn4jxaFTrPFUcA==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.49/373b9813123d498883b6c567a7017206f780874c}
+    peerDependencies:
+      drizzle-orm: ^0.44.3
+      zod: ^4.0.14
+
+  '@scaleits-solutions-gmbh/org-lib-backend-serverless-common-kit@0.0.7':
+    resolution: {integrity: sha512-IyfXho2pDqKxHYw/ie9Pbgze/8/hZdfmYGap7yyBMpZVkmsA7UUgwdf6IpBkonkfCGdbY1kR5wx71fjOgFPH2A==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-serverless-common-kit/0.0.7/97e789691f7677444992d7f59770c4041e8c69b7}
+    peerDependencies:
+      zod: ^4.0.14
+
   '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.4':
     resolution: {integrity: sha512-zH2t6TFoAZHJ++wppdqTeDCnomcj3Y66hBLnMJqPpzY45c02BQR4L00+3YJ3LlFYSl9LUysaUU0v7k/YNzToOw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-global-common-kit/0.0.4/6d1c63458ce2c01a823ba0f7c28c7d10a553dc9b}
+    peerDependencies:
+      drizzle-orm: ^0.44.3
+
+  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.5':
+    resolution: {integrity: sha512-KedI7Dhb9X/VjeisePNVEhhpue5B47MSeMd4Enx6hL020b2OgBZPYglKlYrjqU4FlZWEO2oDCUamHtJQdEiYUw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-global-common-kit/0.0.5/ee3efb6a746e882aa827e55f612c8a45a81c8ca6}
     peerDependencies:
       drizzle-orm: ^0.44.3
 
@@ -3909,6 +3978,9 @@ packages:
     resolution: {integrity: sha512-D7EmwxJV6DsEB6vOFLrBM2OzsVgQzgPWyHlV2OOAVj772n+WTXpudC9e9u5BVKQnYwaD30Ivhi9b+4UeBcGu9g==}
     engines: {node: ^10.13.0 || >=12.0.0}
 
+  openapi3-ts@4.5.0:
+    resolution: {integrity: sha512-jaL+HgTq2Gj5jRcfdutgRGLosCy/hT8sQf6VOy+P+g36cZOjI1iukdPnijC+4CmeRzg/jEllJUboEic2FhxhtQ==}
+
   openid-client@5.7.1:
     resolution: {integrity: sha512-jDBPgSVfTnkIh71Hg9pRvtJc6wTwqjRkN88+gCFtYWrlP4Yx2Dsrow8uPi3qLr/aeymPF3o2+dS+wOpglK04ew==}
 
@@ -4419,6 +4491,14 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  uuid@11.1.0:
+    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+    hasBin: true
+
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
+
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
@@ -4467,6 +4547,11 @@ packages:
     resolution: {integrity: sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==}
     engines: {node: '>=18'}
 
+  yaml@2.8.1:
+    resolution: {integrity: sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
@@ -4474,8 +4559,8 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.1.5:
-    resolution: {integrity: sha512-rcUUZqlLJgBC33IT3PNMgsCq6TzLQEG/Ei/KTCU0PedSWRMAXoOUN+4t/0H+Q8bdnLPdqUYnvboJT0bn/229qg==}
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
   zustand@5.0.8:
     resolution: {integrity: sha512-gyPKpIaxY9XcO2vSMrLbiER7QMAMGOQZVRdJ6Zi782jkbzZygq5GI9nG8g+sMgitRtndwaBSl7uiqC49o1SSiw==}
@@ -4498,6 +4583,11 @@ packages:
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
+
+  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.1.12)':
+    dependencies:
+      openapi3-ts: 4.5.0
+      zod: 4.1.12
 
   '@aws-crypto/sha256-browser@5.2.0':
     dependencies:
@@ -5633,12 +5723,47 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.85.6(react@19.1.0)
 
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.14(drizzle-orm@0.44.5)':
+    dependencies:
+      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.12)
+      '@scaleits-solutions-gmbh/org-lib-backend-serverless-common-kit': 0.0.7(drizzle-orm@0.44.5)(zod@4.1.12)
+      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.5(drizzle-orm@0.44.5)
+      zod: 4.1.12
+    transitivePeerDependencies:
+      - drizzle-orm
+
   '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.6': {}
+
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.41(drizzle-orm@0.44.5)':
+    dependencies:
+      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.4(drizzle-orm@0.44.5)
+      drizzle-orm: 0.44.5
+      uuid: 11.1.0
+      zod: 4.1.12
+
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.49(drizzle-orm@0.44.5)(zod@4.1.12)':
+    dependencies:
+      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.4(drizzle-orm@0.44.5)
+      drizzle-orm: 0.44.5
+      uuid: 13.0.0
+      zod: 4.1.12
+
+  '@scaleits-solutions-gmbh/org-lib-backend-serverless-common-kit@0.0.7(drizzle-orm@0.44.5)(zod@4.1.12)':
+    dependencies:
+      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.41(drizzle-orm@0.44.5)
+      zod: 4.1.12
+    transitivePeerDependencies:
+      - drizzle-orm
 
   '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.4(drizzle-orm@0.44.5)':
     dependencies:
       drizzle-orm: 0.44.5
-      zod: 4.1.5
+      zod: 4.1.12
+
+  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.5(drizzle-orm@0.44.5)':
+    dependencies:
+      drizzle-orm: 0.44.5
+      zod: 4.1.12
 
   '@scaleits-solutions-gmbh/services@0.0.1-beta.20250617100659(typescript@5.9.2)(zod@3.25.76)':
     dependencies:
@@ -5655,10 +5780,10 @@ snapshots:
       typescript: 5.9.2
       zod: 3.25.76
 
-  '@scaleits-solutions-gmbh/services@0.0.1-beta.20250630092238(typescript@5.9.2)(zod@4.1.5)':
+  '@scaleits-solutions-gmbh/services@0.0.1-beta.20250630092238(typescript@5.9.2)(zod@4.1.12)':
     dependencies:
       typescript: 5.9.2
-      zod: 4.1.5
+      zod: 4.1.12
 
   '@smithy/abort-controller@4.0.5':
     dependencies:
@@ -7638,6 +7763,10 @@ snapshots:
 
   oidc-token-hash@5.1.1: {}
 
+  openapi3-ts@4.5.0:
+    dependencies:
+      yaml: 2.8.1
+
   openid-client@5.7.1:
     dependencies:
       jose: 4.15.9
@@ -8234,6 +8363,10 @@ snapshots:
     dependencies:
       react: 19.1.0
 
+  uuid@11.1.0: {}
+
+  uuid@13.0.0: {}
+
   uuid@8.3.2: {}
 
   uuid@9.0.1: {}
@@ -8301,11 +8434,13 @@ snapshots:
 
   yallist@5.0.0: {}
 
+  yaml@2.8.1: {}
+
   yocto-queue@0.1.0: {}
 
   zod@3.25.76: {}
 
-  zod@4.1.5: {}
+  zod@4.1.12: {}
 
   zustand@5.0.8(@types/react@19.1.0)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0)):
     optionalDependencies:

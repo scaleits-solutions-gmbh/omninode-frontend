@@ -101,8 +101,8 @@ export default function CompanySwitcher() {
             </DropdownMenuItem>
           ))}
         </ScrollArea>
-        <DropdownMenuSeparator />
-        <div className="p-2 data-[state=open]:bg-sidebar-accent z-10">
+        <DropdownMenuSeparator className="hidden"/>
+        <div className="p-2 data-[state=open]:bg-sidebar-accent z-10 hidden">
           <SearchInput
             value={search}
             onChange={(e) => setSearch(e.target.value)}
