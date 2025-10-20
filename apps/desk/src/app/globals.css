@@ -1,2 +1,3 @@
-@source "../../node_modules/frontend-common-kit/dist";
-@import "../../node_modules/frontend-common-kit/dist/styles/globals.css";
+@import "tailwindcss";
+@source "../../node_modules/@repo/pkg-frontend-common-kit/dist";
+@import "../../node_modules/@repo/pkg-frontend-common-kit/dist/styles/globals.css";
