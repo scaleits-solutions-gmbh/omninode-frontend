@@ -2,7 +2,7 @@
 
 import { columns } from "./push-client-command-popup-step1-columns";
 import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { ApiClient, AcmpClientCommandListItem } from "@repo/lib-api-client";
+import { ApiClient } from "@repo/lib-api-client";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getFilteredRowModel } from "@tanstack/react-table";

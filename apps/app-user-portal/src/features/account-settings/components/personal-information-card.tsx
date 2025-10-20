@@ -47,7 +47,7 @@ export default function PersonalInformationCard() {
       setFirstName(user.firstName ?? "");
       setLastName(user.lastName ?? "");
     }
-  }, [user?.firstName, user?.lastName]);
+  }, [user]);
 
   const isDirty =
     firstName !== (user?.firstName ?? "") || lastName !== (user?.lastName ?? "");
@@ -126,9 +126,9 @@ export default function PersonalInformationCard() {
 
   const formId = "personal-info-form";
 
-  const handleSubmit = (_formData: FormData) => {
+  const handleSubmit = () => {
     if (!isDirty) return;
-    updateMutation.mutate({ firstName, lastName } as any);
+    updateMutation.mutate({ firstName, lastName });
   };
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 import { sendCompanyUserInvite } from "@/lib/api-client/company/company";
-import { queryClient } from "@/components/providers/query-client-provider";
 import {
   Button,
   Dialog,
@@ -23,7 +22,7 @@ import {
   ManagementConsoleAccess,
 } from "@scaleits-solutions-gmbh/services";
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -31,6 +30,7 @@ import { toast } from "sonner";
 export default function InviteUserPopup() {
   const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
   const inviteUserMutation = useMutation({
     mutationFn: async (value: { email: string; role: string }) => {
       await sendCompanyUserInvite(id, {

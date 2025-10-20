@@ -1,7 +1,7 @@
 import { PlatformUser } from "@/features/platform-users/list/columns";
 
 import {
-  Badge,
+  Avatar, AvatarFallback, AvatarImage,
   Button,
   Dialog,
   DialogContent,
@@ -9,15 +9,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
 } from "@repo/pkg-frontend-common-kit/components";
-import { Avatar, AvatarFallback, AvatarImage } from "@repo/pkg-frontend-common-kit/components";
-
-
-
 interface PlatformUserDetailsPopupProps {
   platformUser?: PlatformUser;
   onClose: () => void;

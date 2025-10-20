@@ -50,7 +50,7 @@ export default function PushClientCommandPopupStep2({
 
   const { viewId } = useParams();
   const { isValid, isLoading: isSessionLoading } = useValidSession();
-  const { data, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
+  const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
     queryKey: ["clients", viewId, search, pagination.pageIndex, pagination.pageSize],
     enabled: isValid && Boolean(viewId),
     queryFn: async ({ accessToken }) =>
