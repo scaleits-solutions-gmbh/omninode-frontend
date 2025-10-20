@@ -23,9 +23,9 @@ export default function MobileHeader({
   return (
     <div className="md:hidden bg-card border-b relative">
       {/* Mobile Header Bar */}
-      <div className="p-4 flex justify-between items-center">
+      <div className="p-2 flex justify-between items-center">
         <Link href="/" onClick={() => setIsMenuOpen(false)}>
-          <AppLogo size="sm" />
+          <AppLogo customSize={32} />
         </Link>
         <button
           onClick={toggleMenu}
@@ -42,8 +42,8 @@ export default function MobileHeader({
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="border-t bg-card absolute top-full left-0 right-0">
-          <div className="px-4 py-2 space-y-4">
+        <div className="z-50 border-t bg-card absolute top-full left-0 right-0">
+          <div className="px-4 py-2 space-y-2">
             {/* Navigation Links */}
             <div className="space-y-3">
               {canAccessManagementConsole ? (
@@ -69,14 +69,9 @@ export default function MobileHeader({
               </Link>
             </div>
 
-            {/* Company Switcher */}
-            <div className="py-2 border-t">
+            <div className="flex gap-2 items-center">
+            <UserIndicator />
               <CompanySwitcher />
-            </div>
-
-            {/* User Indicator */}
-            <div className="py-2 border-t">
-              <UserIndicator />
             </div>
           </div>
         </div>

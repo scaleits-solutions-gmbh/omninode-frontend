@@ -15,7 +15,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "@repo/pkg-frontend-common-kit": "workspace:*",
-    "@repo/lib-api-client": "workspace:*"
+    "@repo/omninode-api-client": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -5,6 +5,7 @@ import { ApiClient, Company } from "@repo/lib-api-client";
 import { useAuthedQuery } from "./use-authed-query";
 import { useMounted } from "./use-mounted";
 import { useValidSession } from "./use-valid-session";
+import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 const CURRENT_COMPANY_ID_KEY = "currentCompanyId";
 const CURRENT_COMPANY_CHANGE_EVENT = "currentCompanyIdChange";
@@ -47,9 +48,10 @@ export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
   const { isValid: isSessionValid, status: sessionStatus } = useValidSession();
   const query = useAuthedQuery<Company[]>({
     queryKey: ["user-companies"],
-    queryFn: async ({ accessToken }) => {
+    queryFn: async ({ accessToken }) => {/*
       const { companies } = await ApiClient.getUserCompanies(accessToken);
-      return companies ?? [];
+      return companies ?? [];*/
+      return [{ id: "1", name: "Sample Company", managementConsoleAccess: ManagementConsoleAccess.User, serviceInstanceHosts: [] }];
     },
     refetchOnWindowFocus: false,
     staleTime: 60_000,

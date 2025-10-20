@@ -1,5 +1,5 @@
-import { logoutRequest, refreshTokenRequest } from "@/lib/oidc";
-import { ApiClient } from "@repo/lib-api-client";
+import { logoutRequest, refreshTokenRequest } from "./oidc";
+import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 import type { Account, AuthOptions, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";
@@ -33,7 +33,7 @@ export const authOptions: AuthOptions = {
     async signIn({ account }) {
       try {
         if (account?.access_token) {
-          await ApiClient.handleUserSignIn(account.access_token);
+          await baseOmninodeApiClient().omninodeUser.userMicroservice.handleExternalProviderSignIn(getApiAuthentication(account.access_token));
           return true;
         }
         return false;

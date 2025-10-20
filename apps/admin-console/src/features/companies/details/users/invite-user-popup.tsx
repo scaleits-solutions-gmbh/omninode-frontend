@@ -1,6 +1,6 @@
 "use client";
 import { sendCompanyUserInvite } from "@/lib/api-client/company/company";
-import { queryClient } from "@/providers/query-client-provider";
+import { queryClient } from "@/components/providers/query-client-provider";
 import {
   Button,
   Dialog,

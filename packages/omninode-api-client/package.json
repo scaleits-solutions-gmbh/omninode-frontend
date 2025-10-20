@@ -1,0 +1,40 @@
+{
+  "name": "@repo/omninode-api-client",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.14",
+    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "^0.0.49",
+    "@scaleits-solutions-gmbh/org-lib-backend-serverless-common-kit": "^0.0.7",
+    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.5",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^24.3.1",
+    "eslint": "^9.33.0",
+    "rimraf": "^6.0.0",
+    "tsc-alias": "^1.8.10",
+    "typescript": "5.9.2"
+  }
+}
