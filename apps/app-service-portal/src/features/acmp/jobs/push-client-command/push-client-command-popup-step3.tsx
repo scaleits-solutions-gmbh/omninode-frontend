@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { FeClientCommand } from "@/types/acmp/client-command";
 import { AcmpClientListItem, ApiClient } from "@repo/lib-api-client";
-import { useAuthedMutation, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
@@ -47,7 +47,6 @@ export default function PushClientCommandPopupStep3({
   const commandVersion = generateVersionFromId(clientCommand.id);
 
   const { viewId } = useParams();
-  const { accessToken } = useValidSession();
 
   const pushMutation = useAuthedMutation<void, { commandId: string; clientIds: string[] }>({
     mutationFn: async ({ accessToken, variables }) => {

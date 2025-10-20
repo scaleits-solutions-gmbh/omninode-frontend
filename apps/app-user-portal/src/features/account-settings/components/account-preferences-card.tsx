@@ -21,13 +21,11 @@ import { useEffect, useMemo, useState } from "react";
 import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 import { toast } from "sonner";
 import { Theme, Locale, themeOptions, localeOptions } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-import { useMounted } from "@repo/pkg-frontend-common-kit/hooks";
 
 type ThemeValue = "light" | "dark" | "system";
 
 export default function AccountPreferencesCard() {
   const { setTheme } = useTheme();
-  const mounted = useMounted();
 
   const { data: userData, isLoading } = useAuthedQuery({
     queryKey: ["me"],

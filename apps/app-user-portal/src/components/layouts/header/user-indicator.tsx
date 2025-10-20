@@ -15,14 +15,13 @@ import {
   Skeleton,
 } from "@repo/pkg-frontend-common-kit/components";
 import { LogOut, Settings } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 import Link from "next/link";
 
 export default function UserIndicator() {
-  const { data: session } = useSession();
 
   const {
     data: userData,
@@ -35,10 +34,6 @@ export default function UserIndicator() {
         apiAuthentication: getApiAuthentication(accessToken),
       }),
   });
-  const handleLogout = () => {
-    toast.loading("Logging out...", { id: "logout" });
-    signOut({ callbackUrl: "/user-portal" });
-  };
 
   if (isLoading) {
     return <Skeleton className="h-9 w-9 rounded-full" />;
@@ -47,6 +42,11 @@ export default function UserIndicator() {
   if (error || !userData) {
     return <div>Failed to fetch user data: {error?.message}</div>;
   }
+
+  const handleLogout = () => {
+    toast.loading("Logging out...", { id: "logout" });
+    signOut({ callbackUrl: "/user-portal" });
+  };
 
   return (
     <DropdownMenu>

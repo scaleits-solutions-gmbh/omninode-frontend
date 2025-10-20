@@ -4,9 +4,6 @@ import { AutoBreadCrumbsProps, AutoBreadCrumbs } from "./auto-bread-crumbs";
 import GlobalSearch from "./global-search";
 import UserIndicator from "./user-indicator";
 import TopBarSkeleton from "./top-bar-skeleton";
-import Link from "next/link";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
-import { Lock } from "lucide-react";
 import {
   Separator,
   SidebarTrigger,

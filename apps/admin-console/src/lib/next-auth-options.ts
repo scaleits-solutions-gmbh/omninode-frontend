@@ -1,5 +1,4 @@
 import { logoutRequest, refreshTokenRequest } from "@/lib/oidc";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 import type { Account, AuthOptions, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";

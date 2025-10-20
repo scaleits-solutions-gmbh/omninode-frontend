@@ -2,12 +2,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import type { AcmpClientHardDriveListItem } from "@repo/lib-api-client";
 import { formatStorageSize } from "@repo/pkg-frontend-common-kit/utils";
 
-const display = (value?: string | number | null) => {
-  if (value === null || value === undefined) return "—";
-  const str = String(value);
-  return str.trim() === "" ? "—" : str;
-};
-
 export const clientHardwareColumns: ColumnDef<AcmpClientHardDriveListItem>[] = [
   {
     size: 45,

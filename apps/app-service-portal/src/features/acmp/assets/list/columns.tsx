@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, HardDrive } from "lucide-react";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
-import { formatDateDe, formatDateTimeDe } from "@/lib/utils/ui/date-format";
+import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 import { AcmpAssetListItem } from "@repo/lib-api-client";
 
 export const createColumns = (): ColumnDef<AcmpAssetListItem>[] => [

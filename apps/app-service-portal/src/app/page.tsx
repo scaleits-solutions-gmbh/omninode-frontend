@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import SideBarLayout from "@/components/layout/layout-side-bar/layout-side-bar";
 import HomePageClient from "../features/home/page-content";
 import { Metadata } from "next";
