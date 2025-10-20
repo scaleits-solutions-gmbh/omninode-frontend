@@ -18,7 +18,7 @@ export default function Header() {
   const canAccessManagementConsole = false;
 
 
-  const { companies, selectedCompany, isLoading } = useGetCurrentCompany();
+  const { companies, isLoading } = useGetCurrentCompany();
 
   return (
     <>

@@ -21,7 +21,6 @@ import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ArrowRight, Globe, Lock, Settings } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 export default function AppSelector() {
   const managementConsoleUrl = getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL;
   const servicePortalUrl = getOriginUrl() + SERVICE_PORTAL_BASE_URL;

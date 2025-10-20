@@ -3,7 +3,6 @@ import * as React from "react";
 import { Check, ChevronDown } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Skeleton,
   Button,
@@ -19,10 +18,6 @@ import {
   SearchInput,
 } from "@repo/pkg-frontend-common-kit/components";
 import { FeCompany } from "@/types/fe-company";
-import { switchCompany } from "@/lib/api-client/auth/switch-company";
-import { toast } from "sonner";
-import { ApiClient } from "@repo/lib-api-client";
-import { useSession } from "next-auth/react";
 import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
 
 

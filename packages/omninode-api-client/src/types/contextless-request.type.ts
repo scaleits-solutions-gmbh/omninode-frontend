@@ -1,1 +1,0 @@
-export type ContextlessRequest<TRequest> = Omit<TRequest, 'context'>;

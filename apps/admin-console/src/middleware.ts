@@ -1,48 +1,32 @@
-import { getSessionTokenPayload } from "./lib/utils/misc/session-token";
 import { NextRequest, NextResponse } from "next/server";
+import { withAuth } from "next-auth/middleware";
+
+export default withAuth(
+  function middleware(request: NextRequest) {
+    console.log("middleware", request.nextUrl.pathname);
+
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token, req }) => {
+        // Allow access to the signin page and auth-related routes without authentication
+        if (req.nextUrl.pathname.startsWith("/authflows") || 
+            req.nextUrl.pathname.startsWith("/api/auth")) {
+          return true;
+        }
+        // For all other routes, require authentication
+        return !!token;
+      },
+    },
+    pages: {
+      signIn: "/authflows/signin",
+    },
+  }
+);
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!_next/static|_next/image|favicon.ico|assets).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
   ],
 };
-
-const publicRoutes: string[] = ["/login", "/api/auth/login"];
-
-export default async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-  const isPublicRoute = publicRoutes.some((route) =>
-    pathname.startsWith(route),
-  );
-  if (isPublicRoute) {
-    return NextResponse.next();
-  }
-  try {
-    const sessionTokenPayload = await getSessionTokenPayload();
-    if (!sessionTokenPayload) {
-      throw new Error("Session token not found");
-    }
-    if (sessionTokenPayload.exp < Date.now() / 1000) {
-      throw new Error("Session token expired");
-    }
-    return NextResponse.next();
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
-
-    if (errorMessage === "Session token not found") {
-      // Missing token - redirect to login
-    } else if (errorMessage === "Session token expired") {
-      // Expired token - redirect to login with message
-    } else {
-      // Invalid token - redirect to login
-    }
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-}

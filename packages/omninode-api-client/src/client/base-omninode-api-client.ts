@@ -1,7 +1,7 @@
 import { OmninodeApiClient } from "./omninode-api-client";
 
 export const baseOmninodeApiClient = () => {
-  const apiUrl = process.env.OMNINODE_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_OMNINODE_API_URL;
   if (!apiUrl) {
     throw new Error("OMNINODE_API_URL is not set");
   }
@@ -11,3 +11,4 @@ export const baseOmninodeApiClient = () => {
 
   return new OmninodeApiClient(apiUrl, timeoutMs);
 };
+
