@@ -1,5 +1,8 @@
 "use client";
 
+// Import to register module augmentation FIRST
+import "@/lib/next-auth-options";
+
 import {
   Card,
   CardContent,
@@ -53,8 +56,8 @@ export const PlatformUserList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: (accessToken) =>
-      baseOmninodeApiClient().internalIamUser.userMicroservice.findPaginatedUserListItems({
+    queryFn: async ({ session }) => {
+      return await baseOmninodeApiClient().userMicroservice.findPaginatedUserListItems({
         request: {
           queryParams: {
             pageSize: pagination.pageSize,
@@ -62,8 +65,9 @@ export const PlatformUserList = () => {
             searchTerm: search,
           },
         },
-        apiAuthentication: getApiAuthentication(accessToken.accessToken),
-      }),
+        apiAuthentication: getApiAuthentication(session.access_token),
+      });
+    },
   });
 
   const table = useReactTable({
