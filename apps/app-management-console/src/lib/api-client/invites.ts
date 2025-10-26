@@ -3,7 +3,7 @@ import {
   BaseApiClient,
   PaginatedResponse,
 } from "@scaleits-solutions-gmbh/api-client";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
 
 const apiClient = new BaseApiClient();
 
@@ -37,15 +37,15 @@ export const fetchCompanyInvites = async ({
 
 interface SendUserInviteParams {
   email: string;
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
 }
 
 export const sendUserInvite = async ({
   email,
-  managementConsoleAccess,
+  organizationRole,
 }: SendUserInviteParams): Promise<void> => {
   await apiClient.post<void>(`/company-user-invites`, {
     email,
-    managementConsoleAccess,
+    organizationRole,
   });
 };

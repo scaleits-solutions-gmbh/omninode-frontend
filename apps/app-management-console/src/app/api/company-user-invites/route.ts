@@ -64,11 +64,11 @@ export async function POST(
 ): Promise<NextResponse<null | unknown>> {
   const companyId = (await getSessionTokenPayload()).companyId;
   const body = await request.json();
-  const { email, managementConsoleAccess } = body;
+  const { email, organizationRole } = body;
   const bodyToSend = {
     companyId: companyId,
     email: email,
-    managementConsoleAccess: managementConsoleAccess,
+    organizationRole: organizationRole,
   };
   console.log(bodyToSend);
   const companyUserInviteService = new CompanyUserInviteService();
@@ -76,7 +76,7 @@ export async function POST(
     {
       companyId: companyId,
       email: email,
-      managementConsoleAccess: managementConsoleAccess,
+      organizationRole: organizationRole,
     },
   );
 

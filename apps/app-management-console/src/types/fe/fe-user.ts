@@ -1,5 +1,5 @@
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   UserCompanyStatus,
 } from "@scaleits-solutions-gmbh/services";
 
@@ -12,7 +12,7 @@ export type FeUser = {
   middleNames: string;
   lastName: string;
   position: string;
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
   status: UserCompanyStatus;
   lastSeenAt: Date;
   createdAt: Date;

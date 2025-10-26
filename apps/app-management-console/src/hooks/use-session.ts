@@ -1,23 +1,23 @@
 "use client";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 export interface SessionData {
   currentUserId: string | undefined;
   currentCompanyId: string | undefined;
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
 }
 
 const getSessionData = async (): Promise<SessionData> => {
-  const managementConsoleAccessCookie = Cookies.get("managementConsoleAccess");
+  const organizationRoleCookie = Cookies.get("organizationRole");
 
   return {
     currentUserId: Cookies.get("currentUserId"),
     currentCompanyId: Cookies.get("currentCompanyId"),
-    managementConsoleAccess: managementConsoleAccessCookie
-      ? (managementConsoleAccessCookie as ManagementConsoleAccess)
-      : ManagementConsoleAccess.None,
+    organizationRole: organizationRoleCookie
+      ? (organizationRoleCookie as OrganizationRole)
+      : OrganizationRole.None,
   };
 };
 
@@ -52,7 +52,7 @@ export function useCompanyId() {
   return sessionData?.currentCompanyId;
 }
 
-export function useManagementConsoleAccess() {
+export function useOrganizationRole() {
   const { sessionData } = useSession();
-  return sessionData?.managementConsoleAccess || ManagementConsoleAccess.None;
+  return sessionData?.organizationRole || OrganizationRole.None;
 }

@@ -3,11 +3,14 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { QueryKey, UseQueryResult } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+// Import module augmentation to ensure extended Session type is available
+import "../utils/next-auth-options";
 
 
 type AuthedQueryOptions<TData, TQueryKey extends QueryKey = QueryKey> = {
   queryKey: TQueryKey;
-  queryFn: (ctx: { accessToken: string }) => Promise<TData>;
+  queryFn: (ctx: { session: Session}) => Promise<TData>;
   enabled?: boolean;
   retry?: any;
   refetchOnWindowFocus?: boolean;
@@ -23,7 +26,7 @@ export function useAuthedQuery<TData = unknown, TQueryKey extends QueryKey = Que
   const result = useQuery<TData, Error, TData, TQueryKey>({
     queryKey: options.queryKey,
     enabled: (options.enabled ?? true) && status === "authenticated",
-    queryFn: () => options.queryFn({ accessToken: session?.access_token ?? "" }),
+    queryFn: () => options.queryFn({ session: session as Session}),
     retry: options.retry,
     refetchOnWindowFocus: options.refetchOnWindowFocus ?? false,
     placeholderData: options.placeholderData ?? keepPreviousData,

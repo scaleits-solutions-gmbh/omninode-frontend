@@ -19,8 +19,8 @@ import {
   SelectValue,
 } from "@repo/pkg-frontend-common-kit/components";
 import {
-  getManagementConsoleAccessOptions,
-  ManagementConsoleAccess,
+  getOrganizationRoleOptions,
+  OrganizationRole,
 } from "@scaleits-solutions-gmbh/services";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -33,7 +33,7 @@ export default function InviteUserPopup() {
     mutationFn: async (value: { email: string; role: string }) => {
       await sendUserInvite({
         email: value.email,
-        managementConsoleAccess: value.role as ManagementConsoleAccess,
+        organizationRole: value.role as OrganizationRole,
       });
     },
     onSuccess: () => {
@@ -69,8 +69,8 @@ export default function InviteUserPopup() {
   const isRoleValid = (value: string) => {
     if (!value) return "Access Level is required";
     if (
-      !Object.values(ManagementConsoleAccess).includes(
-        value as ManagementConsoleAccess,
+      !Object.values(OrganizationRole).includes(
+        value as OrganizationRole,
       )
     ) {
       return "Invalid role";
@@ -150,8 +150,8 @@ export default function InviteUserPopup() {
                     <SelectValue placeholder="Select an access level" />
                   </SelectTrigger>
                   <SelectContent>
-                    {getManagementConsoleAccessOptions().map((option) => {
-                      if (option.value === ManagementConsoleAccess.Owner)
+                    {getOrganizationRoleOptions().map((option) => {
+                      if (option.value === OrganizationRole.Owner)
                         return null;
                       return (
                         <SelectItem key={option.value} value={option.value}>

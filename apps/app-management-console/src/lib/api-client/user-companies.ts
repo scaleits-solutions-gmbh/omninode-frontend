@@ -1,7 +1,7 @@
 import { FeUser } from "@/types/fe/fe-user";
 import { BaseApiClient } from "@scaleits-solutions-gmbh/api-client";
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   PaginatedResponse,
   UserCompanyStatus,
 } from "@scaleits-solutions-gmbh/services";
@@ -33,10 +33,10 @@ export function fetchUser(id: string): Promise<FeUser> {
 export function updateUserCompany(
   id: string,
   status: UserCompanyStatus,
-  managementConsoleAccess: ManagementConsoleAccess,
+  organizationRole: OrganizationRole,
 ): Promise<void> {
   return apiClient.put(`/userCompanies/${id}`, {
     status,
-    managementConsoleAccess,
+    organizationRole,
   });
 }

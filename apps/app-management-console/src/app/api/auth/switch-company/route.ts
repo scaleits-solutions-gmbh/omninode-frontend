@@ -1,7 +1,7 @@
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   OmninodeLoginService,
   OmninodeLoginTokenPayload,
   ResultType,
@@ -57,8 +57,8 @@ export async function POST(
     },
   );
   response.cookies.set(
-    "managementConsoleAccess",
-    ManagementConsoleAccess.None,
+    "organizationRole",
+    OrganizationRole.None,
     {
       httpOnly: false,
       secure: true,

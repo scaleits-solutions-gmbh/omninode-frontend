@@ -62,16 +62,16 @@ export const collumns: ColumnDef<FeUser>[] = [
   },
   {
     header: "Access Level",
-    accessorKey: "managementConsoleAccess",
+    accessorKey: "organizationRole",
     minSize: 150,
     size: 15, // 15% of table width
     cell: ({ row }) => {
       return (
         <div>
-          {(row.getValue("managementConsoleAccess") as string)
+          {(row.getValue("organizationRole") as string)
             .charAt(0)
             .toUpperCase() +
-            (row.getValue("managementConsoleAccess") as string).slice(1)}
+            (row.getValue("organizationRole") as string).slice(1)}
         </div>
       );
     },

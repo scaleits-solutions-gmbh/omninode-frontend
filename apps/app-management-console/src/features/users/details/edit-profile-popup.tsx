@@ -21,9 +21,9 @@ import {
   SelectItem,
 } from "@repo/pkg-frontend-common-kit/components";
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   UserCompanyStatus,
-  getManagementConsoleAccessOptions,
+  getOrganizationRoleOptions,
 } from "@scaleits-solutions-gmbh/services";
 import { useForm } from "@tanstack/react-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -46,12 +46,12 @@ export default function EditProfilePopup() {
     mutationFn: ({
       id,
       status,
-      managementConsoleAccess,
+      organizationRole,
     }: {
       id: string;
       status: UserCompanyStatus;
-      managementConsoleAccess: ManagementConsoleAccess;
-    }) => updateUserCompany(id, status, managementConsoleAccess),
+      organizationRole: OrganizationRole;
+    }) => updateUserCompany(id, status, organizationRole),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userCompany"] });
       toast.success("Profile updated successfully");
@@ -66,7 +66,7 @@ export default function EditProfilePopup() {
   const form = useForm({
     defaultValues: {
       status: undefined as UserCompanyStatus | undefined,
-      managementConsoleAccess: undefined as ManagementConsoleAccess | undefined,
+      organizationRole: undefined as OrganizationRole | undefined,
     },
     onSubmit: async ({ value }) => {
       if (!form.state.isDirty) {
@@ -79,8 +79,8 @@ export default function EditProfilePopup() {
       await updateUserCompanyMutation.mutateAsync({
         id: data.id,
         status: value.status as UserCompanyStatus,
-        managementConsoleAccess:
-          value.managementConsoleAccess as ManagementConsoleAccess,
+        organizationRole:
+          value.organizationRole as OrganizationRole,
       });
     },
   });
@@ -90,8 +90,8 @@ export default function EditProfilePopup() {
     if (data) {
       form.setFieldValue("status", data.status);
       form.setFieldValue(
-        "managementConsoleAccess",
-        data.managementConsoleAccess,
+        "organizationRole",
+        data.organizationRole,
       );
     }
   }, [data, form]);
@@ -111,7 +111,7 @@ export default function EditProfilePopup() {
     );
   }
 
-  const isRoleValid = (value: ManagementConsoleAccess | undefined) => {
+  const isRoleValid = (value: OrganizationRole | undefined) => {
     if (!value) return "Role is required";
     return undefined;
   };
@@ -227,22 +227,22 @@ export default function EditProfilePopup() {
                 </div>
               )}
             </form.Field>
-            {data?.managementConsoleAccess == ManagementConsoleAccess.Owner ? (
+            {data?.organizationRole == OrganizationRole.Owner ? (
               <div className="space-y-2">
-                <Label htmlFor="managementConsoleAccess">
+                <Label htmlFor="organizationRole">
                   Management Console Access
                 </Label>
                 <Input
-                  id="managementConsoleAccess"
+                  id="organizationRole"
                   disabled
                   type="text"
-                  value={data.managementConsoleAccess}
+                  value={data.organizationRole}
                   placeholder="Enter position"
                 />
               </div>
             ) : (
               <form.Field
-                name="managementConsoleAccess"
+                name="organizationRole"
                 validators={{
                   onSubmit: ({ value }) => isRoleValid(value),
                 }}
@@ -256,15 +256,15 @@ export default function EditProfilePopup() {
                       name={field.name}
                       value={field.state.value || ""}
                       onValueChange={(value) =>
-                        field.handleChange(value as ManagementConsoleAccess)
+                        field.handleChange(value as OrganizationRole)
                       }
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select a management console access" />
                       </SelectTrigger>
                       <SelectContent>
-                        {getManagementConsoleAccessOptions().map((option) => {
-                          if (option.value === ManagementConsoleAccess.Owner)
+                        {getOrganizationRoleOptions().map((option) => {
+                          if (option.value === OrganizationRole.Owner)
                             return null;
                           return (
                             <SelectItem key={option.value} value={option.value}>

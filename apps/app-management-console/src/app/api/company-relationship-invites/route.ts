@@ -2,7 +2,7 @@ import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
 import {
   CompanyRelationshipInviteService,
-  ManagementConsoleAccess,
+  OrganizationRole,
   ResultType,
 } from "@scaleits-solutions-gmbh/services";
 import { NextRequest, NextResponse } from "next/server";
@@ -25,7 +25,7 @@ export async function POST(
       relationshipType: relationshipType,
       email: email,
       companyId: companyId,
-      managementConsoleAccess: ManagementConsoleAccess.Admin,
+      organizationRole: OrganizationRole.Admin,
     });
 
   if (resultType != ResultType.SUCCESS) {

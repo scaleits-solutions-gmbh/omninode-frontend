@@ -1,5 +1,5 @@
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   UserCompanyStatus,
 } from "@scaleits-solutions-gmbh/services";
 import { z } from "zod";
@@ -23,8 +23,8 @@ export const UserCompanyInputSchema = z
     userPosition: z.string().default(""),
     userEmail: z.string().email(),
     imageUrl: z.string().default(""),
-    managementConsoleAccess: z
-      .nativeEnum(ManagementConsoleAccess)
+    organizationRole: z
+      .nativeEnum(OrganizationRole)
       .or(z.string())
       .optional(),
     status: z.nativeEnum(UserCompanyStatus).or(z.string()).optional(),
@@ -32,17 +32,17 @@ export const UserCompanyInputSchema = z
     updatedAt: z.string().or(z.date()),
   })
   .transform((data) => {
-    // Helper function to convert string to ManagementConsoleAccess
-    const toManagementConsoleAccess = (
+    // Helper function to convert string to OrganizationRole
+    const toOrganizationRole = (
       value: string | undefined,
-    ): ManagementConsoleAccess => {
-      if (!value) return ManagementConsoleAccess.User;
+    ): OrganizationRole => {
+      if (!value) return OrganizationRole.Member;
       const normalized = value.toLowerCase();
-      if (normalized === "owner") return ManagementConsoleAccess.Owner;
-      if (normalized === "admin") return ManagementConsoleAccess.Admin;
-      if (normalized === "user") return ManagementConsoleAccess.User;
-      if (normalized === "none") return ManagementConsoleAccess.None;
-      return ManagementConsoleAccess.User;
+      if (normalized === "owner") return OrganizationRole.Owner;
+      if (normalized === "admin") return OrganizationRole.Admin;
+      if (normalized === "user") return OrganizationRole.Member;
+      if (normalized === "none") return OrganizationRole.None;
+      return OrganizationRole.Member;
     };
 
     const toUserCompanyStatus = (
@@ -63,8 +63,8 @@ export const UserCompanyInputSchema = z
       position: data.userPosition, // Map userPosition to position
       email: data.userEmail, // Map userEmail to email
       imageUrl: data.imageUrl, // Default empty imageUrl
-      managementConsoleAccess: toManagementConsoleAccess(
-        data.managementConsoleAccess,
+      organizationRole: toOrganizationRole(
+        data.organizationRole,
       ), // Ensure proper enum value
       status: toUserCompanyStatus(data.status),
       lastSeenAt: new Date(), // Default to current date

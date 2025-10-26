@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ApiClient, Company } from "@repo/lib-api-client";
 import { useAuthedQuery } from "./use-authed-query";
 import { useMounted } from "./use-mounted";
 import { useValidSession } from "./use-valid-session";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-
+import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 const CURRENT_COMPANY_ID_KEY = "currentCompanyId";
 const CURRENT_COMPANY_CHANGE_EVENT = "currentCompanyIdChange";
 
@@ -33,8 +32,8 @@ function setCurrentCompanyIdSafe(companyId: string | null): void {
 }
 
 export type UseGetCurrentCompanyResult = {
-  companies: Company[] | undefined;
-  selectedCompany: Company | undefined;
+  companies: UserOrganizationReadModel[] | undefined;
+  selectedCompany: UserOrganizationReadModel | undefined;
   selectedCompanyId: string | null;
   isLoading: boolean;
   isFetching: boolean;
@@ -46,12 +45,18 @@ export type UseGetCurrentCompanyResult = {
 export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
   const mounted = useMounted();
   const { isValid: isSessionValid, status: sessionStatus } = useValidSession();
-  const query = useAuthedQuery<Company[]>({
+  const query = useAuthedQuery<UserOrganizationReadModel[]>({
     queryKey: ["user-companies"],
-    queryFn: async ({ accessToken }) => {/*
-      const { companies } = await ApiClient.getUserCompanies(accessToken);
-      return companies ?? [];*/
-      return [{ id: "1", name: "Sample Company", managementConsoleAccess: ManagementConsoleAccess.User, serviceInstanceHosts: [] }];
+    queryFn: async ({ session }) => {
+      const { body } = await baseOmninodeApiClient().organizationMicroservice.findUserOrganizations({
+        request: {
+          pathParams: {
+            id: session.user.id,
+          },
+        },
+        apiAuthentication: getApiAuthentication(session.access_token),
+      });
+      return body ?? [];
     },
     refetchOnWindowFocus: false,
     staleTime: 60_000,

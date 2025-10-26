@@ -167,8 +167,8 @@ export default function UserDetailsCard() {
               <ShieldCheck className="h-4 w-4 font-medium text-muted-foreground" />
               <span className="font-medium">Management console access:</span>
               <span>
-                {data?.managementConsoleAccess.charAt(0).toUpperCase() +
-                  data?.managementConsoleAccess.slice(1)}
+                {data?.organizationRole.charAt(0).toUpperCase() +
+                  data?.organizationRole.slice(1)}
               </span>
             </div>
           </div>

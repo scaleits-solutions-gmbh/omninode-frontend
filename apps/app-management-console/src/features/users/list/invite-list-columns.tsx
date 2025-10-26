@@ -23,7 +23,7 @@ export const inviteListColumns: ColumnDef<FeUserInvite>[] = [
     size: 27.5,
     minSize: 100,
     header: "MC Access Level",
-    accessorKey: "managementConsoleAccess",
+    accessorKey: "organizationRole",
   },
   {
     size: 27.5,

@@ -1,6 +1,6 @@
 import { FeUser } from "@/types/fe/fe-user";
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   PaginatedResponse,
   UserCompanyStatus,
 } from "@scaleits-solutions-gmbh/services";
@@ -17,7 +17,7 @@ const mockData: PaginatedResponse<FeUser> = {
       middleNames: "",
       lastName: "Stevens",
       position: "Technical",
-      managementConsoleAccess: ManagementConsoleAccess.Admin,
+      organizationRole: OrganizationRole.Admin,
       status: UserCompanyStatus.ACTIVE,
       lastSeenAt: new Date(),
       createdAt: new Date(),
@@ -32,7 +32,7 @@ const mockData: PaginatedResponse<FeUser> = {
       middleNames: "",
       lastName: "Smith",
       position: "Finance",
-      managementConsoleAccess: ManagementConsoleAccess.User,
+      organizationRole: OrganizationRole.Member,
       status: UserCompanyStatus.ACTIVE,
       lastSeenAt: new Date(),
       createdAt: new Date(),

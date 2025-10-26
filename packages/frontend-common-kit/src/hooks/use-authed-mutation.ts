@@ -3,6 +3,8 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+// Import module augmentation to ensure extended Session type is available
+import "../utils/next-auth-options";
 
 
 type AuthedMutationFn<TVariables, TData> = (ctx: { accessToken: string; variables: TVariables }) => Promise<TData>;

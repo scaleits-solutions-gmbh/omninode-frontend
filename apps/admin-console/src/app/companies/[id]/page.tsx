@@ -1,5 +1,5 @@
 import SideBarLayout from "@/components/layout/layout-side-bar/layout-side-bar";
-import PageContent from "@/features/companies/details/page-content";
+import OrganizationsPageContent from "@/features/organizations/page-content";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function CompanyPage() {
         ],
       }}
     >
-      <PageContent />
+      <OrganizationsPageContent />
     </SideBarLayout>
   );
 }

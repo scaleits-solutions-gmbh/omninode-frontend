@@ -18,7 +18,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/constants";
 import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ArrowRight, Globe, Lock, Settings } from "lucide-react";
 import Link from "next/link";
 export default function AppSelector() {
@@ -83,8 +83,8 @@ export default function AppSelector() {
               <></>
             ) : (
               <>
-                {selectedCompany?.managementConsoleAccess !==
-                ManagementConsoleAccess.User ? (
+                {selectedCompany?.organizationRole !==
+                OrganizationRole.Member ? (
                   <Card className="">
                     <CardHeader className="pb-4">
                       <div className="flex items-center gap-3">

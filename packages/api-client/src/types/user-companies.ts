@@ -1,4 +1,4 @@
-import type { Service, ManagementConsoleAccess } from '@scaleits-solutions-gmbh/omninode-lib-global-common-kit';
+import type { Service, OrganizationRole } from '@scaleits-solutions-gmbh/omninode-lib-global-common-kit';
 
 type AcmpPermissions = {
   canViewDashboard: boolean;
@@ -46,7 +46,7 @@ export type ServiceInstanceHost = {
 export type Company = {
   id: string;
   name: string;
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
   serviceInstanceHosts: ServiceInstanceHost[];
 };
 
