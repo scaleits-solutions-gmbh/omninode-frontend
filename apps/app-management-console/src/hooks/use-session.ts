@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 
 export interface SessionData {
   currentUserId: string | undefined;
-  currentCompanyId: string | undefined;
+  currentOrganizationId: string | undefined;
   organizationRole: OrganizationRole;
 }
 
@@ -14,7 +14,7 @@ const getSessionData = async (): Promise<SessionData> => {
 
   return {
     currentUserId: Cookies.get("currentUserId"),
-    currentCompanyId: Cookies.get("currentCompanyId"),
+    currentOrganizationId: Cookies.get("currentOrganizationId"),
     organizationRole: organizationRoleCookie
       ? (organizationRoleCookie as OrganizationRole)
       : OrganizationRole.None,
@@ -47,9 +47,9 @@ export function useUserId() {
   return sessionData?.currentUserId;
 }
 
-export function useCompanyId() {
+export function useOrganizationId() {
   const { sessionData } = useSession();
-  return sessionData?.currentCompanyId;
+  return sessionData?.currentOrganizationId;
 }
 
 export function useOrganizationRole() {

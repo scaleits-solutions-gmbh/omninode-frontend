@@ -2,7 +2,7 @@ import { FeUser } from "@/types/fe/fe-user";
 import {
   OrganizationRole,
   PaginatedResponse,
-  UserCompanyStatus,
+  UserOrganizationStatus,
 } from "@scaleits-solutions-gmbh/services";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,7 +10,7 @@ const mockData: PaginatedResponse<FeUser> = {
   items: [
     {
       id: "101",
-      UserCompanyId: "201",
+      UserOrganizationId: "201",
       imageUrl: "https://randomuser.me/api/portraits/women/44.jpg",
       email: "emily.stevens@scaleits.com",
       firstName: "Emily",
@@ -18,14 +18,14 @@ const mockData: PaginatedResponse<FeUser> = {
       lastName: "Stevens",
       position: "Technical",
       organizationRole: OrganizationRole.Admin,
-      status: UserCompanyStatus.ACTIVE,
+      status: UserOrganizationStatus.ACTIVE,
       lastSeenAt: new Date(),
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       id: "102",
-      UserCompanyId: "202",
+      UserOrganizationId: "202",
       imageUrl: "https://randomuser.me/api/portraits/men/45.jpg",
       email: "john.smith@scaleits.com",
       firstName: "John",
@@ -33,7 +33,7 @@ const mockData: PaginatedResponse<FeUser> = {
       lastName: "Smith",
       position: "Finance",
       organizationRole: OrganizationRole.Member,
-      status: UserCompanyStatus.ACTIVE,
+      status: UserOrganizationStatus.ACTIVE,
       lastSeenAt: new Date(),
       createdAt: new Date(),
       updatedAt: new Date(),

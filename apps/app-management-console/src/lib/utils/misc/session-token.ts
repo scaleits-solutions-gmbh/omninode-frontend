@@ -8,7 +8,7 @@ type SessionTokenPayload = {
   firstName: string;
   lastName: string;
   organizationRole: OrganizationRole;
-  companyId: string;
+  organizationId: string;
   iat: number;
   exp: number;
 };

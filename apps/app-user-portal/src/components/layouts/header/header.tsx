@@ -1,6 +1,6 @@
 "use client";
 import { AppLogo } from "@/components/custom/app-logo";
-import { HelpIndicator, Skeleton } from "@repo/pkg-frontend-common-kit/components";
+import { HelpIndicator, NotificationsIndicator, Skeleton } from "@repo/pkg-frontend-common-kit/components";
 import {
   MANAGEMENT_CONSOLE_BASE_URL,
   SERVICE_PORTAL_BASE_URL,
@@ -9,16 +9,16 @@ import {
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { Lock } from "lucide-react";
 import Link from "next/link";
-import CompanySwitcher from "./company-switcher";
+import OrganizationSwitcher from "./company-switcher";
 import MobileHeader from "./mobile-header";
 import UserIndicator from "./user-indicator";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
 export default function Header() {
   const canAccessManagementConsole = false;
 
 
-  const { companies, isLoading } = useGetCurrentCompany();
+  const { companies, isLoading } = useGetCurrentOrganization();
 
   return (
     <>
@@ -51,9 +51,10 @@ export default function Header() {
                 </Link>
               </>
             ) : null}
-            <CompanySwitcher />
-            <div className="-ml-2">
+            <div className="flex items-center gap-4">
+            <OrganizationSwitcher />
               <HelpIndicator />
+              <NotificationsIndicator />
             </div>
             <UserIndicator />
           </div>

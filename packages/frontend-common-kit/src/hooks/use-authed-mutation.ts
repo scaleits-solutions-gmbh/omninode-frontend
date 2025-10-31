@@ -3,11 +3,12 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 // Import module augmentation to ensure extended Session type is available
 import "../utils/next-auth-options";
 
 
-type AuthedMutationFn<TVariables, TData> = (ctx: { accessToken: string; variables: TVariables }) => Promise<TData>;
+type AuthedMutationFn<TVariables, TData> = (ctx: { session: Session; variables: TVariables }) => Promise<TData>;
 
 export function useAuthedMutation<TData = unknown, TVariables = void>(
   options: {
@@ -20,7 +21,7 @@ export function useAuthedMutation<TData = unknown, TVariables = void>(
     ...options,
     mutationFn: async (variables: TVariables) => {
       if (status !== "authenticated") throw new Error("Not authenticated");
-      return options.mutationFn({ accessToken: session?.access_token ?? "", variables });
+      return options.mutationFn({ session: session as Session, variables });
     },
   });
 }

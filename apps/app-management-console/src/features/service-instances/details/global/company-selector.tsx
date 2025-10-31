@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 
 import { cn } from "@/lib/utils/ui/cn";
@@ -22,40 +23,40 @@ import * as React from "react";
 const companies = [
   {
     value: "1",
-    label: "Company 1",
-    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=company1",
+    label: "Organization 1",
+    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=organization1",
   },
   {
     value: "2",
-    label: "Company 2",
-    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=company2",
+    label: "Organization 2",
+    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=organization2",
   },
   {
     value: "3",
-    label: "Company 3",
-    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=company3",
+    label: "Organization 3",
+    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=organization3",
   },
   {
     value: "4",
-    label: "Company 4",
-    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=company4",
+    label: "Organization 4",
+    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=organization4",
   },
   {
     value: "5",
-    label: "Company 5",
-    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=company5",
+    label: "Organization 5",
+    imageUrl: "https://api.dicebear.com/9.x/glass/svg?seed=organization5",
   },
 ];
 
-interface CompanySelectorProps {
+interface OrganizationSelectorProps {
   value: string;
   onValueChange: (value: string) => void;
 }
 
-export default function CompanySelector({
+export default function OrganizationSelector({
   value,
   onValueChange,
-}: CompanySelectorProps) {
+}: OrganizationSelectorProps) {
   const [popoverOpen, setPopoverOpen] = React.useState(false);
 
   return (
@@ -72,37 +73,37 @@ export default function CompanySelector({
               <Avatar className="h-6 w-6 rounded-sm">
                 <AvatarImage
                   src={
-                    companies.find((company) => company.value === value)
+                    companies.find((organization) => organization.value === value)
                       ?.imageUrl
                   }
                   alt={
-                    companies.find((company) => company.value === value)?.label
+                    companies.find((organization) => organization.value === value)?.label
                   }
                 />
                 <AvatarFallback seed={value}>
                   {companies
-                    .find((company) => company.value === value)
+                    .find((organization) => organization.value === value)
                     ?.label.slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
             )}
             {value
-              ? companies.find((company) => company.value === value)?.label
-              : "Select company..."}
+              ? companies.find((organization) => organization.value === value)?.label
+              : "Select organization..."}
           </div>
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
         <Command>
-          <CommandInput placeholder="Search company..." className="h-9" />
+          <CommandInput placeholder="Search organization..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No company found.</CommandEmpty>
+            <CommandEmpty>No organization found.</CommandEmpty>
             <CommandGroup>
-              {companies.map((company) => (
+              {companies.map((organization) => (
                 <CommandItem
-                  key={company.value}
-                  value={company.value}
+                  key={organization.value}
+                  value={organization.value}
                   onSelect={(currentValue) => {
                     onValueChange(currentValue === value ? "" : currentValue);
                     setPopoverOpen(false);
@@ -110,16 +111,16 @@ export default function CompanySelector({
                   className="flex items-center gap-2"
                 >
                   <Avatar className="h-6 w-6 rounded-sm">
-                    <AvatarImage src={company.imageUrl} alt={company.label} />
-                    <AvatarFallback seed={company.value}>
-                      {company.label.slice(0, 2)}
+                    <AvatarImage src={organization.imageUrl} alt={organization.label} />
+                    <AvatarFallback seed={organization.value}>
+                      {organization.label.slice(0, 2)}
                     </AvatarFallback>
                   </Avatar>
-                  {company.label}
+                  {organization.label}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === company.value ? "opacity-100" : "opacity-0",
+                      value === organization.value ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>
@@ -131,3 +132,4 @@ export default function CompanySelector({
     </Popover>
   );
 }
+*/

@@ -1,13 +1,13 @@
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
-import { UserCompanyInputSchema } from "@/schemas/user-schema";
+import { UserOrganizationInputSchema } from "@/schemas/user-schema";
 import { FeUser } from "@/types/fe/fe-user";
 import {
   ResultType,
-  UserCompanyService,
+  UserOrganizationService,
 } from "@scaleits-solutions-gmbh/services";
 import { NextRequest, NextResponse } from "next/server";
 
-const userCompanyService = new UserCompanyService();
+const userOrganizationService = new UserOrganizationService();
 
 export async function GET(
   request: NextRequest,
@@ -17,13 +17,13 @@ export async function GET(
   const { id } = await params;
 
   const { result, resultType } =
-    await userCompanyService.fetchUserCompanyById(id);
+    await userOrganizationService.fetchUserOrganizationById(id);
 
   if (resultType !== ResultType.SUCCESS) {
     return handleServiceError(resultType);
   }
   try {
-    const mappedResponse: FeUser = UserCompanyInputSchema.parse(result);
+    const mappedResponse: FeUser = UserOrganizationInputSchema.parse(result);
     return NextResponse.json(mappedResponse);
   } catch {
     return handleServiceError(ResultType.RESPONSE_PARSE_ERROR);
@@ -35,11 +35,11 @@ export async function PUT(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { params }: any,
 ): Promise<NextResponse<null | unknown>> {
-  const { userCompanyId } = await params;
+  const { userOrganizationId } = await params;
   const body = await request.json();
 
-  const { result, resultType } = await userCompanyService.updateUserCompanyById(
-    userCompanyId,
+  const { result, resultType } = await userOrganizationService.updateUserOrganizationById(
+    userOrganizationId,
     body,
   );
 

@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import {
   ScrollArea,
   Checkbox,
@@ -49,7 +50,7 @@ export default function WeclappPermissionsSelector({
                 >
                   View Customers
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view customers.
+                    Allow this organization to view customers.
                   </span>
                 </Label>
               </div>
@@ -73,7 +74,7 @@ export default function WeclappPermissionsSelector({
                 >
                   View Quotations
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view quotations.
+                    Allow this organization to view quotations.
                   </span>
                 </Label>
               </div>
@@ -97,7 +98,7 @@ export default function WeclappPermissionsSelector({
                 >
                   View Sales Orders
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view sales orders.
+                    Allow this organization to view sales orders.
                   </span>
                 </Label>
               </div>
@@ -121,7 +122,7 @@ export default function WeclappPermissionsSelector({
                 >
                   View Invoices
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view invoices.
+                    Allow this organization to view invoices.
                   </span>
                 </Label>
               </div>
@@ -132,3 +133,4 @@ export default function WeclappPermissionsSelector({
     </div>
   );
 }
+*/

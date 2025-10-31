@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Companies",
 };
 
-export default function CompanyPage() {
+export default function OrganizationPage() {
   return (
     <SideBarLayout
       autoBreadCrumbs={{

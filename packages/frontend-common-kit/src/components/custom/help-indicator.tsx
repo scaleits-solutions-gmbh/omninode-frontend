@@ -32,7 +32,7 @@ function FAQsPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (open:
     },
     {
       question: "How do I update my profile information?",
-      answer: "Go to Personal Settings from your user menu in the top right corner. You can edit your profile information and save changes there."
+      answer: "Go to Account Settings from your user menu in the top right corner. You can edit your profile information and save changes there."
     },
     {
       question: "What should I do if I receive a company invitation?",

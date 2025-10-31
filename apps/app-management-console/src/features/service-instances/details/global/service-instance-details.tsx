@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import DeletePopup from "./delete-popup";
 import EditPopup from "./edit-details-popup";
 import { fetchServiceInstance } from "@/lib/api-client/service-instances";
@@ -98,3 +99,4 @@ export default function WeclappServiceInstanceDetails() {
     </Card>
   );
 }
+*/

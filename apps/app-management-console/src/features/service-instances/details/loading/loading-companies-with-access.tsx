@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import {
   Card,
   CardContent,
@@ -72,3 +73,4 @@ export default function LoadingUserWithAccess() {
     </div>
   );
 }
+*/

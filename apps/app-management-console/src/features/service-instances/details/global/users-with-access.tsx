@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import GrantUserAccessPopup from "./grant-user-access-popup";
 import { columns } from "./users-with-access-columns";
 import LoadingUsersWithAccess from "../loading/loading-users-with-access";
@@ -163,3 +164,4 @@ export default function UsersWithAccess() {
     </div>
   );
 }
+*/

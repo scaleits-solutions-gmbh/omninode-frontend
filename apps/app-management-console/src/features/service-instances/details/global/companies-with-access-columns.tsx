@@ -1,4 +1,5 @@
-import { FeServiceInstanceCompanyWithAccess } from "@/types/fe/fe-service-instance";
+/* Commented out - service-instances feature
+import { FeServiceInstanceOrganizationWithAccess } from "@/types/fe/fe-service-instance";
 import {
   Avatar,
   AvatarFallback,
@@ -14,14 +15,14 @@ import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type ActionsColumnProps = {
-  company: FeServiceInstanceCompanyWithAccess;
-  onCompanyAccessChange: (companyIndex: number) => void;
+  organization: FeServiceInstanceOrganizationWithAccess;
+  onOrganizationAccessChange: (organizationIndex: number) => void;
   rowIndex: number;
 };
 
 const ActionsColumn = ({
-  company,
-  onCompanyAccessChange,
+  organization,
+  onOrganizationAccessChange,
   rowIndex,
 }: ActionsColumnProps) => {
   const router = useRouter();
@@ -36,11 +37,11 @@ const ActionsColumn = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem
-            onClick={() => router.push(`/companies/${company.companyId}`)}
+            onClick={() => router.push(`/companies/${organization.organizationId}`)}
           >
-            Go to company details
+            Go to organization details
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onCompanyAccessChange(rowIndex)}>
+          <DropdownMenuItem onClick={() => onOrganizationAccessChange(rowIndex)}>
             Edit access
           </DropdownMenuItem>
           <DropdownMenuItem className="text-destructive">
@@ -53,12 +54,12 @@ const ActionsColumn = ({
 };
 
 export const createColumns: (
-  onCompanyAccessChange: (companyIndex: number) => void,
-) => ColumnDef<FeServiceInstanceCompanyWithAccess>[] = (
-  onCompanyAccessChange,
+  onOrganizationAccessChange: (organizationIndex: number) => void,
+) => ColumnDef<FeServiceInstanceOrganizationWithAccess>[] = (
+  onOrganizationAccessChange,
 ) => [
   {
-    header: "Company",
+    header: "Organization",
     accessorKey: "name",
     minSize: 200,
     size: 30,
@@ -66,15 +67,15 @@ export const createColumns: (
       return (
         <div className="flex items-center gap-2">
           <Avatar className="size-8 rounded-md">
-            <AvatarImage src={row.original.companyImageUrl} />
-            <AvatarFallback seed={row.original.companyId}>
-              {row.original.companyName.charAt(0)}
+            <AvatarImage src={row.original.organizationImageUrl} />
+            <AvatarFallback seed={row.original.organizationId}>
+              {row.original.organizationName.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span>{row.original.companyName}</span>
+            <span>{row.original.organizationName}</span>
             <span className="text-sm text-muted-foreground">
-              {row.original.companyEmail}
+              {row.original.organizationEmail}
             </span>
           </div>
         </div>
@@ -113,10 +114,11 @@ export const createColumns: (
     size: 5,
     cell: ({ row }) => (
       <ActionsColumn
-        company={row.original}
-        onCompanyAccessChange={onCompanyAccessChange}
+        organization={row.original}
+        onOrganizationAccessChange={onOrganizationAccessChange}
         rowIndex={row.index}
       />
     ),
   },
 ];
+*/

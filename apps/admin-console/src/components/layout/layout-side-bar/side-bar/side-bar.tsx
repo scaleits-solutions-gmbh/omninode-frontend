@@ -25,7 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="mx-auto">
           <Link href="/">
-            <AppLogoDescriptive />
+            <AppLogoDescriptive customSize={38} />
           </Link>
         </div>
       </SidebarHeader>

@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 
 import { columns } from "./service-instance-table-columns";
@@ -195,3 +196,4 @@ export default function ServiceInstancesList() {
     </Card>
   );
 }
+*/

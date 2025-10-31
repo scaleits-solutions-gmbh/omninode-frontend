@@ -30,9 +30,9 @@
       },
       "companySwitcher": {
         "failedToLoad": "Laden fehlgeschlagen",
-        "switchingCompany": "Wechsle Unternehmen...",
+        "switchingOrganization": "Wechsle Unternehmen...",
         "companySwitchedSuccessfully": "Unternehmen erfolgreich gewechselt",
-        "failedToSwitchCompany": "Unternehmenswechsel fehlgeschlagen"
+        "failedToSwitchOrganization": "Unternehmenswechsel fehlgeschlagen"
       },
       "mobileHeader": {
         "toggleMenu": "Menü umschalten"
@@ -265,8 +265,8 @@
     "expiredInviteDescription": "Der Einladungslink ist abgelaufen",
     "incorrectUser": "Falscher Benutzer",
     "incorrectUserDescription": "Der Einladungslink ist nicht für Sie",
-    "incorrectCompany": "Falsches Unternehmen",
-    "incorrectCompanyDescription": "Der Einladungslink ist nicht für Ihr Unternehmen",
+    "incorrectOrganization": "Falsches Unternehmen",
+    "incorrectOrganizationDescription": "Der Einladungslink ist nicht für Ihr Unternehmen",
     "tokenExpired": "Token abgelaufen",
     "tokenExpiredDescription": "Dieser Zurücksetzen-Link ist abgelaufen",
     "tokenUsed": "Token bereits verwendet",

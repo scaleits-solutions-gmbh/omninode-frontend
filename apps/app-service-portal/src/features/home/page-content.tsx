@@ -3,15 +3,15 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Service } from "@scaleits-solutions-gmbh/services";
 import { useEffect } from "react";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
 export default function HomePageClient() {
   const router = useRouter();
-  const { isLoading, error, selectedCompany } = useGetCurrentCompany();
+  const { isLoading, error, selectedOrganization } = useGetCurrentOrganization();
 
   useEffect(() => {
-    if (!isLoading && !error && selectedCompany) {
-      outerLoop: for (const serviceInstanceHost of selectedCompany.serviceInstanceHosts) {
+    if (!isLoading && !error && selectedOrganization) {
+      outerLoop: for (const serviceInstanceHost of selectedOrganization.serviceInstanceHosts) {
         if (serviceInstanceHost.instances.length > 0) {
           for (const serviceInstance of serviceInstanceHost.instances) {
             /*
@@ -57,7 +57,7 @@ export default function HomePageClient() {
         }
       }
     }
-  }, [selectedCompany, isLoading, error, router]);
+  }, [selectedOrganization, isLoading, error, router]);
 
   if (isLoading) {
     return (
@@ -71,7 +71,7 @@ export default function HomePageClient() {
     return <div>Failed to load service instances</div>;
   }
 
-  if (!selectedCompany) {
+  if (!selectedOrganization) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <p>No service instances found</p>

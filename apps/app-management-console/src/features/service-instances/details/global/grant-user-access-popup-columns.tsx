@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 /*
 Columns:
 - avatar, name, email
@@ -56,3 +57,4 @@ export const createColumns = (): ColumnDef<FeUser>[] => [
     },
   },
 ];
+*/

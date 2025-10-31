@@ -3,7 +3,7 @@ import { ProviderType } from "next-auth/providers/index";
 // Declare custom types for NextAuth modules
 declare module "next-auth" {
   // Define custom session properties
-  interface Session {
+  export interface Session {
     user: {
       sub: string;
       email_verified: boolean;
@@ -21,7 +21,7 @@ declare module "next-auth" {
   }
 
   // Define custom user properties
-  interface User {
+  export interface User {
     sub: string;
     email_verified: boolean;
     name: string;
@@ -35,7 +35,7 @@ declare module "next-auth" {
   }
 
   // Define custom account properties
-  interface Account {
+  export interface Account {
     provider: string;
     type: ProviderType;
     id: string;
@@ -52,7 +52,7 @@ declare module "next-auth" {
   }
 
   // Define custom profile properties
-  interface Profile {
+  export interface Profile {
     sub?: string;
     email_verified: boolean;
     name?: string;
@@ -67,7 +67,7 @@ declare module "next-auth" {
 
 // Declare custom JWT properties
 declare module "next-auth/jwt" {
-  interface JWT {
+  export interface JWT {
     access_token: string;
     refresh_token: string;
     refresh_expires_in: number;

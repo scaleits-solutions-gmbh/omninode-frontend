@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import {
   Badge,
   Button,
@@ -82,3 +83,4 @@ export default function WeclappServiceInstanceDetails() {
     </Card>
   );
 }
+*/

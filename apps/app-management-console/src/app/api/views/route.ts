@@ -2,12 +2,12 @@ import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
 import {
   ResultType,
-  UserCompanyService,
+  UserOrganizationService,
 } from "@scaleits-solutions-gmbh/services";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const userCompanyService = new UserCompanyService();
+  const userOrganizationService = new UserOrganizationService();
 
   const sessionTokenPayload = await getSessionTokenPayload();
 
@@ -15,7 +15,7 @@ export async function GET() {
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 
-  const { result, resultType } = await userCompanyService.fetchUserCompanies({
+  const { result, resultType } = await userOrganizationService.fetchUserCompanies({
     userId: sessionTokenPayload.sub,
     pageSize: 1000,
   });

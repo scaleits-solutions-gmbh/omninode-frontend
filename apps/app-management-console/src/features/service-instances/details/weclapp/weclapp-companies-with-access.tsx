@@ -1,8 +1,9 @@
-import WeclappCompanyAccessPermissionEditor from "./weclapp-company-access-permission-editor";
-import WeclappGrantCompanyAccess from "./weclapp-grant-company-access";
+/* Commented out - service-instances feature
+import WeclappOrganizationAccessPermissionEditor from "./weclapp-organization-access-permission-editor";
+import WeclappGrantOrganizationAccess from "./weclapp-grant-organization-access";
 import CompaniesWithAccess from "../global/companies-with-access";
 import { fetchServiceInstanceCompaniesWithAccess } from "@/lib/api-client/service-instances";
-import { FeWeclappServiceInstanceCompanyWithAccess } from "@/types/fe/fe-service-instance";
+import { FeWeclappServiceInstanceOrganizationWithAccess } from "@/types/fe/fe-service-instance";
 import { PaginatedResponse } from "@scaleits-solutions-gmbh/services";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -14,26 +15,27 @@ export default function WeclappCompaniesWithAccess() {
     queryKey: ["weclapp-companies-with-access", id],
     queryFn: () =>
       fetchServiceInstanceCompaniesWithAccess(id as string) as Promise<
-        PaginatedResponse<FeWeclappServiceInstanceCompanyWithAccess>
+        PaginatedResponse<FeWeclappServiceInstanceOrganizationWithAccess>
       >,
   });
 
-  const [selectedCompany, setSelectedCompany] = useState<
-    FeWeclappServiceInstanceCompanyWithAccess | undefined
+  const [selectedOrganization, setSelectedOrganization] = useState<
+    FeWeclappServiceInstanceOrganizationWithAccess | undefined
   >(undefined);
 
   return (
     <>
-      <WeclappCompanyAccessPermissionEditor
-        FeWeclappServiceInstanceCompanyWithAccess={selectedCompany}
-        onClose={() => setSelectedCompany(undefined)}
+      <WeclappOrganizationAccessPermissionEditor
+        FeWeclappServiceInstanceOrganizationWithAccess={selectedOrganization}
+        onClose={() => setSelectedOrganization(undefined)}
       />
       <CompaniesWithAccess
-        onCompanyAccessChange={(companyIndex) => {
-          setSelectedCompany(data?.items[companyIndex]);
+        onOrganizationAccessChange={(organizationIndex) => {
+          setSelectedOrganization(data?.items[organizationIndex]);
         }}
-        GrantCompanyAccess={<WeclappGrantCompanyAccess />}
+        GrantOrganizationAccess={<WeclappGrantOrganizationAccess />}
       />
     </>
   );
 }
+*/

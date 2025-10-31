@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 
 import { cn } from "@/lib/utils/ui/cn";
@@ -18,45 +19,45 @@ import { useQuery } from "@tanstack/react-query";
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
-const companys = [
+const organizations = [
   {
     value: "1",
-    label: "Weclapp Company 1",
+    label: "Weclapp Organization 1",
   },
   {
     value: "2",
-    label: "Weclapp Company 2",
+    label: "Weclapp Organization 2",
   },
   {
     value: "3",
-    label: "Weclapp Company 3",
+    label: "Weclapp Organization 3",
   },
   {
     value: "4",
-    label: "Weclapp Company 4",
+    label: "Weclapp Organization 4",
   },
   {
     value: "5",
-    label: "Weclapp Company 5",
+    label: "Weclapp Organization 5",
   },
 ];
 
-interface AcmpCompanySelectorProps {
+interface AcmpOrganizationSelectorProps {
   value: string;
   onValueChange: (value: string) => void;
 }
 
-export default function AcmpCompanySelector({
+export default function AcmpOrganizationSelector({
   value,
   onValueChange,
-}: AcmpCompanySelectorProps) {
+}: AcmpOrganizationSelectorProps) {
   const [popoverOpen, setPopoverOpen] = React.useState(false);
   const { isLoading, isError } = useQuery({
-    queryKey: ["acmpCompanys"],
+    queryKey: ["acmpOrganizations"],
     queryFn: async () => {
       //wait 1 second
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      return companys;
+      return organizations;
     },
   });
 
@@ -65,7 +66,7 @@ export default function AcmpCompanySelector({
   }
 
   if (isError) {
-    return <div>Error loading companys.</div>;
+    return <div>Error loading organizations.</div>;
   }
 
   return (
@@ -78,31 +79,31 @@ export default function AcmpCompanySelector({
           className="w-full justify-between"
         >
           {value
-            ? companys.find((company) => company.value === value)?.label
-            : "Select Weclapp company..."}
+            ? organizations.find((organization) => organization.value === value)?.label
+            : "Select Weclapp organization..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
         <Command>
-          <CommandInput placeholder="Search company..." className="h-9" />
+          <CommandInput placeholder="Search organization..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No company found.</CommandEmpty>
+            <CommandEmpty>No organization found.</CommandEmpty>
             <CommandGroup>
-              {companys.map((company) => (
+              {organizations.map((organization) => (
                 <CommandItem
-                  key={company.value}
-                  value={company.value}
+                  key={organization.value}
+                  value={organization.value}
                   onSelect={(currentValue) => {
                     onValueChange(currentValue === value ? "" : currentValue);
                     setPopoverOpen(false);
                   }}
                 >
-                  {company.label}
+                  {organization.label}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === company.value ? "opacity-100" : "opacity-0",
+                      value === organization.value ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>
@@ -114,3 +115,4 @@ export default function AcmpCompanySelector({
     </Popover>
   );
 }
+*/

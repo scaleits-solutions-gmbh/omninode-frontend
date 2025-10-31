@@ -1,8 +1,9 @@
-import AcmpCompanyAccessPermissionEditor from "./acmp-company-access-permission-editor";
-import AcmpGrantCompanyAccess from "./acmp-grant-company-access";
+/* Commented out - service-instances feature
+import AcmpOrganizationAccessPermissionEditor from "./acmp-organization-access-permission-editor";
+import AcmpGrantOrganizationAccess from "./acmp-grant-organization-access";
 import CompaniesWithAccess from "../global/companies-with-access";
 import { fetchServiceInstanceCompaniesWithAccess } from "@/lib/api-client/service-instances";
-import { FeAcmpServiceInstanceCompanyWithAccess } from "@/types/fe/fe-service-instance";
+import { FeAcmpServiceInstanceOrganizationWithAccess } from "@/types/fe/fe-service-instance";
 import { PaginatedResponse } from "@scaleits-solutions-gmbh/services";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -14,26 +15,27 @@ export default function AcmpCompaniesWithAccess() {
     queryKey: ["acmp-companies-with-access", id],
     queryFn: () =>
       fetchServiceInstanceCompaniesWithAccess(id as string) as Promise<
-        PaginatedResponse<FeAcmpServiceInstanceCompanyWithAccess>
+        PaginatedResponse<FeAcmpServiceInstanceOrganizationWithAccess>
       >,
   });
 
-  const [selectedCompany, setSelectedCompany] = useState<
-    FeAcmpServiceInstanceCompanyWithAccess | undefined
+  const [selectedOrganization, setSelectedOrganization] = useState<
+    FeAcmpServiceInstanceOrganizationWithAccess | undefined
   >(undefined);
 
   return (
     <>
-      <AcmpCompanyAccessPermissionEditor
-        FeAcmpServiceInstanceCompanyWithAccess={selectedCompany}
-        onClose={() => setSelectedCompany(undefined)}
+      <AcmpOrganizationAccessPermissionEditor
+        FeAcmpServiceInstanceOrganizationWithAccess={selectedOrganization}
+        onClose={() => setSelectedOrganization(undefined)}
       />
       <CompaniesWithAccess
-        onCompanyAccessChange={(companyIndex) => {
-          setSelectedCompany(data?.items[companyIndex]);
+        onOrganizationAccessChange={(organizationIndex) => {
+          setSelectedOrganization(data?.items[organizationIndex]);
         }}
-        GrantCompanyAccess={<AcmpGrantCompanyAccess />}
+        GrantOrganizationAccess={<AcmpGrantOrganizationAccess />}
       />
     </>
   );
 }
+*/

@@ -13,12 +13,12 @@ export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<null | unknown>> {
   const userId = (await getSessionTokenPayload()).sub;
-  const targetCompanyId = (await request.json()).targetCompanyId;
+  const targetOrganizationId = (await request.json()).targetOrganizationId;
 
   const omninodeLoginService = new OmninodeLoginService();
-  const { result, resultType } = await omninodeLoginService.switchCompany(
+  const { result, resultType } = await omninodeLoginService.switchOrganization(
     userId,
-    targetCompanyId,
+    targetOrganizationId,
   );
   if (resultType !== ResultType.SUCCESS) {
     return handleServiceError(resultType);
@@ -44,10 +44,10 @@ export async function POST(
     maxAge: sessionTokenPayload.exp - sessionTokenPayload.iat,
   });
 
-  // Add currentCompanyId cookie http only to response
+  // Add currentOrganizationId cookie http only to response
   response.cookies.set(
-    "currentCompanyId",
-    sessionTokenPayload.companyId as string,
+    "currentOrganizationId",
+    sessionTokenPayload.organizationId as string,
     {
       httpOnly: false,
       secure: true,

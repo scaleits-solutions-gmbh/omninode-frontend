@@ -22,6 +22,7 @@ import {
 } from "@repo/omninode-api-client";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { Session } from "next-auth";
 
 export default function PersonalInformationCard() {
   const {
@@ -31,9 +32,9 @@ export default function PersonalInformationCard() {
     refetch,
   } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: async ({ accessToken }) =>
-      baseOmninodeApiClient().omninodeUser.userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(accessToken),
+    queryFn: async ({ session }) =>
+      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
+        apiAuthentication: getApiAuthentication(session.access_token),
       }),
   });
 
@@ -54,15 +55,15 @@ export default function PersonalInformationCard() {
 
   const updateMutation = useAuthedMutation({
     mutationFn: async ({
-      accessToken,
+      session,
       variables,
     }: {
-      accessToken: string;
+      session: Session;
       variables: { firstName: string; lastName: string };
     }) => {
-      return await baseOmninodeApiClient().omninodeUser.userMicroservice.updateCurrentUser(
+      return await baseOmninodeApiClient().userMicroservice.updateCurrentUser(
         {
-          apiAuthentication: getApiAuthentication(accessToken),
+          apiAuthentication: getApiAuthentication(session.access_token),
           request: {
             body: {
               firstName: variables.firstName,

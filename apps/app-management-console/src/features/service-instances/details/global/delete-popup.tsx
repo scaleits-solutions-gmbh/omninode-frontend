@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import { fetchServiceInstance } from "@/lib/api-client/service-instances";
 import { FeWeclappServiceInstanceDetails } from "@/types/fe/fe-service-instance";
 import {
@@ -78,3 +79,4 @@ export default function DeletePopup() {
     </Dialog>
   );
 }
+*/

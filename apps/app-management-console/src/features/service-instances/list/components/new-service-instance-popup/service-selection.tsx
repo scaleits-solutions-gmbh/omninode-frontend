@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 import {
   Button,
@@ -141,3 +142,4 @@ export default function ServiceSelection({
     </>
   );
 }
+*/

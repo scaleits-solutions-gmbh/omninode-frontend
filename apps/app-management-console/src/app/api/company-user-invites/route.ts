@@ -2,10 +2,10 @@
 
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
-import { feCompanyUserInviteSchema } from "@/schemas/transformers/fe-company-user-invite-transformer";
-import { FeCompanyUserInvite } from "@/types/fe/fe-company-user-invite";
+import { feOrganizationUserInviteSchema } from "@/schemas/transformers/fe-organization-user-invite-transformer";
+import { FeOrganizationUserInvite } from "@/types/fe/fe-organization-user-invite";
 import {
-  CompanyUserInviteService,
+  OrganizationUserInviteService,
   PaginatedResponse,
   ResultType,
 } from "@scaleits-solutions-gmbh/services";
@@ -13,17 +13,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-): Promise<NextResponse<PaginatedResponse<FeCompanyUserInvite> | unknown>> {
-  const companyId = (await getSessionTokenPayload()).companyId;
+): Promise<NextResponse<PaginatedResponse<FeOrganizationUserInvite> | unknown>> {
+  const organizationId = (await getSessionTokenPayload()).organizationId;
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search") || "";
   const page = parseInt(searchParams.get("page") || "1");
   const pageSize = parseInt(searchParams.get("pageSize") || "10");
 
-  const companyUserInviteService = new CompanyUserInviteService();
+  const organizationUserInviteService = new OrganizationUserInviteService();
   const { result, resultType } =
-    await companyUserInviteService.getCompanyUserInvites({
-      companyId: companyId,
+    await organizationUserInviteService.getOrganizationUserInvites({
+      organizationId: organizationId,
       search: search,
       page: page,
       pageSize: pageSize,
@@ -39,9 +39,9 @@ export async function GET(
   }
 
   try {
-    const mappedResult: PaginatedResponse<FeCompanyUserInvite> = {
+    const mappedResult: PaginatedResponse<FeOrganizationUserInvite> = {
       items: result.items.map((item) => {
-        return feCompanyUserInviteSchema.parse(item);
+        return feOrganizationUserInviteSchema.parse(item);
       }),
       page: result.page,
       pageSize: result.pageSize,
@@ -62,19 +62,19 @@ export async function GET(
 export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<null | unknown>> {
-  const companyId = (await getSessionTokenPayload()).companyId;
+  const organizationId = (await getSessionTokenPayload()).organizationId;
   const body = await request.json();
   const { email, organizationRole } = body;
   const bodyToSend = {
-    companyId: companyId,
+    organizationId: organizationId,
     email: email,
     organizationRole: organizationRole,
   };
   console.log(bodyToSend);
-  const companyUserInviteService = new CompanyUserInviteService();
-  const { resultType } = await companyUserInviteService.createCompanyUserInvite(
+  const organizationUserInviteService = new OrganizationUserInviteService();
+  const { resultType } = await organizationUserInviteService.createOrganizationUserInvite(
     {
-      companyId: companyId,
+      organizationId: organizationId,
       email: email,
       organizationRole: organizationRole,
     },

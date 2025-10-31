@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 
 import { cn } from "@/lib/utils/ui/cn";
@@ -114,3 +115,4 @@ export default function AcmpGroupSelector({
     </Popover>
   );
 }
+*/

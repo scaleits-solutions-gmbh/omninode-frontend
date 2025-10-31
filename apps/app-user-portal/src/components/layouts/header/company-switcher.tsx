@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Plus } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -17,15 +17,18 @@ import {
   DropdownMenuTrigger,
   SearchInput,
 } from "@repo/pkg-frontend-common-kit/components";
-import { FeCompany } from "@/types/fe-company";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { MANAGEMENT_CONSOLE_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import Link from "next/link";
 
 
-export default function CompanySwitcher() {
+export default function OrganizationSwitcher() {
   // Move all hooks to the top before any conditional logic
   const [search, setSearch] = React.useState("");
   const isMobile = useIsMobile();
-  const { companies,selectedCompanyId, isLoading, error, setSelectedCompanyId, selectedCompany } = useGetCurrentCompany();
+  const { companies,selectedOrganizationId, isLoading, error, setSelectedOrganizationId, selectedOrganization } = useGetCurrentOrganization();
 
 
   if (isLoading || !companies) {
@@ -41,14 +44,10 @@ export default function CompanySwitcher() {
     return <div className="text-sm text-muted-foreground">Failed to load</div>;
   }
 
-  // After loading, if there are no companies, render nothing
-  if (companies.length === 0) {
-    return null;
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
+        {companies.length > 0 ? (
         <Button
           variant="ghost"
           size="sm"
@@ -56,15 +55,21 @@ export default function CompanySwitcher() {
         >
           <Avatar className="h-6 w-6 rounded-sm">
             <AvatarImage />
-            <AvatarFallback seed={selectedCompanyId ?? undefined}>
-              {selectedCompany?.name.charAt(0)}
+            <AvatarFallback seed={selectedOrganizationId ?? undefined}>
+              {selectedOrganization?.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <span className="text-sm font-medium truncate max-w-24">
-            {selectedCompany?.name}
+            {selectedOrganization?.name}
           </span>
-          <ChevronDown className="h-3 w-3 text-muted-foreground" />
-        </Button>
+            <ChevronDown className="h-3 w-3 text-muted-foreground" />
+          </Button>
+        ) : (
+          <Button variant="ghost" size="sm" className="h-8 px-2 gap-2 hover:bg-accent hover:text-accent-foreground">
+            <span className="text-sm font-medium">No Organization</span>
+            <ChevronDown className="h-3 w-3 text-muted-foreground" />
+          </Button>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="min-w-56 rounded-lg"
@@ -72,25 +77,31 @@ export default function CompanySwitcher() {
         side={isMobile ? "top" : "bottom"}
       >
         <ScrollArea className="max-h-[300px]">
-          {companies.map((company: FeCompany) => (
+          <Link href={getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL + "/new-organization"}>
+            <Button variant="ghost" size="sm" className="w-full justify-start gap-2 p-2">
+              <Plus className="h-4 w-4" />
+              <span className="text-sm font-medium">New Organization</span>
+            </Button>
+          </Link>
+          {companies.map((company: UserOrganizationReadModel) => (
             <DropdownMenuItem
               key={company.id}
-              onClick={() => setSelectedCompanyId(company.id)}
+              onClick={() => setSelectedOrganizationId(company.organizationId)}
               className="gap-2 p-2"
             >
               <Avatar className="size-6 rounded-sm">
                 <AvatarImage />
-                <AvatarFallback seed={company.id}>
+                <AvatarFallback seed={company.organizationId}>
                   {company.name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{company.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  {company.type}
+                  {company.role}
                 </span>
               </div>
-              {company.id === selectedCompanyId && (
+              {company.organizationId === selectedOrganizationId && (
                 <Check className="h-4 w-4 text-primary" />
               )}
             </DropdownMenuItem>

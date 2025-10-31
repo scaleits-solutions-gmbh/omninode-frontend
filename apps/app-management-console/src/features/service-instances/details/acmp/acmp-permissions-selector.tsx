@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import {
   ScrollArea,
   Checkbox,
@@ -51,7 +52,7 @@ export default function AcmpPermissionsSelector({
                 >
                   View Dashboard
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view the dashboard.
+                    Allow this organization to view the dashboard.
                   </span>
                 </Label>
               </div>
@@ -75,7 +76,7 @@ export default function AcmpPermissionsSelector({
                 >
                   View Clients
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view clients.
+                    Allow this organization to view clients.
                   </span>
                 </Label>
               </div>
@@ -99,7 +100,7 @@ export default function AcmpPermissionsSelector({
                 >
                   View Client Commands
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view client commands.
+                    Allow this organization to view client commands.
                   </span>
                 </Label>
               </div>
@@ -123,7 +124,7 @@ export default function AcmpPermissionsSelector({
                 >
                   View Rollouts
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to view rollouts.
+                    Allow this organization to view rollouts.
                   </span>
                 </Label>
               </div>
@@ -147,7 +148,7 @@ export default function AcmpPermissionsSelector({
                 >
                   Push Client Commands
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to push client commands to the client.
+                    Allow this organization to push client commands to the client.
                   </span>
                 </Label>
               </div>
@@ -171,7 +172,7 @@ export default function AcmpPermissionsSelector({
                 >
                   Push Rollouts
                   <span className="text-xs text-muted-foreground">
-                    Allow this company to push rollouts to the client.
+                    Allow this organization to push rollouts to the client.
                   </span>
                 </Label>
               </div>
@@ -182,3 +183,4 @@ export default function AcmpPermissionsSelector({
     </div>
   );
 }
+*/

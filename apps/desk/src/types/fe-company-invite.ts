@@ -1,14 +1,14 @@
-import { CompanyRelationshipType } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRelationshipType } from "@scaleits-solutions-gmbh/services";
 
-export type feCompanyInvite = {
+export type feOrganizationInvite = {
   id: string;
   companyId: string;
   companyName: string;
-  inviteeCompanyId: string;
-  inviteeCompanyName: string;
-  leftCompanyId: string;
-  leftCompanyName: string;
-  rightCompanyId: string;
-  rightCompanyName: string;
-  relationship: CompanyRelationshipType;
+  inviteeOrganizationId: string;
+  inviteeOrganizationName: string;
+  leftOrganizationId: string;
+  leftOrganizationName: string;
+  rightOrganizationId: string;
+  rightOrganizationName: string;
+  relationship: OrganizationRelationshipType;
 };

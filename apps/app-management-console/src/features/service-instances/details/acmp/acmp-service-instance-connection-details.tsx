@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import AcmpEditConnectionDetailPopup from "./acmp-edit-connection-detail-popup";
 import { fetchServiceInstance } from "@/lib/api-client/service-instances";
 import { FeAcmpServiceInstanceDetails } from "@/types/fe/fe-service-instance";
@@ -135,3 +136,4 @@ export default function AcmpServiceIntanceConnectionDetails() {
     </div>
   );
 }
+*/

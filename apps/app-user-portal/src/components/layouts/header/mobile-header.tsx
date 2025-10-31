@@ -4,7 +4,7 @@ import { AppLogo } from "@/components/custom/app-logo";
 import Link from "next/link";
 import UserIndicator from "./user-indicator";
 import { Lock, Menu, X } from "lucide-react";
-import CompanySwitcher from "./company-switcher";
+import OrganizationSwitcher from "./company-switcher";
 import { useState } from "react";
 
 interface MobileHeaderProps {
@@ -71,7 +71,7 @@ export default function MobileHeader({
 
             <div className="flex gap-2 items-center">
             <UserIndicator />
-              <CompanySwitcher />
+              <OrganizationSwitcher />
             </div>
           </div>
         </div>

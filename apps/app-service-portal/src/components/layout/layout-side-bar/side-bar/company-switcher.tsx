@@ -20,7 +20,7 @@ import * as React from "react";
 import { ChevronsUpDown, Check} from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
 
 
@@ -28,7 +28,7 @@ export default function TenantSwitcher() {
   // Move all hooks to the top before any conditional logic
   const [search, setSearch] = React.useState("");
   const isMobile = useIsMobile();
-  const { companies, selectedCompanyId, isLoading, error, setSelectedCompanyId, selectedCompany } = useGetCurrentCompany();
+  const { companies, selectedOrganizationId, isLoading, error, setSelectedOrganizationId, selectedOrganization } = useGetCurrentOrganization();
 
 
   if (isLoading || !companies) {
@@ -58,16 +58,16 @@ export default function TenantSwitcher() {
             >
               <Avatar className="rounded-sm">
                 <AvatarImage />
-                <AvatarFallback seed={selectedCompany?.id}>
-                  {selectedCompany?.name.charAt(0)}
+                <AvatarFallback seed={selectedOrganization?.id}>
+                  {selectedOrganization?.name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {selectedCompany?.name}
+                  {selectedOrganization?.name}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  {"Company"}
+                  {"Organization"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -82,7 +82,7 @@ export default function TenantSwitcher() {
               {companies?.map((company) => (
                 <DropdownMenuItem
                   key={company.id}
-                  onClick={() => setSelectedCompanyId(company.id)}
+                  onClick={() => setSelectedOrganizationId(company.id)}
                   className="gap-2 p-2"
                 >
                   <Avatar className="size-6 rounded-sm">
@@ -96,10 +96,10 @@ export default function TenantSwitcher() {
                       {company.name}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      {"Company"}
+                      {"Organization"}
                     </span>
                   </div>
-                  {company.id === selectedCompanyId && (
+                  {company.id === selectedOrganizationId && (
                     <Check className="h-4 w-4 text-primary" />
                   )}
                 </DropdownMenuItem>

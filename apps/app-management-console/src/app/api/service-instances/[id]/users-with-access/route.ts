@@ -14,7 +14,7 @@ const mockData: PaginatedResponse<FeServiceInstanceUserWithAccess> = {
       serviceInstanceName: "Service Instance 1",
       serviceInstanceService: Service.Weclapp,
       serviceInstanceStatus: ServiceInstanceStatus.Active,
-      userCompanyId: "1",
+      userOrganizationId: "1",
       userImageUrl: "https://via.placeholder.com/150",
       userFirstName: "John",
       userLastName: "Doe",

@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import {
   Button,
   Input,
@@ -156,7 +157,7 @@ export default function AcmpConfig({ onBack, onFinish }: AcmpConfigProps) {
                 <Input
                   id={field.name}
                   name={field.name}
-                  placeholder="e.g., your-company.acmp.com"
+                  placeholder="e.g., your-organization.acmp.com"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -236,3 +237,4 @@ export default function AcmpConfig({ onBack, onFinish }: AcmpConfigProps) {
     </>
   );
 }
+*/

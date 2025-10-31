@@ -1,8 +1,9 @@
+/* Commented out - service-instances feature
 "use client";
 
-import WeclappCompanySelector from "./weclapp-company-selector";
+import WeclappOrganizationSelector from "./weclapp-organization-selector";
 import WeclappPermissionsSelector from "./weclapp-permissions-selector";
-import CompanySelector from "../global/company-selector";
+import OrganizationSelector from "../global/organization-selector";
 import {
   Label,
   Dialog,
@@ -23,12 +24,12 @@ import { useForm } from "@tanstack/react-form";
 import * as React from "react";
 import { toast } from "sonner";
 
-export default function WeclappGrantCompanyAccess() {
+export default function WeclappGrantOrganizationAccess() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const form = useForm({
     defaultValues: {
-      companyId: "",
+      organizationId: "",
       filterType: WeclappFilterType.None,
       filterValue1: "",
       canViewCustomers: false,
@@ -49,11 +50,11 @@ export default function WeclappGrantCompanyAccess() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Grant company access</Button>
+        <Button size="sm">Grant organization access</Button>
       </DialogTrigger>
       <DialogContent onClick={(e) => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Grant Company Access</DialogTitle>
+          <DialogTitle>Grant Organization Access</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -63,9 +64,9 @@ export default function WeclappGrantCompanyAccess() {
           }}
           className="space-y-4"
         >
-          <form.Field name="companyId">
+          <form.Field name="organizationId">
             {(field) => (
-              <CompanySelector
+              <OrganizationSelector
                 value={field.state.value}
                 onValueChange={(value) => field.handleChange(value)}
               />
@@ -90,8 +91,8 @@ export default function WeclappGrantCompanyAccess() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={WeclappFilterType.None}>None</SelectItem>
-                    <SelectItem value={WeclappFilterType.Company}>
-                      Company
+                    <SelectItem value={WeclappFilterType.Organization}>
+                      Organization
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -101,12 +102,12 @@ export default function WeclappGrantCompanyAccess() {
 
           <form.Subscribe selector={(state) => state.values.filterType}>
             {(filterType) =>
-              filterType === WeclappFilterType.Company ? (
+              filterType === WeclappFilterType.Organization ? (
                 <form.Field name="filterValue1">
                   {(field) => (
                     <div className="space-y-2">
-                      <Label>Weclapp Company</Label>
-                      <WeclappCompanySelector
+                      <Label>Weclapp Organization</Label>
+                      <WeclappOrganizationSelector
                         value={field.state.value}
                         onValueChange={(value: string) =>
                           field.handleChange(value)
@@ -117,7 +118,7 @@ export default function WeclappGrantCompanyAccess() {
                 </form.Field>
               ) : (
                 <div className="text-sm text-muted-foreground">
-                  The company will have access to the selected resources without
+                  The organization will have access to the selected resources without
                   any filters.
                 </div>
               )
@@ -149,3 +150,4 @@ export default function WeclappGrantCompanyAccess() {
     </Dialog>
   );
 }
+*/

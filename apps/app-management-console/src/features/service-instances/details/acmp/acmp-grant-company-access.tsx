@@ -1,9 +1,10 @@
+/* Commented out - service-instances feature
 "use client";
 
 import AcmpGroupSelector from "./acmp-group-selector";
 import AcmpPermissionsSelector from "./acmp-permissions-selector";
 import AcmpTenantSelector from "./acmp-tenant-selector";
-import CompanySelector from "../global/company-selector";
+import OrganizationSelector from "../global/organization-selector";
 import {
   Label,
   Dialog,
@@ -24,12 +25,12 @@ import { useForm } from "@tanstack/react-form";
 import * as React from "react";
 import { toast } from "sonner";
 
-export default function AcmpGrantCompanyAccess() {
+export default function AcmpGrantOrganizationAccess() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const form = useForm({
     defaultValues: {
-      companyId: "",
+      organizationId: "",
       acmpFilterType: undefined as AcmpFilterType | undefined,
       filterValue1: "",
       filterValue2: "",
@@ -53,11 +54,11 @@ export default function AcmpGrantCompanyAccess() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Grant company access</Button>
+        <Button size="sm">Grant organization access</Button>
       </DialogTrigger>
       <DialogContent onClick={(e) => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Grant Company Access</DialogTitle>
+          <DialogTitle>Grant Organization Access</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -67,9 +68,9 @@ export default function AcmpGrantCompanyAccess() {
           }}
           className="space-y-4"
         >
-          <form.Field name="companyId">
+          <form.Field name="organizationId">
             {(field) => (
-              <CompanySelector
+              <OrganizationSelector
                 value={field.state.value}
                 onValueChange={(value) => field.handleChange(value)}
               />
@@ -135,7 +136,7 @@ export default function AcmpGrantCompanyAccess() {
                   </div>
                 ) : acmpFilterType === AcmpFilterType.None ? (
                   <div className="text-sm text-muted-foreground">
-                    No additional filters will be applied. The company will have
+                    No additional filters will be applied. The organization will have
                     access to all resources.
                   </div>
                 ) : null}
@@ -167,3 +168,4 @@ export default function AcmpGrantCompanyAccess() {
     </Dialog>
   );
 }
+*/

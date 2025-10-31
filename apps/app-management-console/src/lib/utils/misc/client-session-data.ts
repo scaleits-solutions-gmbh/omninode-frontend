@@ -7,7 +7,7 @@ export const getClientSessionData = () => {
 
   return {
     currentUserId: Cookies.get("currentUserId"),
-    currentCompanyId: Cookies.get("currentCompanyId"),
+    currentOrganizationId: Cookies.get("currentOrganizationId"),
     organizationRole: organizationRoleCookie
       ? (organizationRoleCookie as OrganizationRole)
       : OrganizationRole.None,
@@ -15,4 +15,4 @@ export const getClientSessionData = () => {
 };
 
 // For React components, use the hooks from @/hooks/useSession:
-// useSession(), useUserId(), useCompanyId(), useOrganizationRole()
+// useSession(), useUserId(), useOrganizationId(), useOrganizationRole()

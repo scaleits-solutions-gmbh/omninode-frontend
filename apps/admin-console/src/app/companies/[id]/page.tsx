@@ -3,10 +3,10 @@ import OrganizationsPageContent from "@/features/organizations/page-content";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Company Details",
+  title: "Organization Details",
 };
 
-export default function CompanyPage() {
+export default function OrganizationPage() {
   return (
     <SideBarLayout
       autoBreadCrumbs={{
@@ -17,7 +17,7 @@ export default function CompanyPage() {
             href: "/companies",
           },
           {
-            label: "Company Details",
+            label: "Organization Details",
           },
         ],
       }}

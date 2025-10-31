@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 import AcmpConfig from "./acmp-config";
 import ServiceSelection from "./service-selection";
@@ -51,3 +52,4 @@ export default function NewServiceInstancePopup() {
     </Dialog>
   );
 }
+*/

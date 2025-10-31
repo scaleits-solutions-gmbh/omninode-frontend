@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import WeclappCompaniesWithAccess from "./weclapp-companies-with-access";
 import WeclappServiceIntanceConnectionDetails from "./weclapp-service-instance-connection-details";
 import ServiceInstanceDetails from "../global/service-instance-details";
@@ -24,3 +25,4 @@ export default function WeclappServiceInstancePageContent() {
     </>
   );
 }
+*/

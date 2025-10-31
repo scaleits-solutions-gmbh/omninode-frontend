@@ -21,6 +21,7 @@ import { useEffect, useMemo, useState } from "react";
 import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 import { toast } from "sonner";
 import { Theme, Locale, themeOptions, localeOptions } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { Session } from "next-auth";
 
 type ThemeValue = "light" | "dark" | "system";
 
@@ -29,9 +30,9 @@ export default function AccountPreferencesCard() {
 
   const { data: userData, isLoading } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: async ({ accessToken }) =>
-      baseOmninodeApiClient().omninodeUser.userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(accessToken),
+    queryFn: async ({ session }) =>
+      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
+        apiAuthentication: getApiAuthentication(session.access_token),
       }),
   });
 
@@ -58,9 +59,9 @@ export default function AccountPreferencesCard() {
   }, [isLoading, currentTheme, currentLocale]);
 
   const updatePreferences = useAuthedMutation({
-    mutationFn: async ({ accessToken, variables }: { accessToken: string; variables: { theme: Theme; locale: Locale } }) => {
-      return await baseOmninodeApiClient().omninodeUser.userMicroservice.updateCurrentUserPreferences({
-        apiAuthentication: getApiAuthentication(accessToken),
+    mutationFn: async ({ session, variables }: { session: Session; variables: { theme: Theme; locale: Locale } }) => {
+      return await baseOmninodeApiClient().userMicroservice.updateCurrentUserPreferences({
+        apiAuthentication: getApiAuthentication(session.access_token),
         request: {
           body: {
             theme: variables.theme,

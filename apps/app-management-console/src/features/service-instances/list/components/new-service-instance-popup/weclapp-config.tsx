@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import {
   Button,
   Input,
@@ -158,7 +159,7 @@ export default function WeclappConfig({
                 <Input
                   id={field.name}
                   name={field.name}
-                  placeholder="e.g., your-company.weclapp.com"
+                  placeholder="e.g., your-organization.weclapp.com"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -238,3 +239,4 @@ export default function WeclappConfig({
     </>
   );
 }
+*/

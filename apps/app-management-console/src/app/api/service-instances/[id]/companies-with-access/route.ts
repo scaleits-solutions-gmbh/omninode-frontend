@@ -1,6 +1,6 @@
 import {
-  FeAcmpServiceInstanceCompanyWithAccess,
-  FeWeclappServiceInstanceCompanyWithAccess,
+  FeAcmpServiceInstanceOrganizationWithAccess,
+  FeWeclappServiceInstanceOrganizationWithAccess,
 } from "@/types/fe/fe-service-instance";
 import {
   AcmpFilterType,
@@ -11,7 +11,7 @@ import {
 } from "@scaleits-solutions-gmbh/services";
 import { NextResponse } from "next/server";
 
-const mockAcmpData: PaginatedResponse<FeAcmpServiceInstanceCompanyWithAccess> =
+const mockAcmpData: PaginatedResponse<FeAcmpServiceInstanceOrganizationWithAccess> =
   {
     items: [
       {
@@ -20,10 +20,10 @@ const mockAcmpData: PaginatedResponse<FeAcmpServiceInstanceCompanyWithAccess> =
         serviceInstanceName: "Service Instance 1",
         serviceInstanceService: Service.Weclapp,
         serviceInstanceStatus: ServiceInstanceStatus.Active,
-        companyId: "123123123123",
-        companyImageUrl: "https://via.placeholder.com/150",
-        companyName: "ScaleITS",
-        companyEmail: "info@scaleits.com",
+        organizationId: "123123123123",
+        organizationImageUrl: "https://via.placeholder.com/150",
+        organizationName: "ScaleITS",
+        organizationEmail: "info@scaleits.com",
         creatorFirstName: "John",
         creatorLastName: "Doe",
         creatorEmail: "john.doe@example.com",
@@ -47,7 +47,7 @@ const mockAcmpData: PaginatedResponse<FeAcmpServiceInstanceCompanyWithAccess> =
     totalPages: 1,
   };
 
-const mockWeclappData: PaginatedResponse<FeWeclappServiceInstanceCompanyWithAccess> =
+const mockWeclappData: PaginatedResponse<FeWeclappServiceInstanceOrganizationWithAccess> =
   {
     items: [
       {
@@ -56,10 +56,10 @@ const mockWeclappData: PaginatedResponse<FeWeclappServiceInstanceCompanyWithAcce
         serviceInstanceName: "Service Instance 1",
         serviceInstanceService: Service.Weclapp,
         serviceInstanceStatus: ServiceInstanceStatus.Active,
-        companyId: "123123123123",
-        companyImageUrl: "https://via.placeholder.com/150",
-        companyName: "ScaleITS",
-        companyEmail: "info@scaleits.com",
+        organizationId: "123123123123",
+        organizationImageUrl: "https://via.placeholder.com/150",
+        organizationName: "ScaleITS",
+        organizationEmail: "info@scaleits.com",
         creatorFirstName: "John",
         creatorLastName: "Doe",
         creatorEmail: "john.doe@example.com",

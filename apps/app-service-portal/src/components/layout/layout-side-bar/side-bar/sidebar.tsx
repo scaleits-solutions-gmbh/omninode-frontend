@@ -36,7 +36,7 @@ import Link from "next/link";
 import { SidebarSkeleton } from "./side-bar-skeleton";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({});
@@ -49,7 +49,7 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   };
 
 
-const {selectedCompany, isLoading, error} = useGetCurrentCompany();
+const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
 
   if (isLoading) {
     return <SidebarSkeleton />;
@@ -70,16 +70,16 @@ const {selectedCompany, isLoading, error} = useGetCurrentCompany();
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {selectedCompany?.serviceInstanceHosts.map((company) => (
-          <SidebarGroup key={company.hostCompanyId}>
+        {selectedOrganization?.serviceInstanceHosts.map((company) => (
+          <SidebarGroup key={company.hostOrganizationId}>
             <SidebarGroupLabel className="flex items-center gap-2 p-0 pb-1 text-sm">
               <Avatar className="rounded-md w-6 h-6">
                 <AvatarImage src={""} />
-                <AvatarFallback seed={company.hostCompanyId}>
-                  {company.hostCompanyName.charAt(0)}
+                <AvatarFallback seed={company.hostOrganizationId}>
+                  {company.hostOrganizationName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              {company.hostCompanyName}
+              {company.hostOrganizationName}
             </SidebarGroupLabel>
             <SidebarGroupContent className="pl-1">
               <SidebarMenu>

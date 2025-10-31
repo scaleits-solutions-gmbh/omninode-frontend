@@ -38,12 +38,12 @@ type WeclappServiceInstance = BaseServiceInstance & {
 type ServiceInstance = AcmpServiceInstance | WeclappServiceInstance;
 
 export type ServiceInstanceHost = {
-  hostCompanyId: string;
-  hostCompanyName: string;
+  hostOrganizationId: string;
+  hostOrganizationName: string;
   instances: ServiceInstance[];
 };
 
-export type Company = {
+export type Organization = {
   id: string;
   name: string;
   organizationRole: OrganizationRole;
@@ -51,5 +51,5 @@ export type Company = {
 };
 
 export type GetUserCompaniesResponseDto = {
-  companies: Company[];
+  companies: Organization[];
 };
