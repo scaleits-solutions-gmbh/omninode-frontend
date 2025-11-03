@@ -8,7 +8,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import {
   Locale,
-  OrganizationMembershipReadModel,
+  ComposedOrganizationMembershipReadModel,
   OrganizationRole,
   organizationRoleLabel,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
@@ -22,7 +22,7 @@ function getInitials(name: string): string {
   return initials || "U";
 }
 
-export const recentUsersColumns: ColumnDef<OrganizationMembershipReadModel>[] =
+export const recentUsersColumns: ColumnDef<ComposedOrganizationMembershipReadModel>[] =
   [
     {
       accessorKey: "name",
@@ -30,16 +30,18 @@ export const recentUsersColumns: ColumnDef<OrganizationMembershipReadModel>[] =
       size: 40,
       minSize: 200,
       cell: ({ row }) => {
-        const user = row.original;
+        const membership = row.original;
+        const user = membership.user;
+        const fullName = `${user.firstName} ${user.lastName}`.trim() || "Unknown User";
         return (
           <div className="flex items-center gap-2">
             <Avatar className="">
-              <AvatarImage alt={"Unknown User"} />
-              <AvatarFallback seed={user.userId} className="">
-                {getInitials("Unknown User")}
+              <AvatarImage alt={fullName} />
+              <AvatarFallback seed={user.id} className="">
+                {getInitials(fullName)}
               </AvatarFallback>
             </Avatar>
-            <span className="font-medium">{"Unknown User"}</span>
+            <span className="font-medium">{fullName}</span>
           </div>
         );
       },
@@ -49,9 +51,9 @@ export const recentUsersColumns: ColumnDef<OrganizationMembershipReadModel>[] =
       header: "Email",
       size: 40,
       minSize: 240,
-      cell: () => (
+      cell: ({ row }) => (
         <span className="text-muted-foreground">
-          {"unknown.user@example.com"}
+          {row.original.user.email}
         </span>
       ),
     },
