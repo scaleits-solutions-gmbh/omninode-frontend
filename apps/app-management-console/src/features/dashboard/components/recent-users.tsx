@@ -37,7 +37,7 @@ export default function RecentUsers() {
   const { data: queryData, isLoading } = useAuthedQuery({
     queryKey: ["recentOrganizationUsers", organizationId],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationMembers({
+      return await baseOmninodeApiClient().organizationMicroservice.findComposedOrganizationMemberships({
         request: {
           pathParams: { id: organizationId as string },
           queryParams: {
