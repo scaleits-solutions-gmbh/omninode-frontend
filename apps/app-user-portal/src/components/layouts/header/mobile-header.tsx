@@ -6,6 +6,9 @@ import UserIndicator from "./user-indicator";
 import { Lock, Menu, X } from "lucide-react";
 import OrganizationSwitcher from "./organization-switcher";
 import { useState } from "react";
+import { MANAGEMENT_CONSOLE_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
 interface MobileHeaderProps {
   canAccessManagementConsole: boolean;
@@ -14,6 +17,7 @@ interface MobileHeaderProps {
 export default function MobileHeader({
   canAccessManagementConsole,
 }: MobileHeaderProps) {
+  const { selectedOrganization } = useGetCurrentOrganization();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -48,7 +52,13 @@ export default function MobileHeader({
             <div className="space-y-3">
               {canAccessManagementConsole ? (
                 <Link
-                  href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}
+                  href={
+                    getOriginUrl() + 
+                    MANAGEMENT_CONSOLE_BASE_URL + 
+                    "/" + 
+                    selectedOrganization!.organizationId + 
+                    "/dashboard"
+                  }
                   className="block py-2 text-sm hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
