@@ -7,9 +7,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  DataTablePagination,
-  DataTableViewOptions,
-  SearchInput,
   Skeleton,
   Table,
   TableBody,
@@ -17,39 +14,35 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  SearchInput,
+  DataTableViewOptions,
+  DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
 
 import {
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { createColumns } from "./columns";
 
+import { FeedbackListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useState } from "react";
 
+import { FeedbackDetailsPopup } from "../details-popup/feedback-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
-import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
-import ChangeRolePopup from "./change-role-popup";
-import RemoveUserPopup from "./remove-user-popup";
-import TransferOwnershipPopup from "./transfer-ownership-popup";
+import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
-export const UsersList = () => {
-  const { organizationId } = useParams();
-  const [selectedUser, setSelectedUser] = useState<
-    ComposedOrganizationMembershipReadModel | undefined
-  >(undefined);
-  const [showChangeRole, setShowChangeRole] = useState(false);
-  const [showTransferOwnership, setShowTransferOwnership] = useState(false);
-  const [showRemoveUser, setShowRemoveUser] = useState(false);
+
+export const FeedbackList = () => {
+  const { viewId } = useParams();
+  const [feedback, setFeedback] = useState<FeedbackListItemReadModel | undefined>(
+    undefined
+  );
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -58,46 +51,31 @@ export const UsersList = () => {
 
   const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
-      "organizationUsers",
-      organizationId,
+      "feedbacks",
+      viewId,
       search,
       pagination.pageIndex,
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findComposedOrganizationMemberships(
-        {
-          request: {
-            pathParams: { id: organizationId as string },
-            queryParams: {
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              searchTerm: search,
-            },
+      return await baseOmninodeApiClient().feedbackMicroservice.findPaginatedFeedbackListItems({
+        request: {
+          queryParams: {
+            pageSize: pagination.pageSize,
+            page: pagination.pageIndex + 1,
+            searchTerm: search,
           },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+        },
+        apiAuthentication: getApiAuthentication(session.access_token),
+      });
     },
   });
 
   const table = useReactTable({
     data: data?.body.data || [],
     columns: createColumns({
-      onViewDetails: (user: ComposedOrganizationMembershipReadModel) => {
-        setSelectedUser(user);
-      },
-      onRemoveUser: (user: ComposedOrganizationMembershipReadModel) => {
-        setSelectedUser(user);
-        setShowRemoveUser(true);
-      },
-      onTransferOwnership: (user: ComposedOrganizationMembershipReadModel) => {
-        setSelectedUser(user);
-        setShowTransferOwnership(true);
-      },
-      onChangeRole: (user: ComposedOrganizationMembershipReadModel) => {
-        setSelectedUser(user);
-        setShowChangeRole(true);
+      onViewDetails: (feedback: FeedbackListItemReadModel) => {
+        setFeedback(feedback);
       },
     }),
     getCoreRowModel: getCoreRowModel(),
@@ -119,34 +97,10 @@ export const UsersList = () => {
 
   return (
     <>
-      {selectedUser && (
-        <>
-          <ChangeRolePopup
-            show={showChangeRole}
-            user={selectedUser}
-            onClose={() => {
-              setShowChangeRole(false);
-              setSelectedUser(undefined);
-            }}
-          />
-          <TransferOwnershipPopup
-            show={showTransferOwnership}
-            user={selectedUser}
-            onClose={() => {
-              setShowTransferOwnership(false);
-              setSelectedUser(undefined);
-            }}
-          />
-          <RemoveUserPopup
-            show={showRemoveUser}
-            user={selectedUser}
-            onClose={() => {
-              setShowRemoveUser(false);
-              setSelectedUser(undefined);
-            }}
-          />
-        </>
-      )}
+      <FeedbackDetailsPopup
+        feedback={feedback}
+        onClose={() => setFeedback(undefined)}
+      />
       <Card>
         <CardHeader className="flex justify-between">
           <SearchInput
@@ -170,12 +124,12 @@ export const UsersList = () => {
                           {header.isPlaceholder
                             ? null
                             : typeof header.column.columnDef.header === "string"
-                              ? header.column.columnDef.header
-                              : header.column.columnDef.header?.({
-                                  column: header.column,
-                                  header,
-                                  table,
-                                })}
+                            ? header.column.columnDef.header
+                            : header.column.columnDef.header?.({
+                                column: header.column,
+                                header,
+                                table,
+                              })}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -187,12 +141,12 @@ export const UsersList = () => {
                       <TableRow key={`skeleton-${index}`}>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <Skeleton className="size-8 rounded-full" />
+                            <Skeleton className="size-8 rounded-md" />
                             <Skeleton className="h-4 flex-1" />
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Skeleton className="h-4" />
+                          <Skeleton className="h-6 w-16" />
                         </TableCell>
                         <TableCell>
                           <Skeleton className="h-4" />
@@ -220,12 +174,12 @@ export const UsersList = () => {
                           {header.isPlaceholder
                             ? null
                             : typeof header.column.columnDef.header === "string"
-                              ? header.column.columnDef.header
-                              : header.column.columnDef.header?.({
-                                  column: header.column,
-                                  header,
-                                  table,
-                                })}
+                            ? header.column.columnDef.header
+                            : header.column.columnDef.header?.({
+                                column: header.column,
+                                header,
+                                table,
+                              })}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -271,15 +225,11 @@ export const UsersList = () => {
               </Table>
             )}
           </div>
-          <DataTablePagination
-            table={table}
-            isLoading={isLoading}
-            showPageCount={false}
-            showRowsPerPage={false}
-            totalRowsOverride={data?.body.total}
-          />
+          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.body.total}/>
         </CardContent>
       </Card>
     </>
   );
 };
+
+

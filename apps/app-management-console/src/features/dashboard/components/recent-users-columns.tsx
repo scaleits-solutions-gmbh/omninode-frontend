@@ -49,7 +49,7 @@ export const recentUsersColumns: ColumnDef<OrganizationMembershipReadModel>[] =
       header: "Email",
       size: 40,
       minSize: 240,
-      cell: ({ getValue }) => (
+      cell: () => (
         <span className="text-muted-foreground">
           {"unknown.user@example.com"}
         </span>

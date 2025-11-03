@@ -3,7 +3,7 @@
 // Import to register module augmentation FIRST
 import "@/lib/next-auth-options";
 
-import { OrganizationMembershipReadModel, OrganizationRole, organizationRoleOptions, Locale } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ComposedOrganizationMembershipReadModel, OrganizationRole, organizationRoleOptions, Locale } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Dialog,
   DialogContent,
@@ -35,7 +35,7 @@ import type { Session } from "next-auth";
 
 interface ChangeRolePopupProps {
   show: boolean;
-  user: OrganizationMembershipReadModel;
+  user: ComposedOrganizationMembershipReadModel;
   onClose: () => void;
 }
 
@@ -126,15 +126,15 @@ export default function ChangeRolePopup({ show, user, onClose }: ChangeRolePopup
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage alt={"Unknown User"} />
-              <AvatarFallback seed={user.userId}>
-                {getInitials("Unknown User")}
+              <AvatarImage alt={`${user.user.firstName} ${user.user.lastName}`} />
+              <AvatarFallback seed={user.user.id}>
+                {getInitials(`${user.user.firstName} ${user.user.lastName}`.trim() || "Unknown User")}
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-sm font-medium">Unknown User</p>
+              <p className="text-sm font-medium">{`${user.user.firstName} ${user.user.lastName}`.trim() || "Unknown User"}</p>
               <p className="text-sm text-muted-foreground">
-                unknown.user@example.com
+                {user.user.email}
               </p>
             </div>
           </div>

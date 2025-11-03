@@ -1,22 +1,22 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { Eye, MoreVertical } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  Button,
   Badge,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
+  Button,
   DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@repo/pkg-frontend-common-kit/components";
 import {
   Locale,
-  OrganizationMembershipReadModel,
+  ComposedOrganizationMembershipReadModel,
   OrganizationRole,
   organizationRoleName,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreVertical } from "lucide-react";
 
 function getInitials(name: string): string {
   const parts = name.split(" ").filter(Boolean);
@@ -28,28 +28,30 @@ function getInitials(name: string): string {
 }
 
 export interface ColumnProps {
-  onViewDetails: (user: OrganizationMembershipReadModel) => void;
-  onRemoveUser: (user: OrganizationMembershipReadModel) => void;
-  onTransferOwnership: (user: OrganizationMembershipReadModel) => void;
-  onChangeRole: (user: OrganizationMembershipReadModel) => void;
+  onViewDetails: (user: ComposedOrganizationMembershipReadModel) => void;
+  onRemoveUser: (user: ComposedOrganizationMembershipReadModel) => void;
+  onTransferOwnership: (user: ComposedOrganizationMembershipReadModel) => void;
+  onChangeRole: (user: ComposedOrganizationMembershipReadModel) => void;
 }
 
 export const createColumns = (
   props: ColumnProps
-): ColumnDef<OrganizationMembershipReadModel>[] => {
+): ColumnDef<ComposedOrganizationMembershipReadModel>[] => {
   return [
     {
       size: 33,
       minSize: 150,
       header: "User",
       cell: ({ row }) => {
+        const user = row.original.user;
+        const fullName = `${user.firstName} ${user.lastName}`.trim() || "Unknown User";
         return (
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage alt={"Unknown User"} />
-              <AvatarFallback seed={row.original.userId}>{getInitials("Unknown User")}</AvatarFallback>
+              <AvatarImage alt={fullName} />
+              <AvatarFallback seed={user.id}>{getInitials(fullName)}</AvatarFallback>
             </Avatar>
-            <span className="font-medium">{"Unknown User"}</span>
+            <span className="font-medium">{fullName}</span>
           </div>
         );
       },
@@ -62,7 +64,7 @@ export const createColumns = (
       cell: ({ row }) => {
         return (
           <div className="text-sm text-muted-foreground">
-            {"unknown.user@example.com"}
+            {row.original.user.email}
           </div>
         );
       },
@@ -87,7 +89,7 @@ export const createColumns = (
       minSize: 60,
       id: "actions",
       cell: ({ row }) => {
-        const currentUserRole = OrganizationRole.Owner as any;
+        const currentUserRole = OrganizationRole.Owner;
         return (
           <div className="flex justify-end">
             <DropdownMenu>

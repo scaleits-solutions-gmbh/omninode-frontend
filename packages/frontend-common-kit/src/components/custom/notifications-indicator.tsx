@@ -17,7 +17,7 @@ import {
   Skeleton,
 } from "@/components/ui";
 import { Bell, SmilePlus, UserPlus, BellDot } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuthedQuery, useAuthedMutation } from "@/hooks";
 import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -32,6 +32,10 @@ const notifications: Array<{
 export function NotificationsIndicator() {
   const [tab, setTab] = useState("notifications");
   const queryClient = useQueryClient();
+  const acceptMembershipToastIdRef = useRef<string | number | undefined>(undefined);
+  const rejectMembershipToastIdRef = useRef<string | number | undefined>(undefined);
+  const acceptRelationshipToastIdRef = useRef<string | number | undefined>(undefined);
+  const rejectRelationshipToastIdRef = useRef<string | number | undefined>(undefined);
 
   // Fetch current user actionable membership invites
   const {
@@ -65,6 +69,9 @@ export function NotificationsIndicator() {
 
   // Accept membership invite mutation
   const acceptMembershipInviteMutation = useAuthedMutation({
+    onMutate: () => {
+      acceptMembershipToastIdRef.current = toast.loading("Accepting invite...");
+    },
     mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
       await baseOmninodeApiClient().organizationMicroservice.acceptOrganizationMembershipInvite({
         request: {
@@ -76,15 +83,21 @@ export function NotificationsIndicator() {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-membership-invites"] });
-      toast.success("Membership invite accepted");
+      toast.success("Membership invite accepted", { id: acceptMembershipToastIdRef.current });
     },
     onError: (error) => {
-      toast.error(`Failed to accept invite: ${error.message}`);
+      toast.error(`Failed to accept invite: ${error.message}`, { id: acceptMembershipToastIdRef.current });
+    },
+    onSettled: () => {
+      acceptMembershipToastIdRef.current = undefined;
     },
   });
 
   // Reject membership invite mutation
   const rejectMembershipInviteMutation = useAuthedMutation({
+    onMutate: () => {
+      rejectMembershipToastIdRef.current = toast.loading("Rejecting invite...");
+    },
     mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
       await baseOmninodeApiClient().organizationMicroservice.rejectOrganizationMembershipInvite({
         request: {
@@ -96,15 +109,21 @@ export function NotificationsIndicator() {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-membership-invites"] });
-      toast.success("Membership invite rejected");
+      toast.success("Membership invite rejected", { id: rejectMembershipToastIdRef.current });
     },
     onError: (error) => {
-      toast.error(`Failed to reject invite: ${error.message}`);
+      toast.error(`Failed to reject invite: ${error.message}`, { id: rejectMembershipToastIdRef.current });
+    },
+    onSettled: () => {
+      rejectMembershipToastIdRef.current = undefined;
     },
   });
 
   // Accept relationship invite mutation
   const acceptRelationshipInviteMutation = useAuthedMutation({
+    onMutate: () => {
+      acceptRelationshipToastIdRef.current = toast.loading("Accepting relationship invite...");
+    },
     mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
       await baseOmninodeApiClient().organizationMicroservice.acceptOrganizationRelationshipInvite({
         request: {
@@ -119,15 +138,21 @@ export function NotificationsIndicator() {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-relationship-invites"] });
-      toast.success("Relationship invite accepted");
+      toast.success("Relationship invite accepted", { id: acceptRelationshipToastIdRef.current });
     },
     onError: (error) => {
-      toast.error(`Failed to accept invite: ${error.message}`);
+      toast.error(`Failed to accept invite: ${error.message}`, { id: acceptRelationshipToastIdRef.current });
+    },
+    onSettled: () => {
+      acceptRelationshipToastIdRef.current = undefined;
     },
   });
 
   // Reject relationship invite mutation
   const rejectRelationshipInviteMutation = useAuthedMutation({
+    onMutate: () => {
+      rejectRelationshipToastIdRef.current = toast.loading("Rejecting relationship invite...");
+    },
     mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
       await baseOmninodeApiClient().organizationMicroservice.rejectOrganizationRelationshipInvite({
         request: {
@@ -139,10 +164,13 @@ export function NotificationsIndicator() {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-relationship-invites"] });
-      toast.success("Relationship invite rejected");
+      toast.success("Relationship invite rejected", { id: rejectRelationshipToastIdRef.current });
     },
     onError: (error) => {
-      toast.error(`Failed to reject invite: ${error.message}`);
+      toast.error(`Failed to reject invite: ${error.message}`, { id: rejectRelationshipToastIdRef.current });
+    },
+    onSettled: () => {
+      rejectRelationshipToastIdRef.current = undefined;
     },
   });
 

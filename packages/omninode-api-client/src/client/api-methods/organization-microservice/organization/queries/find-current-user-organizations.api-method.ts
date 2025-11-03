@@ -12,10 +12,12 @@ import {
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export type FindCurrentUserOrganizationsParams = {
+  request: ContextlessRequest<FindCurrentUserOrganizationsHttpRequest>;
   apiConnection: AuthenticatedApiConnection;
 };
 
 export async function findCurrentUserOrganizations({
+  request,
   apiConnection,
 }: FindCurrentUserOrganizationsParams): Promise<FindCurrentUserOrganizationsHttpResponse> {
   return await authenticatedApiRequest<

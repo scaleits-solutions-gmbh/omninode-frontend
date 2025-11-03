@@ -1,12 +1,12 @@
 "use client";
-import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 export interface SessionData {
   currentUserId: string | undefined;
   currentOrganizationId: string | undefined;
-  organizationRole: OrganizationRole;
+  organizationRole: OrganizationRole | undefined;
 }
 
 const getSessionData = async (): Promise<SessionData> => {
@@ -17,7 +17,7 @@ const getSessionData = async (): Promise<SessionData> => {
     currentOrganizationId: Cookies.get("currentOrganizationId"),
     organizationRole: organizationRoleCookie
       ? (organizationRoleCookie as OrganizationRole)
-      : OrganizationRole.None,
+      : undefined,
   };
 };
 
@@ -54,5 +54,5 @@ export function useOrganizationId() {
 
 export function useOrganizationRole() {
   const { sessionData } = useSession();
-  return sessionData?.organizationRole || OrganizationRole.None;
+  return sessionData?.organizationRole;
 }

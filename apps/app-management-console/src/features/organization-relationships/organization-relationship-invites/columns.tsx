@@ -17,6 +17,15 @@ import {
   organizationRelationshipInviteStatusName,
   Locale,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  baseOmninodeApiClient,
+  getApiAuthentication,
+} from "@repo/omninode-api-client";
+import { toast } from "sonner";
+import { useRef } from "react";
+import { formatExpiresIn } from "@repo/pkg-frontend-common-kit/utils";
 
 export interface ColumnProps {
   currentOrganizationId: string;
@@ -26,11 +35,96 @@ export interface ColumnProps {
 export const createColumns = (
   props: ColumnProps
 ): ColumnDef<OrganizationRelationshipInviteReadModel>[] => {
+  function ActionsCell({
+    invite,
+  }: {
+    invite: OrganizationRelationshipInviteReadModel;
+  }) {
+    const queryClient = useQueryClient();
+    const cancelToastIdRef = useRef<string | number | undefined>(undefined);
+
+    const cancelInviteMutation = useAuthedMutation({
+      onMutate: () => {
+        cancelToastIdRef.current = toast.loading("Cancelling invite...");
+      },
+      mutationFn: async ({ session }) =>
+        await baseOmninodeApiClient().organizationMicroservice.cancelOrganizationRelationshipInvite(
+          {
+            request: {
+              pathParams: { id: invite.id },
+            },
+            apiAuthentication: getApiAuthentication(session.access_token),
+          }
+        ),
+      onSuccess: () => {
+        toast.success("Invite cancelled", { id: cancelToastIdRef.current });
+        queryClient.invalidateQueries({
+          queryKey: ["platformOrganizationRelationshipInvites"],
+          exact: false,
+        });
+      },
+      onError: (error) => {
+        toast.error(`Failed to cancel invite: ${error.message}`, {
+          id: cancelToastIdRef.current,
+        });
+      },
+      onSettled: () => {
+        cancelToastIdRef.current = undefined;
+      },
+    });
+
+    const isPending = cancelInviteMutation.isPending;
+
+    return (
+      <div className="flex justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              disabled={
+                (props.inviteType === "sent" &&
+                  invite.status !==
+                    OrganizationRelationshipInviteStatus.Pending) ||
+                isPending
+              }
+            >
+              <MoreVertical className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {props.inviteType === "sent" ? (
+              invite.status ===
+                OrganizationRelationshipInviteStatus.Pending && (
+                <>
+                  <DropdownMenuItem hidden>Resend invite</DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-destructive"
+                    disabled={isPending}
+                    onClick={() => cancelInviteMutation.mutate()}
+                  >
+                    Cancel invite
+                  </DropdownMenuItem>
+                </>
+              )
+            ) : (
+              <>
+                <DropdownMenuItem>Accept invite</DropdownMenuItem>
+                <DropdownMenuItem className="text-destructive">
+                  Decline invite
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    );
+  }
   return [
     {
       size: 33,
       minSize: 150,
-      header: `${props.inviteType === "sent" ? "Inviter" : "Target"} Organization`,
+      header: `${props.inviteType === "sent" ? "Target" : "Inviter"} Organization`,
       cell: ({ row }) => {
         const isCurrentInviter =
           row.original.inviterOrganizationId === props.currentOrganizationId;
@@ -70,7 +164,10 @@ export const createColumns = (
                   : row.original.status ===
                       OrganizationRelationshipInviteStatus.Pending
                     ? "bg-amber-500"
-                    : "bg-red-500"
+                    : row.original.status ===
+                        OrganizationRelationshipInviteStatus.Rejected
+                      ? "bg-red-500"
+                      : "bg-gray-500"
               }`}
             />
             {organizationRelationshipInviteStatusName(
@@ -85,54 +182,17 @@ export const createColumns = (
       accessorKey: "Expires At",
       size: 33,
       minSize: 150,
-      header: "Expires At",
+      header: "Expires In",
       cell: ({ row }) => {
-        return (
-          <div>
-            {new Date(row.original.expiresAt).toLocaleDateString() +
-              " " +
-              new Date(row.original.expiresAt).toLocaleTimeString()}
-          </div>
-        );
+        const isPending = row.original.status === OrganizationRelationshipInviteStatus.Pending;
+        return <div>{isPending ? formatExpiresIn(row.original.expiresAt) : "N/A"}</div>;
       },
     },
     {
       size: 1,
       minSize: 60,
       id: "actions",
-      cell: ({ row }) => {
-        return (
-          <div className="flex justify-end">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={props.inviteType === "sent" && row.original.status !== OrganizationRelationshipInviteStatus.Pending}>
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {props.inviteType === "sent" ? (
-                  row.original.status ===
-                    OrganizationRelationshipInviteStatus.Pending && (
-                    <>
-                      <DropdownMenuItem>Resend invite</DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive">
-                        Cancel invite
-                      </DropdownMenuItem>
-                    </>
-                  )
-                ) : (
-                  <>
-                    <DropdownMenuItem>Accept invite</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">
-                      Decline invite
-                    </DropdownMenuItem>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        );
-      },
+      cell: ({ row }) => <ActionsCell invite={row.original} />,
     },
   ];
 };

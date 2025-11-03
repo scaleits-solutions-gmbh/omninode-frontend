@@ -3,7 +3,7 @@
 // Import to register module augmentation FIRST
 import "@/lib/next-auth-options";
 
-import { OrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Dialog,
   DialogContent,
@@ -22,18 +22,13 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import type { Session } from "next-auth";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
 
 interface RemoveUserPopupProps {
   show: boolean;
-  user: OrganizationMembershipReadModel;
+  user: ComposedOrganizationMembershipReadModel;
   onClose: () => void;
 }
 
@@ -50,19 +45,18 @@ export default function RemoveUserPopup({
   user,
   onClose,
 }: RemoveUserPopupProps) {
-    const placeholderEmail = "unknown.user@example.com";
+    const placeholderEmail = user.user.email;
   const { organizationId } = useParams();
   const queryClient = useQueryClient();
-  const [confirmation, setConfirmation] = useState(placeholderEmail);
+  const [confirmation, setConfirmation] = useState("");
 
   const removeUserMutation = useAuthedMutation({
     mutationFn: async ({
-      session,
-      variables,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      variables: _variables,
     }: {
-      session: Session;
       variables: { membershipId: string };
-    }) => {
+    }): Promise<never> => {
       throw new Error(
         "Remove organization membership endpoint not yet implemented"
       );
@@ -99,15 +93,15 @@ export default function RemoveUserPopup({
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage alt={"Unknown User"} />
-              <AvatarFallback seed={user.userId}>
-                {getInitials("Unknown User")}
+              <AvatarImage alt={`${user.user.firstName} ${user.user.lastName}`} />
+              <AvatarFallback seed={user.user.id}>
+                {getInitials(`${user.user.firstName} ${user.user.lastName}`.trim() || "Unknown User")}
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-sm font-medium">Unknown User</p>
+              <p className="text-sm font-medium">{`${user.user.firstName} ${user.user.lastName}`.trim() || "Unknown User"}</p>
               <p className="text-sm text-muted-foreground">
-                unknown.user@example.com
+                {user.user.email}
               </p>
             </div>
           </div>

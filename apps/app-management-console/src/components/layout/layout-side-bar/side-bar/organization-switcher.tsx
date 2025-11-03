@@ -16,13 +16,18 @@ import {
   Skeleton,
   SearchInput,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { ChevronsUpDown, Check } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
-import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import {
+  UserOrganizationReadModel,
+  Locale,
+  organizationRoleLabel,
+  OrganizationRole,
+} from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 type organizationSwitcherProps = {
   organizationId?: string;
 };
@@ -51,19 +56,72 @@ export default function OrganizationSwitcher({
     isLoading,
     error,
     setSelectedOrganizationId,
-    selectedOrganization,
   } = useGetCurrentOrganization();
 
-  // Initialize a default selection only when no explicit organizationId is provided
-  // and no selection exists yet. Avoid mutating global selection for display-only mode.
-  useEffect(() => {
-    if (organizationId) return; // display-only mode
-    if (companies?.length && !selectedOrganization) {
-      setSelectedOrganizationId(companies[0].organizationId);
-    }
-  }, [organizationId, companies, selectedOrganization, setSelectedOrganizationId]);
+  // Filter organizations to only show Owner or Admin roles
+  const filteredCompanies = useMemo(() => {
+    if (!companies) return undefined;
+    return companies.filter(
+      (org) =>
+        org.role === OrganizationRole.Owner ||
+        org.role === OrganizationRole.Admin
+    );
+  }, [companies]);
 
-  if (isLoading || !companies) {
+  // Find the selected organization from filtered companies
+  const selectedFilteredOrganization = useMemo(() => {
+    if (!filteredCompanies || !selectedOrganizationId) return undefined;
+    return filteredCompanies.find(
+      (org) => org.organizationId === selectedOrganizationId
+    );
+  }, [filteredCompanies, selectedOrganizationId]);
+
+  // Track the last processed organizationId to avoid unnecessary updates
+  const lastProcessedOrgIdRef = useRef<string | undefined>(undefined);
+
+  // Set the selected organization based on the organizationId prop or default selection
+  // Only trigger when organizationId prop or filteredCompanies change, not when selectedOrganizationId changes
+  useEffect(() => {
+    if (!filteredCompanies?.length) return;
+
+    // If an organizationId prop is provided, set it as selected if it exists in filtered companies
+    if (organizationId) {
+      // Only update if the organizationId prop changed and it's different from current selection
+      if (
+        lastProcessedOrgIdRef.current !== organizationId &&
+        selectedOrganizationId !== organizationId
+      ) {
+        const orgExists = filteredCompanies.some(
+          (org) => org.organizationId === organizationId
+        );
+        if (orgExists) {
+          setSelectedOrganizationId(organizationId);
+          lastProcessedOrgIdRef.current = organizationId;
+        }
+      }
+      return;
+    }
+
+    // Reset ref when not in display mode
+    lastProcessedOrgIdRef.current = undefined;
+
+    // If no organizationId prop, handle default selection logic
+    // Only update if we don't have a valid selection in filtered companies
+    const currentSelectedExists = selectedOrganizationId
+      ? filteredCompanies.some(
+          (org) => org.organizationId === selectedOrganizationId
+        )
+      : false;
+
+    if (!currentSelectedExists && filteredCompanies.length > 0) {
+      // If the currently selected org is not in filtered list or no selection exists,
+      // select the first filtered one
+      setSelectedOrganizationId(filteredCompanies[0].organizationId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [organizationId, filteredCompanies]);
+
+  if (isLoading || !filteredCompanies) {
     return (
       <div className="flex items-center w-full gap-2 p-2">
         <Skeleton className="h-8 w-8 rounded-md" />
@@ -79,9 +137,12 @@ export default function OrganizationSwitcher({
     return <div className="text-sm text-muted-foreground">Failed to load</div>;
   }
 
-  const organizationOnDisplay: UserOrganizationReadModel | undefined = organizationId
-    ? companies.find((organization) => organization.organizationId === organizationId)
-    : selectedOrganization;
+  const organizationOnDisplay: UserOrganizationReadModel | undefined =
+    organizationId
+      ? filteredCompanies.find(
+          (organization) => organization.organizationId === organizationId
+        )
+      : selectedFilteredOrganization ?? filteredCompanies[0];
 
   return (
     <SidebarMenu>
@@ -103,7 +164,12 @@ export default function OrganizationSwitcher({
                   {organizationOnDisplay?.name}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  {"Organization"}
+                  {organizationOnDisplay?.role
+                    ? organizationRoleLabel(
+                        organizationOnDisplay.role,
+                        Locale.En
+                      )
+                    : "Organization"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -115,7 +181,7 @@ export default function OrganizationSwitcher({
             side={isMobile ? "top" : "right"}
           >
             <ScrollArea className="max-h-[300px]">
-              {companies?.map((organization) => (
+              {filteredCompanies?.map((organization) => (
                 <DropdownMenuItem
                   key={organization.id}
                   onClick={() => {
@@ -144,7 +210,9 @@ export default function OrganizationSwitcher({
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{organization.name}</span>
                     <span className="text-xs text-muted-foreground">
-                      {"Organization"}
+                      {organization.role
+                        ? organizationRoleLabel(organization.role, Locale.En)
+                        : "Organization"}
                     </span>
                   </div>
                   {organization.organizationId === selectedOrganizationId && (

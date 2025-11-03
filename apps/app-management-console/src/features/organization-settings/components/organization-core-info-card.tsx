@@ -33,6 +33,9 @@ import {
   currencyOptions,
   industryOptions,
   Locale,
+  Industry,
+  Currency,
+  CountryCode,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 import { Check, Copy } from "lucide-react";
@@ -58,11 +61,11 @@ export default function OrganizationCoreInfoCard() {
   const org = data?.body;
 
   const [name, setName] = useState("");
-  const [countryCode, setCountryCode] = useState("");
+  const [countryCode, setCountryCode] = useState<CountryCode | "">("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [industry, setIndustry] = useState<Industry | "">("");
+  const [currency, setCurrency] = useState<Currency | "">("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [taxId, setTaxId] = useState("");
@@ -71,11 +74,11 @@ export default function OrganizationCoreInfoCard() {
   useMemo(() => {
     if (!org) return;
     setName(org.name ?? "");
-    setCountryCode(String(org.countryCode ?? ""));
+    setCountryCode((org.countryCode as CountryCode) ?? "");
     setCity(org.city ?? "");
     setAddress(org.address ?? "");
-    setIndustry(String(org.industry ?? ""));
-    setCurrency(String(org.currency ?? ""));
+    setIndustry((org.industry as Industry) ?? "");
+    setCurrency((org.currency as Currency) ?? "");
     setEmail(org.email ?? "");
     setPhone(org.phone ?? "");
     setTaxId(org.taxId ?? "");
@@ -107,6 +110,13 @@ export default function OrganizationCoreInfoCard() {
     taxId,
   ]);
 
+  // Require all core enum fields and basic text fields
+  const isValid = useMemo(() => {
+    const hasEnums = Boolean(countryCode && industry && currency);
+    const hasTexts = Boolean(name.trim() && city.trim() && address.trim());
+    return hasEnums && hasTexts;
+  }, [countryCode, industry, currency, name, city, address]);
+
   const updateMutation = useAuthedMutation({
     mutationFn: async ({
       session,
@@ -115,11 +125,11 @@ export default function OrganizationCoreInfoCard() {
       session: Session;
       variables: {
         name: string;
-        countryCode: string;
+        countryCode: CountryCode;
         city: string;
         address: string;
-        industry: string;
-        currency: string;
+        industry: Industry;
+        currency: Currency;
         email?: string;
         phone?: string;
         taxId?: string;
@@ -132,11 +142,11 @@ export default function OrganizationCoreInfoCard() {
             pathParams: { id: organizationId },
             body: {
               name: variables.name,
-              countryCode: variables.countryCode as any,
+              countryCode: variables.countryCode ,
               city: variables.city,
               address: variables.address,
-              industry: variables.industry as any,
-              currency: variables.currency as any,
+              industry: variables.industry ,
+              currency: variables.currency ,
               email: variables.email || undefined,
               phone: variables.phone || undefined,
               taxId: variables.taxId || undefined,
@@ -237,13 +247,17 @@ export default function OrganizationCoreInfoCard() {
 
   const handleSubmit = () => {
     if (!isDirty) return;
+    if (!isValid) {
+      toast.error("Please fill all required fields before saving");
+      return;
+    }
     updateMutation.mutate({
       name,
-      countryCode,
+      countryCode: countryCode as CountryCode,
       city,
       address,
-      industry,
-      currency,
+      industry: industry as Industry,
+      currency: currency as Currency,
       email,
       phone,
       taxId,
@@ -292,7 +306,7 @@ export default function OrganizationCoreInfoCard() {
                     try {
                       await navigator.clipboard.writeText(org.id);
                       setCopiedId(true);
-                    } catch (e) {
+                    } catch {
                       toast.error("Failed to copy");
                     }
                   }}
@@ -313,7 +327,7 @@ export default function OrganizationCoreInfoCard() {
               <Label htmlFor="countryCode">Country</Label>
               <Select
                 value={countryCode}
-                onValueChange={(val) => setCountryCode(val)}
+                onValueChange={(val) => setCountryCode(val as CountryCode)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select country" />
@@ -356,7 +370,7 @@ export default function OrganizationCoreInfoCard() {
               <Label htmlFor="industry">Industry</Label>
               <Select
                 value={industry}
-                onValueChange={(val) => setIndustry(val)}
+                onValueChange={(val) => setIndustry(val as Industry)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select industry" />
@@ -377,7 +391,7 @@ export default function OrganizationCoreInfoCard() {
               <Label htmlFor="currency">Currency</Label>
               <Select
                 value={currency}
-                onValueChange={(val) => setCurrency(val)}
+                onValueChange={(val) => setCurrency(val as Currency)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select currency" />
@@ -428,7 +442,7 @@ export default function OrganizationCoreInfoCard() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={!isDirty || updateMutation.isPending}>
+          <Button type="submit" disabled={!isDirty || !isValid || updateMutation.isPending}>
             {updateMutation.isPending ? "Saving..." : "Save"}
           </Button>
         </CardFooter>

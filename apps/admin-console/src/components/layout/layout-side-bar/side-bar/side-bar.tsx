@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 
-import { Home, Building2, User2 } from "lucide-react";
+import { Home, Building2, User2, MessageSquare } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -67,11 +67,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname.startsWith("/companies")}
+                  isActive={pathname.startsWith("/organizations")}
                 >
-                  <Link className="flex items-center gap-2" href="/companies">
+                  <Link className="flex items-center gap-2" href="/organizations">
                     <Building2 />
-                    <span>Companies</span>
+                    <span>Organizations</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith("/feedbacks")}
+                >
+                  <Link className="flex items-center gap-2" href="/feedbacks">
+                    <MessageSquare />
+                    <span>Feedbacks</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
