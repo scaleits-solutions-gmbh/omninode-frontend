@@ -17,12 +17,12 @@ import OrganizationSwitcher from "./organization-switcher";
 import MobileHeader from "./mobile-header";
 import UserIndicator from "./user-indicator";
 import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export default function Header() {
-  const canAccessManagementConsole = false;
-
+  const { companies, isLoading, selectedOrganization } = useGetCurrentOrganization();
   
-  const { companies, isLoading } = useGetCurrentOrganization();
+  const canAccessManagementConsole = selectedOrganization?.role !== OrganizationRole.Member;
 
   return (
     <>
@@ -41,7 +41,13 @@ export default function Header() {
             ) : companies && companies.length > 0 ? (
               <>
                 {canAccessManagementConsole ? (
-                  <Link href={getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL}>
+                  <Link href={
+                    getOriginUrl() + 
+                    MANAGEMENT_CONSOLE_BASE_URL + 
+                    "/" + 
+                    selectedOrganization!.organizationId + 
+                    "/dashboard"
+                  }>
                     Management Console
                   </Link>
                 ) : (
