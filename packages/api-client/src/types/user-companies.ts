@@ -1,4 +1,13 @@
-import type { Service, OrganizationRole } from '@scaleits-solutions-gmbh/omninode-lib-global-common-kit';
+import type { Service } from '@scaleits-solutions-gmbh/omninode-lib-global-common-kit';
+
+// TODO: Remove this local definition once @scaleits-solutions-gmbh/omninode-lib-global-common-kit
+// exports OrganizationRole properly. This is a workaround for the published version
+// that doesn't include this export.
+export enum OrganizationRole {
+  Owner = 'owner',
+  Admin = 'admin',
+  Member = 'member',
+}
 
 type AcmpPermissions = {
   canViewDashboard: boolean;

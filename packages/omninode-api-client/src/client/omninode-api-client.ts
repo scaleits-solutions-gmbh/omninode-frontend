@@ -9,7 +9,7 @@ import {
   createOrganization,
   CreateOrganizationParams,
 } from "./api-methods/organization-microservice/organization/commands/create-organization.api-method";
-import { findCurrentUserOrganizations } from "./api-methods/organization-microservice/organization/queries/find-current-user-organizations.api-method";
+import { findCurrentUserOrganizations, FindCurrentUserOrganizationsParams } from "./api-methods/organization-microservice/organization/queries/find-current-user-organizations.api-method";
 import {
   findPaginatedOrganizationListItems,
   FindPaginatedOrganizationListItemsParams,
@@ -18,6 +18,10 @@ import {
   findPaginatedOrganizationMembers,
   FindPaginatedOrganizationMembersParams,
 } from "./api-methods/organization-microservice/organization-membership/queries/find-paginated-organization-members.api-method";
+import {
+  findComposedOrganizationMemberships,
+  FindComposedOrganizationMembershipsParams,
+} from "./api-methods/organization-microservice/organization-membership/queries/find-composed-organization-memberships.api-method";
 import {
   findUserOrganizations,
   FindUserOrganizationsParams,
@@ -444,6 +448,17 @@ export class OmninodeApiClient {
         this.getAuthenticatedApiConnection(apiAuthentication);
       return await findPaginatedOrganizationMembers({ request, apiConnection });
     },
+    findComposedOrganizationMemberships: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedOrganizationMembershipsParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedOrganizationMemberships({ request, apiConnection });
+    },
     findUserOrganizations: async ({
       request,
       apiAuthentication,
@@ -456,13 +471,15 @@ export class OmninodeApiClient {
       return await findUserOrganizations({ request, apiConnection });
     },
     findCurrentUserOrganizations: async ({
+      request,
       apiAuthentication,
     }: {
       apiAuthentication: ApiAuthentication;
+      request: FindCurrentUserOrganizationsParams["request"];
     }) => {
       const apiConnection =
         this.getAuthenticatedApiConnection(apiAuthentication);
-      return await findCurrentUserOrganizations({ apiConnection });
+      return await findCurrentUserOrganizations({ request, apiConnection });
     },
     findOrganizationCount: async ({
       request,

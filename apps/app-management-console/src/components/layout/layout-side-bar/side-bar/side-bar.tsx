@@ -1,7 +1,6 @@
 "use client";
 
-import OrganizationSwitcher from "./organization-switcher";
-import {AppLogoDescriptive} from "@/components/custom/app-logo-descriptive";
+import { AppLogoDescriptive } from "@/components/custom/app-logo-descriptive";
 import {
   Sidebar,
   SidebarContent,
@@ -15,11 +14,12 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@repo/pkg-frontend-common-kit/components";
-import { Users, Smile, Layers2, Lock, CreditCard, Settings2, Users2, Group, LayoutDashboard } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useParams } from "next/navigation";
-import * as React from "react";
 import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { CreditCard, Group, Layers2, LayoutDashboard, Settings2, Smile, Users } from "lucide-react";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
+import * as React from "react";
+import OrganizationSwitcher from "./organization-switcher";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();

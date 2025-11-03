@@ -84,6 +84,10 @@ export default function InviteOrganizationPopup({ currentOrganizationId }: Invit
       queryClient.invalidateQueries({
         queryKey: ["platformOrganizationRelationshipInvites", organizationId],
       });
+      // Ensure notifications widget refreshes actionable invites count
+      queryClient.invalidateQueries({
+        queryKey: ["current-user-relationship-invites"],
+      });
     },
     onError: (error: Error) => {
       toast.error(error.message || "Error sending invite");

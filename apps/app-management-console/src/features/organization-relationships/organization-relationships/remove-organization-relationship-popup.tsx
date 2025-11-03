@@ -29,7 +29,7 @@ import {
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import type { Session } from "next-auth";
 import { AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface RemoveOrganizationRelationshipPopupProps {
   show: boolean;
@@ -57,8 +57,12 @@ export default function RemoveOrganizationRelationshipPopup({
     : relationship.leftOrganizationId;
 
   const [confirmation, setConfirmation] = useState("");
+  const loadingToastIdRef = useRef<string | number | undefined>(undefined);
 
   const removeRelationshipMutation = useAuthedMutation({
+    onMutate: () => {
+      loadingToastIdRef.current = toast.loading("Removing relationship...");
+    },
     mutationFn: async ({
       session,
       variables,
@@ -78,14 +82,17 @@ export default function RemoveOrganizationRelationshipPopup({
       );
     },
     onSuccess: () => {
-      toast.success("Relationship removed successfully");
+      toast.success("Relationship removed successfully", { id: loadingToastIdRef.current });
       onClose();
       queryClient.invalidateQueries({
         queryKey: ["platformOrganizationRelationships", organizationId],
       });
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to remove relationship");
+      toast.error(error.message || "Failed to remove relationship", { id: loadingToastIdRef.current });
+    },
+    onSettled: () => {
+      loadingToastIdRef.current = undefined;
     },
   });
 

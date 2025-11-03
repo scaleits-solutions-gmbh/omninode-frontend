@@ -5,7 +5,7 @@ Columns:
 - email
 - AccessGrantedAt - By person Name
 - Actions ellipsisicon  (Got to user details, Revoke access) use shadcn dropdown menu
- */
+ 
 
 import { FeServiceInstanceUserWithAccess } from "@/types/fe/fe-service-instance";
 import {

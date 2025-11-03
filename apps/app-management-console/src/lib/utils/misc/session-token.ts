@@ -1,4 +1,4 @@
-import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
 

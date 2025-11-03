@@ -5,7 +5,10 @@ import { useAuthedQuery } from "./use-authed-query";
 import { useMounted } from "./use-mounted";
 import { useValidSession } from "./use-valid-session";
 import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import {
+  baseOmninodeApiClient,
+  getApiAuthentication,
+} from "@repo/omninode-api-client";
 const CURRENT_COMPANY_ID_KEY = "currentOrganizationId";
 const CURRENT_COMPANY_CHANGE_EVENT = "currentOrganizationIdChange";
 
@@ -48,16 +51,23 @@ export function useGetCurrentOrganization(): UseGetCurrentOrganizationResult {
   const query = useAuthedQuery<UserOrganizationReadModel[]>({
     queryKey: ["current-user-companies"],
     queryFn: async ({ session }) => {
-      const { body } = await baseOmninodeApiClient().organizationMicroservice.findCurrentUserOrganizations({
-        apiAuthentication: getApiAuthentication(session.access_token),
-      });
+      const { body } =
+        await baseOmninodeApiClient().organizationMicroservice.findCurrentUserOrganizations(
+          {
+            apiAuthentication: getApiAuthentication(session.access_token),
+            request: {
+              queryParams: {},
+            },
+          }
+        );
       return body ?? [];
     },
     refetchOnWindowFocus: false,
     staleTime: 60_000,
   });
 
-  const [selectedOrganizationIdState, setSelectedOrganizationIdState] = useState<string | null>(getCurrentOrganizationIdSafe());
+  const [selectedOrganizationIdState, setSelectedOrganizationIdState] =
+    useState<string | null>(getCurrentOrganizationIdSafe());
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -114,7 +124,9 @@ export function useGetCurrentOrganization(): UseGetCurrentOrganizationResult {
     if (!companies.length) return undefined;
     const currentId = selectedOrganizationId;
     if (!currentId) return companies[0];
-    return companies.find((c) => c.organizationId === currentId) ?? companies[0];
+    return (
+      companies.find((c) => c.organizationId === currentId) ?? companies[0]
+    );
   }, [query.data, selectedOrganizationId]);
 
   return {
@@ -134,5 +146,3 @@ export function useGetCurrentOrganization(): UseGetCurrentOrganizationResult {
     setSelectedOrganizationId,
   };
 }
-
-

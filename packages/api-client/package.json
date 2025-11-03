@@ -22,15 +22,15 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.6",
+    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.43-feat.fix-final-fe-integration-fixes.20251102215913",
     "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.4"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^24.9.2",
-    "eslint": "^9.38.0",
-    "rimraf": "^6.0.1",
+    "eslint": "^9.39.0",
+    "rimraf": "^6.1.0",
     "tsc-alias": "^1.8.16",
     "typescript": "5.9.2"
   }

@@ -9,9 +9,9 @@ import {
   Checkbox,
   Progress,
 } from "@repo/pkg-frontend-common-kit/components";
-import { Users, Layers2, CheckCircle2, Smile, PartyPopper, Atom } from "lucide-react";
-import { useState } from "react";
+import { Atom, CheckCircle2, Layers2, Smile, Users } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Task {
   id: string;
@@ -23,7 +23,7 @@ interface Task {
 }
 
 export default function Onboarding() {
-  const [tasks, setTasks] = useState<Task[]>([
+  const [tasks] = useState<Task[]>([
     {
       id: "1",
       label: "Invite team members",

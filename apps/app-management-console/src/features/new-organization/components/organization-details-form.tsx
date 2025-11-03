@@ -34,6 +34,7 @@ import {
   CountryCode,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 
 type CreateOrganizationFormValues = {
   name: string;
@@ -48,6 +49,8 @@ type CreateOrganizationFormValues = {
 };
 
 export default function OrganizationDetailsForm() {
+  const router = useRouter();
+  
   const createOrganizationMutation = useAuthedMutation({
     mutationFn: async ({
       session,
@@ -82,8 +85,13 @@ export default function OrganizationDetailsForm() {
       toast.error(e.message || "Failed to create organization", {
         id: "create-org",
       }),
-    onSuccess: () =>
-      toast.success("Organization created", { id: "create-org" }),
+    onSuccess: (response) => {
+      toast.success("Organization created", { id: "create-org" });
+      const organizationId = response.body.id;
+      if (organizationId) {
+        router.push(`/${organizationId}/dashboard`);
+      }
+    },
   });
 
   const form = useForm({
@@ -99,7 +107,17 @@ export default function OrganizationDetailsForm() {
       taxId: "",
     },
     onSubmit: async ({ value }) => {
-      await createOrganizationMutation.mutateAsync(value);
+      await createOrganizationMutation.mutateAsync({
+        name: value.name,
+        countryCode: value.countryCode as CountryCode,
+        city: value.city,
+        address: value.address,
+        industry: value.industry as Industry,
+        currency: value.currency as Currency,
+        email: value.email,
+        phone: value.phone,
+        taxId: value.taxId,
+      });
       form.reset();
     },
   });

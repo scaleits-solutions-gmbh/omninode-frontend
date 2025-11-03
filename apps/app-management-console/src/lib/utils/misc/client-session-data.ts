@@ -1,4 +1,4 @@
-import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import Cookies from "js-cookie";
 
 // This function provides access to the current session data for non-React usage
@@ -10,7 +10,7 @@ export const getClientSessionData = () => {
     currentOrganizationId: Cookies.get("currentOrganizationId"),
     organizationRole: organizationRoleCookie
       ? (organizationRoleCookie as OrganizationRole)
-      : OrganizationRole.None,
+      : undefined,
   };
 };
 

@@ -23,6 +23,7 @@ export default function ServiceInstancesPage() {
         ],
       }}
     >
+      <div>Service Instance Details - Coming Soon</div>
       {/* <PageContent /> */}
     </SideBarLayout>
   );

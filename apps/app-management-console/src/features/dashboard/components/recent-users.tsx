@@ -1,42 +1,40 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  Button,
-  Skeleton,
-  DataTablePagination,
-} from "@repo/pkg-frontend-common-kit/components";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import {
-  ColumnDef,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { recentUsersColumns } from "./recent-users-columns";
-import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useOrganizationId } from "@/hooks/use-organization-id";
+import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import {
   baseOmninodeApiClient,
   getApiAuthentication,
 } from "@repo/omninode-api-client";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  DataTablePagination,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { OrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import {
+  getCoreRowModel,
+  useReactTable
+} from "@tanstack/react-table";
+import Link from "next/link";
+import { useState } from "react";
+import { recentUsersColumns } from "./recent-users-columns";
 
 export default function RecentUsers() {
   const [pagination] = useState({ pageIndex: 0, pageSize: 5 });
   const organizationId = useOrganizationId();
 
-  const { data: queryData, isLoading, error } = useAuthedQuery({
+  const { data: queryData, isLoading } = useAuthedQuery({
     queryKey: ["recentOrganizationUsers", organizationId],
     queryFn: async ({ session }) => {
       return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationMembers({

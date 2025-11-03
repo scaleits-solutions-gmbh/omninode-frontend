@@ -23,7 +23,7 @@ import {
     Input,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import { OrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 import type { Session } from "next-auth";
@@ -33,7 +33,7 @@ import { toast } from "sonner";
 
 interface TransferOwnershipPopupProps {
   show: boolean;
-  user: OrganizationMembershipReadModel;
+  user: ComposedOrganizationMembershipReadModel;
   onClose: () => void;
 }
 
@@ -51,7 +51,7 @@ export default function TransferOwnershipPopup({
   user,
   onClose,
 }: TransferOwnershipPopupProps) {
-  const placeholderEmail = "unknown.user@example.com";
+  const placeholderEmail = user.user.email;
   const { organizationId } = useParams();
   const queryClient = useQueryClient();
   const [confirmation, setConfirmation] = useState("");
@@ -104,15 +104,15 @@ export default function TransferOwnershipPopup({
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage alt={"Unknown User"} />
-              <AvatarFallback seed={user.userId}>
-                {getInitials("Unknown User")}
+              <AvatarImage alt={`${user.user.firstName} ${user.user.lastName}`} />
+              <AvatarFallback seed={user.user.id}>
+                {getInitials(`${user.user.firstName} ${user.user.lastName}`.trim() || "Unknown User")}
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-sm font-medium">Unknown User</p>
+              <p className="text-sm font-medium">{`${user.user.firstName} ${user.user.lastName}`.trim() || "Unknown User"}</p>
               <p className="text-sm text-muted-foreground">
-                unknown.user@example.com
+                {user.user.email}
               </p>
             </div>
           </div>

@@ -50,7 +50,7 @@ export const createColumns = (props: ColumnProps): ColumnDef<OrganizationRelatio
       size: 49,
       minSize: 150,
       header: "Relationship Since",
-      cell: ({ row }) => {
+      cell: () => {
         return <div>{new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()}</div>;
       },
     },
