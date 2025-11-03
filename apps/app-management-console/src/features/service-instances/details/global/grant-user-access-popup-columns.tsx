@@ -1,7 +1,8 @@
+/* Commented out - service-instances feature
 /*
 Columns:
 - avatar, name, email
-- ManagementConsoleAccess
+- OrganizationRole
 - Actions Select
 */
 
@@ -43,11 +44,11 @@ export const createColumns = (): ColumnDef<FeUser>[] => [
   },
   {
     header: "Access Level",
-    accessorKey: "managementConsoleAccess",
+    accessorKey: "organizationRole",
     minSize: 150,
     size: 45,
     cell: ({ row }) => {
-      const access = row.getValue("managementConsoleAccess") as string;
+      const access = row.getValue("organizationRole") as string;
       return (
         <div className="capitalize">
           {access.charAt(0).toUpperCase() + access.slice(1)}
@@ -56,3 +57,4 @@ export const createColumns = (): ColumnDef<FeUser>[] => [
     },
   },
 ];
+*/

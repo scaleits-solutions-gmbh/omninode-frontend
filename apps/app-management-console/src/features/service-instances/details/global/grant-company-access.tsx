@@ -1,6 +1,7 @@
+/* Commented out - service-instances feature
 "use client";
 
-import CompanySelector from "./company-selector";
+import OrganizationSelector from "./organization-selector";
 import {
   Dialog,
   DialogContent,
@@ -11,26 +12,27 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
 
-interface GrantCompanyAccessProps {
+interface GrantOrganizationAccessProps {
   children: React.ReactNode;
 }
 
-export function GrantCompanyAccess({ children }: GrantCompanyAccessProps) {
+export function GrantOrganizationAccess({ children }: GrantOrganizationAccessProps) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Grant company access</Button>
+        <Button size="sm">Grant organization access</Button>
       </DialogTrigger>
       <DialogContent onClick={(e) => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Grant Company Access</DialogTitle>
+          <DialogTitle>Grant Organization Access</DialogTitle>
         </DialogHeader>
-        <CompanySelector value={value} onValueChange={setValue} />
+        <OrganizationSelector value={value} onValueChange={setValue} />
         {children}
       </DialogContent>
     </Dialog>
   );
 }
+*/

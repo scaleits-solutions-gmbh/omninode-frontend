@@ -1,4 +1,4 @@
-import ProvidersAggregate from "@/providers/providers-aggregate";
+import { AppProvidersAggregate } from "@/providers/providers-aggregate";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -47,7 +47,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ProvidersAggregate>{children}</ProvidersAggregate>
+        <AppProvidersAggregate>{children}</AppProvidersAggregate>
       </body>
     </html>
   );

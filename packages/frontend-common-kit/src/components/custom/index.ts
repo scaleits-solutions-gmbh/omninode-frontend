@@ -9,3 +9,4 @@ export { DataTablePagination } from "./data-table-pagination";
 export { DataTablePaginationLoading } from "./data-table-pagination-loading";
 export { HelpIndicator } from "./help-indicator";
 export { BaseLocaleSelector } from "./base-locale-selector";
+export { NotificationsIndicator } from "./notifications-indicator";

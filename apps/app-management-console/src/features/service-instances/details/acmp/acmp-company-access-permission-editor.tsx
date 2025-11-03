@@ -1,7 +1,8 @@
+/* Commented out - service-instances feature
 import AcmpGroupSelector from "./acmp-group-selector";
 import AcmpPermissionsSelector from "./acmp-permissions-selector";
 import AcmpTenantSelector from "./acmp-tenant-selector";
-import { FeAcmpServiceInstanceCompanyWithAccess } from "@/types/fe/fe-service-instance";
+import { FeAcmpServiceInstanceOrganizationWithAccess } from "@/types/fe/fe-service-instance";
 import {
   Dialog,
   DialogContent,
@@ -21,38 +22,38 @@ import { useForm } from "@tanstack/react-form";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-interface AcmpCompanyAccessPermissionEditorProps {
-  FeAcmpServiceInstanceCompanyWithAccess?: FeAcmpServiceInstanceCompanyWithAccess;
+interface AcmpOrganizationAccessPermissionEditorProps {
+  FeAcmpServiceInstanceOrganizationWithAccess?: FeAcmpServiceInstanceOrganizationWithAccess;
   onClose: () => void;
 }
 
-export default function AcmpCompanyAccessPermissionEditor({
-  FeAcmpServiceInstanceCompanyWithAccess,
+export default function AcmpOrganizationAccessPermissionEditor({
+  FeAcmpServiceInstanceOrganizationWithAccess,
   onClose,
-}: AcmpCompanyAccessPermissionEditorProps) {
+}: AcmpOrganizationAccessPermissionEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    if (FeAcmpServiceInstanceCompanyWithAccess) {
+    if (FeAcmpServiceInstanceOrganizationWithAccess) {
       setIsOpen(true);
     }
-  }, [FeAcmpServiceInstanceCompanyWithAccess]);
+  }, [FeAcmpServiceInstanceOrganizationWithAccess]);
 
   const form = useForm({
     defaultValues: {
-      acmpFilterType: FeAcmpServiceInstanceCompanyWithAccess?.acmpFilterType,
+      acmpFilterType: FeAcmpServiceInstanceOrganizationWithAccess?.acmpFilterType,
       filterValue1:
-        FeAcmpServiceInstanceCompanyWithAccess?.acmpFilterValue1 || "",
+        FeAcmpServiceInstanceOrganizationWithAccess?.acmpFilterValue1 || "",
       filterValue2:
-        FeAcmpServiceInstanceCompanyWithAccess?.acmpFilterValue2 || "",
+        FeAcmpServiceInstanceOrganizationWithAccess?.acmpFilterValue2 || "",
       canViewDashboard:
-        FeAcmpServiceInstanceCompanyWithAccess?.canViewDashboard,
-      canViewClients: FeAcmpServiceInstanceCompanyWithAccess?.canViewClients,
+        FeAcmpServiceInstanceOrganizationWithAccess?.canViewDashboard,
+      canViewClients: FeAcmpServiceInstanceOrganizationWithAccess?.canViewClients,
       canViewClientCommands:
-        FeAcmpServiceInstanceCompanyWithAccess?.canViewClientCommands,
-      canViewRollouts: FeAcmpServiceInstanceCompanyWithAccess?.canViewRollouts,
+        FeAcmpServiceInstanceOrganizationWithAccess?.canViewClientCommands,
+      canViewRollouts: FeAcmpServiceInstanceOrganizationWithAccess?.canViewRollouts,
       canPushClientCommands:
-        FeAcmpServiceInstanceCompanyWithAccess?.canPushClientCommands,
-      canPushRollouts: FeAcmpServiceInstanceCompanyWithAccess?.canPushRollouts,
+        FeAcmpServiceInstanceOrganizationWithAccess?.canPushClientCommands,
+      canPushRollouts: FeAcmpServiceInstanceOrganizationWithAccess?.canPushRollouts,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -72,7 +73,7 @@ export default function AcmpCompanyAccessPermissionEditor({
     >
       <DialogContent>
         <DialogHeader className="border-b pb-4">
-          <DialogTitle>Company Access Permission Editor</DialogTitle>
+          <DialogTitle>Organization Access Permission Editor</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -145,7 +146,7 @@ export default function AcmpCompanyAccessPermissionEditor({
                     </div>
                   ) : acmpFilterType === AcmpFilterType.None ? (
                     <div className="text-sm text-muted-foreground">
-                      No additional filters will be applied. The company will
+                      No additional filters will be applied. The organization will
                       have access to all resources.
                     </div>
                   ) : null}
@@ -180,3 +181,4 @@ export default function AcmpCompanyAccessPermissionEditor({
     </Dialog>
   );
 }
+*/

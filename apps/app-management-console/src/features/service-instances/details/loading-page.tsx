@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import LoadingCompaniesWithAccess from "./loading/loading-companies-with-access";
 import LoadingConnectionDetailsCard from "./loading/loading-connection-details-card";
 import LoadingDetailsCard from "./loading/loading-details-card";
@@ -25,3 +26,4 @@ export default function LoadingPage() {
     </>
   );
 }
+*/

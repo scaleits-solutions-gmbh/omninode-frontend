@@ -33,7 +33,7 @@ export const authOptions: AuthOptions = {
     async signIn({ account }) {
       try {
         if (account?.access_token) {
-          await baseOmninodeApiClient().omninodeUser.userMicroservice.handleExternalProviderSignIn(getApiAuthentication(account.access_token));
+          await baseOmninodeApiClient().userMicroservice.handleExternalProviderSignIn(getApiAuthentication(account.access_token));
           return true;
         }
         return false;

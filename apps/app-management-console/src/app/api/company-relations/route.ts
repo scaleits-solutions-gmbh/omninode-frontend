@@ -1,14 +1,14 @@
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
-import { FeCompanyRelationship } from "@/types/fe/fe-company-relationship";
+import { FeOrganizationRelationship } from "@/types/fe/fe-organization-relationship";
 import {
-  CompanyRelationshipService,
+  OrganizationRelationshipService,
   PaginatedResponse,
   ResultType,
 } from "@scaleits-solutions-gmbh/services";
 import { NextRequest, NextResponse } from "next/server";
 
-const companyRelationshipService = new CompanyRelationshipService();
+const organizationRelationshipService = new OrganizationRelationshipService();
 
 export async function GET(request: NextRequest) {
   const page = request.nextUrl.searchParams.get("page");
@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
   const search = request.nextUrl.searchParams.get("search");
 
   const sessionTokenPayload = await getSessionTokenPayload();
-  const companyId = sessionTokenPayload.companyId;
+  const organizationId = sessionTokenPayload.organizationId;
 
   const { result, resultType } =
-    await companyRelationshipService.fetchCompanyRelationships({
-      leftCompanyId: companyId,
+    await organizationRelationshipService.fetchOrganizationRelationships({
+      leftOrganizationId: organizationId,
       page: page ? parseInt(page) : 1,
       pageSize: pageSize ? parseInt(pageSize) : 10,
       search: search ?? undefined,
@@ -35,21 +35,21 @@ export async function GET(request: NextRequest) {
     return handleServiceError(ResultType.UNHANDLED_ERROR);
   }
   try {
-    const mappedResponse: PaginatedResponse<FeCompanyRelationship> = {
-      items: result.items.map((companyRelationship) => {
+    const mappedResponse: PaginatedResponse<FeOrganizationRelationship> = {
+      items: result.items.map((organizationRelationship) => {
         return {
-          id: companyRelationship.id,
-          leftCompanyId: companyRelationship.leftCompanyId,
-          leftCompanyName: companyRelationship.leftCompanyName,
-          leftCompanyImageUrl: "", // Not provided by service, setting empty string
-          leftCompanyEmail: companyRelationship.leftCompanyEmail,
-          rightCompanyId: companyRelationship.rightCompanyId,
-          rightCompanyName: companyRelationship.rightCompanyName,
-          rightCompanyImageUrl: "", // Not provided by service, setting empty string
-          rightCompanyEmail: companyRelationship.rightCompanyEmail,
-          relationshipType: companyRelationship.relationshipType,
-          createdAt: new Date(companyRelationship.createdAt),
-          updatedAt: new Date(companyRelationship.updatedAt),
+          id: organizationRelationship.id,
+          leftOrganizationId: organizationRelationship.leftOrganizationId,
+          leftOrganizationName: organizationRelationship.leftOrganizationName,
+          leftOrganizationImageUrl: "", // Not provided by service, setting empty string
+          leftOrganizationEmail: organizationRelationship.leftOrganizationEmail,
+          rightOrganizationId: organizationRelationship.rightOrganizationId,
+          rightOrganizationName: organizationRelationship.rightOrganizationName,
+          rightOrganizationImageUrl: "", // Not provided by service, setting empty string
+          rightOrganizationEmail: organizationRelationship.rightOrganizationEmail,
+          relationshipType: organizationRelationship.relationshipType,
+          createdAt: new Date(organizationRelationship.createdAt),
+          updatedAt: new Date(organizationRelationship.updatedAt),
         };
       }),
       total: result.total,

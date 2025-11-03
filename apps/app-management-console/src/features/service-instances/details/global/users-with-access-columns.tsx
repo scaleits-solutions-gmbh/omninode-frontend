@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 /*
 Columns:
 - avatar, name
@@ -34,7 +35,7 @@ const ActionsColumn = (user: FeServiceInstanceUserWithAccess) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem
-            onClick={() => router.push(`/users/${user.userCompanyId}`)}
+            onClick={() => router.push(`/users/${user.userOrganizationId}`)}
           >
             Go to user details
           </DropdownMenuItem>
@@ -108,3 +109,4 @@ export const columns: ColumnDef<FeServiceInstanceUserWithAccess>[] = [
     cell: ({ row }) => ActionsColumn(row.original),
   },
 ];
+*/

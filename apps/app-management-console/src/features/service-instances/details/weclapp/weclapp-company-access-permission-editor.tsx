@@ -1,4 +1,5 @@
-import { FeWeclappServiceInstanceCompanyWithAccess } from "@/types/fe/fe-service-instance";
+/* Commented out - service-instances feature
+import { FeWeclappServiceInstanceOrganizationWithAccess } from "@/types/fe/fe-service-instance";
 import {
   Dialog,
   DialogContent,
@@ -14,32 +15,32 @@ import { useForm } from "@tanstack/react-form";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-interface WeclappCompanyAccessPermissionEditorProps {
-  FeWeclappServiceInstanceCompanyWithAccess?: FeWeclappServiceInstanceCompanyWithAccess;
+interface WeclappOrganizationAccessPermissionEditorProps {
+  FeWeclappServiceInstanceOrganizationWithAccess?: FeWeclappServiceInstanceOrganizationWithAccess;
   onClose: () => void;
 }
 
-export default function WeclappCompanyAccessPermissionEditor({
-  FeWeclappServiceInstanceCompanyWithAccess,
+export default function WeclappOrganizationAccessPermissionEditor({
+  FeWeclappServiceInstanceOrganizationWithAccess,
   onClose,
-}: WeclappCompanyAccessPermissionEditorProps) {
+}: WeclappOrganizationAccessPermissionEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    if (FeWeclappServiceInstanceCompanyWithAccess) {
+    if (FeWeclappServiceInstanceOrganizationWithAccess) {
       setIsOpen(true);
     }
-  }, [FeWeclappServiceInstanceCompanyWithAccess]);
+  }, [FeWeclappServiceInstanceOrganizationWithAccess]);
 
   const form = useForm({
     defaultValues: {
       canViewDashboard:
-        FeWeclappServiceInstanceCompanyWithAccess?.canViewDashboard,
+        FeWeclappServiceInstanceOrganizationWithAccess?.canViewDashboard,
       canViewQuotations:
-        FeWeclappServiceInstanceCompanyWithAccess?.canViewQuotations,
+        FeWeclappServiceInstanceOrganizationWithAccess?.canViewQuotations,
       canViewSalesOrders:
-        FeWeclappServiceInstanceCompanyWithAccess?.canViewSalesOrders,
+        FeWeclappServiceInstanceOrganizationWithAccess?.canViewSalesOrders,
       canViewInvoices:
-        FeWeclappServiceInstanceCompanyWithAccess?.canViewInvoices,
+        FeWeclappServiceInstanceOrganizationWithAccess?.canViewInvoices,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -59,7 +60,7 @@ export default function WeclappCompanyAccessPermissionEditor({
     >
       <DialogContent>
         <DialogHeader className="border-b pb-4">
-          <DialogTitle>Company Access Permission Editor</DialogTitle>
+          <DialogTitle>Organization Access Permission Editor</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -87,7 +88,7 @@ export default function WeclappCompanyAccessPermissionEditor({
                     >
                       View Dashboard
                       <span className="text-xs text-muted-foreground">
-                        Allow this company to view the dashboard.
+                        Allow this organization to view the dashboard.
                       </span>
                     </Label>
                   </div>
@@ -111,7 +112,7 @@ export default function WeclappCompanyAccessPermissionEditor({
                     >
                       View Quotations
                       <span className="text-xs text-muted-foreground">
-                        Allow this company to view quotations.
+                        Allow this organization to view quotations.
                       </span>
                     </Label>
                   </div>
@@ -135,7 +136,7 @@ export default function WeclappCompanyAccessPermissionEditor({
                     >
                       View Sales Orders
                       <span className="text-xs text-muted-foreground">
-                        Allow this company to view sales orders.
+                        Allow this organization to view sales orders.
                       </span>
                     </Label>
                   </div>
@@ -159,7 +160,7 @@ export default function WeclappCompanyAccessPermissionEditor({
                     >
                       View Invoices
                       <span className="text-xs text-muted-foreground">
-                        Allow this company to view invoices.
+                        Allow this organization to view invoices.
                       </span>
                     </Label>
                   </div>
@@ -193,3 +194,4 @@ export default function WeclappCompanyAccessPermissionEditor({
     </Dialog>
   );
 }
+*/

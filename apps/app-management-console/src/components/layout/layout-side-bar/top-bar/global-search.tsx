@@ -12,7 +12,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@repo/pkg-frontend-common-kit/components";
-import { Search } from "lucide-react";
+import { CreditCard, Group, Layers2, LayoutDashboard, Search, Settings, Smile, Users } from "lucide-react";
 import * as React from "react";
 
 export default function GlobalSearch({ ...props }: DialogProps) {
@@ -68,16 +68,39 @@ export default function GlobalSearch({ ...props }: DialogProps) {
           <CommandSeparator />
           <CommandGroup heading="Navigation">
             <CommandItem>
+              <LayoutDashboard className="h-4 w-4" />
               <span>Dashboard</span>
               <CommandShortcut>⌘D</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <span>Projects</span>
-              <CommandShortcut>⌘P</CommandShortcut>
+              <Layers2 className="h-4 w-4" />
+              <span>Service Instances</span>
+              <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
+              <Smile className="h-4 w-4" />
+              <span>Org Relationships</span>
+              <CommandShortcut>⌘R</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              <Users className="h-4 w-4" />
+              <span>Users</span>
+              <CommandShortcut>⌘U</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              <Group className="h-4 w-4" />
+              <span>Groups</span>
+              <CommandShortcut>⌘G</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              <CreditCard className="h-4 w-4" />
+              <span>Billing</span>
+              <CommandShortcut>⌘B</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              <Settings className="h-4 w-4" />
+              <span>Organization Settings</span>
+              <CommandShortcut>⌘O</CommandShortcut>
             </CommandItem>
           </CommandGroup>
         </CommandList>

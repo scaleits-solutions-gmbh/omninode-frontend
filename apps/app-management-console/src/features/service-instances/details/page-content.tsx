@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 
 import AcmpServiceInstancePageContent from "./acmp/acmp-service-instance-page-content";
@@ -36,3 +37,4 @@ export default function PageContent() {
       return <div>Service not supported</div>;
   }
 }
+*/

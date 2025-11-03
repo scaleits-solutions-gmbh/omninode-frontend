@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import WeclappEditConnectionDetailPopup from "./weclapp-edit-connection-detail-popup";
 import {
   Card,
@@ -92,3 +93,4 @@ export default function WeclappServiceInstanceDetails() {
     </div>
   );
 }
+*/

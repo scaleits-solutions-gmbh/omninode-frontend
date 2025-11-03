@@ -4,7 +4,8 @@ import UserIndicator from "./user-indicator";
 import {
   Separator,
   SidebarTrigger,
-  HelpIndicator
+  HelpIndicator,
+  NotificationsIndicator,
 } from "@repo/pkg-frontend-common-kit/components";
 import Link from "next/link";
 
@@ -23,14 +24,16 @@ export default function TopBar({
         <AutoBreadCrumbs category={category} breadcrumbs={breadcrumbs} />
       </div>
 
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-6">
         <Link href={process.env.NEXT_PUBLIC_SERVICE_PORTAL_URL || ""}>
           Service Portal
         </Link>
-        <HelpIndicator />
-        <div className="hidden">
+        <div className="flex items-center gap-4">
           <GlobalSearch />
+          <HelpIndicator />
+          <NotificationsIndicator />
         </div>
+
         <UserIndicator />
       </div>
     </header>

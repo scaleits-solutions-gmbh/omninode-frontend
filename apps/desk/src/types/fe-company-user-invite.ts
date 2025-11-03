@@ -1,4 +1,4 @@
-export interface FeCompanyUserInvite {
+export interface FeOrganizationUserInvite {
   id: string;
   userId?: string;
   companyId: string;

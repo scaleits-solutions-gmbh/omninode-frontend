@@ -29,7 +29,7 @@ export function SidebarSkeleton() {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {/* First Company */}
+        {/* First Organization */}
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center gap-2 p-0">
             <Skeleton className="w-6 h-6 rounded-md" />
@@ -69,7 +69,7 @@ export function SidebarSkeleton() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Second Company */}
+        {/* Second Organization */}
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center gap-2 p-0">
             <Skeleton className="w-6 h-6 rounded-md" />

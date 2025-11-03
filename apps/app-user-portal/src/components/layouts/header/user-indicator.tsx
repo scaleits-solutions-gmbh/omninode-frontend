@@ -29,10 +29,10 @@ export default function UserIndicator() {
     error,
   } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: ({ accessToken }) =>
-      baseOmninodeApiClient().omninodeUser.userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(accessToken),
-      }),
+    queryFn: async ({ session }) =>
+      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
+        apiAuthentication: getApiAuthentication(session.access_token),
+      })
   });
 
   if (isLoading) {

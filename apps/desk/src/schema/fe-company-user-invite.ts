@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const feCompanyUserInviteSchema = z.object({
+export const feOrganizationUserInviteSchema = z.object({
   id: z.string().uuid(),
   companyId: z.string().uuid(),
   companyName: z.string(),
@@ -12,4 +12,4 @@ export const feCompanyUserInviteSchema = z.object({
     .transform((val) => val ?? undefined),
 });
 
-export type FeCompanyUserInvite = z.infer<typeof feCompanyUserInviteSchema>;
+export type FeOrganizationUserInvite = z.infer<typeof feOrganizationUserInviteSchema>;

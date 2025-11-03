@@ -1,8 +1,17 @@
+"use client";
 import { BaseProvidersAggregate } from "@repo/pkg-frontend-common-kit/components";
-export default function ProvidersAggregate({
-  children,
-}: {
+import { SessionProvider } from "next-auth/react";
+
+type AppProvidersAggregateProps = {
   children: React.ReactNode;
-}) {
-  return <BaseProvidersAggregate>{children}</BaseProvidersAggregate>;
+};
+
+export function AppProvidersAggregate({
+  children,
+}: AppProvidersAggregateProps) {
+  return (
+    <SessionProvider>
+      <BaseProvidersAggregate>{children}</BaseProvidersAggregate>
+    </SessionProvider>
+  );
 }

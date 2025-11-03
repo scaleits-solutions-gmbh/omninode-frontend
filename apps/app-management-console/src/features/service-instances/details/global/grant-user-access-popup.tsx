@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import { createColumns } from "./grant-user-access-popup-columns";
 import { fetchServiceInstanceUsersWithoutAccess } from "@/lib/api-client/service-instances";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
@@ -191,3 +192,4 @@ export default function GrantUserAccessPopup() {
     </Dialog>
   );
 }
+*/

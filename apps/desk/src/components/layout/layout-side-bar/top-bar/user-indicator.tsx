@@ -77,7 +77,7 @@ export default function UserIndicator() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link
-            href={`${process.env.NEXT_PUBLIC_USER_PORTAL_URL}/personal-settings`}
+            href={`${process.env.NEXT_PUBLIC_USER_PORTAL_URL}/account-settings`}
           >
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />

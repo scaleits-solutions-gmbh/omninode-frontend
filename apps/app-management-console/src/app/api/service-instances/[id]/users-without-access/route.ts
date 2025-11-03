@@ -1,8 +1,8 @@
 import { FeUser } from "@/types/fe/fe-user";
 import {
-  ManagementConsoleAccess,
+  OrganizationRole,
   PaginatedResponse,
-  UserCompanyStatus,
+  UserOrganizationStatus,
 } from "@scaleits-solutions-gmbh/services";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,30 +10,30 @@ const mockData: PaginatedResponse<FeUser> = {
   items: [
     {
       id: "101",
-      UserCompanyId: "201",
+      UserOrganizationId: "201",
       imageUrl: "https://randomuser.me/api/portraits/women/44.jpg",
       email: "emily.stevens@scaleits.com",
       firstName: "Emily",
       middleNames: "",
       lastName: "Stevens",
       position: "Technical",
-      managementConsoleAccess: ManagementConsoleAccess.Admin,
-      status: UserCompanyStatus.ACTIVE,
+      organizationRole: OrganizationRole.Admin,
+      status: UserOrganizationStatus.ACTIVE,
       lastSeenAt: new Date(),
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       id: "102",
-      UserCompanyId: "202",
+      UserOrganizationId: "202",
       imageUrl: "https://randomuser.me/api/portraits/men/45.jpg",
       email: "john.smith@scaleits.com",
       firstName: "John",
       middleNames: "",
       lastName: "Smith",
       position: "Finance",
-      managementConsoleAccess: ManagementConsoleAccess.User,
-      status: UserCompanyStatus.ACTIVE,
+      organizationRole: OrganizationRole.Member,
+      status: UserOrganizationStatus.ACTIVE,
       lastSeenAt: new Date(),
       createdAt: new Date(),
       updatedAt: new Date(),

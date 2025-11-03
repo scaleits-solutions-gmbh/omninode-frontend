@@ -16,16 +16,17 @@ import {
   MANAGEMENT_CONSOLE_BASE_URL,
   SERVICE_PORTAL_BASE_URL,
 } from "@repo/pkg-frontend-common-kit/constants";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ArrowRight, Globe, Lock, Settings } from "lucide-react";
 import Link from "next/link";
 export default function AppSelector() {
   const managementConsoleUrl = getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL;
   const servicePortalUrl = getOriginUrl() + SERVICE_PORTAL_BASE_URL;
 
-  const { selectedCompany, companies, isLoading } = useGetCurrentCompany();
+  const { selectedOrganization, companies, isLoading } =
+    useGetCurrentOrganization();
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -83,8 +84,7 @@ export default function AppSelector() {
               <></>
             ) : (
               <>
-                {selectedCompany?.managementConsoleAccess !==
-                ManagementConsoleAccess.User ? (
+                {selectedOrganization?.role !== OrganizationRole.Member ? (
                   <Card className="">
                     <CardHeader className="pb-4">
                       <div className="flex items-center gap-3">
@@ -102,7 +102,15 @@ export default function AppSelector() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <Link href={managementConsoleUrl} className="block">
+                      <Link
+                        href={
+                          managementConsoleUrl +
+                          "/" +
+                          selectedOrganization!.organizationId +
+                          "/dashboard"
+                        }
+                        className="block"
+                      >
                         <Button className="w-full cursor-pointer" size="lg">
                           Access Console
                           <ArrowRight className="ml-2 h-4 w-4" />

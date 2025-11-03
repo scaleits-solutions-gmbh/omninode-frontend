@@ -1,4 +1,4 @@
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
 import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
 
@@ -7,8 +7,8 @@ type SessionTokenPayload = {
   email: string;
   firstName: string;
   lastName: string;
-  managementConsoleAccess: ManagementConsoleAccess;
-  companyId: string;
+  organizationRole: OrganizationRole;
+  organizationId: string;
   iat: number;
   exp: number;
 };

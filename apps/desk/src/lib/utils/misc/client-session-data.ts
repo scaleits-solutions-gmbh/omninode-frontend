@@ -1,18 +1,18 @@
 import Cookies from "js-cookie";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
 
 // This function provides access to the current session data for non-React usage
 export const getClientSessionData = () => {
-  const managementConsoleAccessCookie = Cookies.get("managementConsoleAccess");
+  const organizationRoleCookie = Cookies.get("organizationRole");
 
   return {
     currentUserId: Cookies.get("currentUserId"),
-    currentCompanyId: Cookies.get("currentCompanyId"),
-    managementConsoleAccess: managementConsoleAccessCookie
-      ? (managementConsoleAccessCookie as ManagementConsoleAccess)
-      : ManagementConsoleAccess.None,
+    currentOrganizationId: Cookies.get("currentOrganizationId"),
+    organizationRole: organizationRoleCookie
+      ? (organizationRoleCookie as OrganizationRole)
+      : OrganizationRole.None,
   };
 };
 
 // For React components, use the hooks from @/hooks/useSession:
-// useSession(), useUserId(), useCompanyId(), useManagementConsoleAccess()
+// useSession(), useUserId(), useOrganizationId(), useOrganizationRole()

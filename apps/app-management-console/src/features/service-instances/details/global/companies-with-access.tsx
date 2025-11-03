@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import { createColumns } from "./companies-with-access-columns";
 import LoadingCompaniesWithAccess from "../loading/loading-companies-with-access";
 import { fetchServiceInstanceCompaniesWithAccess } from "@/lib/api-client/service-instances";
@@ -31,13 +32,13 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 interface CompaniesWithAccessProps {
-  onCompanyAccessChange: (companyIndex: number) => void;
-  GrantCompanyAccess: React.ReactNode;
+  onOrganizationAccessChange: (organizationIndex: number) => void;
+  GrantOrganizationAccess: React.ReactNode;
 }
 
 export default function CompaniesWithAccess({
-  onCompanyAccessChange,
-  GrantCompanyAccess,
+  onOrganizationAccessChange,
+  GrantOrganizationAccess,
 }: CompaniesWithAccessProps) {
   const { id } = useParams();
   const [search, setSearch] = useState("");
@@ -51,7 +52,7 @@ export default function CompaniesWithAccess({
     queryFn: () => fetchServiceInstanceCompaniesWithAccess(id as string),
   });
 
-  const columns = createColumns(onCompanyAccessChange);
+  const columns = createColumns(onOrganizationAccessChange);
 
   const table = useReactTable({
     data: data?.items || [],
@@ -80,7 +81,7 @@ export default function CompaniesWithAccess({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {GrantCompanyAccess}
+          {GrantOrganizationAccess}
         </CardHeader>
         <CardContent>
           <div className="rounded-md border">
@@ -158,3 +159,4 @@ export default function CompaniesWithAccess({
     </div>
   );
 }
+*/

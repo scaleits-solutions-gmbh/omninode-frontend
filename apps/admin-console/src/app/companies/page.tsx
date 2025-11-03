@@ -1,12 +1,12 @@
 import SideBarLayout from "@/components/layout/layout-side-bar/layout-side-bar";
-import PageContent from "@/features/companies/list/page-content";
+import OrganizationsPageContent from "@/features/organizations/page-content";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Companies",
 };
 
-export default function CompanyPage() {
+export default function OrganizationPage() {
   return (
     <SideBarLayout
       autoBreadCrumbs={{
@@ -19,7 +19,7 @@ export default function CompanyPage() {
         ],
       }}
     >
-      <PageContent />
+      <OrganizationsPageContent />
     </SideBarLayout>
   );
 }

@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ApiClient, Company } from "@repo/lib-api-client";
 import { useAuthedQuery } from "./use-authed-query";
 import { useMounted } from "./use-mounted";
 import { useValidSession } from "./use-valid-session";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+const CURRENT_COMPANY_ID_KEY = "currentOrganizationId";
+const CURRENT_COMPANY_CHANGE_EVENT = "currentOrganizationIdChange";
 
-const CURRENT_COMPANY_ID_KEY = "currentCompanyId";
-const CURRENT_COMPANY_CHANGE_EVENT = "currentCompanyIdChange";
-
-function getCurrentCompanyIdSafe(): string | null {
+function getCurrentOrganizationIdSafe(): string | null {
   if (typeof window === "undefined") return null;
   try {
     return localStorage.getItem(CURRENT_COMPANY_ID_KEY);
@@ -19,7 +18,7 @@ function getCurrentCompanyIdSafe(): string | null {
   }
 }
 
-function setCurrentCompanyIdSafe(companyId: string | null): void {
+function setCurrentOrganizationIdSafe(companyId: string | null): void {
   if (typeof window === "undefined") return;
   try {
     if (!companyId) {
@@ -32,43 +31,44 @@ function setCurrentCompanyIdSafe(companyId: string | null): void {
   }
 }
 
-export type UseGetCurrentCompanyResult = {
-  companies: Company[] | undefined;
-  selectedCompany: Company | undefined;
-  selectedCompanyId: string | null;
+export type UseGetCurrentOrganizationResult = {
+  companies: UserOrganizationReadModel[] | undefined;
+  selectedOrganization: UserOrganizationReadModel | undefined;
+  selectedOrganizationId: string | null;
   isLoading: boolean;
   isFetching: boolean;
   error: unknown;
   refetch: () => void;
-  setSelectedCompanyId: (companyId: string | null) => void;
+  setSelectedOrganizationId: (companyId: string | null) => void;
 };
 
-export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
+export function useGetCurrentOrganization(): UseGetCurrentOrganizationResult {
   const mounted = useMounted();
   const { isValid: isSessionValid, status: sessionStatus } = useValidSession();
-  const query = useAuthedQuery<Company[]>({
-    queryKey: ["user-companies"],
-    queryFn: async ({ accessToken }) => {/*
-      const { companies } = await ApiClient.getUserCompanies(accessToken);
-      return companies ?? [];*/
-      return [{ id: "1", name: "Sample Company", managementConsoleAccess: ManagementConsoleAccess.User, serviceInstanceHosts: [] }];
+  const query = useAuthedQuery<UserOrganizationReadModel[]>({
+    queryKey: ["current-user-companies"],
+    queryFn: async ({ session }) => {
+      const { body } = await baseOmninodeApiClient().organizationMicroservice.findCurrentUserOrganizations({
+        apiAuthentication: getApiAuthentication(session.access_token),
+      });
+      return body ?? [];
     },
     refetchOnWindowFocus: false,
     staleTime: 60_000,
   });
 
-  const [selectedCompanyIdState, setSelectedCompanyIdState] = useState<string | null>(getCurrentCompanyIdSafe());
+  const [selectedOrganizationIdState, setSelectedOrganizationIdState] = useState<string | null>(getCurrentOrganizationIdSafe());
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const onStorage = (e: StorageEvent) => {
       if (e.key === CURRENT_COMPANY_ID_KEY) {
-        setSelectedCompanyIdState(e.newValue);
+        setSelectedOrganizationIdState(e.newValue);
       }
     };
     const onCustomChange = (e: Event) => {
       // For safety, re-read from storage
-      setSelectedCompanyIdState(getCurrentCompanyIdSafe());
+      setSelectedOrganizationIdState(getCurrentOrganizationIdSafe());
     };
     window.addEventListener("storage", onStorage);
     window.addEventListener(CURRENT_COMPANY_CHANGE_EVENT, onCustomChange);
@@ -83,44 +83,44 @@ export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
     if (!query.data) return; // avoid clearing persisted id before data loads
     const companies = query.data;
     if (!companies.length) {
-      setCurrentCompanyIdSafe(null);
-      setSelectedCompanyIdState(null);
+      setCurrentOrganizationIdSafe(null);
+      setSelectedOrganizationIdState(null);
       return;
     }
-    const currentId = getCurrentCompanyIdSafe();
-    const exists = companies.some((c) => c.id === currentId);
+    const currentId = getCurrentOrganizationIdSafe();
+    const exists = companies.some((c) => c.organizationId === currentId);
     if (!exists) {
-      const firstCompanyId = companies[0]?.id ?? null;
-      setCurrentCompanyIdSafe(firstCompanyId);
-      setSelectedCompanyIdState(firstCompanyId);
+      const firstOrganizationId = companies[0]?.organizationId ?? null;
+      setCurrentOrganizationIdSafe(firstOrganizationId);
+      setSelectedOrganizationIdState(firstOrganizationId);
     } else {
       // Ensure state reflects persisted selection
-      setSelectedCompanyIdState(currentId);
+      setSelectedOrganizationIdState(currentId);
     }
   }, [query.data]);
 
-  const selectedCompanyId = selectedCompanyIdState;
+  const selectedOrganizationId = selectedOrganizationIdState;
 
-  const setSelectedCompanyId = (companyId: string | null) => {
-    setCurrentCompanyIdSafe(companyId);
-    setSelectedCompanyIdState(companyId);
+  const setSelectedOrganizationId = (companyId: string | null) => {
+    setCurrentOrganizationIdSafe(companyId);
+    setSelectedOrganizationIdState(companyId);
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent(CURRENT_COMPANY_CHANGE_EVENT));
     }
   };
 
-  const selectedCompany = useMemo(() => {
+  const selectedOrganization = useMemo(() => {
     const companies = query.data ?? [];
     if (!companies.length) return undefined;
-    const currentId = selectedCompanyId;
+    const currentId = selectedOrganizationId;
     if (!currentId) return companies[0];
-    return companies.find((c) => c.id === currentId) ?? companies[0];
-  }, [query.data, selectedCompanyId]);
+    return companies.find((c) => c.organizationId === currentId) ?? companies[0];
+  }, [query.data, selectedOrganizationId]);
 
   return {
     companies: query.data,
-    selectedCompany,
-    selectedCompanyId,
+    selectedOrganization,
+    selectedOrganizationId,
     isLoading:
       !mounted ||
       sessionStatus !== "authenticated" ||
@@ -131,7 +131,7 @@ export function useGetCurrentCompany(): UseGetCurrentCompanyResult {
     refetch: () => {
       void query.refetch();
     },
-    setSelectedCompanyId,
+    setSelectedOrganizationId,
   };
 }
 

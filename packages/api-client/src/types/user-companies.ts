@@ -1,4 +1,4 @@
-import type { Service, ManagementConsoleAccess } from '@scaleits-solutions-gmbh/omninode-lib-global-common-kit';
+import type { Service, OrganizationRole } from '@scaleits-solutions-gmbh/omninode-lib-global-common-kit';
 
 type AcmpPermissions = {
   canViewDashboard: boolean;
@@ -38,18 +38,18 @@ type WeclappServiceInstance = BaseServiceInstance & {
 type ServiceInstance = AcmpServiceInstance | WeclappServiceInstance;
 
 export type ServiceInstanceHost = {
-  hostCompanyId: string;
-  hostCompanyName: string;
+  hostOrganizationId: string;
+  hostOrganizationName: string;
   instances: ServiceInstance[];
 };
 
-export type Company = {
+export type Organization = {
   id: string;
   name: string;
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
   serviceInstanceHosts: ServiceInstanceHost[];
 };
 
 export type GetUserCompaniesResponseDto = {
-  companies: Company[];
+  companies: Organization[];
 };

@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import AcmpCompaniesWithAccess from "./acmp-companies-with-access";
 import AcmpServiceIntanceConnectionDetails from "./acmp-service-instance-connection-details";
 import ServiceInstanceDetails from "../global/service-instance-details";
@@ -28,3 +29,4 @@ export default function WeclappServiceInstancePageContent() {
     </>
   );
 }
+*/

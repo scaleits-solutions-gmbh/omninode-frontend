@@ -6,7 +6,7 @@ const deepOmitContext = (value: unknown): unknown => {
   }
   if (value != null && typeof value === "object") {
     const entries = Object.entries(value as Record<string, unknown>)
-      .filter(([key]) => key !== "context")
+      .filter(([key]) => key !== "executionContext" && key !== "unsafeExecutionContext")
       .map(([key, val]) => [key, deepOmitContext(val)] as const);
     return Object.fromEntries(entries);
   }
@@ -24,7 +24,7 @@ export type DeepOmitContext<T> =
   T extends (infer U)[]
     ? DeepOmitContext<U>[]
     : T extends object
-      ? { [K in keyof T as K extends 'context' ? never : K]: DeepOmitContext<T[K]> }
+      ? { [K in keyof T as K extends 'executionContext' | 'unsafeExecutionContext' ? never : K]: DeepOmitContext<T[K]> }
       : T;
 
 export type ContextlessRequest<TRequest> = DeepOmitContext<TRequest>;

@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 "use client";
 import { fetchServiceInstance } from "@/lib/api-client/service-instances";
 import {
@@ -177,3 +178,4 @@ export default function EditPopup() {
     </Dialog>
   );
 }
+*/

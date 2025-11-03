@@ -1,3 +1,4 @@
+/* Commented out - service-instances feature
 import { fetchServiceInstance } from "@/lib/api-client/service-instances";
 import { FeAcmpServiceInstanceDetails } from "@/types/fe/fe-service-instance";
 import {
@@ -115,7 +116,7 @@ export default function AcmpEditConnectionDetailPopup() {
                 <Input
                   id={field.name}
                   name={field.name}
-                  placeholder="e.g., your-company.acmp.com"
+                  placeholder="e.g., your-organization.acmp.com"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -201,3 +202,4 @@ export default function AcmpEditConnectionDetailPopup() {
     </Dialog>
   );
 }
+*/

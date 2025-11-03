@@ -1,4 +1,5 @@
-import { useCompanyId } from "@/hooks/use-session";
+/* Commented out - service-instances feature
+import { useOrganizationId } from "@/hooks/use-session";
 import { FeServiceInstance } from "@/types/fe/fe-service-instance";
 import {
   Badge,
@@ -34,11 +35,11 @@ const SourceCellComponent = ({
 }: {
   row: CellContext<FeServiceInstance, unknown>["row"];
 }) => {
-  const currentCompanyId = useCompanyId();
-  if (row.original.sourceCompanyId === currentCompanyId) {
+  const currentOrganizationId = useOrganizationId();
+  if (row.original.sourceOrganizationId === currentOrganizationId) {
     return <Badge variant="default">Direct</Badge>;
   }
-  return <Badge variant="secondary">{row.original.sourceCompanyName}</Badge>;
+  return <Badge variant="secondary">{row.original.sourceOrganizationName}</Badge>;
 };
 
 export const columns: ColumnDef<FeServiceInstance>[] = [
@@ -135,3 +136,4 @@ export const columns: ColumnDef<FeServiceInstance>[] = [
     cell: ({ row }) => ActionsColumn(row.original),
   },
 ];
+*/

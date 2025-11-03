@@ -1,8 +1,8 @@
 import { handleServiceError } from "@/lib/utils/misc/api-error-handler";
 import { getSessionTokenPayload } from "@/lib/utils/misc/session-token";
 import {
-  CompanyRelationshipInviteService,
-  ManagementConsoleAccess,
+  OrganizationRelationshipInviteService,
+  OrganizationRole,
   ResultType,
 } from "@scaleits-solutions-gmbh/services";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,22 +10,22 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<null | unknown>> {
-  const currentCompanyId = (await getSessionTokenPayload()).companyId;
+  const currentOrganizationId = (await getSessionTokenPayload()).organizationId;
   const body = await request.json();
-  const { email, leftCompanyId, rightCompanyId, companyId, relationshipType } =
+  const { email, leftOrganizationId, rightOrganizationId, organizationId, relationshipType } =
     body;
 
-  const companyRelationshipInviteService =
-    new CompanyRelationshipInviteService();
+  const organizationRelationshipInviteService =
+    new OrganizationRelationshipInviteService();
   const { resultType } =
-    await companyRelationshipInviteService.createCompanyRelationshipInvite({
-      inviterCompanyId: currentCompanyId,
-      leftCompanyId: leftCompanyId,
-      rightCompanyId: rightCompanyId,
+    await organizationRelationshipInviteService.createOrganizationRelationshipInvite({
+      inviterOrganizationId: currentOrganizationId,
+      leftOrganizationId: leftOrganizationId,
+      rightOrganizationId: rightOrganizationId,
       relationshipType: relationshipType,
       email: email,
-      companyId: companyId,
-      managementConsoleAccess: ManagementConsoleAccess.Admin,
+      organizationId: organizationId,
+      organizationRole: OrganizationRole.Admin,
     });
 
   if (resultType != ResultType.SUCCESS) {
