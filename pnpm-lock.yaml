@@ -922,8 +922,8 @@ importers:
   packages/api-client:
     dependencies:
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.6
-        version: 0.0.6
+        specifier: 0.0.43-feat.fix-final-fe-integration-fixes.20251102215913
+        version: 0.0.43-feat.fix-final-fe-integration-fixes.20251102215913(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@scaleits-solutions-gmbh/org-lib-global-common-kit':
         specifier: ^0.0.4
         version: 0.0.4(drizzle-orm@0.44.5)
@@ -2186,9 +2186,6 @@ packages:
 
   '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.43-feat.fix-final-fe-integration-fixes.20251102215913':
     resolution: {integrity: sha512-9V7U31aXSx+KXI3L+atUXg4Je4nDg+/u8yLxVz4f44JGAu6YK1/o2ZsHpfuzOTaohOlBk7K7UHerPoMCLZxNWw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.43-feat.fix-final-fe-integration-fixes.20251102215913/e8924920cca982c76eddf002229fe504feb4d40c}
-
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.6':
-    resolution: {integrity: sha512-VYfrLmLVANZrah0Y5i4SHWL4+BE3dN33S5uI5q5kcpjP7+5kxIjcLfE3QK6Gwfxryp01cieTUMZP12kqJQLpuw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.6/6a2011ee975f595d5413d3c1266f3138c76d70d0}
 
   '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.41':
     resolution: {integrity: sha512-z9j91Uz3lkX06wh7vpPTpU6JR+TLnd3JdWKnYNkZf31BBJJdpUI1uBLAGS1zr/uAb40R691ITViThwkQm1jWlg==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.41/06be18ed6f09da5433e8cefd2ad296d9ae5594cd}
@@ -5970,8 +5967,6 @@ snapshots:
       - eslint
       - eslint-import-resolver-node
       - supports-color
-
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.6': {}
 
   '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.41(drizzle-orm@0.44.5)':
     dependencies:
