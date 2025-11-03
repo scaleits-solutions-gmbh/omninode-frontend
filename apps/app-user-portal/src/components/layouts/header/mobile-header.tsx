@@ -4,7 +4,7 @@ import { AppLogo } from "@/components/custom/app-logo";
 import Link from "next/link";
 import UserIndicator from "./user-indicator";
 import { Lock, Menu, X } from "lucide-react";
-import OrganizationSwitcher from "./company-switcher";
+import OrganizationSwitcher from "./organization-switcher";
 import { useState } from "react";
 
 interface MobileHeaderProps {
