@@ -1,5 +1,5 @@
 import SideBarLayout from "@/components/layout/layout-side-bar/layout-side-bar";
-// import PageContent from "@/features/service-instances/details/page-content";
+import PageContent from "@/features/service-instances/details/page-content";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,8 +23,7 @@ export default function ServiceInstancesPage() {
         ],
       }}
     >
-      <div>Service Instance Details - Coming Soon</div>
-      {/* <PageContent /> */}
+      <PageContent />
     </SideBarLayout>
   );
 }

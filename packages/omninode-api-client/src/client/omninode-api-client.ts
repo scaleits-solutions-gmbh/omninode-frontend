@@ -173,6 +173,74 @@ import {
   findUserFeedbacks,
   FindUserFeedbacksParams,
 } from "./api-methods/feedback-microservice/feedback/queries/find-user-feedbacks.api-method";
+import {
+  findComposedPaginatedOrganizationServiceInstanceListItems,
+  FindComposedPaginatedOrganizationServiceInstanceListItemsParams,
+} from "./api-methods/service-microservice/organization-service-instance/queries/find-paginated-organization-service-instance-list-items.api-method";
+import {
+  findComposedOrganizationServiceInstanceById,
+  FindComposedOrganizationServiceInstanceByIdParams,
+} from "./api-methods/service-microservice/organization-service-instance/queries/find-composed-organization-service-instance-by-id.api-method";
+import {
+  createServiceInstance,
+  CreateServiceInstanceParams,
+} from "./api-methods/service-microservice/service-instance/commands/create-service-instance.api-method";
+import {
+  findComposedPaginatedServiceViews,
+  FindComposedPaginatedServiceViewsParams,
+} from "./api-methods/service-microservice/service-view/queries/find-composed-paginated-service-views.api-method";
+import {
+  findComposedServiceViewById,
+  FindComposedServiceViewByIdParams,
+} from "./api-methods/service-microservice/service-view/queries/find-composed-service-view-by-id.api-method";
+import {
+  findComposedServiceViewMembershipGrants,
+  FindComposedServiceViewMembershipGrantsParams,
+} from "./api-methods/service-microservice/service-view/queries/find-composed-service-view-membership-grants.api-method";
+import {
+  findComposedServiceViewOrganizationRelationshipGrants,
+  FindComposedServiceViewOrganizationRelationshipGrantsParams,
+} from "./api-methods/service-microservice/service-view/queries/find-composed-service-view-organization-relationship-grants.api-method";
+import {
+  createServiceView,
+  CreateServiceViewParams,
+} from "./api-methods/service-microservice/service-view/commands/create-service-view.api-method";
+import {
+  grantServiceViewToOrganizationMembership,
+  GrantServiceViewToOrganizationMembershipParams,
+} from "./api-methods/service-microservice/service-view/commands/grant-service-view-to-organization-membership.api-method";
+import {
+  revokeServiceViewFromOrganizationMembership,
+  RevokeServiceViewFromOrganizationMembershipParams,
+} from "./api-methods/service-microservice/service-view/commands/revoke-service-view-from-organization-membership.api-method";
+import {
+  grantServiceViewToOrganizationRelationship,
+  GrantServiceViewToOrganizationRelationshipParams,
+} from "./api-methods/service-microservice/service-view/commands/grant-service-view-to-organization-relationship.api-method";
+import {
+  revokeServiceViewFromOrganizationRelationship,
+  RevokeServiceViewFromOrganizationRelationshipParams,
+} from "./api-methods/service-microservice/service-view/commands/revoke-service-view-from-organization-relationship.api-method";
+import {
+  updateServiceView,
+  UpdateServiceViewParams,
+} from "./api-methods/service-microservice/service-view/commands/update-service-view.api-method";
+import {
+  changeServiceInstanceStatus,
+  ChangeServiceInstanceStatusParams,
+} from "./api-methods/service-microservice/service-instance/commands/change-service-instance-status.api-method";
+import {
+  updateServiceInstance,
+  UpdateServiceInstanceParams,
+} from "./api-methods/service-microservice/service-instance/commands/update-service-instance.api-method";
+import {
+  addServiceInstanceAddon,
+  AddServiceInstanceAddonParams,
+} from "./api-methods/service-microservice/service-instance-addon/commands/add-service-instance-addon.api-method";
+import {
+  removeServiceInstanceAddon,
+  RemoveServiceInstanceAddonParams,
+} from "./api-methods/service-microservice/service-instance-addon/commands/remove-service-instance-addon.api-method";
 export class OmninodeApiClient {
   constructor(
     private readonly baseUrl: string,
@@ -714,6 +782,229 @@ export class OmninodeApiClient {
       const apiConnection =
         this.getAuthenticatedApiConnection(apiAuthentication);
       return await findUserFeedbacks({ request, apiConnection });
+    },
+  };
+
+  serviceMicroservice = {
+    createServiceInstance: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: CreateServiceInstanceParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await createServiceInstance({ request, apiConnection });
+    },
+    changeServiceInstanceStatus: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: ChangeServiceInstanceStatusParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await changeServiceInstanceStatus({ request, apiConnection });
+    },
+    updateServiceInstance: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: UpdateServiceInstanceParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await updateServiceInstance({ request, apiConnection });
+    },
+    findPaginatedOrganizationServiceInstanceListItems: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedPaginatedOrganizationServiceInstanceListItemsParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedPaginatedOrganizationServiceInstanceListItems({ request, apiConnection });
+    },
+    findComposedOrganizationServiceInstanceById: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedOrganizationServiceInstanceByIdParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedOrganizationServiceInstanceById({ request, apiConnection });
+    },
+    findComposedPaginatedServiceViews: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedPaginatedServiceViewsParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedPaginatedServiceViews({
+        request,
+        apiConnection,
+      });
+    },
+    findComposedServiceViewById: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedServiceViewByIdParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedServiceViewById({ request, apiConnection });
+    },
+    findComposedServiceViewMembershipGrants: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedServiceViewMembershipGrantsParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedServiceViewMembershipGrants({
+        request,
+        apiConnection,
+      });
+    },
+    findComposedServiceViewOrganizationRelationshipGrants: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: FindComposedServiceViewOrganizationRelationshipGrantsParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await findComposedServiceViewOrganizationRelationshipGrants({
+        request,
+        apiConnection,
+      });
+    },
+    grantServiceViewToOrganizationMembership: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: GrantServiceViewToOrganizationMembershipParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await grantServiceViewToOrganizationMembership({
+        request,
+        apiConnection,
+      });
+    },
+    revokeServiceViewFromOrganizationMembership: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: RevokeServiceViewFromOrganizationMembershipParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await revokeServiceViewFromOrganizationMembership({
+        request,
+        apiConnection,
+      });
+    },
+    grantServiceViewToOrganizationRelationship: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: GrantServiceViewToOrganizationRelationshipParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await grantServiceViewToOrganizationRelationship({
+        request,
+        apiConnection,
+      });
+    },
+    revokeServiceViewFromOrganizationRelationship: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: RevokeServiceViewFromOrganizationRelationshipParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await revokeServiceViewFromOrganizationRelationship({
+        request,
+        apiConnection,
+      });
+    },
+    updateServiceView: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: UpdateServiceViewParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await updateServiceView({
+        request,
+        apiConnection,
+      });
+    },
+    addServiceInstanceAddon: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: AddServiceInstanceAddonParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await addServiceInstanceAddon({
+        request,
+        apiConnection,
+      });
+    },
+    removeServiceInstanceAddon: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: RemoveServiceInstanceAddonParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await removeServiceInstanceAddon({
+        request,
+        apiConnection,
+      });
+    },
+    createServiceView: async ({
+      request,
+      apiAuthentication,
+    }: {
+      request: CreateServiceViewParams["request"];
+      apiAuthentication: ApiAuthentication;
+    }) => {
+      const apiConnection =
+        this.getAuthenticatedApiConnection(apiAuthentication);
+      return await createServiceView({
+        request,
+        apiConnection,
+      });
     },
   };
 }

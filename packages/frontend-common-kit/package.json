@@ -84,7 +84,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@repo/lib-api-client": "workspace:*",
     "@repo/omninode-api-client": "workspace:*",
-    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.43-feat.fix-final-fe-integration-fixes.20251102215913",
+    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.44-feat.dev.20251121143334",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
