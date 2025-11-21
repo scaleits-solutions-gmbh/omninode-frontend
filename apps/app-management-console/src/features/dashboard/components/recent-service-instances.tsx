@@ -16,46 +16,61 @@ import {
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { RecentServiceInstance, recentServiceInstancesColumns } from "./recent-service-instances-columns";
+import { recentServiceInstancesColumns } from "./recent-service-instances-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useOrganizationId } from "@/hooks/use-organization-id";
+import {
+  baseOmninodeApiClient,
+  getApiAuthentication,
+} from "@repo/omninode-api-client";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { OrganizationServiceInstanceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { useRouter } from "next/navigation";
 
 export default function RecentServiceInstances() {
   const organizationId = useOrganizationId();
-  const [data, setData] = useState<RecentServiceInstance[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
   const [pagination] = useState({ pageIndex: 0, pageSize: 5 });
 
-  useEffect(() => {
-    // Mock fetch: hydrate with current data after a short delay
-    const mock: RecentServiceInstance[] = [
-      { id: "si_1", instanceName: "Weclapp - HQ", type: "Weclapp", status: "Connected" },
-      { id: "si_2", instanceName: "ACMP - EU", type: "ACMP", status: "Connected" },
-      { id: "si_3", instanceName: "Salesforce - Sandbox", type: "Salesforce", status: "Pending" },
-      { id: "si_4", instanceName: "SAP - Prod", type: "SAP", status: "Error" },
-    ];
-    const t = setTimeout(() => {
-      setData(mock);
-      setIsLoading(false);
-    }, 300);
-    return () => clearTimeout(t);
-  }, []);
+  const { data, isLoading } = useAuthedQuery({
+    queryKey: [
+      "organizationServiceInstances",
+      organizationId,
+      "", // search
+      pagination.pageIndex,
+      pagination.pageSize,
+    ],
+    queryFn: async ({ session }) => {
+      return await baseOmninodeApiClient().serviceMicroservice.findPaginatedOrganizationServiceInstanceListItems(
+        {
+          request: {
+            queryParams: {
+              organizationId: organizationId as string,
+              pageSize: pagination.pageSize,
+              page: pagination.pageIndex + 1,
+            },
+          },
+          apiAuthentication: getApiAuthentication(session.access_token),
+        }
+      );
+    },
+  });
 
   const table = useReactTable({
-    data,
-    columns: recentServiceInstancesColumns as ColumnDef<RecentServiceInstance, unknown>[],
+    data: (data?.body.data as OrganizationServiceInstanceListItemReadModel[]) || [],
+    columns: recentServiceInstancesColumns as ColumnDef<OrganizationServiceInstanceListItemReadModel, unknown>[],
     getCoreRowModel: getCoreRowModel(),
     state: { pagination },
     manualPagination: true,
-    pageCount: 1,
+    pageCount: data?.body.totalPages || 0,
   });
 
   return (
     <Card className="gap-3">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base">Recent Service Instances (mock data)</CardTitle>
+        <CardTitle className="text-base">Recent Service Instances</CardTitle>
         <Button asChild variant="ghost" size="sm">
           <Link href={`/${organizationId}/service-instances`}>View all</Link>
         </Button>
@@ -119,7 +134,12 @@ export default function RecentServiceInstances() {
               <TableBody>
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id} className="hover:bg-accent/50" data-state={row.getIsSelected() && "selected"}>
+                    <TableRow 
+                      key={row.id} 
+                      className="hover:bg-accent/50 cursor-pointer" 
+                      data-state={row.getIsSelected() && "selected"}
+                      onClick={() => router.push(`/${organizationId}/service-instances/${row.original.id}`)}
+                    >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id} style={getColumnStyle(cell.column.columnDef)}>
                           {typeof cell.column.columnDef.cell === "function"
@@ -147,7 +167,13 @@ export default function RecentServiceInstances() {
             </Table>
           )}
         </div>
-      <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data.length} />
+        <DataTablePagination
+          table={table}
+          isLoading={isLoading}
+          showPageCount={false}
+          showRowsPerPage={false}
+          totalRowsOverride={data?.body.total}
+        />
       </CardContent>
     </Card>
   );
