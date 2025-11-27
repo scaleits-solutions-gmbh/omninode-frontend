@@ -19,7 +19,7 @@ import {
 import { Bell, SmilePlus, UserPlus, BellDot } from "lucide-react";
 import { useState, useRef } from "react";
 import { useAuthedQuery, useAuthedMutation } from "@/hooks";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@/utils/api-clients";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -44,11 +44,10 @@ export function NotificationsIndicator() {
     isFetching: isFetchingMembershipInvites,
   } = useAuthedQuery({
     queryKey: ["current-user-membership-invites"],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().organizationMicroservice.findCurrentUserActionableOrganizationMembershipInvites({
-        request: {},
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getOrganizationClient(session).findCurrentUserActionableOrganizationMembershipInvites({});
+      return response.data;
+    },
     staleTime: 30000, // Consider data fresh for 30 seconds
   });
 
@@ -59,11 +58,10 @@ export function NotificationsIndicator() {
     isFetching: isFetchingRelationshipInvites,
   } = useAuthedQuery({
     queryKey: ["current-user-relationship-invites"],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().organizationMicroservice.findCurrentUserActionableReceivedOrganizationRelationshipInvites({
-        request: {},
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getOrganizationClient(session).findCurrentUserActionableReceivedOrganizationRelationshipInvites({});
+      return response.data;
+    },
     staleTime: 30000, // Consider data fresh for 30 seconds
   });
 
@@ -72,15 +70,14 @@ export function NotificationsIndicator() {
     onMutate: () => {
       acceptMembershipToastIdRef.current = toast.loading("Accepting invite...");
     },
-    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
-      await baseOmninodeApiClient().organizationMicroservice.acceptOrganizationMembershipInvite({
-        request: {
-          pathParams: {
-            id: variables.inviteId,
-          },
+    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) => {
+      const response = await getOrganizationClient(session).acceptOrganizationMembershipInvite({
+        pathParams: {
+          id: variables.inviteId,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+      });
+      return response.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-membership-invites"] });
       toast.success("Membership invite accepted", { id: acceptMembershipToastIdRef.current });
@@ -98,15 +95,14 @@ export function NotificationsIndicator() {
     onMutate: () => {
       rejectMembershipToastIdRef.current = toast.loading("Rejecting invite...");
     },
-    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
-      await baseOmninodeApiClient().organizationMicroservice.rejectOrganizationMembershipInvite({
-        request: {
-          pathParams: {
-            id: variables.inviteId,
-          },
+    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) => {
+      const response = await getOrganizationClient(session).rejectOrganizationMembershipInvite({
+        pathParams: {
+          id: variables.inviteId,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+      });
+      return response.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-membership-invites"] });
       toast.success("Membership invite rejected", { id: rejectMembershipToastIdRef.current });
@@ -124,18 +120,17 @@ export function NotificationsIndicator() {
     onMutate: () => {
       acceptRelationshipToastIdRef.current = toast.loading("Accepting relationship invite...");
     },
-    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
-      await baseOmninodeApiClient().organizationMicroservice.acceptOrganizationRelationshipInvite({
-        request: {
-          pathParams: {
-            id: variables.inviteId,
-          },
-          body: {
-            relationshipId: variables.inviteId,
-          },
+    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) => {
+      const response = await getOrganizationClient(session).acceptOrganizationRelationshipInvite({
+        pathParams: {
+          id: variables.inviteId,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+        body: {
+          relationshipId: variables.inviteId,
+        },
+      });
+      return response.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-relationship-invites"] });
       toast.success("Relationship invite accepted", { id: acceptRelationshipToastIdRef.current });
@@ -153,15 +148,14 @@ export function NotificationsIndicator() {
     onMutate: () => {
       rejectRelationshipToastIdRef.current = toast.loading("Rejecting relationship invite...");
     },
-    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) =>
-      await baseOmninodeApiClient().organizationMicroservice.rejectOrganizationRelationshipInvite({
-        request: {
-          pathParams: {
-            id: variables.inviteId,
-          },
+    mutationFn: async ({ session, variables }: { session: any; variables: { inviteId: string } }) => {
+      const response = await getOrganizationClient(session).rejectOrganizationRelationshipInvite({
+        pathParams: {
+          id: variables.inviteId,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+      });
+      return response.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["current-user-relationship-invites"] });
       toast.success("Relationship invite rejected", { id: rejectRelationshipToastIdRef.current });
@@ -174,8 +168,8 @@ export function NotificationsIndicator() {
     },
   });
 
-  const membershipInvites = membershipInvitesData?.body || [];
-  const relationshipInvites = relationshipInvitesData?.body || [];
+  const membershipInvites = membershipInvitesData || [];
+  const relationshipInvites = relationshipInvitesData || [];
 
   const notificationCount = notifications.length;
   const invitesCount = membershipInvites.length + relationshipInvites.length;

@@ -27,10 +27,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -92,29 +89,24 @@ export default function CreateWeclappViewPopup({
 
   const createViewMutation = useAuthedMutation({
     mutationFn: async ({ session }: { session: Session }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.createServiceView({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            viewId: crypto.randomUUID(),
-            organizationServiceInstanceId:
-              organizationServiceInstanceId as string,
-            name: name.trim(),
-            service: Service.Weclapp,
-            view: {
-              filterType,
-              filterValue: filterValue,
-              canViewDashboard,
-              canViewQuotes,
-              canViewSalesOrders,
-              canViewInvoices,
-              canViewProjects,
-              canViewTickets,
-              canCreateTickets,
-              canRespondToTickets,
-            },
+      await getServiceClient(session).createServiceView({
+        body: {
+          viewId: crypto.randomUUID(),
+          organizationServiceInstanceId:
+            organizationServiceInstanceId as string,
+          name: name.trim(),
+          service: Service.Weclapp,
+          view: {
+            filterType,
+            filterValue: filterValue,
+            canViewDashboard,
+            canViewQuotes,
+            canViewSalesOrders,
+            canViewInvoices,
+            canViewProjects,
+            canViewTickets,
+            canCreateTickets,
+            canRespondToTickets,
           },
         },
       });

@@ -17,10 +17,7 @@ import {
   TableRow,
   Button,
 } from "@repo/pkg-frontend-common-kit/components";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -62,24 +59,20 @@ export default function MembershipGrantsCard() {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findComposedServiceViewMembershipGrants(
-        {
-          request: {
-            pathParams: { id: organizationServiceInstanceId },
-            queryParams: {
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              searchTerm: undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedServiceViewMembershipGrants({
+        pathParams: { id: organizationServiceInstanceId },
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: undefined,
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: (data?.body.data as ComposedMembershipViewGrantReadModel[]) || [],
+    data: (data?.data as ComposedMembershipViewGrantReadModel[]) || [],
     columns: createMembershipGrantsColumns({
       onChangeAccess: (grant) => {
         setSelectedGrant(grant);
@@ -98,7 +91,7 @@ export default function MembershipGrantsCard() {
     },
     onPaginationChange: setPagination,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   const allColumns = table.getAllColumns();
@@ -245,7 +238,7 @@ export default function MembershipGrantsCard() {
           isLoading={isLoading}
           showPageCount={false}
           showRowsPerPage={false}
-          totalRowsOverride={data?.body.total}
+          totalRowsOverride={data?.total}
         />
       </CardContent>
     </Card>

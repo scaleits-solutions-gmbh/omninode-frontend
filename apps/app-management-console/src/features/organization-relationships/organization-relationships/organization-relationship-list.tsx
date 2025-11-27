@@ -32,10 +32,7 @@ import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { OrganizationRelationshipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import RemoveOrganizationRelationshipPopup from "./remove-organization-relationship-popup";
@@ -62,26 +59,22 @@ export const OrganizationRelationshipList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationRelationships(
-        {
-          request: {
-            pathParams: {
-              id: organizationId as string,
-            },
-            queryParams: {
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              searchTerm: search,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).findPaginatedOrganizationRelationships({
+        pathParams: {
+          id: organizationId as string,
+        },
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: search,
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns({
       currentOrganizationId: organizationId as string,
       onRemoveRelationship: (relationship: OrganizationRelationshipReadModel) => {
@@ -99,7 +92,7 @@ export const OrganizationRelationshipList = () => {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -245,7 +238,7 @@ export const OrganizationRelationshipList = () => {
             isLoading={isLoading}
             showPageCount={false}
             showRowsPerPage={false}
-            totalRowsOverride={data?.body.total}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

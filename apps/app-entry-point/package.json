@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@repo/omninode-api-client": "workspace:*",
     "@repo/pkg-frontend-common-kit": "workspace:*",
     "axios": "^1.13.1",
     "next": "15.5.2",

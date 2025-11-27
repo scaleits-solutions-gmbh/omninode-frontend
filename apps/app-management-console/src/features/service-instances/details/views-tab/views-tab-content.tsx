@@ -24,10 +24,7 @@ import EditWeclappViewPopup from "./services/weclapp/edit-weclapp-view-popup";
 import ViewGridLoading from "./loading/view-grid-loading";
 import SwitchServiceView from "./services/switch-service-view";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 
 export default function ViewsTabContent() {
@@ -46,25 +43,21 @@ export default function ViewsTabContent() {
   const { data, isLoading, error } = useAuthedQuery({
     queryKey: ["serviceInstanceViews", serviceInstanceId, search, page],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findComposedPaginatedServiceViews(
-        {
-          request: {
-            pathParams: { id: serviceInstanceId as string },
-            queryParams: {
-              pageSize: 9,
-              page,
-              searchTerm: search || undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedPaginatedServiceViews({
+        pathParams: { id: serviceInstanceId as string },
+        queryParams: {
+          pageSize: 9,
+          page,
+          searchTerm: search || undefined,
+        },
+      });
+      return response.data;
     },
     enabled: Boolean(serviceInstanceId),
   });
 
-  const views = (data?.body.data as ComposedServiceViewReadModel[]) || [];
-  const totalItems = data?.body.total ?? 0;
+  const views = (data?.data as ComposedServiceViewReadModel[]) || [];
+  const totalItems = data?.total ?? 0;
 
   if (error) {
     return (

@@ -17,10 +17,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import {
   ComposedOrganizationServiceInstanceReadModel,
@@ -80,9 +77,9 @@ export default function EditWeclappConnectionDetailsPopup({
   }, [normalizedHostname, normalizedApiKey]);
 
   const testConnectionMutation = useAuthedMutation({
-    mutationFn: async (): Promise<void> => {
+    mutationFn: async ({ session }): Promise<void> => {
       // TODO: wire to real Weclapp test connection endpoint
-      await baseOmninodeApiClient().serviceMicroservice;
+      await getServiceClient(session);
       // Simulate success for now
       return;
     },
@@ -102,18 +99,13 @@ export default function EditWeclappConnectionDetailsPopup({
     }: {
       session: Session;
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.updateServiceInstance({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            id: serviceInstanceId,
-            service: Service.Weclapp,
-            config: {
-              hostname: normalizedHostname,
-              ...(effectiveApiKey !== "" && { apiKey: effectiveApiKey }),
-            },
+      await getServiceClient(session).updateServiceInstance({
+        body: {
+          id: serviceInstanceId,
+          service: Service.Weclapp,
+          config: {
+            hostname: normalizedHostname,
+            ...(effectiveApiKey !== "" && { apiKey: effectiveApiKey }),
           },
         },
       });

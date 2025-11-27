@@ -1,5 +1,5 @@
+import type { AcmpClientNetworkCardListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
-import type { AcmpClientNetworkCardListItem } from "@repo/lib-api-client";
 
 const display = (value?: string | number | null) => {
   if (value === null || value === undefined) return "—";
@@ -7,7 +7,7 @@ const display = (value?: string | number | null) => {
   return str.trim() === "" ? "—" : str;
 };
 
-export const clientNetworkColumns: ColumnDef<AcmpClientNetworkCardListItem>[] = [
+export const clientNetworkColumns: ColumnDef<AcmpClientNetworkCardListItemReadModel>[] = [
   {
     size: 28,
     minSize: 220,

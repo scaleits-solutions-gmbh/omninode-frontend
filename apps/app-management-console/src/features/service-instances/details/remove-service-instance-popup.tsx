@@ -20,7 +20,7 @@ import {
 import { AlertCircle } from "lucide-react";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import { baseOmninodeApiClient } from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { ComposedOrganizationServiceInstanceReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 interface RemoveServiceInstancePopupProps {
@@ -49,9 +49,9 @@ export default function RemoveServiceInstancePopup({
   const canSubmit = confirmation.trim() === expected;
 
   const removeInstanceMutation = useAuthedMutation({
-    mutationFn: async (): Promise<void> => {
+    mutationFn: async ({ session }): Promise<void> => {
       // TODO: wire to real remove-service-instance endpoint
-      await baseOmninodeApiClient().serviceMicroservice;
+      await getServiceClient(session);
       throw new Error("Remove service instance endpoint not yet implemented");
     },
     onSuccess: () => {

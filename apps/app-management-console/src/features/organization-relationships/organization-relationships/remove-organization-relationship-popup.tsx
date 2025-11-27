@@ -22,10 +22,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import type { Session } from "next-auth";
 import { AlertCircle } from "lucide-react";
@@ -70,16 +67,12 @@ export default function RemoveOrganizationRelationshipPopup({
       session: Session;
       variables: { relationshipId: string };
     }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.removeOrganizationRelationship(
-        {
-          request: {
-            pathParams: {
-              id: variables.relationshipId,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).removeOrganizationRelationship({
+        pathParams: {
+          id: variables.relationshipId,
+        },
+      });
+      return response.data;
     },
     onSuccess: () => {
       toast.success("Relationship removed successfully", { id: loadingToastIdRef.current });

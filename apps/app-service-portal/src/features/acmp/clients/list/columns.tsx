@@ -1,14 +1,14 @@
-import { AcmpClientListItem } from "@repo/lib-api-client";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Monitor } from "lucide-react";
 import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 
 export interface ColumnProps {
-  onViewDetails: (client: AcmpClientListItem) => void;
+  onViewDetails: (client: AcmpClientListItemReadModel) => void;
 }
 
-export const createColumns = (props: ColumnProps): ColumnDef<AcmpClientListItem>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<AcmpClientListItemReadModel>[] => {
   return [
     {
       size: 30,

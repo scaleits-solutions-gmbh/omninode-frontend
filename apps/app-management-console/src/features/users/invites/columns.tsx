@@ -1,31 +1,30 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { MoreVertical } from "lucide-react";
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Badge,
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
 } from "@repo/pkg-frontend-common-kit/components";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import {
+  formatExpiresIn,
+  getOrganizationClient,
+} from "@repo/pkg-frontend-common-kit/utils";
+import {
+  Locale,
   OrganizationMembershipInviteReadModel,
   OrganizationMembershipInviteStatus,
   organizationMembershipInviteStatusName,
-  Locale,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-import { formatExpiresIn } from "@repo/pkg-frontend-common-kit/utils";
-import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
-import { toast } from "sonner";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreVertical } from "lucide-react";
 import { useRef } from "react";
+import { toast } from "sonner";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ColumnProps {}
@@ -42,15 +41,11 @@ function ActionsCell({
     onMutate: () => {
       cancelToastIdRef.current = toast.loading("Cancelling invite...");
     },
-    mutationFn: async ({ session }) =>
-      await baseOmninodeApiClient().organizationMicroservice.cancelOrganizationMembershipInvite(
-        {
-          request: {
-            pathParams: { id: invite.id },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      ),
+    mutationFn: async ({ session }) => {
+      await getOrganizationClient(session).cancelOrganizationMembershipInvite({
+        pathParams: { id: invite.id },
+      });
+    },
     onSuccess: () => {
       toast.success("Invite cancelled", { id: cancelToastIdRef.current });
       queryClient.invalidateQueries({

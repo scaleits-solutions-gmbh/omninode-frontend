@@ -1,14 +1,14 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { AcmpJobListItem } from "@repo/lib-api-client";
-import { Eye, Zap } from "lucide-react";
 import { Button } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpJobListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ColumnDef } from "@tanstack/react-table";
+import { Eye, Zap } from "lucide-react";
 import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 
 export interface ColumnProps {
-  onViewDetails: (job: AcmpJobListItem) => void;
+  onViewDetails: (job: AcmpJobListItemReadModel) => void;
 }
 
-export const createColumns = (props: ColumnProps): ColumnDef<AcmpJobListItem>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<AcmpJobListItemReadModel>[] => {
   return [
     {
       size: 30,

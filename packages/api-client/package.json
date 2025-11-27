@@ -22,7 +22,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.44-feat.dev.20251121143334",
+    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.44-feat.dev.20251127133002",
     "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.4"
   },
   "devDependencies": {

@@ -33,7 +33,7 @@ import { PlatformUserDetailsPopup } from "../details-popup/platform-user-details
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getUserClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
 
@@ -57,21 +57,19 @@ export const PlatformUserList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().userMicroservice.findPaginatedUserListItems({
-        request: {
-          queryParams: {
-            pageSize: pagination.pageSize,
-            page: pagination.pageIndex + 1,
-            searchTerm: search,
-          },
+      const response = await getUserClient(session).findPaginatedUserListItems({
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: search,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
       });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns({
       onViewDetails: (platformUser: PlatformUser) => {
         setPlatformUser(platformUser);
@@ -87,7 +85,7 @@ export const PlatformUserList = () => {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -221,7 +219,7 @@ export const PlatformUserList = () => {
               </Table>
             )}
           </div>
-          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.body.total}/>
+          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
     </>

@@ -16,10 +16,7 @@ import {
   useAuthedMutation,
   useAuthedQuery,
 } from "@repo/pkg-frontend-common-kit/hooks";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getUserClient } from "@repo/pkg-frontend-common-kit/utils";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { Session } from "next-auth";
@@ -32,13 +29,13 @@ export default function PersonalInformationCard() {
     refetch,
   } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getUserClient(session).findCurrentUser({});
+      return response.data;
+    },
   });
 
-  const user = userData?.body;
+  const user = userData;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -61,17 +58,13 @@ export default function PersonalInformationCard() {
       session: Session;
       variables: { firstName: string; lastName: string };
     }) => {
-      return await baseOmninodeApiClient().userMicroservice.updateCurrentUser(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              firstName: variables.firstName,
-              lastName: variables.lastName,
-            },
-          },
-        }
-      );
+      const response = await getUserClient(session).updateCurrentUser({
+        body: {
+          firstName: variables.firstName,
+          lastName: variables.lastName,
+        },
+      });
+      return response.data;
     },
     onMutate: () => toast.loading("Saving...", { id: "save-profile" }),
     onError: (e: Error) =>

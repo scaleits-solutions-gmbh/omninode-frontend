@@ -1,8 +1,8 @@
-import { AcmpClientListItem } from "@repo/lib-api-client";
 import { Card, CardContent, Input, Label } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 interface ClientNetworkTabProps {
-  client: AcmpClientListItem;
+  client: AcmpClientListItemReadModel;
 }
 
 export const ClientNetworkTab = ({ client }: ClientNetworkTabProps) => {

@@ -1,6 +1,7 @@
 import { columns } from "./push-rollout-popup-step2-columns";
 import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { ApiClient, AcmpClientListItem } from "@repo/lib-api-client";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useState } from "react";
 import {
   useReactTable,
@@ -29,8 +30,8 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 
 interface PushClientCommandPopupStep2Props {
-  initialSelectedClients: AcmpClientListItem[];
-  onNext: (clients: AcmpClientListItem[]) => void;
+  initialSelectedClients: AcmpClientListItemReadModel[];
+  onNext: (clients: AcmpClientListItemReadModel[]) => void;
   onBack: () => void;
 }
 
@@ -39,7 +40,7 @@ export default function PushClientCommandPopupStep2({
   onNext,
   onBack,
 }: PushClientCommandPopupStep2Props) {
-  const [selectedClients, setSelectedClients] = useState<AcmpClientListItem[]>(
+  const [selectedClients, setSelectedClients] = useState<AcmpClientListItemReadModel[]>(
     initialSelectedClients
   );
   const [search, setSearch] = useState("");
@@ -53,13 +54,17 @@ export default function PushClientCommandPopupStep2({
   const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
     queryKey: ["clients", viewId, search, pagination.pageIndex, pagination.pageSize],
     enabled: isValid && Boolean(viewId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpClients(accessToken, {
-        serviceInstanceId: viewId as string,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search: search,
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getAcmpServiceClient(session).getAcmpClients({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
   const isLoading = isSessionLoading || isQueryLoading;
 

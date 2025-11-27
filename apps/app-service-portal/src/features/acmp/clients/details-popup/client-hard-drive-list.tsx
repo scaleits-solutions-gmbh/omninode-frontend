@@ -21,7 +21,7 @@ import { useState } from "react";
 import { clientHardwareColumns } from "./client-hard-drive-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-import { ApiClient } from "@repo/lib-api-client";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 
 interface ClientHardwareListProps {
   clientId: string;
@@ -48,14 +48,17 @@ export const ClientHardwareList = ({ clientId }: ClientHardwareListProps) => {
       pagination.pageSize,
     ],
     enabled: isValid && Boolean(viewId) && Boolean(clientId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpClientHardDrives(accessToken, {
-        serviceInstanceId: viewId as string,
-        clientId,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search,
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getAcmpServiceClient(session).getAcmpClientHardDrives({
+        pathParams: { viewId: viewId as string, clientId },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const isLoading = isSessionLoading || isQueryLoading;

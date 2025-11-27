@@ -31,10 +31,7 @@ import {
 import { AlertCircle } from "lucide-react";
 import { useAuthedMutation, useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient, getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { useParams } from "next/navigation";
 
@@ -73,25 +70,21 @@ export default function OrganizationRelationshipGrantAddPopup({
       show,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationRelationships(
-        {
-          request: {
-            pathParams: { id: organizationId as string },
-            queryParams: {
-              pageSize: 50,
-              page: 1,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).findPaginatedOrganizationRelationships({
+        pathParams: { id: organizationId as string },
+        queryParams: {
+          pageSize: 50,
+          page: 1,
+        },
+      });
+      return response.data;
     },
     enabled: show,
   });
 
   const relationships: OrganizationRelationshipReadModel[] = useMemo(
     () =>
-      (relationshipsData?.body.data as OrganizationRelationshipReadModel[]) ||
+      (relationshipsData?.data as OrganizationRelationshipReadModel[]) ||
       [],
     [relationshipsData]
   );
@@ -126,26 +119,22 @@ export default function OrganizationRelationshipGrantAddPopup({
       show,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findComposedPaginatedServiceViews(
-        {
-          request: {
-            pathParams: { id: serviceInstanceId as string },
-            queryParams: {
-              pageSize: 50,
-              page: 1,
-              searchTerm: undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedPaginatedServiceViews({
+        pathParams: { id: serviceInstanceId as string },
+        queryParams: {
+          pageSize: 50,
+          page: 1,
+          searchTerm: undefined,
+        },
+      });
+      return response.data;
     },
     enabled: show && Boolean(serviceInstanceId),
   });
 
   const availableViews: ComposedServiceViewReadModel[] = useMemo(
     () =>
-      ((viewsData?.body.data as ComposedServiceViewReadModel[]) || []) as ComposedServiceViewReadModel[],
+      ((viewsData?.data as ComposedServiceViewReadModel[]) || []) as ComposedServiceViewReadModel[],
     [viewsData]
   );
 
@@ -177,8 +166,6 @@ export default function OrganizationRelationshipGrantAddPopup({
       session: Session;
       variables: { relationshipId: string; viewId: string };
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
       const relOption = relationshipOptions.find(
         (r) => r.id === variables.relationshipId
       );
@@ -186,18 +173,13 @@ export default function OrganizationRelationshipGrantAddPopup({
         throw new Error("Selected relationship not found");
       }
 
-      await apiClient.serviceMicroservice.grantServiceViewToOrganizationRelationship(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              viewId: variables.viewId,
-              targetOrganizationRelationshipId: variables.relationshipId,
-              targetOrganizationId: relOption.otherOrgId,
-            },
-          },
-        }
-      );
+      await getServiceClient(session).grantServiceViewToOrganizationRelationship({
+        body: {
+          viewId: variables.viewId,
+          targetOrganizationRelationshipId: variables.relationshipId,
+          targetOrganizationId: relOption.otherOrgId,
+        },
+      });
     },
     onSuccess: () => {
       toast.success("Access granted successfully");

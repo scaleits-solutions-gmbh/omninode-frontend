@@ -5,10 +5,7 @@ import { useAuthedQuery } from "./use-authed-query";
 import { useMounted } from "./use-mounted";
 import { useValidSession } from "./use-valid-session";
 import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@/utils/api-clients";
 const CURRENT_COMPANY_ID_KEY = "currentOrganizationId";
 const CURRENT_COMPANY_CHANGE_EVENT = "currentOrganizationIdChange";
 
@@ -51,16 +48,10 @@ export function useGetCurrentOrganization(): UseGetCurrentOrganizationResult {
   const query = useAuthedQuery<UserOrganizationReadModel[]>({
     queryKey: ["current-user-companies"],
     queryFn: async ({ session }) => {
-      const { body } =
-        await baseOmninodeApiClient().organizationMicroservice.findCurrentUserOrganizations(
-          {
-            apiAuthentication: getApiAuthentication(session.access_token),
-            request: {
-              queryParams: {},
-            },
-          }
-        );
-      return body ?? [];
+      const response = await getOrganizationClient(session).findCurrentUserOrganizations({
+        queryParams: {},
+      });
+      return response.data ?? [];
     },
     refetchOnWindowFocus: false,
     staleTime: 60_000,

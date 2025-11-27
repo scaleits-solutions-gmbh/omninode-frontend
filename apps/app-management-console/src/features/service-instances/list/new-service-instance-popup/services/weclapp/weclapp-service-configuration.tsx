@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { Badge, Button } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { Service } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
@@ -55,23 +52,19 @@ export default function WeclappForm({
         apiKey: string;
       };
     }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.createServiceInstance(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              service: Service.Weclapp,
-              organizationId: organizationId as string,
-              name: variables.name,
-              description: variables.description,
-              config: {
-                hostname: variables.hostname,
-                apiKey: variables.apiKey,
-              },
-            },
+      const response = await getServiceClient(session).createServiceInstance({
+        body: {
+          service: Service.Weclapp,
+          organizationId: organizationId as string,
+          name: variables.name,
+          description: variables.description,
+          config: {
+            hostname: variables.hostname,
+            apiKey: variables.apiKey,
           },
-        }
-      );
+        },
+      });
+      return response.data;
     },
     onMutate: () =>
       toast.loading("Creating service instance...", { id: "create-si" }),

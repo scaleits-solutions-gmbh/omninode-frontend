@@ -16,7 +16,7 @@ import {
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { ApiClient } from "@repo/lib-api-client";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -60,13 +60,17 @@ export const TicketList = () => {
       pagination.pageSize,
     ],
     enabled: isValid && Boolean(viewId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpTickets(accessToken, {
-        serviceInstanceId: viewId as string,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search: search,
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getAcmpServiceClient(session).getAcmpTickets({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const isLoading = isSessionLoading || isQueryLoading;

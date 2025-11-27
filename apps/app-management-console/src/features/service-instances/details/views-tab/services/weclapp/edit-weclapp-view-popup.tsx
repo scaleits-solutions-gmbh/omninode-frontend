@@ -28,10 +28,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import type { Session } from "next-auth";
@@ -159,27 +156,22 @@ function EditWeclappViewPopupInner({
     }: {
       session: Session;
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.updateServiceView({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            viewId: view.id,
-            name: name.trim(),
-            service: Service.Weclapp,
-            view: {
-              filterType,
-              filterValue: filterValue,
-              canViewDashboard,
-              canViewQuotes,
-              canViewSalesOrders,
-              canViewInvoices,
-              canViewProjects,
-              canViewTickets,
-              canCreateTickets,
-              canRespondToTickets,
-            },
+      await getServiceClient(session).updateServiceView({
+        body: {
+          viewId: view.id,
+          name: name.trim(),
+          service: Service.Weclapp,
+          view: {
+            filterType,
+            filterValue: filterValue,
+            canViewDashboard,
+            canViewQuotes,
+            canViewSalesOrders,
+            canViewInvoices,
+            canViewProjects,
+            canViewTickets,
+            canCreateTickets,
+            canRespondToTickets,
           },
         },
       });

@@ -17,10 +17,7 @@ import {
   TableRow,
   Button,
 } from "@repo/pkg-frontend-common-kit/components";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -65,24 +62,20 @@ export default function OrganizationRelationshipGrantsCard() {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findComposedServiceViewOrganizationRelationshipGrants(
-        {
-          request: {
-            pathParams: { id: organizationServiceInstanceId },
-            queryParams: {
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              searchTerm: undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedServiceViewOrganizationRelationshipGrants({
+        pathParams: { id: organizationServiceInstanceId },
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: undefined,
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: (data?.body.data as ComposedRelationshipViewGrantReadModel[]) || [],
+    data: (data?.data as ComposedRelationshipViewGrantReadModel[]) || [],
     columns: createOrganizationRelationshipGrantsColumns({
       onChangeAccess: (grant) => {
         setSelectedGrant(grant);
@@ -101,7 +94,7 @@ export default function OrganizationRelationshipGrantsCard() {
     },
     onPaginationChange: setPagination,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   const allColumns = table.getAllColumns();
@@ -250,7 +243,7 @@ export default function OrganizationRelationshipGrantsCard() {
           isLoading={isLoading}
           showPageCount={false}
           showRowsPerPage={false}
-          totalRowsOverride={data?.body.total}
+          totalRowsOverride={data?.total}
         />
       </CardContent>
     </Card>

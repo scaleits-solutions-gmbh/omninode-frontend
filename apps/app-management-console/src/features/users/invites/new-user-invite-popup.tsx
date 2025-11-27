@@ -25,10 +25,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { OrganizationRole, organizationRoleOptions, Locale } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import type { Session } from "next-auth";
@@ -77,21 +74,17 @@ export default function NewUserInvitePopup() {
       session: Session;
       variables: { email: string; role: OrganizationRole };
     }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.sendOrganizationMembershipInvite(
-        {
-          request: {
-            pathParams: {
-              id: organizationId as string,
-            },
-            body: {
-              email: variables.email,
-              role: variables.role,
-              expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(), // 7 days
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).sendOrganizationMembershipInvite({
+        pathParams: {
+          id: organizationId as string,
+        },
+        body: {
+          email: variables.email,
+          role: variables.role,
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(), // 7 days
+        },
+      });
+      return response.data;
     },
     onSuccess: () => {
       toast.success("Invite sent successfully");

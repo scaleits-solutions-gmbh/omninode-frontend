@@ -21,10 +21,7 @@ import {
 import { AlertCircle } from "lucide-react";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -62,19 +59,12 @@ export default function MembershipGrantRevokeAccessPopup({
     }: {
       session: Session;
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.revokeServiceViewFromOrganizationMembership(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              viewId: grant.view.id,
-              organizationMembershipId: grant.membershipId,
-            },
-          },
-        }
-      );
+      await getServiceClient(session).revokeServiceViewFromOrganizationMembership({
+        body: {
+          viewId: grant.view.id,
+          organizationMembershipId: grant.membershipId,
+        },
+      });
     },
     onSuccess: () => {
       toast.success("Access revoked successfully");

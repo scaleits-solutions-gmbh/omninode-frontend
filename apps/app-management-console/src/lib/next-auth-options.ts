@@ -1,4 +1,4 @@
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getUserClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Account, AuthOptions, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";
@@ -33,7 +33,10 @@ export const authOptions: AuthOptions = {
     async signIn({ account }) {
       try {
         if (account?.access_token) {
-          await baseOmninodeApiClient().userMicroservice.handleExternalProviderSignIn(getApiAuthentication(account.access_token));
+          // Create a temporary session-like object for the API client
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const tempSession = { access_token: account.access_token } as any;
+          await getUserClient(tempSession).handleExternalProviderSignIn({});
           return true;
         }
         return false;

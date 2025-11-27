@@ -18,7 +18,7 @@ import {
 import { useAuthedMutation, useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useState } from "react";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getUserClient } from "@repo/pkg-frontend-common-kit/utils";
 import { toast } from "sonner";
 import { Theme, Locale, themeOptions, localeOptions } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Session } from "next-auth";
@@ -30,13 +30,13 @@ export default function AccountPreferencesCard() {
 
   const { data: userData, isLoading } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getUserClient(session).findCurrentUser({});
+      return response.data;
+    },
   });
 
-  const current = userData?.body;
+  const current = userData;
   const currentLocale = (current?.userPreferences?.locale as Locale | undefined);
   const currentTheme = useMemo<ThemeValue | undefined>(() => {
     return (current?.userPreferences?.theme as ThemeValue | undefined);
@@ -60,15 +60,13 @@ export default function AccountPreferencesCard() {
 
   const updatePreferences = useAuthedMutation({
     mutationFn: async ({ session, variables }: { session: Session; variables: { theme: Theme; locale: Locale } }) => {
-      return await baseOmninodeApiClient().userMicroservice.updateCurrentUserPreferences({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            theme: variables.theme,
-            locale: variables.locale,
-          },
+      const response = await getUserClient(session).updateCurrentUserPreferences({
+        body: {
+          theme: variables.theme,
+          locale: variables.locale,
         },
       });
+      return response.data;
     },
     onMutate: () => toast.loading("Updating preferences...", { id: "prefs" }),
     onError: (e: Error) => toast.error(e.message || "Failed to update", { id: "prefs" }),

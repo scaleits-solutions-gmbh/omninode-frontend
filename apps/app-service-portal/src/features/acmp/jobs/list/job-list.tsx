@@ -26,10 +26,11 @@ import { useEffect, useState } from "react";
 import { JobDetailsPopup } from "../details-popup/job-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-import { ApiClient, AcmpJobListItem } from "@repo/lib-api-client";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpJobListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 export const JobList = () => {
   const { viewId } = useParams();
-  const [job, setJob] = useState<AcmpJobListItem | undefined>(undefined);
+  const [job, setJob] = useState<AcmpJobListItemReadModel | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -46,14 +47,17 @@ export const JobList = () => {
       pagination.pageSize,
     ],
     enabled: isValid && Boolean(viewId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpJobs(accessToken, {
-        serviceInstanceId: viewId as string,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search: search,
-      }),
-
+    queryFn: async ({ session }) => {
+      const response = await getAcmpServiceClient(session).getAcmpJobs({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const isLoading = isSessionLoading || isQueryLoading;

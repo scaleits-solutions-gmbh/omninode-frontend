@@ -26,10 +26,7 @@ import { useForm } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import type { Session } from "next-auth";
 
@@ -83,19 +80,15 @@ export default function ChangeRolePopup({ show, user, onClose }: ChangeRolePopup
       session: Session;
       variables: { membershipId: string; role: OrganizationRole };
     }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.updateOrganizationMembershipRole(
-        {
-          request: {
-            pathParams: {
-              id: variables.membershipId,
-            },
-            body: {
-              role: variables.role,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).updateOrganizationMembershipRole({
+        pathParams: {
+          id: variables.membershipId,
+        },
+        body: {
+          role: variables.role,
+        },
+      });
+      return response.data;
     },
     onSuccess: () => {
       toast.success("Role updated successfully");

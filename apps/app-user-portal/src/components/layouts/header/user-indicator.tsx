@@ -18,21 +18,20 @@ import { LogOut, Settings } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getUserClient } from "@repo/pkg-frontend-common-kit/utils";
 import Link from "next/link";
 
 export default function UserIndicator() {
-
   const {
     data: userData,
     isLoading,
     error,
   } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(session.access_token),
-      })
+    queryFn: async ({ session }) => {
+      const response = await getUserClient(session).findCurrentUser({});
+      return response.data;
+    },
   });
 
   if (isLoading) {
@@ -53,9 +52,9 @@ export default function UserIndicator() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-9 w-9">
-            <AvatarImage src={""} alt={userData.body.firstName + " " + userData.body.lastName} />
-            <AvatarFallback seed={userData.body.id}>
-              {userData.body.firstName.charAt(0) + userData.body.lastName.charAt(0)}
+            <AvatarImage src={""} alt={userData.firstName + " " + userData.lastName} />
+            <AvatarFallback seed={userData.id}>
+              {userData.firstName.charAt(0) + userData.lastName.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -64,10 +63,10 @@ export default function UserIndicator() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {userData.body.firstName} {userData.body.lastName}
+              {userData.firstName} {userData.lastName}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {userData.body.email}
+              {userData.email}
             </p>
           </div>
         </DropdownMenuLabel>

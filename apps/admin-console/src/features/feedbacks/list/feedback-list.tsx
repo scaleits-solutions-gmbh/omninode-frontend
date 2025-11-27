@@ -34,7 +34,7 @@ import { FeedbackDetailsPopup } from "../details-popup/feedback-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getFeedbackClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
 
@@ -58,21 +58,19 @@ export const FeedbackList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().feedbackMicroservice.findPaginatedFeedbackListItems({
-        request: {
-          queryParams: {
-            pageSize: pagination.pageSize,
-            page: pagination.pageIndex + 1,
-            searchTerm: search,
-          },
+      const response = await getFeedbackClient(session).findPaginatedFeedbackListItems({
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: search,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
       });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns({
       onViewDetails: (feedback: FeedbackListItemReadModel) => {
         setFeedback(feedback);
@@ -88,7 +86,7 @@ export const FeedbackList = () => {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -225,7 +223,7 @@ export const FeedbackList = () => {
               </Table>
             )}
           </div>
-          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.body.total}/>
+          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
     </>

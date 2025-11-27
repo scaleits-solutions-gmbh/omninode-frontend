@@ -1,31 +1,30 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { MoreVertical } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  Button,
   Badge,
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@repo/pkg-frontend-common-kit/components";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import {
+  formatExpiresIn,
+  getOrganizationClient,
+} from "@repo/pkg-frontend-common-kit/utils";
+import {
+  Locale,
   OrganizationRelationshipInviteReadModel,
   OrganizationRelationshipInviteStatus,
   organizationRelationshipInviteStatusName,
-  Locale,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
-import { toast } from "sonner";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreVertical } from "lucide-react";
 import { useRef } from "react";
-import { formatExpiresIn } from "@repo/pkg-frontend-common-kit/utils";
+import { toast } from "sonner";
 
 export interface ColumnProps {
   currentOrganizationId: string;
@@ -47,15 +46,13 @@ export const createColumns = (
       onMutate: () => {
         cancelToastIdRef.current = toast.loading("Cancelling invite...");
       },
-      mutationFn: async ({ session }) =>
-        await baseOmninodeApiClient().organizationMicroservice.cancelOrganizationRelationshipInvite(
-          {
-            request: {
-              pathParams: { id: invite.id },
-            },
-            apiAuthentication: getApiAuthentication(session.access_token),
-          }
-        ),
+      mutationFn: async ({ session }) => {
+        await getOrganizationClient(
+          session
+        ).cancelOrganizationRelationshipInvite({
+          pathParams: { id: invite.id },
+        });
+      },
       onSuccess: () => {
         toast.success("Invite cancelled", { id: cancelToastIdRef.current });
         queryClient.invalidateQueries({
@@ -184,8 +181,13 @@ export const createColumns = (
       minSize: 150,
       header: "Expires In",
       cell: ({ row }) => {
-        const isPending = row.original.status === OrganizationRelationshipInviteStatus.Pending;
-        return <div>{isPending ? formatExpiresIn(row.original.expiresAt) : "N/A"}</div>;
+        const isPending =
+          row.original.status === OrganizationRelationshipInviteStatus.Pending;
+        return (
+          <div>
+            {isPending ? formatExpiresIn(row.original.expiresAt) : "N/A"}
+          </div>
+        );
       },
     },
     {

@@ -1,8 +1,8 @@
-import { ColumnDef } from "@tanstack/react-table";
-import type { AcmpClientHardDriveListItem } from "@repo/lib-api-client";
 import { formatStorageSize } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpClientHardDriveListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ColumnDef } from "@tanstack/react-table";
 
-export const clientHardwareColumns: ColumnDef<AcmpClientHardDriveListItem>[] = [
+export const clientHardwareColumns: ColumnDef<AcmpClientHardDriveListItemReadModel>[] = [
   {
     size: 45,
     minSize: 240,

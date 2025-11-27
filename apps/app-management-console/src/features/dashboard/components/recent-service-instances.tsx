@@ -21,10 +21,7 @@ import { ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table
 import { recentServiceInstancesColumns } from "./recent-service-instances-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useOrganizationId } from "@/hooks/use-organization-id";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { OrganizationServiceInstanceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useRouter } from "next/navigation";
@@ -43,28 +40,24 @@ export default function RecentServiceInstances() {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findPaginatedOrganizationServiceInstanceListItems(
-        {
-          request: {
-            queryParams: {
-              organizationId: organizationId as string,
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedPaginatedOrganizationServiceInstanceListItems({
+        queryParams: {
+          organizationId: organizationId as string,
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: (data?.body.data as OrganizationServiceInstanceListItemReadModel[]) || [],
+    data: (data?.data as OrganizationServiceInstanceListItemReadModel[]) || [],
     columns: recentServiceInstancesColumns as ColumnDef<OrganizationServiceInstanceListItemReadModel, unknown>[],
     getCoreRowModel: getCoreRowModel(),
     state: { pagination },
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   return (
@@ -172,7 +165,7 @@ export default function RecentServiceInstances() {
           isLoading={isLoading}
           showPageCount={false}
           showRowsPerPage={false}
-          totalRowsOverride={data?.body.total}
+          totalRowsOverride={data?.total}
         />
       </CardContent>
     </Card>

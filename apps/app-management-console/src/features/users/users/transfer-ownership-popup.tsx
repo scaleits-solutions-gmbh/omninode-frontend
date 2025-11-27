@@ -3,10 +3,7 @@
 // Import to register module augmentation FIRST
 import "@/lib/next-auth-options";
 
-import {
-    baseOmninodeApiClient,
-    getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
     Alert,
     AlertDescription,
@@ -58,19 +55,15 @@ export default function TransferOwnershipPopup({
 
   const transferOwnershipMutation = useAuthedMutation({
     mutationFn: async ({ session }: { session: Session; variables: void }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.transferOwnership(
-        {
-          request: {
-            pathParams: {
-              id: organizationId as string,
-            },
-            body: {
-              newOwnerMembershipId: user.id,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).transferOwnership({
+        pathParams: {
+          id: organizationId as string,
+        },
+        body: {
+          newOwnerMembershipId: user.id,
+        },
+      });
+      return response.data;
     },
     onSuccess: () => {
       toast.success("Ownership transferred successfully");

@@ -32,10 +32,7 @@ import { useState } from "react";
 
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { OrganizationServiceInstanceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
@@ -57,24 +54,20 @@ export const ServiceInstancesList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findPaginatedOrganizationServiceInstanceListItems(
-        {
-          request: {
-            queryParams: {
-              organizationId: organizationId as string,
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              searchTerm: search || undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedPaginatedOrganizationServiceInstanceListItems({
+        queryParams: {
+          organizationId: organizationId as string,
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: search || undefined,
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns({
       onViewDetails: (serviceInstance: OrganizationServiceInstanceListItemReadModel) => {
         const id = serviceInstance.id;
@@ -93,7 +86,7 @@ export const ServiceInstancesList = () => {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -234,7 +227,7 @@ export const ServiceInstancesList = () => {
             isLoading={isLoading}
             showPageCount={false}
             showRowsPerPage={false}
-            totalRowsOverride={data?.body.total}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

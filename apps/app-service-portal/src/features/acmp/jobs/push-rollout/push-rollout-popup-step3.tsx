@@ -22,15 +22,16 @@ import {
   CheckCircle,
   Pencil,
 } from "lucide-react";
-import { AcmpRolloutTemplateListItem, AcmpClientListItem, ApiClient } from "@repo/lib-api-client";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpRolloutTemplateListItemReadModel, AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
-import { toast } from "sonner";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface PushRolloutPopupStep3Props {
-  rollout: AcmpRolloutTemplateListItem;
-  clients: AcmpClientListItem[];
+  rollout: AcmpRolloutTemplateListItemReadModel;
+  clients: AcmpClientListItemReadModel[];
   onFinish: () => void;
   onBack: () => void;
 }
@@ -49,8 +50,12 @@ export default function PushRolloutPopupStep3({
   const [editDescription, setEditDescription] = useState("");
 
   const pushMutation = useAuthedMutation<void, { rolloutId: string; clients: { id: string; newName: string; newDescription: string }[] }>({
-    mutationFn: async ({ accessToken, variables }) =>
-      ApiClient.pushAcmpRolloutTemplate(accessToken, { serviceInstanceId: viewId as string }, variables),
+    mutationFn: async ({ session, variables }) => {
+      await getAcmpServiceClient(session).pushAcmpRolloutTemplate({
+        pathParams: { viewId: viewId as string },
+        body: variables,
+      });
+    },
   });
 
   const handlePush = async () => {
@@ -72,7 +77,7 @@ export default function PushRolloutPopupStep3({
     });
   };
 
-  const openEdit = (client: AcmpClientListItem) => {
+  const openEdit = (client: AcmpClientListItemReadModel) => {
     setEditingClientId(client.id);
     const ov = overrides[client.id] || {};
     setEditName(ov.newName ?? "");
