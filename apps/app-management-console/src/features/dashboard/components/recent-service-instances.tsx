@@ -65,7 +65,7 @@ export default function RecentServiceInstances() {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base">Recent Service Instances</CardTitle>
         <Button asChild variant="ghost" size="sm">
-          <Link href={`/${organizationId}/service-instances`}>View all</Link>
+          <Link href={`/${organizationId}`}>View all</Link>
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">

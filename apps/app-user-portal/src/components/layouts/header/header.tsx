@@ -16,13 +16,13 @@ import Link from "next/link";
 import OrganizationSwitcher from "./organization-switcher";
 import MobileHeader from "./mobile-header";
 import UserIndicator from "./user-indicator";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export default function Header() {
-  const { companies, isLoading, selectedOrganization } = useGetCurrentOrganization();
+  const { organizations, isLoading, organization } = usePersistedCurrentOrganization();
   
-  const canAccessManagementConsole = selectedOrganization?.role !== OrganizationRole.Member;
+  const canAccessManagementConsole = organization ? organization.role !== OrganizationRole.Member : false;
 
   return (
     <>
@@ -38,14 +38,14 @@ export default function Header() {
                 <Skeleton className="h-4 w-40" />
                 <Skeleton className="h-4 w-32" />
               </>
-            ) : companies && companies.length > 0 ? (
+            ) : organizations && organizations.length > 0 ? (
               <>
-                {canAccessManagementConsole ? (
+                {canAccessManagementConsole && organization ? (
                   <Link href={
                     getOriginUrl() + 
                     MANAGEMENT_CONSOLE_BASE_URL + 
                     "/" + 
-                    selectedOrganization!.organizationId + 
+                    organization.organizationId + 
                     "/dashboard"
                   }>
                     Management Console
@@ -56,7 +56,11 @@ export default function Header() {
                     <span className="">Management Console</span>
                   </div>
                 )}
-                <Link href={getOriginUrl() + SERVICE_PORTAL_BASE_URL}>
+                <Link href={
+                  getOriginUrl() + 
+                  SERVICE_PORTAL_BASE_URL + 
+                  (organization?.organizationId ? `/${organization.organizationId}` : "")
+                }>
                   Service Portal
                 </Link>
               </>

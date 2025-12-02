@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeProject } from "@/types/weclapp/project";
+import type { WeclappProjectListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 import { EyeIcon, FolderOpen } from "lucide-react";
 import {
@@ -10,10 +10,10 @@ import { formatDateDe } from "@/lib/utils/ui/date-format";
 
 
 export interface ColumnProps {
-    onViewDetails: (project: FeProject) => void;
+    onViewDetails: (project: WeclappProjectListItemReadModel) => void;
 }
 
-export const createColumns = (props: ColumnProps): ColumnDef<FeProject>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<WeclappProjectListItemReadModel>[] => {
     return [
     {
         size: 15,

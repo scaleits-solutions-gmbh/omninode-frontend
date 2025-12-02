@@ -1,6 +1,6 @@
 "use client";
 
-import { FeSalesInvoice } from "@/types/weclapp/sales-invoice";
+import type { WeclappSalesInvoiceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Card,
   CardContent,
@@ -28,7 +28,7 @@ import { useMemo, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 interface SalesInvoiceItemsListProps {
-  salesInvoice: FeSalesInvoice;
+  salesInvoice: WeclappSalesInvoiceListItemReadModel;
 }
 
 export const SalesInvoiceItemsList = ({ salesInvoice }: SalesInvoiceItemsListProps) => {

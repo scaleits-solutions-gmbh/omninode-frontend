@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, ShoppingCart } from "lucide-react";
-import { FeSalesOrder } from "@/types/weclapp/sales-order";
+import type { WeclappSalesOrderListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Badge,
   Button
@@ -10,10 +10,10 @@ import {
 
 
 export interface ColumnProps {
-  onViewDetails: (salesOrder: FeSalesOrder) => void;
+  onViewDetails: (salesOrder: WeclappSalesOrderListItemReadModel) => void;
 }
 
-export const createColumns = (props: ColumnProps): ColumnDef<FeSalesOrder>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<WeclappSalesOrderListItemReadModel>[] => {
   return [
   {
     size: 20,

@@ -1,7 +1,7 @@
 "use client";
 
 import { columns } from "./push-client-command-popup-step1-columns";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -39,7 +39,6 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
     });
   
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
     queryKey: [
       "clientCommands",
@@ -48,7 +47,7 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpClientCommands({
         pathParams: { viewId: viewId as string },
@@ -63,7 +62,7 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
   });
   
   
-    const isLoading = isSessionLoading || isQueryLoading;
+    const isLoading = isQueryLoading;
 
     const table = useReactTable({
       data: data?.data || [],

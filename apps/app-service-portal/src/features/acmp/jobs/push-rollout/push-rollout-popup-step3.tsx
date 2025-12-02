@@ -49,7 +49,7 @@ export default function PushRolloutPopupStep3({
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
 
-  const pushMutation = useAuthedMutation<void, { rolloutId: string; clients: { id: string; newName: string; newDescription: string }[] }>({
+  const pushMutation = useAuthedMutation<void, { rolloutId: string; clientIds: string[] }>({
     mutationFn: async ({ session, variables }) => {
       await getAcmpServiceClient(session).pushAcmpRolloutTemplate({
         pathParams: { viewId: viewId as string },
@@ -62,12 +62,7 @@ export default function PushRolloutPopupStep3({
     onFinish();
     const payload = {
       rolloutId: rollout.id,
-      clients: clients.map(c => {
-        const ov = overrides[c.id] || {};
-        const newName = (ov.newName ?? "").trim() || c.name;
-        const newDescription = (ov.newDescription ?? "").trim() || c.name;
-        return { id: c.id, newName, newDescription };
-      }),
+      clientIds: clients.map(c => c.id),
     };
     const promise = pushMutation.mutateAsync(payload);
     toast.promise(promise, {

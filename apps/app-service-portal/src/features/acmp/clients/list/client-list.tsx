@@ -15,10 +15,7 @@ import {
   DataTableViewOptions,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-import {
-  useAuthedQuery,
-  useValidSession,
-} from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -44,8 +41,6 @@ export const ClientList = () => {
     pageIndex: 0,
     pageSize: 10,
   });
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
-
   const {
     data: clients,
     isLoading: isQueryLoading,
@@ -59,7 +54,7 @@ export const ClientList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpClients({
         pathParams: { viewId: viewId as string },
@@ -73,7 +68,7 @@ export const ClientList = () => {
     },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
   const [isFetchingPage, setIsFetchingPage] = useState(false);
 
   const table = useReactTable({

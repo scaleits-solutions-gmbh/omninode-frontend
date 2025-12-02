@@ -16,8 +16,8 @@ import {
   DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
 
-import { fetchWeclappSalesOrders } from "@/lib/api-client/weclapp/sales-order";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -29,14 +29,14 @@ import { createColumns } from "./columns";
 import { useState } from "react";
 
 import { SalesOrderDetailsPopup } from "../details-popup/sales-order-details-popup";
-import { FeSalesOrder } from "@/types/weclapp/sales-order";
+import type { WeclappSalesOrderListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
 
 export const SalesOrderList = () => {
   const { viewId } = useParams();
-  const [salesOrder, setSalesOrder] = useState<FeSalesOrder | undefined>(
+  const [salesOrder, setSalesOrder] = useState<WeclappSalesOrderListItemReadModel | undefined>(
     undefined
   );
   const [search, setSearch] = useState("");
@@ -45,7 +45,7 @@ export const SalesOrderList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "salesOrders",
       viewId,
@@ -53,18 +53,24 @@ export const SalesOrderList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappSalesOrders(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getWeclappServiceClient(session).getWeclappSalesOrders({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (salesOrder: FeSalesOrder) => {
+      onViewDetails: (salesOrder: WeclappSalesOrderListItemReadModel) => {
         setSalesOrder(salesOrder);
       },
     }),

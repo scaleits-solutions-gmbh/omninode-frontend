@@ -1,6 +1,6 @@
 "use client";
 
-import { FeSalesOrder } from "@/types/weclapp/sales-order";
+import type { WeclappSalesOrderListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Card,
   CardContent,
@@ -29,7 +29,7 @@ import { useMemo, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 interface SalesOrderItemsListProps {
-  salesOrder: FeSalesOrder;
+  salesOrder: WeclappSalesOrderListItemReadModel;
 }
 
 export const SalesOrderItemsList = ({ salesOrder }: SalesOrderItemsListProps) => {

@@ -26,7 +26,7 @@ export const clientNetworkColumns: ColumnDef<AcmpClientNetworkCardListItemReadMo
     minSize: 140,
     header: "MAC",
     accessorKey: "mac",
-    cell: ({ row }) => <>{display(row.original.mac)}</>,
+    cell: ({ row }) => <>{display(row.original.macAddress)}</>,
   },
   {
     size: 14,

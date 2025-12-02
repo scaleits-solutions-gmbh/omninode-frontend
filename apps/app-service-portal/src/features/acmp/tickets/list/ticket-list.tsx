@@ -15,7 +15,7 @@ import {
   DataTableViewOptions,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
@@ -50,7 +50,6 @@ export const TicketList = () => {
     impactDe: false,
   });
 
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const { data: tickets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
       "tickets",
@@ -59,7 +58,7 @@ export const TicketList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpTickets({
         pathParams: { viewId: viewId as string },
@@ -73,7 +72,7 @@ export const TicketList = () => {
     },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
   const [isFetchingPage, setIsFetchingPage] = useState(false);
 
   const table = useReactTable({

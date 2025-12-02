@@ -4,7 +4,7 @@ import { Users, Layers2, Smile, Group } from "lucide-react";
 import KpiCard from "./kpi-card";
 import { useOrganizationId } from "@/hooks/use-organization-id";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getOrganizationClient, getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 
 export default function KpiCards() {
   const organizationId = useOrganizationId();
@@ -45,7 +45,12 @@ export default function KpiCards() {
   const { data: serviceInstancesData, isLoading: serviceInstancesLoading } =
     useAuthedQuery({
       queryKey: ["serviceInstancesCount", organizationId],
-      queryFn: async () => {
+      queryFn: async ({ session }) => {
+        const response = await getServiceClient(session).findOrganizationServiceInstanceCount({
+          pathParams: { id: organizationId },
+          queryParams: {},
+        });
+        return response.data;
         return { count: 0 };
       },
       enabled: !!organizationId,
@@ -57,7 +62,7 @@ export default function KpiCards() {
         label="Service Instances"
         value={serviceInstancesData?.count ?? 0}
         icon={<Layers2 className="h-4 w-4 text-muted-foreground" />}
-        href={`/${organizationId}/service-instances`}
+        href={`/${organizationId}`}
         valueLoading={serviceInstancesLoading}
       />
       <KpiCard

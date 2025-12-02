@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getCoreRowModel, getPaginationRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
 import { clientNetworkColumns } from "./client-network-columns";
@@ -31,7 +31,6 @@ export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
 
   const {
     data,
@@ -47,7 +46,7 @@ export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId) && Boolean(clientId),
+    enabled: Boolean(viewId) && Boolean(clientId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpClientNetworkCards({
         pathParams: { viewId: viewId as string, clientId },
@@ -61,7 +60,7 @@ export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
     },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
   const isFetchingPage = isQueryFetching;
 
   const table = useReactTable({

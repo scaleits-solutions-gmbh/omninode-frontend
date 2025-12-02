@@ -75,8 +75,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251127133002
-        version: 0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.44-feat.dev.20251201235034
+        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@tanstack/react-form':
         specifier: ^1.23.8
         version: 1.23.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -281,8 +281,8 @@ importers:
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251127133002
-        version: 0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.44-feat.dev.20251201235034
+        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.12)
@@ -450,8 +450,8 @@ importers:
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251127133002
-        version: 0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.44-feat.dev.20251201235034
+        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250617100659
         version: 0.0.1-beta.20250617100659(typescript@5.9.3)(zod@4.1.12)
@@ -607,8 +607,8 @@ importers:
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251127133002
-        version: 0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.44-feat.dev.20251201235034
+        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.12)
@@ -913,8 +913,8 @@ importers:
   packages/api-client:
     dependencies:
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251127133002
-        version: 0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.44-feat.dev.20251201235034
+        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@scaleits-solutions-gmbh/org-lib-global-common-kit':
         specifier: ^0.0.4
         version: 0.0.4(drizzle-orm@0.44.5)
@@ -1031,11 +1031,11 @@ importers:
         specifier: workspace:*
         version: link:../api-client
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251127133002
-        version: 0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.44-feat.dev.20251201235034
+        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
-        version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.12)
+        version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.13)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2132,8 +2132,8 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251127133002':
-    resolution: {integrity: sha512-EewnAM+mAPp/D/8RozQRR2dICFcChDWNA3WNj2kp/BL4cX2Yjwx1Jnec3vhy2SA3cfl0U82mP4Fsjd88mYoIQQ==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.44-feat.dev.20251127133002/1eff9562988011e74f92ce94bf23fbf8e5fe95e6}
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251201235034':
+    resolution: {integrity: sha512-NRzG5XsBXi3K9KZg/c9HKv7v2XicsMU3gFQW6wLRENjrrXVfJKhROMStGPNOaRxqlWMlET6tlkeRBSgL4gSZeA==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.44-feat.dev.20251201235034/e607feae5d67df9ed31ed7b06bb0e26b5ef98bf1}
 
   '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53':
     resolution: {integrity: sha512-K5Z1vBm0RcNCgYDzd7xrZJur0LMzxOvnGaNvoh7LP4422VKb02xafpGCXG99LErKf2dpBNsuiukiTVL5DvCAyA==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.53/61b9e3db1035b0af467a126a86d19907265f0565}
@@ -4679,6 +4679,9 @@ packages:
   zod@4.1.12:
     resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
+  zod@4.1.13:
+    resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==}
+
   zustand@5.0.8:
     resolution: {integrity: sha512-gyPKpIaxY9XcO2vSMrLbiER7QMAMGOQZVRdJ6Zi782jkbzZygq5GI9nG8g+sMgitRtndwaBSl7uiqC49o1SSiw==}
     engines: {node: '>=12.20.0'}
@@ -4701,10 +4704,10 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.1.12)':
+  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.1.13)':
     dependencies:
       openapi3-ts: 4.5.0
-      zod: 4.1.12
+      zod: 4.1.13
 
   '@aws-crypto/sha256-browser@5.2.0':
     dependencies:
@@ -5870,12 +5873,12 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.90.6(react@19.2.0)
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))':
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.12)
-      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.12)
+      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
+      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)
       '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.5(drizzle-orm@0.44.5)
-      zod: 4.1.12
+      zod: 4.1.13
     transitivePeerDependencies:
       - '@typescript-eslint/utils'
       - drizzle-orm
@@ -5883,12 +5886,12 @@ snapshots:
       - eslint-import-resolver-node
       - supports-color
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251127133002(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))':
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.12)
-      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.12)
+      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
+      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)
       '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.5(drizzle-orm@0.44.5)
-      zod: 4.1.12
+      zod: 4.1.13
     transitivePeerDependencies:
       - '@typescript-eslint/utils'
       - drizzle-orm
@@ -5896,26 +5899,26 @@ snapshots:
       - eslint-import-resolver-node
       - supports-color
 
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.12)':
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)':
     dependencies:
       '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.4(drizzle-orm@0.44.5)
       drizzle-orm: 0.44.5
       eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       uuid: 13.0.0
-      zod: 4.1.12
+      zod: 4.1.13
     transitivePeerDependencies:
       - '@typescript-eslint/utils'
       - eslint
       - eslint-import-resolver-node
       - supports-color
 
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.12)':
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)':
     dependencies:
       '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.4(drizzle-orm@0.44.5)
       drizzle-orm: 0.44.5
       eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       uuid: 13.0.0
-      zod: 4.1.12
+      zod: 4.1.13
     transitivePeerDependencies:
       - '@typescript-eslint/utils'
       - eslint
@@ -5941,6 +5944,11 @@ snapshots:
     dependencies:
       typescript: 5.9.3
       zod: 4.1.12
+
+  '@scaleits-solutions-gmbh/services@0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.13)':
+    dependencies:
+      typescript: 5.9.3
+      zod: 4.1.13
 
   '@smithy/abort-controller@4.2.4':
     dependencies:
@@ -8862,6 +8870,8 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zod@4.1.12: {}
+
+  zod@4.1.13: {}
 
   zustand@5.0.8(@types/react@19.2.2)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)):
     optionalDependencies:

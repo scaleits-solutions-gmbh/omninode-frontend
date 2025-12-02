@@ -28,7 +28,7 @@
     "@repo/lib-api-client": "workspace:*",
     "@repo/pkg-frontend-common-kit": "workspace:*",
     "@scaleits-solutions-gmbh/api-client": "1.0.0-beta.20250601143734",
-    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.44-feat.dev.20251127133002",
+    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": "0.0.44-feat.dev.20251201235034",
     "@scaleits-solutions-gmbh/services": "0.0.1-beta.20250630092238",
     "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-query": "^5.90.6",

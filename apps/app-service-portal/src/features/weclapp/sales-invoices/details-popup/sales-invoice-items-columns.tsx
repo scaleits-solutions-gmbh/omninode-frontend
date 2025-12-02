@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeSalesInvoiceItem } from "@/types/weclapp/sales-invoice";
+import type { WeclappSalesInvoiceItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 // Extended type to include the calculated total
-type SalesInvoiceItemWithTotal = FeSalesInvoiceItem & {
+type SalesInvoiceItemWithTotal = WeclappSalesInvoiceItemReadModel & {
   total: string;
 };
 

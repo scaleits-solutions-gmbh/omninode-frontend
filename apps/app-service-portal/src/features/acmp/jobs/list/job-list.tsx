@@ -21,7 +21,7 @@ import {
   Skeleton,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { useEffect, useState } from "react";
 import { JobDetailsPopup } from "../details-popup/job-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
@@ -36,8 +36,6 @@ export const JobList = () => {
     pageIndex: 0,
     pageSize: 10,
   });
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
-
   const { data: jobs, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
       "jobs",
@@ -46,7 +44,7 @@ export const JobList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpJobs({
         pathParams: { viewId: viewId as string },
@@ -60,7 +58,7 @@ export const JobList = () => {
     },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
   const [isFetchingPage, setIsFetchingPage] = useState(false);
 
   const table = useReactTable({

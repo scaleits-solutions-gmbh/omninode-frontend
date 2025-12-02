@@ -1,12 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeWeclappDocument } from "@/types/weclapp/document";
+import type { WeclappDocumentListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Download } from "lucide-react";
 import {
   Button
 } from "@repo/pkg-frontend-common-kit/components";
 
 
-export const projectDocumentsColumns: ColumnDef<FeWeclappDocument>[] = [
+export const projectDocumentsColumns: ColumnDef<WeclappDocumentListItemReadModel>[] = [
   {
     size: 40,
     minSize: 250,

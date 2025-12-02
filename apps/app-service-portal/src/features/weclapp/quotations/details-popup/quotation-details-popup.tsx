@@ -1,4 +1,4 @@
-import { FeQuotation } from "@/types/weclapp/quotation";
+import type { WeclappQuotationListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 import { QuotationItemsList } from "./quotation-items-list";
 import { QuotationDocumentsList } from "./quotation-documents-list";
@@ -20,7 +20,7 @@ import {
 
 
 interface QuotationDetailsPopupProps {
-  quotation?: FeQuotation;
+  quotation?: WeclappQuotationListItemReadModel;
   onClose: () => void;
 }
 

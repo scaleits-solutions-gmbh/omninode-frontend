@@ -1,29 +1,61 @@
 "use client"
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { USER_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Loader2 } from "lucide-react";
 
-export default function UsersPage() {
-  const { selectedOrganizationId, isLoading, companies, error } = useGetCurrentOrganization();
+export default function RootPage() {
+  const { organizationId, organizations, isLoading, error, setOrganizationId } = usePersistedCurrentOrganization();
   const router = useRouter();
 
+  // Find the first manageable organization (Owner or Admin)
+  const firstManageableOrg = useMemo(() => {
+    if (!organizations) return undefined;
+    return organizations.find(
+      (org) => org.role === OrganizationRole.Owner || org.role === OrganizationRole.Admin
+    );
+  }, [organizations]);
+
   useEffect(() => {
-    if (!isLoading && !error && selectedOrganizationId) {
-      router.push(`/${selectedOrganizationId}/dashboard`);
+    if (isLoading || error) return;
+    
+    // If no organizations, redirect to user portal
+    if (!organizations || organizations.length === 0) {
+      router.replace(getOriginUrl() + USER_PORTAL_BASE_URL);
+      return;
     }
-  }, [selectedOrganizationId, isLoading, error, router]);
+
+    // If no manageable organizations, redirect to user portal
+    if (!firstManageableOrg) {
+      router.replace(getOriginUrl() + USER_PORTAL_BASE_URL);
+      return;
+    }
+
+    // Check if current selection is manageable
+    const currentOrg = organizationId 
+      ? organizations.find((org) => org.organizationId === organizationId)
+      : undefined;
+    
+    const isCurrentManageable = currentOrg && 
+      (currentOrg.role === OrganizationRole.Owner || currentOrg.role === OrganizationRole.Admin);
+
+    // If current selection is manageable, redirect to its dashboard
+    if (isCurrentManageable && organizationId) {
+      router.push(`/${organizationId}/dashboard`);
+      return;
+    }
+
+    // Otherwise, select first manageable org and redirect
+    setOrganizationId(firstManageableOrg.organizationId);
+    router.push(`/${firstManageableOrg.organizationId}/dashboard`);
+  }, [organizationId, organizations, isLoading, error, firstManageableOrg, router, setOrganizationId]);
 
   if (error) {
     return <div>Error: {JSON.stringify(error)}</div>;
-  }
-
-  if (!isLoading && (!companies || companies.length === 0)) {
-    router.replace(getOriginUrl() + USER_PORTAL_BASE_URL);
-    return null;
   }
 
   return (

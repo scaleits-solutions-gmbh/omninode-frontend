@@ -17,18 +17,22 @@ import {
   SearchInput,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useEffect, useState, useMemo, useRef } from "react";
-import { ChevronsUpDown, Check } from "lucide-react";
+import { ChevronsUpDown, Check, Lock } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { 
+  useRouteCurrentOrganization,
+  setPersistedOrganizationId,
+} from "@repo/pkg-frontend-common-kit/hooks";
 import {
   UserOrganizationReadModel,
   Locale,
   organizationRoleLabel,
   OrganizationRole,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-type organizationSwitcherProps = {
+
+type OrganizationSwitcherProps = {
   organizationId?: string;
 };
 
@@ -42,86 +46,81 @@ const transferablePaths = [
   "/organization-settings",
 ];
 
+/**
+ * Check if an organization is manageable (user is Owner or Admin)
+ */
+function isManageableOrganization(org: UserOrganizationReadModel): boolean {
+  return org.role === OrganizationRole.Owner || org.role === OrganizationRole.Admin;
+}
+
 export default function OrganizationSwitcher({
-  organizationId,
-}: organizationSwitcherProps) {
-  // Move all hooks to the top before any conditional logic
+  organizationId: propOrganizationId,
+}: OrganizationSwitcherProps) {
   const [search, setSearch] = useState("");
   const isMobile = useIsMobile();
   const router = useRouter();
   const pathname = usePathname();
+  
   const {
-    companies,
-    selectedOrganizationId,
+    organizationId: routeOrganizationId,
+    organizations,
     isLoading,
     error,
-    setSelectedOrganizationId,
-  } = useGetCurrentOrganization();
+  } = useRouteCurrentOrganization({
+    syncToPersisted: true,
+  });
 
-  // Filter organizations to only show Owner or Admin roles
-  const filteredCompanies = useMemo(() => {
-    if (!companies) return undefined;
-    return companies.filter(
-      (org) =>
-        org.role === OrganizationRole.Owner ||
-        org.role === OrganizationRole.Admin
+  // Use prop organizationId if provided, otherwise use route organizationId
+  const currentOrganizationId = propOrganizationId || routeOrganizationId;
+
+  // Filter organizations based on search
+  const filteredOrganizations = useMemo(() => {
+    if (!organizations) return undefined;
+    if (!search.trim()) return organizations;
+    
+    const searchLower = search.toLowerCase();
+    return organizations.filter((org) =>
+      org.name.toLowerCase().includes(searchLower)
     );
-  }, [companies]);
+  }, [organizations, search]);
 
-  // Find the selected organization from filtered companies
-  const selectedFilteredOrganization = useMemo(() => {
-    if (!filteredCompanies || !selectedOrganizationId) return undefined;
-    return filteredCompanies.find(
-      (org) => org.organizationId === selectedOrganizationId
-    );
-  }, [filteredCompanies, selectedOrganizationId]);
+  // Find the organization to display in the trigger button
+  const organizationOnDisplay = useMemo(() => {
+    if (!organizations?.length) return undefined;
+    if (currentOrganizationId) {
+      return organizations.find((org) => org.organizationId === currentOrganizationId);
+    }
+    // Default to first manageable organization
+    return organizations.find(isManageableOrganization) || organizations[0];
+  }, [organizations, currentOrganizationId]);
 
-  // Track the last processed organizationId to avoid unnecessary updates
+  // Track the last processed organizationId to avoid unnecessary redirects
   const lastProcessedOrgIdRef = useRef<string | undefined>(undefined);
 
-  // Set the selected organization based on the organizationId prop or default selection
-  // Only trigger when organizationId prop or filteredCompanies change, not when selectedOrganizationId changes
+  // Handle initial redirect if current org is not manageable
   useEffect(() => {
-    if (!filteredCompanies?.length) return;
+    if (!organizations?.length) return;
+    if (!currentOrganizationId) return;
+    
+    // Skip if we already processed this org
+    if (lastProcessedOrgIdRef.current === currentOrganizationId) return;
 
-    // If an organizationId prop is provided, set it as selected if it exists in filtered companies
-    if (organizationId) {
-      // Only update if the organizationId prop changed and it's different from current selection
-      if (
-        lastProcessedOrgIdRef.current !== organizationId &&
-        selectedOrganizationId !== organizationId
-      ) {
-        const orgExists = filteredCompanies.some(
-          (org) => org.organizationId === organizationId
-        );
-        if (orgExists) {
-          setSelectedOrganizationId(organizationId);
-          lastProcessedOrgIdRef.current = organizationId;
-        }
+    const currentOrg = organizations.find((org) => org.organizationId === currentOrganizationId);
+    
+    // If current org is not manageable, redirect to first manageable org
+    if (currentOrg && !isManageableOrganization(currentOrg)) {
+      const firstManageableOrg = organizations.find(isManageableOrganization);
+      if (firstManageableOrg) {
+        lastProcessedOrgIdRef.current = firstManageableOrg.organizationId;
+        setPersistedOrganizationId(firstManageableOrg.organizationId);
+        router.replace(`/${firstManageableOrg.organizationId}/dashboard`);
       }
-      return;
+    } else {
+      lastProcessedOrgIdRef.current = currentOrganizationId;
     }
+  }, [currentOrganizationId, organizations, router]);
 
-    // Reset ref when not in display mode
-    lastProcessedOrgIdRef.current = undefined;
-
-    // If no organizationId prop, handle default selection logic
-    // Only update if we don't have a valid selection in filtered companies
-    const currentSelectedExists = selectedOrganizationId
-      ? filteredCompanies.some(
-          (org) => org.organizationId === selectedOrganizationId
-        )
-      : false;
-
-    if (!currentSelectedExists && filteredCompanies.length > 0) {
-      // If the currently selected org is not in filtered list or no selection exists,
-      // select the first filtered one
-      setSelectedOrganizationId(filteredCompanies[0].organizationId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [organizationId, filteredCompanies]);
-
-  if (isLoading || !filteredCompanies) {
+  if (isLoading || !filteredOrganizations) {
     return (
       <div className="flex items-center w-full gap-2 p-2">
         <Skeleton className="h-8 w-8 rounded-md" />
@@ -137,12 +136,23 @@ export default function OrganizationSwitcher({
     return <div className="text-sm text-muted-foreground">Failed to load</div>;
   }
 
-  const organizationOnDisplay: UserOrganizationReadModel | undefined =
-    organizationId
-      ? filteredCompanies.find(
-          (organization) => organization.organizationId === organizationId
-        )
-      : selectedFilteredOrganization ?? filteredCompanies[0];
+  const handleOrganizationSelect = (org: UserOrganizationReadModel) => {
+    // Don't allow selecting non-manageable organizations
+    if (!isManageableOrganization(org)) return;
+
+    setPersistedOrganizationId(org.organizationId);
+    
+    // Calculate the target path
+    const segments = pathname.split("/").filter(Boolean);
+    const subpathIndex = segments.length && currentOrganizationId && segments[0] === currentOrganizationId ? 1 : 0;
+    const currentTopLevel = segments[subpathIndex] ? `/${segments[subpathIndex]}` : "/dashboard";
+    const allowed = new Set(transferablePaths);
+    const target = allowed.has(currentTopLevel)
+      ? `/${org.organizationId}${currentTopLevel}`
+      : `/${org.organizationId}/dashboard`;
+
+    router.replace(target);
+  };
 
   return (
     <SidebarMenu>
@@ -165,10 +175,7 @@ export default function OrganizationSwitcher({
                 </span>
                 <span className="text-xs text-muted-foreground">
                   {organizationOnDisplay?.role
-                    ? organizationRoleLabel(
-                        organizationOnDisplay.role,
-                        Locale.En
-                      )
+                    ? organizationRoleLabel(organizationOnDisplay.role, Locale.En)
                     : "Organization"}
                 </span>
               </div>
@@ -180,54 +187,65 @@ export default function OrganizationSwitcher({
             align="start"
             side={isMobile ? "top" : "right"}
           >
-            <ScrollArea className="max-h-[300px]">
-              {filteredCompanies?.map((organization) => (
-                <DropdownMenuItem
-                  key={organization.id}
-                  onClick={() => {
-                    setSelectedOrganizationId(organization.organizationId);
-                    const segments = pathname.split("/").filter(Boolean);
-                    const currentOrgId = organizationId ?? selectedOrganizationId;
-                    const subpathIndex = segments.length && currentOrgId && segments[0] === currentOrgId ? 1 : 0;
-                    const currentTopLevel = segments[subpathIndex] ? `/${segments[subpathIndex]}` : "/dashboard";
-
-                    const allowed = new Set(transferablePaths);
-
-                    const target = allowed.has(currentTopLevel)
-                      ? `/${organization.organizationId}${currentTopLevel}`
-                      : `/${organization.organizationId}/dashboard`;
-
-                    router.replace(target);
-                  }}
-                  className="gap-2 p-2"
-                >
-                  <Avatar className="size-6 rounded-sm">
-                    <AvatarImage />
-                    <AvatarFallback seed={organization.organizationId}>
-                      {organization.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{organization.name}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {organization.role
-                        ? organizationRoleLabel(organization.role, Locale.En)
-                        : "Organization"}
-                    </span>
-                  </div>
-                  {organization.organizationId === selectedOrganizationId && (
-                    <Check className="h-4 w-4 text-primary" />
-                  )}
-                </DropdownMenuItem>
-              ))}
-            </ScrollArea>
-            <DropdownMenuSeparator />
-            <div className="p-2 data-[state=open]:bg-sidebar-accent z-10">
+            <div className="p-2">
               <SearchInput
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
+            <DropdownMenuSeparator />
+            <ScrollArea className="max-h-[300px]">
+              {filteredOrganizations?.map((org) => {
+                const isManageable = isManageableOrganization(org);
+                const isSelected = org.organizationId === currentOrganizationId;
+
+                return (
+                  <DropdownMenuItem
+                    key={org.id}
+                    onClick={() => handleOrganizationSelect(org)}
+                    disabled={!isManageable}
+                    className={`gap-2 p-2 ${
+                      !isManageable 
+                        ? "opacity-50 cursor-not-allowed" 
+                        : ""
+                    }`}
+                  >
+                    <div className="relative">
+                      <Avatar className="size-6 rounded-sm">
+                        <AvatarImage />
+                        <AvatarFallback seed={org.organizationId}>
+                          {org.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      {!isManageable && (
+                        <div className="absolute -bottom-1 -right-1 bg-muted rounded-full p-0.5">
+                          <Lock className="h-2.5 w-2.5 text-muted-foreground" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className={`truncate font-medium ${!isManageable ? "text-muted-foreground" : ""}`}>
+                        {org.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {org.role
+                          ? organizationRoleLabel(org.role, Locale.En)
+                          : "Organization"}
+                        {!isManageable && " • View Only"}
+                      </span>
+                    </div>
+                    {isSelected && isManageable && (
+                      <Check className="h-4 w-4 text-primary" />
+                    )}
+                  </DropdownMenuItem>
+                );
+              })}
+              {filteredOrganizations?.length === 0 && (
+                <div className="p-4 text-sm text-muted-foreground text-center">
+                  No organizations found
+                </div>
+              )}
+            </ScrollArea>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

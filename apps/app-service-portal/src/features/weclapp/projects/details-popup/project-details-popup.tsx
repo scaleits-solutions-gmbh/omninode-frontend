@@ -1,4 +1,4 @@
-import { FeProject } from "@/types/weclapp/project";
+import type { WeclappProjectListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ProjectMembersList } from "./project-members-list";
 import { ProjectDocumentsList } from "./project-documents-list";
 import {
@@ -19,7 +19,7 @@ import {
 
 
 interface ProjectDetailsPopupProps {
-  project?: FeProject;
+  project?: WeclappProjectListItemReadModel;
   onClose: () => void;
 }
 

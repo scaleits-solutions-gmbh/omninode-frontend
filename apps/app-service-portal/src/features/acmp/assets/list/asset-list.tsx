@@ -24,7 +24,7 @@ import {
 import { useEffect, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { createColumns } from "./columns";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 
@@ -52,7 +52,6 @@ export const AssetList = () => {
     isLent: true,
   });
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const [isFetchingPage, setIsFetchingPage] = useState(false);
   const { data: assets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
@@ -62,7 +61,7 @@ export const AssetList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpAssets({
         pathParams: { viewId: viewId as string },
@@ -76,7 +75,7 @@ export const AssetList = () => {
     },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
 
   const table = useReactTable({
     data: assets?.data || [],

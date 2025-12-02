@@ -1,6 +1,6 @@
 "use client";
 
-import { FeProject } from "@/types/weclapp/project";
+import type { WeclappProjectListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   TableBody,
   TableCell,
@@ -27,7 +27,7 @@ import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 interface ProjectMembersListProps {
-  project: FeProject;
+  project: WeclappProjectListItemReadModel;
 }
 
 export const ProjectMembersList = ({ project }: ProjectMembersListProps) => {

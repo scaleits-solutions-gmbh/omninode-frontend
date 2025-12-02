@@ -1,44 +1,36 @@
 /**
- * Shared German date formatting helpers for table cells in Service Portal
+ * Format a date string or Date object to German date format (DD.MM.YYYY)
  */
-
-type InputDate = string | number | Date | null | undefined;
-
-function parseToDate(value: InputDate): Date | null {
-  if (value === null || value === undefined || value === "") return null;
-  const date = value instanceof Date ? value : new Date(value);
-  return isNaN(date.getTime()) ? null : date;
-}
-
-const dateFormatterDE = new Intl.DateTimeFormat("de-DE", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-
-const dateTimeFormatterDE = new Intl.DateTimeFormat("de-DE", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-});
-
-export function formatDateDe(value: InputDate, fallback: string = "-"): string {
-  const date = parseToDate(value);
+export function formatDateDe(date: string | Date | null | undefined, fallback: string = "-"): string {
   if (!date) return fallback;
-  return dateFormatterDE.format(date);
+  
+  const d = typeof date === "string" ? new Date(date) : date;
+  
+  if (isNaN(d.getTime())) return fallback;
+  
+  return d.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 }
 
-export function formatDateTimeDe(value: InputDate, fallback: string = "-"): string {
-  const date = parseToDate(value);
+/**
+ * Format a date string or Date object to German date time format (DD.MM.YYYY HH:mm)
+ */
+export function formatDateTimeDe(date: string | Date | null | undefined, fallback: string = "-"): string {
   if (!date) return fallback;
-  return dateTimeFormatterDE.format(date);
+  
+  const d = typeof date === "string" ? new Date(date) : date;
+  
+  if (isNaN(d.getTime())) return fallback;
+  
+  return d.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
-
-export const deDateUtils = {
-  formatDate: formatDateDe,
-  formatDateTime: formatDateTimeDe,
-};
-
 

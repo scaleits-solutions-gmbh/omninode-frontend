@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { useRouteCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 import { CreditCard, Group, Layers2, LayoutDashboard, Settings2, Smile, Users } from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
@@ -24,9 +24,9 @@ import OrganizationSwitcher from "./organization-switcher";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const params = useParams<{ organizationId?: string }>();
-  const { selectedOrganizationId } = useGetCurrentOrganization();
+  const { organizationId: routeOrgId } = useRouteCurrentOrganization();
 
-  const organizationId = params?.organizationId ?? selectedOrganizationId ?? "";
+  const organizationId = params?.organizationId ?? routeOrgId ?? "";
   const orgPrefix = organizationId ? `/${organizationId}` : "";
 
   const isActivePath = (subPath: string, exact?: boolean) => {

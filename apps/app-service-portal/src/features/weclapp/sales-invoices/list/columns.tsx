@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, ReceiptText } from "lucide-react";
-import { FeSalesInvoice } from "@/types/weclapp/sales-invoice";
+import type { WeclappSalesInvoiceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Badge,
   Button
@@ -10,10 +10,10 @@ import {
 
 
 export interface ColumnProps {
-  onViewDetails: (salesInvoice: FeSalesInvoice) => void;
+  onViewDetails: (salesInvoice: WeclappSalesInvoiceListItemReadModel) => void;
 }
 
-export const createColumns = (props: ColumnProps): ColumnDef<FeSalesInvoice>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<WeclappSalesInvoiceListItemReadModel>[] => {
   return [
   {
     size: 20,

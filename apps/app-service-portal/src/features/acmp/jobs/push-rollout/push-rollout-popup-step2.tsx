@@ -1,5 +1,5 @@
 import { columns } from "./push-rollout-popup-step2-columns";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useState } from "react";
@@ -50,10 +50,9 @@ export default function PushClientCommandPopupStep2({
   });
 
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
     queryKey: ["clients", viewId, search, pagination.pageIndex, pagination.pageSize],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpClients({
         pathParams: { viewId: viewId as string },
@@ -66,7 +65,7 @@ export default function PushClientCommandPopupStep2({
       return response.data;
     },
   });
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
 
   const table = useReactTable({
     data: data?.data || [],
@@ -151,7 +150,6 @@ export default function PushClientCommandPopupStep2({
             isLoading={true}
             showRowsPerPage={false}
             showPageCount={false}
-            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

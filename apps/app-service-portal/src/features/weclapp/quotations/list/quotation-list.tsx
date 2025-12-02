@@ -16,8 +16,8 @@ import {
   DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
 
-import { fetchWeclappQuotations } from "@/lib/api-client/weclapp/quotation";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -29,14 +29,14 @@ import { createColumns } from "./columns";
 import { useState } from "react";
 
 import { QuotationDetailsPopup } from "../details-popup/quotation-details-popup";
-import { FeQuotation } from "@/types/weclapp/quotation";
+import type { WeclappQuotationListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
 
 export const QuotationList = () => {
   const { viewId } = useParams();
-  const [quotation, setQuotation] = useState<FeQuotation | undefined>(
+  const [quotation, setQuotation] = useState<WeclappQuotationListItemReadModel | undefined>(
     undefined
   );
   const [search, setSearch] = useState("");
@@ -45,7 +45,7 @@ export const QuotationList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "quotations",
       viewId,
@@ -53,18 +53,24 @@ export const QuotationList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappQuotations(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getWeclappServiceClient(session).getWeclappQuotations({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (quotation: FeQuotation) => {
+      onViewDetails: (quotation: WeclappQuotationListItemReadModel) => {
         setQuotation(quotation);
       },
     }),

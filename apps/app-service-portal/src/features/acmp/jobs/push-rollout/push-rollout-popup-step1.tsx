@@ -25,7 +25,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpRolloutTemplateListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
@@ -49,10 +49,9 @@ export default function PushRolloutPopupStep1({
   });
 
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
     queryKey: ["rollout-templates", viewId, search, pagination.pageIndex, pagination.pageSize],
-    enabled: isValid && Boolean(viewId),
+    enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
       const response = await getAcmpServiceClient(session).getAcmpRolloutTemplates({
         pathParams: { viewId: viewId as string },
@@ -66,7 +65,7 @@ export default function PushRolloutPopupStep1({
     },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
 
   const table = useReactTable({
     data: data?.data || [],
@@ -157,7 +156,6 @@ export default function PushRolloutPopupStep1({
               isLoading={true}
               showRowsPerPage={false}
               showPageCount={false}
-              totalRowsOverride={data?.total}
             />
           </CardContent>
         </Card>
