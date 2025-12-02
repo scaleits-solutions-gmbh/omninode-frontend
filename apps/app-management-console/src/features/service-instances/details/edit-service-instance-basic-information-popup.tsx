@@ -18,10 +18,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { ComposedOrganizationServiceInstanceReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
@@ -70,16 +67,11 @@ export default function EditServiceInstanceDetailsPopup({
     }: {
       session: Session;
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.updateServiceInstance({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            id: serviceInstance.serviceInstanceId,
-            name: name.trim(),
-            description: description.trim() || undefined,
-          },
+      await getServiceClient(session).updateServiceInstance({
+        body: {
+          id: serviceInstance.serviceInstanceId,
+          name: name.trim(),
+          description: description.trim() || undefined,
         },
       });
     },

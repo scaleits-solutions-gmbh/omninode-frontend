@@ -24,7 +24,7 @@ import { HelpCircle, MessageSquare, CircleHelp, Headphones, Mail, Phone, Clock, 
 import { useState, useRef } from "react";
 import { cn } from "@/utils/ui/cn";
 import { useAuthedMutation } from "@/hooks";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getFeedbackClient } from "@/utils/api-clients";
 import { FeedbackType } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { toast } from "sonner";
 
@@ -161,16 +161,14 @@ function FeedbackPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (o
       loadingToastIdRef.current = toast.loading("Submitting feedback...");
     },
     mutationFn: async ({ session }) => {
-      return await baseOmninodeApiClient().feedbackMicroservice.publishFeedback({
-        request: {
-          body: {
-            feedbackType: selectedFeedbackType,
-            title: subject.trim(),
-            description: description.trim(),
-          },
+      const response = await getFeedbackClient(session).publishFeedback({
+        body: {
+          feedbackType: selectedFeedbackType,
+          title: subject.trim(),
+          description: description.trim(),
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
       });
+      return response.data;
     },
     onSuccess: () => {
       toast.success("Feedback submitted successfully", { id: loadingToastIdRef.current });

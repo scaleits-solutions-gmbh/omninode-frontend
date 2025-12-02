@@ -15,8 +15,8 @@ import {
   DataTableViewOptions,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-import { fetchWeclappTickets } from "@/lib/api-client/weclapp/ticket";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -35,14 +35,13 @@ export const TicketList = () => {
   const { viewId } = useParams();
   const router = useRouter();
   const pathname = usePathname();
-  //const [ticket, setTicket] = useState<FeTicket | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "tickets",
       viewId,
@@ -50,16 +49,22 @@ export const TicketList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappTickets(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getWeclappServiceClient(session).getWeclappTickets({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: createColumns(router, pathname),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

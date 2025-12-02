@@ -28,10 +28,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import type { Session } from "next-auth";
@@ -55,6 +52,8 @@ interface EditAcmpViewPopupInnerProps extends EditAcmpViewPopupProps {
       canViewJobs: boolean;
       canPushRollouts: boolean;
       canPushClientCommands: boolean;
+      canViewAssets: boolean;
+      canViewTickets: boolean;
     };
   };
 }
@@ -107,6 +106,12 @@ function EditAcmpViewPopupInner({
   );
   const [canPushClientCommands, setCanPushClientCommands] =
     React.useState<boolean>(view.serviceView.canPushClientCommands ?? false);
+  const [canViewAssets, setCanViewAssets] = React.useState<boolean>(
+    view.serviceView.canViewAssets ?? false
+  );
+  const [canViewTickets, setCanViewTickets] = React.useState<boolean>(
+    view.serviceView.canViewTickets ?? false
+  );
 
   React.useEffect(() => {
     if (show) {
@@ -120,6 +125,8 @@ function EditAcmpViewPopupInner({
       setCanViewJobs(svc?.canViewJobs ?? false);
       setCanPushRollouts(svc?.canPushRollouts ?? false);
       setCanPushClientCommands(svc?.canPushClientCommands ?? false);
+      setCanViewAssets(svc?.canViewAssets ?? false);
+      setCanViewTickets(svc?.canViewTickets ?? false);
     }
   }, [show, view]);
 
@@ -133,7 +140,9 @@ function EditAcmpViewPopupInner({
     canViewDevices !== (original?.canViewDevices ?? true) ||
     canViewJobs !== (original?.canViewJobs ?? false) ||
     canPushRollouts !== (original?.canPushRollouts ?? false) ||
-    canPushClientCommands !== (original?.canPushClientCommands ?? false);
+    canPushClientCommands !== (original?.canPushClientCommands ?? false) ||
+    canViewAssets !== (original?.canViewAssets ?? false) ||
+    canViewTickets !== (original?.canViewTickets ?? false);
 
   const canSubmit = isDirty && name.trim().length > 0;
 
@@ -143,25 +152,22 @@ function EditAcmpViewPopupInner({
     }: {
       session: Session;
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.updateServiceView({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            viewId: view.id,
-            name: name.trim(),
-            service: Service.Acmp,
-            view: {
-              filterType,
-              filterValue1: tenantId,
-              filterValue2: groupId,
-              canViewDashboard,
-              canViewDevices,
-              canViewJobs,
-              canPushRollouts,
-              canPushClientCommands,
-            },
+      await getServiceClient(session).updateServiceView({
+        body: {
+          viewId: view.id,
+          name: name.trim(),
+          service: Service.Acmp,
+          view: {
+            filterType,
+            filterValue1: tenantId,
+            filterValue2: groupId,
+            canViewDashboard,
+            canViewDevices,
+            canViewJobs,
+            canPushRollouts,
+            canPushClientCommands,
+            canViewAssets,
+            canViewTickets,
           },
         },
       });
@@ -284,6 +290,24 @@ function EditAcmpViewPopupInner({
                   }
                 />
                 <span>Push client commands</span>
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={canViewAssets}
+                  onCheckedChange={(checked) =>
+                    setCanViewAssets(checked as boolean)
+                  }
+                />
+                <span>View assets</span>
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={canViewTickets}
+                  onCheckedChange={(checked) =>
+                    setCanViewTickets(checked as boolean)
+                  }
+                />
+                <span>View tickets</span>
               </label>
             </div>
           </div>

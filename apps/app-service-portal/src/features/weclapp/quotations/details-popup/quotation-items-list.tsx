@@ -1,6 +1,6 @@
 "use client";
 
-import { FeQuotation } from "@/types/weclapp/quotation";
+import type { WeclappQuotationListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ import { useMemo, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 interface QuotationItemsListProps {
-  quotation: FeQuotation;
+  quotation: WeclappQuotationListItemReadModel;
 }
 
 export const QuotationItemsList = ({ quotation }: QuotationItemsListProps) => {

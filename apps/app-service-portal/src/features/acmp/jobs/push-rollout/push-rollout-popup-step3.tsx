@@ -22,15 +22,16 @@ import {
   CheckCircle,
   Pencil,
 } from "lucide-react";
-import { AcmpRolloutTemplateListItem, AcmpClientListItem, ApiClient } from "@repo/lib-api-client";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpRolloutTemplateListItemReadModel, AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
-import { toast } from "sonner";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface PushRolloutPopupStep3Props {
-  rollout: AcmpRolloutTemplateListItem;
-  clients: AcmpClientListItem[];
+  rollout: AcmpRolloutTemplateListItemReadModel;
+  clients: AcmpClientListItemReadModel[];
   onFinish: () => void;
   onBack: () => void;
 }
@@ -48,21 +49,20 @@ export default function PushRolloutPopupStep3({
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
 
-  const pushMutation = useAuthedMutation<void, { rolloutId: string; clients: { id: string; newName: string; newDescription: string }[] }>({
-    mutationFn: async ({ accessToken, variables }) =>
-      ApiClient.pushAcmpRolloutTemplate(accessToken, { serviceInstanceId: viewId as string }, variables),
+  const pushMutation = useAuthedMutation<void, { rolloutId: string; clientIds: string[] }>({
+    mutationFn: async ({ session, variables }) => {
+      await getAcmpServiceClient(session).pushAcmpRolloutTemplate({
+        pathParams: { viewId: viewId as string },
+        body: variables,
+      });
+    },
   });
 
   const handlePush = async () => {
     onFinish();
     const payload = {
       rolloutId: rollout.id,
-      clients: clients.map(c => {
-        const ov = overrides[c.id] || {};
-        const newName = (ov.newName ?? "").trim() || c.name;
-        const newDescription = (ov.newDescription ?? "").trim() || c.name;
-        return { id: c.id, newName, newDescription };
-      }),
+      clientIds: clients.map(c => c.id),
     };
     const promise = pushMutation.mutateAsync(payload);
     toast.promise(promise, {
@@ -72,7 +72,7 @@ export default function PushRolloutPopupStep3({
     });
   };
 
-  const openEdit = (client: AcmpClientListItem) => {
+  const openEdit = (client: AcmpClientListItemReadModel) => {
     setEditingClientId(client.id);
     const ov = overrides[client.id] || {};
     setEditName(ov.newName ?? "");

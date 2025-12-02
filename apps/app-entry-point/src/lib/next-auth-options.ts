@@ -1,9 +1,9 @@
 import { logoutRequest, refreshTokenRequest } from "./oidc";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
-import type { Account, AuthOptions, User } from "next-auth";
+import type { Account, AuthOptions, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";
 import KeycloakProvider from "next-auth/providers/keycloak";
+import { getUserClient } from "@repo/pkg-frontend-common-kit/utils";
 
 export const authOptions: AuthOptions = {
   session: { strategy: "jwt" },
@@ -33,7 +33,7 @@ export const authOptions: AuthOptions = {
     async signIn({ account }) {
       try {
         if (account?.access_token) {
-          await baseOmninodeApiClient().userMicroservice.handleExternalProviderSignIn(getApiAuthentication(account.access_token));
+          await getUserClient({ access_token: account.access_token } as Session).handleExternalProviderSignIn({});
           return true;
         }
         return false;

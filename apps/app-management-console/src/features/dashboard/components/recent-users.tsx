@@ -2,10 +2,7 @@
 
 import { useOrganizationId } from "@/hooks/use-organization-id";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   Button,
   Card,
@@ -37,28 +34,26 @@ export default function RecentUsers() {
   const { data: queryData, isLoading } = useAuthedQuery({
     queryKey: ["recentOrganizationUsers", organizationId],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findComposedOrganizationMemberships({
-        request: {
-          pathParams: { id: organizationId as string },
-          queryParams: {
-            pageSize: pagination.pageSize,
-            page: pagination.pageIndex + 1,
-          },
+      const response = await getOrganizationClient(session).findComposedOrganizationMemberships({
+        pathParams: { id: organizationId as string },
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
       });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: queryData?.body.data || [],
+    data: queryData?.data || [],
     columns: recentUsersColumns,
     getCoreRowModel: getCoreRowModel(),
     state: {
       pagination,
     },
     manualPagination: true,
-    pageCount: queryData?.body.totalPages || 1,
+    pageCount: queryData?.totalPages || 1,
   });
 
   return (
@@ -188,7 +183,7 @@ export default function RecentUsers() {
           isLoading={isLoading}
           showPageCount={false}
           showRowsPerPage={false}
-          totalRowsOverride={queryData?.body.total}
+          totalRowsOverride={queryData?.total}
         />
       </CardContent>
     </Card>

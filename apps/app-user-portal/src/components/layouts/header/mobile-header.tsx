@@ -6,9 +6,9 @@ import UserIndicator from "./user-indicator";
 import { Lock, Menu, X } from "lucide-react";
 import OrganizationSwitcher from "./organization-switcher";
 import { useState } from "react";
-import { MANAGEMENT_CONSOLE_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { MANAGEMENT_CONSOLE_BASE_URL, SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
 interface MobileHeaderProps {
   canAccessManagementConsole: boolean;
@@ -17,7 +17,7 @@ interface MobileHeaderProps {
 export default function MobileHeader({
   canAccessManagementConsole,
 }: MobileHeaderProps) {
-  const { selectedOrganization } = useGetCurrentOrganization();
+  const { organization } = usePersistedCurrentOrganization();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -50,13 +50,13 @@ export default function MobileHeader({
           <div className="px-4 py-2 space-y-2">
             {/* Navigation Links */}
             <div className="space-y-3">
-              {canAccessManagementConsole ? (
+              {canAccessManagementConsole && organization ? (
                 <Link
                   href={
                     getOriginUrl() + 
                     MANAGEMENT_CONSOLE_BASE_URL + 
                     "/" + 
-                    selectedOrganization!.organizationId + 
+                    organization.organizationId + 
                     "/dashboard"
                   }
                   className="block py-2 text-sm hover:text-primary transition-colors"
@@ -71,7 +71,11 @@ export default function MobileHeader({
                 </div>
               )}
               <Link
-                href={process.env.NEXT_PUBLIC_SERVICE_PORTAL_URL || ""}
+                href={
+                  getOriginUrl() + 
+                  SERVICE_PORTAL_BASE_URL + 
+                  (organization?.organizationId ? `/${organization.organizationId}` : "")
+                }
                 className="block py-2 text-sm hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

@@ -34,7 +34,7 @@ import { OrganizationDetailsPopup } from "../details-popup/organization-details-
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
 
@@ -58,21 +58,19 @@ export const OrganizationList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationListItems({
-        request: {
-          queryParams: {
-            pageSize: pagination.pageSize,
-            page: pagination.pageIndex + 1,
-            searchTerm: search,
-          },
+      const response = await getOrganizationClient(session).findPaginatedOrganizationListItems({
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: search,
         },
-        apiAuthentication: getApiAuthentication(session.access_token),
       });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns({
       onViewDetails: (organization: OrganizationListItemReadModel) => {
         setOrganization(organization);
@@ -88,7 +86,7 @@ export const OrganizationList = () => {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -228,7 +226,7 @@ export const OrganizationList = () => {
               </Table>
             )}
           </div>
-          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.body.total}/>
+          <DataTablePagination table={table} isLoading={isLoading} showPageCount={false} showRowsPerPage={false} totalRowsOverride={data?.total}/>
         </CardContent>
       </Card>
     </>

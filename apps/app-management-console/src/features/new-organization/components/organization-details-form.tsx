@@ -18,10 +18,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useForm } from "@tanstack/react-form";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { toast } from "sonner";
 import {
   currencyOptions,
@@ -59,25 +56,21 @@ export default function OrganizationDetailsForm() {
       session: Session;
       variables: CreateOrganizationFormValues;
     }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.createOrganization(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              name: variables.name,
-              countryCode: variables.countryCode,
-              city: variables.city,
-              address: variables.address,
-              industry: variables.industry,
-              currency: variables.currency,
-              type: OrganizationType.Customer,
-              email: variables.email || undefined,
-              phone: variables.phone || undefined,
-              taxId: variables.taxId || undefined,
-            },
-          },
-        }
-      );
+      const response = await getOrganizationClient(session).createOrganization({
+        body: {
+          name: variables.name,
+          countryCode: variables.countryCode,
+          city: variables.city,
+          address: variables.address,
+          industry: variables.industry,
+          currency: variables.currency,
+          type: OrganizationType.Customer,
+          email: variables.email || undefined,
+          phone: variables.phone || undefined,
+          taxId: variables.taxId || undefined,
+        },
+      });
+      return response.data;
     },
     onMutate: () =>
       toast.loading("Creating organization...", { id: "create-org" }),
@@ -87,7 +80,7 @@ export default function OrganizationDetailsForm() {
       }),
     onSuccess: (response) => {
       toast.success("Organization created", { id: "create-org" });
-      const organizationId = response.body.id;
+      const organizationId = response.id;
       if (organizationId) {
         router.push(`/${organizationId}/dashboard`);
       }

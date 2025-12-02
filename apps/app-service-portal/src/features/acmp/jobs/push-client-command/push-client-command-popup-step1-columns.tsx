@@ -1,17 +1,17 @@
-import { ColumnDef } from "@tanstack/react-table";
 import {
   Checkbox
 } from "@repo/pkg-frontend-common-kit/components";
-import { AcmpClientCommandListItem } from "@repo/lib-api-client";
+import type { AcmpClientCommandListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ColumnDef } from "@tanstack/react-table";
 
 
 // Define the table meta interface for proper typing
 interface TableMeta {
-  selectedClientCommand: AcmpClientCommandListItem | undefined;
-  onSelectionChange: (clientCommand: AcmpClientCommandListItem | undefined) => void;
+  selectedClientCommand: AcmpClientCommandListItemReadModel | undefined;
+  onSelectionChange: (clientCommand: AcmpClientCommandListItemReadModel | undefined) => void;
 }
 
-export const columns: ColumnDef<AcmpClientCommandListItem>[] = [
+export const columns: ColumnDef<AcmpClientCommandListItemReadModel>[] = [
   {
     size: 50,
     header: "Name",

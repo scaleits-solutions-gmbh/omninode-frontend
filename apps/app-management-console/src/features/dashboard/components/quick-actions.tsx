@@ -22,7 +22,7 @@ export default function QuickActions() {
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href={`/${organizationId}/service-instances`} className="flex items-center gap-2">
+            <Link href={`/${organizationId}`} className="flex items-center gap-2">
               <Layers2 className="h-4 w-4" />
               <span>Add Service Instance</span>
             </Link>

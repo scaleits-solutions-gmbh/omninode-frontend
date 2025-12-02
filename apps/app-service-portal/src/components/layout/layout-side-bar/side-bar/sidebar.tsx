@@ -24,21 +24,22 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
 import { Service } from "@scaleits-solutions-gmbh/services";
-import { Minus, Plus, Lock } from "lucide-react";
+import { Minus, Plus, Lock, Inbox, ExternalLink } from "lucide-react";
 
-
-
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import Image from "next/image";
-import TenantSwitcher from "./company-switcher";
+import OrganizationSwitcher from "./company-switcher";
 import { AppLogoDescriptive } from "@/components/custom/app-logo-descriptive";
 import Link from "next/link";
 import { SidebarSkeleton } from "./side-bar-skeleton";
-import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
-import { SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { getOriginUrl, getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { SERVICE_PORTAL_BASE_URL, USER_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import type { FindCurrentUserServiceViewsHttpBodyResponse } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const params = useParams<{ organizationId?: string }>();
   const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({});
 
   const toggleItem = (itemId: string) => {
@@ -48,10 +49,23 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     }));
   };
 
+  // Get organizationId from URL params
+  const organizationId = params?.organizationId ?? "";
+  const orgPrefix = organizationId ? `/${organizationId}` : "";
 
-const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
+  // Fetch current user's service views for this organization
+  const { data: serviceViews, isLoading, error } = useAuthedQuery<FindCurrentUserServiceViewsHttpBodyResponse>({
+    queryKey: ["currentUserServiceViews", organizationId],
+    queryFn: async ({ session }) => {
+      const response = await getServiceClient(session).findCurrentUserServiceViews({
+        pathParams: { organizationId },
+      });
+      return response.data;
+    },
+    enabled: Boolean(organizationId),
+  });
 
-  if (isLoading) {
+  if (isLoading || !organizationId) {
     return <SidebarSkeleton />;
   }
   if (error) {
@@ -70,52 +84,76 @@ const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {selectedOrganization?.serviceInstanceHosts.map((company) => (
-          <SidebarGroup key={company.hostOrganizationId}>
+        {/* Empty state when no services */}
+        {(!serviceViews || serviceViews.length === 0 || serviceViews.every(org => org.ServiceViews.length === 0)) && (
+          <SidebarGroup className="p-4">
+            <div className="border rounded-md flex flex-col items-center justify-center py-8 px-4 text-center">
+              <div className="rounded-full bg-muted p-3 mb-3">
+                <Inbox className="h-6 w-6 text-muted-foreground" />
+              </div>
+              <p className="text-sm font-medium text-muted-foreground mb-1">
+                No Services Available
+              </p>
+              <p className="text-xs text-muted-foreground/70 mb-4">
+                You don&apos;t have access to any services for this organization yet.
+              </p>
+              <a
+                href={getOriginUrl() + USER_PORTAL_BASE_URL}
+                className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline"
+              >
+                <span>Go to User Portal</span>
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+          </SidebarGroup>
+        )}
+
+        {/* Service views list */}
+        {serviceViews?.map((providerOrg) => (
+          <SidebarGroup key={providerOrg.providerOrganizationId}>
             <SidebarGroupLabel className="flex items-center gap-2 p-0 pb-1 text-sm">
               <Avatar className="rounded-md w-6 h-6">
                 <AvatarImage src={""} />
-                <AvatarFallback seed={company.hostOrganizationId}>
-                  {company.hostOrganizationName.charAt(0)}
+                <AvatarFallback seed={providerOrg.providerOrganizationId}>
+                  {providerOrg.providerOrganizationName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              {company.hostOrganizationName}
+              {providerOrg.providerOrganizationName}
             </SidebarGroupLabel>
             <SidebarGroupContent className="pl-1">
               <SidebarMenu>
-                {company.instances.map((serviceInstance) => (
+                {providerOrg.ServiceViews.map((view) => (
                   <Collapsible
-                    key={serviceInstance.serviceInstanceId}
-                    open={openItems[serviceInstance.serviceInstanceId]}
-                    onOpenChange={() => toggleItem(serviceInstance.serviceInstanceId)}
+                    key={view.id}
+                    open={openItems[view.id]}
+                    onOpenChange={() => toggleItem(view.id)}
                     className="group/collapsible"
-                    //can you make it so * is a wildcard for any service
-                    defaultOpen={new RegExp(`^/service-instances/[^/]+/${serviceInstance.serviceInstanceId}(?:/|$)`).test(pathname)}
+                    defaultOpen={new RegExp(`${orgPrefix}/views/${view.id}(?:/|$)`).test(pathname)}
                   >
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
-                          isActive={pathname.startsWith(
-                            `/service-instances/${serviceInstance.serviceInstanceId}`
+                          isActive={pathname.includes(
+                            `/views/${view.id}`
                           )}
                         >
                           <div className="flex items-center gap-2">
                             <Image
-                              src={`${getOriginUrl()+ SERVICE_PORTAL_BASE_URL}/assets/services/${serviceInstance.service}.svg`}
-                              alt={serviceInstance.name}
+                              src={`${getOriginUrl() + SERVICE_PORTAL_BASE_URL}/assets/services/${view.service}.svg`}
+                              alt={view.serviceViewName}
                               width={16}
                               height={16}
                             />
-                            <span>{serviceInstance.name}</span>
+                            <span>{view.serviceViewName}</span>
                           </div>
                           <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
                           <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
-                      {serviceInstance.service === Service.Weclapp ? (
+                      {view.service === Service.Weclapp ? (
                         <CollapsibleContent>
                           <SidebarMenuSub>
-                            {serviceInstance.permissions.canViewDashboard && (
+                            {view.serviceView.canViewDashboard && (
                               <SidebarMenuSubItem key="dashboard">
                                 <SidebarMenuSubButton
                                   aria-disabled
@@ -125,106 +163,83 @@ const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
                                     <Lock className="h-4 w-4" />
                                     <span>Dashboard</span>
                                   </div>
-                                  {/*
-                                  <Link
-                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/dashboard`}
-                                  >
-                                    Dashboard
-                                  </Link>
-                                  */}
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.permissions.canViewQuotes && (
+                            {view.serviceView.canViewQuotes && (
                               <SidebarMenuSubItem key="quotations">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/quotations`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/weclapp/quotations`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/quotations`}
+                                    href={`${orgPrefix}/views/${view.id}/weclapp/quotations`}
                                   >
                                     Quotations
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.permissions.canViewSalesOrders && (
+                            {view.serviceView.canViewSalesOrders && (
                               <SidebarMenuSubItem key="sales-orders">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-orders`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/weclapp/sales-orders`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-orders`}
+                                    href={`${orgPrefix}/views/${view.id}/weclapp/sales-orders`}
                                   >
                                     Sales Orders
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.permissions.canViewInvoices && (
+                            {view.serviceView.canViewInvoices && (
                               <SidebarMenuSubItem key="sales-invoices">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-invoices`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/weclapp/sales-invoices`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/sales-invoices`}
+                                    href={`${orgPrefix}/views/${view.id}/weclapp/sales-invoices`}
                                   >
                                     Sales Invoices
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
-                            )}{/*
-                            {serviceInstance.permissions.canVicaewContracts && (
-                              <SidebarMenuSubItem key="contracts">
-                                <SidebarMenuSubButton
-                                  asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/${serviceInstance.id}/contracts`
-                                  )}
-                                >
-                                  <Link
-                                    href={`/service-instances/${serviceInstance.id}/contracts`}
-                                  >
-                                    Contracts
-                                  </Link>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            )}*/}
-                            {serviceInstance.permissions.canViewProjects && (
+                            )}
+                            {view.serviceView.canViewProjects && (
                               <SidebarMenuSubItem key="projects">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/projects`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/weclapp/projects`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/projects`}
+                                    href={`${orgPrefix}/views/${view.id}/weclapp/projects`}
                                   >
                                     Projects
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.permissions.canViewTickets && (
+                            {view.serviceView.canViewTickets && (
                               <SidebarMenuSubItem key="tickets">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/weclapp/${serviceInstance.serviceInstanceId}/tickets`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/weclapp/tickets`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/weclapp/${serviceInstance.serviceInstanceId}/tickets`}
+                                    href={`${orgPrefix}/views/${view.id}/weclapp/tickets`}
                                   >
                                     Tickets
                                   </Link>
@@ -233,10 +248,10 @@ const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
                             )}
                           </SidebarMenuSub>
                         </CollapsibleContent>
-                      ) : serviceInstance.service === Service.Acmp ? (
+                      ) : view.service === Service.Acmp ? (
                         <CollapsibleContent>
                           <SidebarMenuSub>
-                            {serviceInstance.permissions.canViewDashboard && (
+                            {view.serviceView.canViewDashboard && (
                               <SidebarMenuSubItem key="dashboard">
                                 <SidebarMenuSubButton
                                   aria-disabled
@@ -246,74 +261,67 @@ const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
                                     <Lock className="h-4 w-4" />
                                     <span>Dashboard</span>
                                   </div>
-                                  {/*
-                                  <Link
-                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/dashboard`}
-                                  >
-                                    Dashboard
-                                  </Link>
-                                  */}
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.permissions.canViewJobs && (
+                            {view.serviceView.canViewJobs && (
                               <SidebarMenuSubItem key="jobs">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/jobs`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/acmp/jobs`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/jobs`}
+                                    href={`${orgPrefix}/views/${view.id}/acmp/jobs`}
                                   >
                                     Jobs
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {serviceInstance.permissions.canViewDevices && (
+                            {view.serviceView.canViewDevices && (
                               <SidebarMenuSubItem key="clients">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/clients`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/acmp/clients`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/clients`}
+                                    href={`${orgPrefix}/views/${view.id}/acmp/clients`}
                                   >
                                     Clients
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {/*serviceInstance.permissions.canviewTickets*/ true && (
+                            {view.serviceView.canViewTickets && (
                               <SidebarMenuSubItem key="tickets">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/tickets`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/acmp/tickets`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/tickets`}
+                                    href={`${orgPrefix}/views/${view.id}/acmp/tickets`}
                                   >
                                     Tickets
                                   </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             )}
-                            {/*serviceInstance.permissions.canViewAssets*/ true && (
+                            {view.serviceView.canViewAssets && (
                               <SidebarMenuSubItem key="assets">
                                 <SidebarMenuSubButton
                                   asChild
-                                  isActive={pathname.startsWith(
-                                    `/service-instances/acmp/${serviceInstance.serviceInstanceId}/assets`
+                                  isActive={pathname.includes(
+                                    `/views/${view.id}/acmp/assets`
                                   )}
                                 >
                                   <Link
-                                    href={`/service-instances/acmp/${serviceInstance.serviceInstanceId}/assets`}
+                                    href={`${orgPrefix}/views/${view.id}/acmp/assets`}
                                   >
                                     Assets
                                   </Link>
@@ -333,7 +341,7 @@ const {selectedOrganization, isLoading, error} = useGetCurrentOrganization();
       </SidebarContent>
       <SidebarRail />
       <SidebarFooter>
-        <TenantSwitcher />
+        <OrganizationSwitcher organizationId={organizationId} />
       </SidebarFooter>
     </Sidebar>
   );

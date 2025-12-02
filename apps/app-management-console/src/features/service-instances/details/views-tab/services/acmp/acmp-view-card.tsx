@@ -34,6 +34,8 @@ export default function AcmpViewCard({
     canViewJobs: boolean;
     canPushRollouts: boolean;
     canPushClientCommands: boolean;
+    canViewAssets: boolean;
+    canViewTickets: boolean;
   };
 
   const filterLabel =
@@ -45,6 +47,8 @@ export default function AcmpViewCard({
     { label: "Jobs", enabled: config.canViewJobs },
     { label: "Rollouts", enabled: config.canPushRollouts },
     { label: "Client commands", enabled: config.canPushClientCommands },
+    { label: "Assets", enabled: config.canViewAssets },
+    { label: "Tickets", enabled: config.canViewTickets },
   ];
 
   const enabledPermissions = permissions.filter((p) => p.enabled);

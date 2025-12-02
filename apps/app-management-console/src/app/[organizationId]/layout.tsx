@@ -1,4 +1,4 @@
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";  
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";  
 import { redirect } from "next/navigation";
 import { getDelegatedSession } from "@/lib/delegated-session";
 import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
@@ -15,21 +15,19 @@ export default async function OrganizationLayout({
     if (!session) {
         throw new Error("Session not found");
     }
-    const organizations = await baseOmninodeApiClient().organizationMicroservice.findCurrentUserOrganizations({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-            queryParams: {
-                organizationId: organizationId,
-            },
+    const response = await getOrganizationClient(session).findCurrentUserOrganizations({
+        queryParams: {
+            organizationId: organizationId,
         },
     });
+    const organizations = response.data;
     const endTime = performance.now();
     console.log(`Time taken to find organizations: ${endTime - startTime} milliseconds`);
-    if (!organizations.body[0]) {
+    if (!organizations[0]) {
         redirect("/");
     }
 
-    if (organizations.body[0].role !== OrganizationRole.Owner && organizations.body[0].role !== OrganizationRole.Admin) {
+    if (organizations[0].role !== OrganizationRole.Owner && organizations[0].role !== OrganizationRole.Admin) {
         redirect("/");
     }
 

@@ -25,20 +25,21 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { ApiClient, AcmpRolloutTemplateListItem } from "@repo/lib-api-client";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpRolloutTemplateListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 
 interface PushRolloutPopupStep1Props {
-  initialSelectedRollout: AcmpRolloutTemplateListItem | undefined;
-  onNext: (rollout: AcmpRolloutTemplateListItem) => void;
+  initialSelectedRollout: AcmpRolloutTemplateListItemReadModel | undefined;
+  onNext: (rollout: AcmpRolloutTemplateListItemReadModel) => void;
 }
 
 export default function PushRolloutPopupStep1({
   initialSelectedRollout,
   onNext,
 }: PushRolloutPopupStep1Props) {
-  const [selectedRollout, setSelectedRollout] = useState<AcmpRolloutTemplateListItem | undefined>(
+  const [selectedRollout, setSelectedRollout] = useState<AcmpRolloutTemplateListItemReadModel | undefined>(
     initialSelectedRollout
   );
   const [search, setSearch] = useState("");
@@ -48,20 +49,23 @@ export default function PushRolloutPopupStep1({
   });
 
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const { data, isLoading: isQueryLoading, error } = useAuthedQuery({
     queryKey: ["rollout-templates", viewId, search, pagination.pageIndex, pagination.pageSize],
-    enabled: isValid && Boolean(viewId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpRolloutTemplates(accessToken, {
-        serviceInstanceId: viewId as string,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search: search,
-      }),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getAcmpServiceClient(session).getAcmpRolloutTemplates({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
 
   const table = useReactTable({
     data: data?.data || [],
@@ -152,7 +156,6 @@ export default function PushRolloutPopupStep1({
               isLoading={true}
               showRowsPerPage={false}
               showPageCount={false}
-              totalRowsOverride={data?.total}
             />
           </CardContent>
         </Card>

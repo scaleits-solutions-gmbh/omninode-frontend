@@ -16,13 +16,13 @@ import PushClientCommandPopupStep1 from "./push-client-command-popup-step1";
 import PushClientCommandPopupStep2 from "./push-client-command-popup-step2";
 import PushClientCommandPopupStep3 from "./push-client-command-popup-step3";
 import { FeClientCommand } from "@/types/acmp/client-command";
-import { AcmpClientListItem } from "@repo/lib-api-client";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export default function PushClientCommandPopup() {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [clientCommand, setClientCommand] = useState<FeClientCommand | undefined>(undefined);
-  const [clients, setClients] = useState<AcmpClientListItem[]>([]);
+  const [clients, setClients] = useState<AcmpClientListItemReadModel[]>([]);
   
 
   const handleNextStep1 = (clientCommand: FeClientCommand) => {
@@ -30,7 +30,7 @@ export default function PushClientCommandPopup() {
     setStep(2);
   };
 
-  const handleNextStep2 = (clients: AcmpClientListItem[]) => {
+  const handleNextStep2 = (clients: AcmpClientListItemReadModel[]) => {
     setClients(clients);
     setStep(3);
   };

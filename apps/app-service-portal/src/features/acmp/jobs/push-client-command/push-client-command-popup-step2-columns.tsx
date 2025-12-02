@@ -1,16 +1,16 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { AcmpClientListItem } from "@repo/lib-api-client";
 import {
   Checkbox
 } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ColumnDef } from "@tanstack/react-table";
 
 // Define the table meta interface for proper typing
 interface TableMeta {
-  selectedClients: AcmpClientListItem[] | undefined;
-  onSelectionChange: (clients: AcmpClientListItem[] | undefined) => void;
+  selectedClients: AcmpClientListItemReadModel[] | undefined;
+  onSelectionChange: (clients: AcmpClientListItemReadModel[] | undefined) => void;
 }
 
-export const columns: ColumnDef<AcmpClientListItem>[] = [
+export const columns: ColumnDef<AcmpClientListItemReadModel>[] = [
   {
     size: 30,
     header: "Computer Name",
@@ -28,7 +28,7 @@ export const columns: ColumnDef<AcmpClientListItem>[] = [
     cell: ({ row, table }) => {
       const selectedClients = (table.options.meta as TableMeta)?.selectedClients || [];
       const onSelectionChange = (table.options.meta as TableMeta)?.onSelectionChange;
-      const isSelected = selectedClients.some((client: AcmpClientListItem) => client.id === row.original.id);
+      const isSelected = selectedClients.some((client: AcmpClientListItemReadModel) => client.id === row.original.id);
       
       return (
         <div className="flex justify-end pr-2">
@@ -38,7 +38,7 @@ export const columns: ColumnDef<AcmpClientListItem>[] = [
               if (checked) {
               onSelectionChange([...selectedClients, row.original]);
               } else {
-              onSelectionChange(selectedClients.filter((client: AcmpClientListItem) => client.id !== row.original.id));
+              onSelectionChange(selectedClients.filter((client: AcmpClientListItemReadModel) => client.id !== row.original.id));
               }
             }}
           />

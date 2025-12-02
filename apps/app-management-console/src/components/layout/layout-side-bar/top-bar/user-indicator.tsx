@@ -15,22 +15,28 @@ import {
   DropdownMenuTrigger,
   Skeleton,
 } from "@repo/pkg-frontend-common-kit/components";
-import { Settings, LogOut } from "lucide-react";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
-import { toast } from "sonner";
-import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
-import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { USER_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import {
+  getOriginUrl,
+  getUserClient,
+} from "@repo/pkg-frontend-common-kit/utils";
+import { LogOut, Settings } from "lucide-react";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { toast } from "sonner";
 
 export default function UserIndicator() {
-  const { data: userData, isLoading, error } = useAuthedQuery({
+  const {
+    data: userData,
+    isLoading,
+    error,
+  } = useAuthedQuery({
     queryKey: ["me"],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().userMicroservice.findCurrentUser({
-        apiAuthentication: getApiAuthentication(session.access_token),
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getUserClient(session).findCurrentUser({});
+      return response.data;
+    },
     retry: false,
   });
 
@@ -54,10 +60,10 @@ export default function UserIndicator() {
           <Avatar className="h-9 w-9">
             <AvatarImage
               src={""}
-              alt={userData.body.firstName + " " + userData.body.lastName}
+              alt={userData.firstName + " " + userData.lastName}
             />
-            <AvatarFallback seed={userData.body.id}>
-              {userData.body.firstName.charAt(0) + userData.body.lastName.charAt(0)}
+            <AvatarFallback seed={userData.id}>
+              {userData.firstName.charAt(0) + userData.lastName.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -66,17 +72,17 @@ export default function UserIndicator() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {userData.body.firstName} {userData.body.lastName}
+              {userData.firstName} {userData.lastName}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {userData.body.email}
+              {userData.email}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link
-            href={`${getOriginUrl()+USER_PORTAL_BASE_URL}/account-settings`}
+            href={`${getOriginUrl() + USER_PORTAL_BASE_URL}/account-settings`}
           >
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />

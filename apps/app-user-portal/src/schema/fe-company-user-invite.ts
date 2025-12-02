@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const feOrganizationUserInviteSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   companyId: z.string().uuid(),
   companyName: z.string(),
   email: z.string().email(),

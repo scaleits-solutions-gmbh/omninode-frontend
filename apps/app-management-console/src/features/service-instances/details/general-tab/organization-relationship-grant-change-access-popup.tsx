@@ -33,10 +33,7 @@ import {
   useAuthedQuery,
 } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -75,24 +72,20 @@ export default function OrganizationRelationshipGrantChangeAccessPopup({
       serviceInstanceId,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findComposedPaginatedServiceViews(
-        {
-          request: {
-            pathParams: { id: serviceInstanceId as string },
-            queryParams: {
-              pageSize: 50,
-              page: 1,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedPaginatedServiceViews({
+        pathParams: { id: serviceInstanceId as string },
+        queryParams: {
+          pageSize: 50,
+          page: 1,
+        },
+      });
+      return response.data;
     },
     enabled: show,
   });
 
   const availableViews: ComposedServiceViewReadModel[] =
-    ((viewsData?.body.data as ComposedServiceViewReadModel[]) || []).filter(
+    ((viewsData?.data as ComposedServiceViewReadModel[]) || []).filter(
       (v) => v.id !== grant.view.id
     );
 
@@ -114,34 +107,22 @@ export default function OrganizationRelationshipGrantChangeAccessPopup({
       session: Session;
       variables: { newViewId: string };
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
       // First revoke current view access
-      await apiClient.serviceMicroservice.revokeServiceViewFromOrganizationRelationship(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              viewId: grant.view.id,
-              organizationRelationshipId: grant.organizationRelationshipId,
-            },
-          },
-        }
-      );
+      await getServiceClient(session).revokeServiceViewFromOrganizationRelationship({
+        body: {
+          viewId: grant.view.id,
+          organizationRelationshipId: grant.organizationRelationshipId,
+        },
+      });
 
       // Then grant the new view
-      await apiClient.serviceMicroservice.grantServiceViewToOrganizationRelationship(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              viewId: variables.newViewId,
-              targetOrganizationRelationshipId: grant.organizationRelationshipId,
-              targetOrganizationId: grant.organization.id,
-            },
-          },
-        }
-      );
+      await getServiceClient(session).grantServiceViewToOrganizationRelationship({
+        body: {
+          viewId: variables.newViewId,
+          targetOrganizationRelationshipId: grant.organizationRelationshipId,
+          targetOrganizationId: grant.organization.id,
+        },
+      });
     },
     onSuccess: () => {
       toast.success("Access updated successfully");

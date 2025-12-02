@@ -20,10 +20,7 @@ import EditServiceInstanceDetailsPopup from "./edit-service-instance-basic-infor
 import RemoveServiceInstancePopup from "./remove-service-instance-popup";
 import { useParams } from "next/navigation";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { ComposedOrganizationServiceInstanceReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import SwitchCreateServiceViewPopup from "./views-tab/services/switch-create-service-view-popup";
 
@@ -42,15 +39,12 @@ export default function PageContent() {
       "composedOrganizationServiceInstance",
       organizationServiceInstanceId,
     ],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().serviceMicroservice.findComposedOrganizationServiceInstanceById(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            pathParams: { id: organizationServiceInstanceId },
-          },
-        }
-      ),
+    queryFn: async ({ session }) => {
+      const response = await getServiceClient(session).findComposedOrganizationServiceInstanceById({
+        pathParams: { id: organizationServiceInstanceId },
+      });
+      return response.data;
+    },
     enabled: Boolean(organizationServiceInstanceId),
   });
 
@@ -62,7 +56,7 @@ export default function PageContent() {
     return <div>Service instance not found</div>;
   }
 
-  const serviceInstance = data?.body as ComposedOrganizationServiceInstanceReadModel;
+  const serviceInstance = data as ComposedOrganizationServiceInstanceReadModel;
 
   return (
     <div className="space-y-6">

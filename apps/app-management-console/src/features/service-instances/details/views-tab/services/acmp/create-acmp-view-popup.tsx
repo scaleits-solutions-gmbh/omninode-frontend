@@ -26,14 +26,11 @@ import {
   SelectValue,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CreateAcmpViewPopupProps {
   show: boolean;
@@ -51,7 +48,6 @@ export default function CreateAcmpViewPopup({
     organizationServiceInstanceId: string;
   }>();
   const queryClient = useQueryClient();
-
   const [name, setName] = React.useState("");
   const [filterType, setFilterType] = React.useState<ACMPFilterType>(
     ACMPFilterType.None
@@ -62,8 +58,9 @@ export default function CreateAcmpViewPopup({
   const [canViewDevices, setCanViewDevices] = React.useState<boolean>(true);
   const [canViewJobs, setCanViewJobs] = React.useState<boolean>(false);
   const [canPushRollouts, setCanPushRollouts] = React.useState<boolean>(false);
-  const [canPushClientCommands, setCanPushClientCommands] =
-    React.useState<boolean>(false);
+  const [canPushClientCommands, setCanPushClientCommands] = React.useState<boolean>(false);
+  const [canViewAssets, setCanViewAssets] = React.useState<boolean>(false);
+  const [canViewTickets, setCanViewTickets] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (show) {
@@ -76,37 +73,34 @@ export default function CreateAcmpViewPopup({
       setCanViewJobs(false);
       setCanPushRollouts(false);
       setCanPushClientCommands(false);
+      setCanViewAssets(false);
+      setCanViewTickets(false);
     }
   }, [show]);
 
-  const isTenantFilter = filterType === ACMPFilterType.Tenant;
   const isValidName = name.trim().length > 0;
-  const isValidTenantId = !isTenantFilter || tenantId.trim().length > 0;
-  const canSubmit = isValidName && isValidTenantId;
+  const canSubmit = isValidName;
 
   const createViewMutation = useAuthedMutation({
     mutationFn: async ({ session }: { session: Session }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.createServiceView({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            viewId: crypto.randomUUID(),
-            organizationServiceInstanceId:
-              organizationServiceInstanceId as string,
-            name: name.trim(),
-            service: Service.Acmp,
-            view: {
-              filterType,
-              filterValue1: tenantId,
-              filterValue2: groupId,
-              canViewDashboard,
-              canViewDevices,
-              canViewJobs,
-              canPushRollouts,
-              canPushClientCommands,
-            },
+      await getServiceClient(session).createServiceView({
+        body: {
+          viewId: crypto.randomUUID(),
+          organizationServiceInstanceId:
+            organizationServiceInstanceId as string,
+          name: name.trim(),
+          service: Service.Acmp,
+          view: {
+            filterType,
+            filterValue1: tenantId,
+            filterValue2: groupId,
+            canViewDashboard,
+            canViewDevices,
+            canViewJobs,
+            canPushRollouts,
+            canPushClientCommands,
+            canViewAssets,
+            canViewTickets,
           },
         },
       });
@@ -230,6 +224,24 @@ export default function CreateAcmpViewPopup({
                 />
                 <span>Push client commands</span>
               </label>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={canViewAssets}
+                  onCheckedChange={(checked) =>
+                    setCanViewAssets(checked as boolean)
+                  }
+                />
+                <span>View assets</span>
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={canViewTickets}
+                  onCheckedChange={(checked) =>
+                    setCanViewTickets(checked as boolean)
+                  }
+                />
+                <span>View tickets</span>
+              </label>
             </div>
           </div>
         </div>
@@ -258,5 +270,4 @@ export default function CreateAcmpViewPopup({
     </Dialog>
   );
 }
-
 

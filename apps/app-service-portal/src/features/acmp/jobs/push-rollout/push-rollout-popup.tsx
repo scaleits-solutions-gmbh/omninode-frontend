@@ -14,21 +14,21 @@ import { useState } from "react";
 import PushRolloutPopupStep1 from "./push-rollout-popup-step1";
 import PushRolloutPopupStep2 from "./push-rollout-popup-step2";
 import PushRolloutPopupStep3 from "./push-rollout-popup-step3";
-import { AcmpRolloutTemplateListItem, AcmpClientListItem } from "@repo/lib-api-client";
+import type { AcmpRolloutTemplateListItemReadModel, AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export default function PushRolloutPopup() {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [rollout, setRollout] = useState<AcmpRolloutTemplateListItem | undefined>(undefined);
-  const [clients, setClients] = useState<AcmpClientListItem[]>([]);
+  const [rollout, setRollout] = useState<AcmpRolloutTemplateListItemReadModel | undefined>(undefined);
+  const [clients, setClients] = useState<AcmpClientListItemReadModel[]>([]);
   
 
-  const handleNextStep1 = (rollout: AcmpRolloutTemplateListItem) => {
+  const handleNextStep1 = (rollout: AcmpRolloutTemplateListItemReadModel) => {
     setRollout(rollout);
     setStep(2);
   };
 
-  const handleNextStep2 = (clients: AcmpClientListItem[]) => {
+  const handleNextStep2 = (clients: AcmpClientListItemReadModel[]) => {
     setClients(clients);
     setStep(3);
   };

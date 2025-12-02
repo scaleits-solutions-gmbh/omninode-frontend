@@ -1,9 +1,4 @@
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
-import { TrustedBy } from "@/components/TrustedBy";
-import { FeaturesDiagram } from "@/components/FeaturesDiagram";
-import { IntegrationsCarousel } from "@/components/IntegrationsCarousel";
-import { CallToAction } from "@/components/CallToAction";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { Soon } from "@/components/Soon";

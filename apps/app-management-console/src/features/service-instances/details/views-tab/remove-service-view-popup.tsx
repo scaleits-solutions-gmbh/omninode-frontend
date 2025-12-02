@@ -18,7 +18,7 @@ import {
 import { AlertCircle } from "lucide-react";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import { baseOmninodeApiClient } from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 
 interface RemoveServiceViewPopupProps {
   show: boolean;
@@ -34,10 +34,9 @@ export default function RemoveServiceViewPopup({
   onRemoved,
 }: RemoveServiceViewPopupProps) {
   const removeViewMutation = useAuthedMutation({
-    mutationFn: async (): Promise<void> => {
+    mutationFn: async ({ session }): Promise<void> => {
       // TODO: wire to real remove-service-view endpoint
-      await baseOmninodeApiClient()
-        .serviceMicroservice; // placeholder to keep pattern consistent
+      await getServiceClient(session); // placeholder to keep pattern consistent
       throw new Error("Remove service view endpoint not yet implemented");
     },
     onSuccess: () => {

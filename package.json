@@ -2,9 +2,9 @@
   "name": "omninode-frontend",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=!service-portal --filter=!desk",
-    "dev": "turbo run dev --filter=!service-portal --filter=!desk",
-    "start": "turbo run start --filter=!service-portal --filter=!desk",
+    "build": "turbo run build --filter=!desk",
+    "dev": "turbo run dev --filter=!desk",
+    "start": "turbo run start --filter=!desk",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

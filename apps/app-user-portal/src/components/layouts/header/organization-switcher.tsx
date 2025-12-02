@@ -18,7 +18,7 @@ import {
   SearchInput,
 } from "@repo/pkg-frontend-common-kit/components";
 import { UserOrganizationReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 import { MANAGEMENT_CONSOLE_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import Link from "next/link";
@@ -28,10 +28,17 @@ export default function OrganizationSwitcher() {
   // Move all hooks to the top before any conditional logic
   const [search, setSearch] = React.useState("");
   const isMobile = useIsMobile();
-  const { companies,selectedOrganizationId, isLoading, error, setSelectedOrganizationId, selectedOrganization } = useGetCurrentOrganization();
+  const { 
+    organizations, 
+    organizationId, 
+    organization, 
+    isLoading, 
+    error, 
+    setOrganizationId 
+  } = usePersistedCurrentOrganization();
 
 
-  if (isLoading || !companies) {
+  if (isLoading || !organizations) {
     return (
       <div className="flex items-center gap-2 px-2">
         <Skeleton className="h-8 w-8 rounded-md" />
@@ -47,7 +54,7 @@ export default function OrganizationSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {companies.length > 0 ? (
+        {organizations.length > 0 ? (
         <Button
           variant="ghost"
           size="sm"
@@ -55,12 +62,12 @@ export default function OrganizationSwitcher() {
         >
           <Avatar className="h-6 w-6 rounded-sm">
             <AvatarImage />
-            <AvatarFallback seed={selectedOrganizationId ?? undefined}>
-              {selectedOrganization?.name.charAt(0)}
+            <AvatarFallback seed={organizationId ?? undefined}>
+              {organization?.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <span className="text-sm font-medium truncate max-w-24">
-            {selectedOrganization?.name}
+            {organization?.name}
           </span>
             <ChevronDown className="h-3 w-3 text-muted-foreground" />
           </Button>
@@ -83,25 +90,25 @@ export default function OrganizationSwitcher() {
               <span className="text-sm font-medium">New Organization</span>
             </Button>
           </Link>
-          {companies.map((company: UserOrganizationReadModel) => (
+          {organizations.map((org: UserOrganizationReadModel) => (
             <DropdownMenuItem
-              key={company.id}
-              onClick={() => setSelectedOrganizationId(company.organizationId)}
+              key={org.id}
+              onClick={() => setOrganizationId(org.organizationId)}
               className="gap-2 p-2"
             >
               <Avatar className="size-6 rounded-sm">
                 <AvatarImage />
-                <AvatarFallback seed={company.organizationId}>
-                  {company.name.charAt(0)}
+                <AvatarFallback seed={org.organizationId}>
+                  {org.name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{company.name}</span>
+                <span className="truncate font-medium">{org.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  {company.role}
+                  {org.role}
                 </span>
               </div>
-              {company.organizationId === selectedOrganizationId && (
+              {org.organizationId === organizationId && (
                 <Check className="h-4 w-4 text-primary" />
               )}
             </DropdownMenuItem>

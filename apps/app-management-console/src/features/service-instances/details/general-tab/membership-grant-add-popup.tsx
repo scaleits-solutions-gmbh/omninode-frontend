@@ -31,10 +31,7 @@ import {
 import { AlertCircle } from "lucide-react";
 import { useAuthedMutation, useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { toast } from "sonner";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient, getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { Session } from "next-auth";
 import { useParams } from "next/navigation";
 
@@ -85,26 +82,22 @@ export default function MembershipGrantAddPopup({
       show,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findComposedOrganizationMemberships(
-        {
-          request: {
-            pathParams: { id: organizationId as string },
-            queryParams: {
-              pageSize: 50,
-              page: 1,
-              searchTerm: undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).findComposedOrganizationMemberships({
+        pathParams: { id: organizationId as string },
+        queryParams: {
+          pageSize: 50,
+          page: 1,
+          searchTerm: undefined,
+        },
+      });
+      return response.data;
     },
     enabled: show,
   });
 
   const memberships: ComposedOrganizationMembershipReadModel[] = useMemo(
     () =>
-      (membershipsData?.body.data as ComposedOrganizationMembershipReadModel[]) ||
+      (membershipsData?.data as ComposedOrganizationMembershipReadModel[]) ||
       [],
     [membershipsData]
   );
@@ -120,26 +113,22 @@ export default function MembershipGrantAddPopup({
       show,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.findComposedPaginatedServiceViews(
-        {
-          request: {
-            pathParams: { id: serviceInstanceId as string },
-            queryParams: {
-              pageSize: 50,
-              page: 1,
-              searchTerm: undefined,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getServiceClient(session).findComposedPaginatedServiceViews({
+        pathParams: { id: serviceInstanceId as string },
+        queryParams: {
+          pageSize: 50,
+          page: 1,
+          searchTerm: undefined,
+        },
+      });
+      return response.data;
     },
     enabled: show && Boolean(serviceInstanceId),
   });
 
   const availableViews: ComposedServiceViewReadModel[] = useMemo(
     () =>
-      ((viewsData?.body.data as ComposedServiceViewReadModel[]) || []) as ComposedServiceViewReadModel[],
+      ((viewsData?.data as ComposedServiceViewReadModel[]) || []) as ComposedServiceViewReadModel[],
     [viewsData]
   );
 
@@ -165,19 +154,12 @@ export default function MembershipGrantAddPopup({
       session: Session;
       variables: { membershipId: string; viewId: string };
     }): Promise<void> => {
-      const apiClient = baseOmninodeApiClient();
-
-      await apiClient.serviceMicroservice.grantServiceViewToOrganizationMembership(
-        {
-          apiAuthentication: getApiAuthentication(session.access_token),
-          request: {
-            body: {
-              viewId: variables.viewId,
-              organizationMembershipId: variables.membershipId,
-            },
-          },
-        }
-      );
+      await getServiceClient(session).grantServiceViewToOrganizationMembership({
+        body: {
+          viewId: variables.viewId,
+          organizationMembershipId: variables.membershipId,
+        },
+      });
     },
     onSuccess: () => {
       toast.success("Access granted successfully");

@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeSalesOrderItem } from "@/types/weclapp/sales-order";
+import type { WeclappSalesOrderItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 // Extended type to include the calculated total
-type SalesOrderItemWithTotal = FeSalesOrderItem & {
+type SalesOrderItemWithTotal = WeclappSalesOrderItemReadModel & {
   total: string;
 };
 

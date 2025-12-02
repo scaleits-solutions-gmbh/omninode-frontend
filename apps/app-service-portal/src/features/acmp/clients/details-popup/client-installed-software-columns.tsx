@@ -1,8 +1,8 @@
+import type { AcmpClientInstalledSoftwareListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
-import type { AcmpClientInstalledSoftwareListItem } from "@repo/lib-api-client";
 import { formatDateDe } from "@/lib/utils/ui/date-format";
 
-export const installedSoftwareColumns: ColumnDef<AcmpClientInstalledSoftwareListItem>[] = [
+export const installedSoftwareColumns: ColumnDef<AcmpClientInstalledSoftwareListItemReadModel>[] = [
   {
     size: 35,
     minSize: 200,

@@ -19,21 +19,21 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { quotationDocumentsColumns } from "./quotation-documents-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchWeclappQuotationDocuments } from "@/lib/api-client/weclapp/quotation";
-
-
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 
 import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
+import { useParams } from "next/navigation";
 
 interface QuotationDocumentsListProps {
   quotationId: string;
 }
 
 export const QuotationDocumentsList = ({ quotationId }: QuotationDocumentsListProps) => {
+  const { viewId } = useParams();
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -43,13 +43,24 @@ export const QuotationDocumentsList = ({ quotationId }: QuotationDocumentsListPr
     setPage(1); // Reset to first page when searching
   };
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["quotationDocuments", quotationId, searchText, page, pageSize],
-    queryFn: () => fetchWeclappQuotationDocuments(quotationId, searchText, page, pageSize),
+  const { data, isLoading, error } = useAuthedQuery({
+    queryKey: ["quotationDocuments", viewId, quotationId, searchText, page, pageSize],
+    enabled: Boolean(viewId) && Boolean(quotationId),
+    queryFn: async ({ session }) => {
+      const response = await getWeclappServiceClient(session).getWeclappQuotationDocuments({
+        pathParams: { viewId: viewId as string, quotationId },
+        queryParams: {
+          page,
+          pageSize,
+          search: searchText,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: quotationDocumentsColumns,
     getCoreRowModel: getCoreRowModel(),
     pageCount: data?.totalPages || 0,
@@ -173,7 +184,7 @@ export const QuotationDocumentsList = ({ quotationId }: QuotationDocumentsListPr
             <DataTableViewOptions table={table} />
         </CardHeader>
         <CardContent className="space-y-4">
-      {data?.items && data.items.length > 0 ? (
+      {data?.data && data.data.length > 0 ? (
         <div className="border rounded-md">
           <Table>
             <TableHeader>

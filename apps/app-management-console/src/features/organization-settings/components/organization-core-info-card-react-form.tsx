@@ -19,7 +19,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { useForm } from "@tanstack/react-form";
 import { useAuthedMutation, useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { Session } from "next-auth";
@@ -40,37 +40,36 @@ export default function OrganizationCoreInfoCardReactForm() {
 
   const { data, isLoading, error } = useAuthedQuery({
     queryKey: ["organization", organizationId],
-    queryFn: async ({ session }) =>
-      await baseOmninodeApiClient().organizationMicroservice.findOrganizationById({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: { pathParams: { id: organizationId as string } },
-      }),
+    queryFn: async ({ session }) => {
+      const response = await getOrganizationClient(session).findOrganizationById({
+        pathParams: { id: organizationId as string },
+      });
+      return response.data;
+    },
     enabled: Boolean(organizationId),
     staleTime: 60_000, // Consider data fresh for 60 seconds
     refetchOnWindowFocus: false, // Don't refetch when window regains focus
   });
 
-  const org = data?.body;
+  const org = data;
 
   const updateMutation = useAuthedMutation({
     mutationFn: async ({ session, variables }: { session: Session; variables: { name: string; countryCode: CountryCode; city: string; address: string; industry: Industry; currency: Currency; email?: string; phone?: string; taxId?: string } }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.updateOrganizationCoreInfo({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          pathParams: { id: organizationId as string },
-          body: {
-            name: variables.name,
-            countryCode: variables.countryCode,
-            city: variables.city,
-            address: variables.address,
-            industry: variables.industry,
-            currency: variables.currency,
-            email: variables.email || undefined,
-            phone: variables.phone || undefined,
-            taxId: variables.taxId || undefined,
-          },
+      const response = await getOrganizationClient(session).updateOrganizationCoreInfo({
+        pathParams: { id: organizationId as string },
+        body: {
+          name: variables.name,
+          countryCode: variables.countryCode,
+          city: variables.city,
+          address: variables.address,
+          industry: variables.industry,
+          currency: variables.currency,
+          email: variables.email || undefined,
+          phone: variables.phone || undefined,
+          taxId: variables.taxId || undefined,
         },
       });
+      return response.data;
     },
     onMutate: () => toast.loading("Saving...", { id: "save-org" }),
     onError: (e: Error) => toast.error(e.message || "Failed to save", { id: "save-org" }),

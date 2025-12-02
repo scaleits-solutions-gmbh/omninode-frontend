@@ -32,10 +32,7 @@ import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
 export const UserInviteList = () => {
@@ -55,26 +52,22 @@ export const UserInviteList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationMembershipInvites(
-        {
-          request: {
-            pathParams: {
-              id: organizationId as string,
-            },
-            queryParams: {
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              searchTerm: search,
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).findPaginatedOrganizationMembershipInvites({
+        pathParams: {
+          id: organizationId as string,
+        },
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          searchTerm: search,
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -86,7 +79,7 @@ export const UserInviteList = () => {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -224,7 +217,7 @@ export const UserInviteList = () => {
             isLoading={isLoading}
             showPageCount={false}
             showRowsPerPage={false}
-            totalRowsOverride={data?.body.total}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

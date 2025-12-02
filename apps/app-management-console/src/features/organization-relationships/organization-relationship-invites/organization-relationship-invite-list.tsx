@@ -32,10 +32,7 @@ import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
-import {
-  baseOmninodeApiClient,
-  getApiAuthentication,
-} from "@repo/omninode-api-client";
+import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
 interface OrganizationRelationshipInviteListProps {
@@ -62,26 +59,22 @@ export const OrganizationRelationshipInviteList = ({
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      return await baseOmninodeApiClient().organizationMicroservice.findPaginatedOrganizationRelationshipInvites(
-        {
-          request: {
-            pathParams: {
-              id: organizationId as string,
-            },
-            queryParams: {
-              pageSize: pagination.pageSize,
-              page: pagination.pageIndex + 1,
-              direction: inviteType === "sent" ? "sent" : "received",
-            },
-          },
-          apiAuthentication: getApiAuthentication(session.access_token),
-        }
-      );
+      const response = await getOrganizationClient(session).findPaginatedOrganizationRelationshipInvites({
+        pathParams: {
+          id: organizationId as string,
+        },
+        queryParams: {
+          pageSize: pagination.pageSize,
+          page: pagination.pageIndex + 1,
+          direction: inviteType === "sent" ? "sent" : "received",
+        },
+      });
+      return response.data;
     },
   });
 
   const table = useReactTable({
-    data: data?.body.data || [],
+    data: data?.data || [],
     columns: createColumns({
       currentOrganizationId: organizationId as string,
       inviteType,
@@ -96,7 +89,7 @@ export const OrganizationRelationshipInviteList = ({
     onPaginationChange: setPagination,
     onGlobalFilterChange: setSearch,
     manualPagination: true,
-    pageCount: data?.body.totalPages || 0,
+    pageCount: data?.totalPages || 0,
   });
 
   if (error) return <div>Error: {error.message}</div>;
@@ -234,7 +227,7 @@ export const OrganizationRelationshipInviteList = ({
             isLoading={isLoading}
             showPageCount={false}
             showRowsPerPage={false}
-            totalRowsOverride={data?.body.total}
+            totalRowsOverride={data?.total}
           />
         </CardContent>
       </Card>

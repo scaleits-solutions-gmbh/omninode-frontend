@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
-import { FeTicket } from "@/types/weclapp/ticket";
+import type { WeclappTicketListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
   Badge,
@@ -15,7 +15,7 @@ function ActionsColumn({
   router, 
   pathname 
 }: { 
-  row: FeTicket; 
+  row: WeclappTicketListItemReadModel; 
   router: AppRouterInstance; 
   pathname: string; 
 }) {
@@ -33,7 +33,7 @@ function ActionsColumn({
   );
 }
 
-export const createColumns = (router: AppRouterInstance, pathname: string): ColumnDef<FeTicket>[] => [
+export const createColumns = (router: AppRouterInstance, pathname: string): ColumnDef<WeclappTicketListItemReadModel>[] => [
   {
     size: 20,
     minSize: 100,

@@ -1,15 +1,19 @@
 "use client";
 import Link from "next/link";
-import { useGetCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
-import { OrganizationRole } from "@scaleits-solutions-gmbh/services";
+import { useRouteCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Lock } from "lucide-react";
 
 export default function ManagementConsoleLink() {
-  const { selectedOrganization } = useGetCurrentOrganization();
+  const { organization } = useRouteCurrentOrganization();
 
-  if (selectedOrganization?.organizationRole !== OrganizationRole.Member) {
+  // Allow access if user is Owner or Admin
+  if (organization?.role !== OrganizationRole.Member) {
     return (
-      <Link className="hidden md:flex" href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}>
+      <Link
+        className="hidden md:flex"
+        href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}
+      >
         Management Console
       </Link>
     );

@@ -2,17 +2,17 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, FileText } from "lucide-react";
-import { FeQuotation } from "@/types/weclapp/quotation";
+import type { WeclappQuotationListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Badge,
   Button
 } from "@repo/pkg-frontend-common-kit/components";
 
 export interface ColumnProps {
-  onViewDetails: (quotation: FeQuotation) => void;
+  onViewDetails: (quotation: WeclappQuotationListItemReadModel) => void;
 }
 
-export const createColumns = (props: ColumnProps): ColumnDef<FeQuotation>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<WeclappQuotationListItemReadModel>[] => {
   return [
     {
       size: 20,

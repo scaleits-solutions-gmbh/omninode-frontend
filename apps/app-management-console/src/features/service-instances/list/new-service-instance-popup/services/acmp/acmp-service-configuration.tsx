@@ -7,7 +7,7 @@ import BaseServiceConfiguration from "../base-service-configuration";
 import AcmpConnectionDetails from "./acmp-connection-details";
 import ServiceBasicInformation from "../service-basic-information";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import { baseOmninodeApiClient, getApiAuthentication } from "@repo/omninode-api-client";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -49,21 +49,19 @@ export default function AcmpForm({
         apiKey: string;
       };
     }) => {
-      return await baseOmninodeApiClient().serviceMicroservice.createServiceInstance({
-        apiAuthentication: getApiAuthentication(session.access_token),
-        request: {
-          body: {
-            service: Service.Acmp,
-            organizationId: organizationId as string,
-            name: variables.name,
-            description: variables.description,
-            config: {
-              hostname: variables.hostname,
-              apiKey: variables.apiKey,
-            },
+      const response = await getServiceClient(session).createServiceInstance({
+        body: {
+          service: Service.Acmp,
+          organizationId: organizationId as string,
+          name: variables.name,
+          description: variables.description,
+          config: {
+            hostname: variables.hostname,
+            apiKey: variables.apiKey,
           },
         },
       });
+      return response.data;
     },
     onMutate: () => toast.loading("Creating service instance...", { id: "create-acmp-si" }),
     onError: (e: Error) =>
