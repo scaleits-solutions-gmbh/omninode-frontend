@@ -1,6 +1,5 @@
 "use client";
 
-import type { DialogProps } from "@radix-ui/react-dialog";
 import {
   Button,
   CommandDialog,
@@ -11,13 +10,14 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
+  Dialog,
 } from "@repo/pkg-frontend-common-kit/components";
 import { CreditCard, Group, Layers2, LayoutDashboard, Search, Settings, Smile, Users } from "lucide-react";
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useRouteCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
-export default function GlobalSearch({ ...props }: DialogProps) {
+export default function GlobalSearch({ ...props }: React.ComponentProps<typeof Dialog>) {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const { organizationId } = useRouteCurrentOrganization();
