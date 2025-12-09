@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = () => {
+const nextConfig = (): NextConfig => {
   return {
     async rewrites() {
       const stage = process.env.NEXT_PUBLIC_STAGE;
