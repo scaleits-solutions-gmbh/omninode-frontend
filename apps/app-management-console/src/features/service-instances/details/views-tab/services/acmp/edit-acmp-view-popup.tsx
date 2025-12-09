@@ -144,7 +144,10 @@ function EditAcmpViewPopupInner({
     canViewAssets !== (original?.canViewAssets ?? false) ||
     canViewTickets !== (original?.canViewTickets ?? false);
 
-  const canSubmit = isDirty && name.trim().length > 0;
+  const isTenantFilter = filterType === ACMPFilterType.Tenant;
+  const isValidName = name.trim().length > 0;
+  const isValidTenantFilter = !isTenantFilter || (isTenantFilter && tenantId.trim().length > 0 && groupId.trim().length > 0);
+  const canSubmit = isDirty && isValidName && isValidTenantFilter;
 
   const updateViewMutation = useAuthedMutation({
     mutationFn: async ({

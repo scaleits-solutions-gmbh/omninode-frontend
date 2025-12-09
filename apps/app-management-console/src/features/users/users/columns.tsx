@@ -16,7 +16,7 @@ import {
   organizationRoleName,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Eye } from "lucide-react";
 
 function getInitials(name: string): string {
   const parts = name.split(" ").filter(Boolean);
@@ -103,6 +103,9 @@ export const createColumns = (
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => props.onViewDetails(row.original)}>
+                View Details
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => props.onChangeRole(row.original)}>
                 Change role
               </DropdownMenuItem>

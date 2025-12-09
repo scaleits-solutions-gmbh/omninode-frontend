@@ -44,6 +44,8 @@ export const createColumns = (
 ): ColumnDef<ComposedOrganizationServiceInstanceListItemReadModel>[] => {
   return [
     {
+      id: "name",
+      accessorFn: () => undefined, // Required for column visibility toggle
       size: 30,
       minSize: 200,
       header: "Name",
@@ -60,6 +62,8 @@ export const createColumns = (
       },
     },
     {
+      id: "service",
+      accessorFn: () => undefined, // Required for column visibility toggle
       size: 20,
       minSize: 120,
       header: "Service",
@@ -79,6 +83,8 @@ export const createColumns = (
       },
     },
     {
+      id: "source",
+      accessorFn: () => undefined, // Required for column visibility toggle
       size: 20,
       minSize: 150,
       header: "Source",

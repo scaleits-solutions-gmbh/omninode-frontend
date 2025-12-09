@@ -56,10 +56,15 @@ export const authOptions: AuthOptions = {
         // Update token with account information
         token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
-        token.access_token_expired =
-          Date.now() + (account.expires_in - 15) * 1000;
-        token.refresh_token_expired =
-          Date.now() + (account.refresh_expires_in - 15) * 1000;
+        
+        // Calculate expiry - Keycloak/NextAuth provides expires_at (absolute Unix timestamp in seconds)
+        // instead of expires_in (relative seconds). We convert to milliseconds for middleware validation.
+        const expiresInSeconds = account.expires_in ?? (account.expires_at - Math.floor(Date.now() / 1000));
+        const refreshExpiresInSeconds = account.refresh_expires_in ?? 0;
+        
+        token.access_token_expired = Date.now() + (expiresInSeconds - 15) * 1000;
+        token.refresh_token_expired = Date.now() + (refreshExpiresInSeconds - 15) * 1000;
+        
         token.user = user;
         return token;
       } else {
@@ -73,6 +78,8 @@ export const authOptions: AuthOptions = {
             ...token,
             access_token: tokens.access_token,
             refresh_token: tokens.refresh_token ?? token.refresh_token,
+            // Update access_token_expired so middleware can validate the new token
+            access_token_expired: Date.now() + (tokens.expires_in - 15) * 1000,
             refresh_token_expired:
               tokens.refresh_expires_in ?? token.refresh_token_expired,
             expires_in: Math.floor(Date.now() / 1000 + tokens.expires_in),
@@ -142,7 +149,8 @@ declare module "next-auth" {
     access_token: string;
     refresh_token: string;
     idToken: string;
-    expires_in: number;
+    expires_in: number; // Relative seconds until expiry (may not be provided by all OIDC providers)
+    expires_at: number; // Absolute Unix timestamp in seconds when token expires (provided by Keycloak/NextAuth)
     refresh_expires_in: number;
     token_type: string;
     id_token: string;
@@ -170,6 +178,8 @@ declare module "next-auth/jwt" {
   interface JWT {
     access_token: string;
     refresh_token: string;
+    access_token_expired: number; // timestamp in ms when access token expires
+    refresh_token_expired: number;
     refresh_expires_in: number;
     expires_in: number;
     user: {

@@ -26,10 +26,16 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { recentUsersColumns } from "./recent-users-columns";
+import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { UserDetailsPopup } from "@/features/users/users/user-details-popup";
 
 export default function RecentUsers() {
   const [pagination] = useState({ pageIndex: 0, pageSize: 5 });
   const organizationId = useOrganizationId();
+  const [selectedUser, setSelectedUser] = useState<
+    ComposedOrganizationMembershipReadModel | undefined
+  >(undefined);
+  const [showUserDetails, setShowUserDetails] = useState(false);
 
   const { data: queryData, isLoading } = useAuthedQuery({
     queryKey: ["recentOrganizationUsers", organizationId],
@@ -57,7 +63,15 @@ export default function RecentUsers() {
   });
 
   return (
-    <Card className="gap-3">
+    <>
+      <UserDetailsPopup
+        user={showUserDetails ? selectedUser : undefined}
+        onClose={() => {
+          setShowUserDetails(false);
+          setSelectedUser(undefined);
+        }}
+      />
+      <Card className="gap-3">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base">Recent Users</CardTitle>
         <Button asChild variant="ghost" size="sm">
@@ -142,8 +156,12 @@ export default function RecentUsers() {
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}
-                      className="hover:bg-accent/50"
+                      className="hover:bg-accent/50 cursor-pointer"
                       data-state={row.getIsSelected() && "selected"}
+                      onClick={() => {
+                        setSelectedUser(row.original);
+                        setShowUserDetails(true);
+                      }}
                     >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
@@ -187,5 +205,6 @@ export default function RecentUsers() {
         />
       </CardContent>
     </Card>
+    </>
   );
 }
