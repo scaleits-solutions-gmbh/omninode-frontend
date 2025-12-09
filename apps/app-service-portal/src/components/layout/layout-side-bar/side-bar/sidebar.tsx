@@ -23,7 +23,7 @@ import {
   SidebarRail
 } from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
-import { Service } from "@scaleits-solutions-gmbh/services";
+import { Service } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Minus, Plus, Lock, Inbox, ExternalLink } from "lucide-react";
 
 import { usePathname, useParams } from "next/navigation";

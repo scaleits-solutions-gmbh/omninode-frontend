@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
 export default withAuth(
-  function middleware(request: NextRequest) {
-    console.log("middleware", request.nextUrl.pathname);
-
+  function proxy(request: NextRequest) {
+    console.log("proxy", request.nextUrl.pathname);
+    if(request.nextUrl.pathname === "/") {
+      return NextResponse.redirect(new URL("/user-portal", request.url), 308);
+    }
     return NextResponse.next();
   },
   {
@@ -27,6 +29,9 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+    // Root redirect
+    "/",
+    // Exclude API, Next internals, favicon, static files, and sub-app prefixes
+    "/((?!api|_next/static|_next/image|favicon.ico|user-portal|service-portal|management-console|.*\\..*).*)",
   ],
 };
