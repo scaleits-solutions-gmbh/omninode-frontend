@@ -3,7 +3,7 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { salesOrderDocumentsColumns } from "./sales-order-documents-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import { FileText, AlertCircle } from "lucide-react";
 
 import { useState } from "react";
@@ -46,7 +46,7 @@ export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsLis
     queryKey: ["salesOrderDocuments", viewId, salesOrderId, searchText, page, pageSize],
     enabled: Boolean(viewId) && Boolean(salesOrderId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappSalesOrderDocuments({
+      const response = await getServiceWeclappClient(session).getWeclappSalesOrderDocuments({
         pathParams: { viewId: viewId as string, salesOrderId },
         queryParams: {
           page,

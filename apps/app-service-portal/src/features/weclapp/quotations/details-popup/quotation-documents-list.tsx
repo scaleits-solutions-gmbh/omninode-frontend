@@ -20,7 +20,7 @@ import {
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { quotationDocumentsColumns } from "./quotation-documents-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 
@@ -47,7 +47,7 @@ export const QuotationDocumentsList = ({ quotationId }: QuotationDocumentsListPr
     queryKey: ["quotationDocuments", viewId, quotationId, searchText, page, pageSize],
     enabled: Boolean(viewId) && Boolean(quotationId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappQuotationDocuments({
+      const response = await getServiceWeclappClient(session).getWeclappQuotationDocuments({
         pathParams: { viewId: viewId as string, quotationId },
         queryParams: {
           page,

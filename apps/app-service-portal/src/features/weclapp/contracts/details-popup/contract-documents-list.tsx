@@ -20,7 +20,7 @@ import {
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { contractDocumentsColumns } from "./contract-documents-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 
@@ -49,7 +49,7 @@ export const ContractDocumentsList = ({
     queryKey: ["contractDocuments", viewId, contractId, searchText, page, pageSize],
     enabled: Boolean(viewId) && Boolean(contractId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappContractDocuments({
+      const response = await getServiceWeclappClient(session).getWeclappContractDocuments({
         pathParams: { viewId: viewId as string, contractId },
         queryParams: {
           page,

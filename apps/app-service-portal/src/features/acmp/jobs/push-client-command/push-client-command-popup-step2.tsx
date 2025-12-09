@@ -4,7 +4,7 @@ import { columns } from "./push-client-command-popup-step2-columns";
 import { useState } from "react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getFilteredRowModel } from "@tanstack/react-table";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
@@ -54,7 +54,7 @@ export default function PushClientCommandPopupStep2({
     ],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpClients({
+      const response = await getServiceAcmpClient(session).getAcmpClients({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,

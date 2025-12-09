@@ -1,6 +1,6 @@
 import { columns } from "./push-rollout-popup-step2-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useState } from "react";
 import {
@@ -54,7 +54,7 @@ export default function PushClientCommandPopupStep2({
     queryKey: ["clients", viewId, search, pagination.pageIndex, pagination.pageSize],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpClients({
+      const response = await getServiceAcmpClient(session).getAcmpClients({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,

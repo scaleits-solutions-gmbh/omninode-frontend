@@ -16,7 +16,7 @@ import {
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -51,7 +51,7 @@ export const TicketList = () => {
     ],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappTickets({
+      const response = await getServiceWeclappClient(session).getWeclappTickets({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,

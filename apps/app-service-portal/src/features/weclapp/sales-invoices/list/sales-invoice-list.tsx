@@ -17,7 +17,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -55,7 +55,7 @@ export const SalesInvoiceList = () => {
     ],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappSalesInvoices({
+      const response = await getServiceWeclappClient(session).getWeclappSalesInvoices({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,

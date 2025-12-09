@@ -23,7 +23,7 @@ import {
   Pencil,
 } from "lucide-react";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpRolloutTemplateListItemReadModel, AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -51,7 +51,7 @@ export default function PushRolloutPopupStep3({
 
   const pushMutation = useAuthedMutation<void, { rolloutId: string; clientIds: string[] }>({
     mutationFn: async ({ session, variables }) => {
-      await getAcmpServiceClient(session).pushAcmpRolloutTemplate({
+      await getServiceAcmpClient(session).pushAcmpRolloutTemplate({
         pathParams: { viewId: viewId as string },
         body: variables,
       });

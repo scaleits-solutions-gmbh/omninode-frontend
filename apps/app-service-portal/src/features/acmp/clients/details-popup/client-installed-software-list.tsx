@@ -21,7 +21,7 @@ import { useState } from "react";
 import { installedSoftwareColumns } from "./client-installed-software-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 
 interface ClientInstalledSoftwareListProps {
   clientId: string;
@@ -48,7 +48,7 @@ export const ClientInstalledSoftwareList = ({ clientId }: ClientInstalledSoftwar
     ],
     enabled: Boolean(viewId) && Boolean(clientId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpClientInstalledSoftware({
+      const response = await getServiceAcmpClient(session).getAcmpClientInstalledSoftware({
         pathParams: { viewId: viewId as string, clientId },
         queryParams: {
           page: pagination.pageIndex + 1,

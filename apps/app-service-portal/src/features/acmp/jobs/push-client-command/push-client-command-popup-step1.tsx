@@ -2,7 +2,7 @@
 
 import { columns } from "./push-client-command-popup-step1-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getFilteredRowModel } from "@tanstack/react-table";
@@ -49,7 +49,7 @@ export default function PushClientCommandPopupStep1({ initialSelectedClientComma
     ],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpClientCommands({
+      const response = await getServiceAcmpClient(session).getAcmpClientCommands({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,

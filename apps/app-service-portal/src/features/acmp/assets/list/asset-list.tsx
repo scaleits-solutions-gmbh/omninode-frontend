@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { createColumns } from "./columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 
 // removed mock data; using real API
@@ -63,7 +63,7 @@ export const AssetList = () => {
     ],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpAssets({
+      const response = await getServiceAcmpClient(session).getAcmpAssets({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,
