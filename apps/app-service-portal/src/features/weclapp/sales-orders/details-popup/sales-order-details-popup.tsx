@@ -1,4 +1,4 @@
-import { FeSalesOrder } from "@/types/weclapp/sales-order";
+import type { WeclappSalesOrderListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 
 import { SalesOrderItemsList } from "./sales-order-items-list";
@@ -21,7 +21,7 @@ import {
 
 
 interface SalesOrderDetailsPopupProps {
-  salesOrder?: FeSalesOrder;
+  salesOrder?: WeclappSalesOrderListItemReadModel;
   onClose: () => void;
 }
 

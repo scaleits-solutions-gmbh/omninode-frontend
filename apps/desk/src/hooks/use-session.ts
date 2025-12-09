@@ -1,23 +1,23 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export interface SessionData {
   currentUserId: string | undefined;
-  currentCompanyId: string | undefined;
-  managementConsoleAccess: ManagementConsoleAccess;
+  currentOrganizationId: string | undefined;
+  organizationRole: OrganizationRole | undefined;
 }
 
 const getSessionData = async (): Promise<SessionData> => {
-  const managementConsoleAccessCookie = Cookies.get("managementConsoleAccess");
+  const organizationRoleCookie = Cookies.get("organizationRole");
 
   return {
     currentUserId: Cookies.get("currentUserId"),
-    currentCompanyId: Cookies.get("currentCompanyId"),
-    managementConsoleAccess: managementConsoleAccessCookie
-      ? (managementConsoleAccessCookie as ManagementConsoleAccess)
-      : ManagementConsoleAccess.None,
+    currentOrganizationId: Cookies.get("currentOrganizationId"),
+    organizationRole: organizationRoleCookie
+      ? (organizationRoleCookie as OrganizationRole)
+      : undefined,
   };
 };
 
@@ -47,12 +47,12 @@ export function useUserId() {
   return sessionData?.currentUserId;
 }
 
-export function useCompanyId() {
+export function useOrganizationId() {
   const { sessionData } = useSession();
-  return sessionData?.currentCompanyId;
+  return sessionData?.currentOrganizationId;
 }
 
-export function useManagementConsoleAccess() {
+export function useOrganizationRole() {
   const { sessionData } = useSession();
-  return sessionData?.managementConsoleAccess || ManagementConsoleAccess.None;
+  return sessionData?.organizationRole;
 }

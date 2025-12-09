@@ -1,13 +1,22 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 /**
- * Get column style from column definition for consistent table column sizing
- * @param columnDef - The column definition containing size and minSize properties
- * @returns Object with width and minWidth CSS properties
+ * Get CSS style object for table column based on column definition
  */
-export const getColumnStyle = <T>(columnDef: ColumnDef<T>) => {
-  return {
-    width: columnDef.size ? `${columnDef.size}%` : 'auto',
-    minWidth: columnDef.minSize ? `${columnDef.minSize}px` : 'auto',
+export function getColumnStyle<TData>(columnDef: ColumnDef<TData, unknown>): React.CSSProperties {
+  const style: React.CSSProperties = {};
+  
+  if (columnDef.size) {
+    style.width = `${columnDef.size}%`;
   }
+  
+  if (columnDef.minSize) {
+    style.minWidth = `${columnDef.minSize}px`;
+  }
+  
+  if (columnDef.maxSize) {
+    style.maxWidth = `${columnDef.maxSize}px`;
+  }
+  
+  return style;
 }

@@ -13,14 +13,15 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { FeClientCommand } from "@/types/acmp/client-command";
-import { AcmpClientListItem, ApiClient } from "@repo/lib-api-client";
-import { useAuthedMutation, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
 interface PushClientCommandPopupStep3Props {
   clientCommand: FeClientCommand;
-  clients: AcmpClientListItem[];
+  clients: AcmpClientListItemReadModel[];
   onFinish: () => void;
   onBack: () => void;
 }
@@ -47,13 +48,13 @@ export default function PushClientCommandPopupStep3({
   const commandVersion = generateVersionFromId(clientCommand.id);
 
   const { viewId } = useParams();
-  const { accessToken } = useValidSession();
 
   const pushMutation = useAuthedMutation<void, { commandId: string; clientIds: string[] }>({
-    mutationFn: async ({ accessToken, variables }) => {
-      return ApiClient.pushAcmpClientCommands(accessToken, {
-        serviceInstanceId: viewId as string,
-      }, variables);
+    mutationFn: async ({ session, variables }) => {
+      await getServiceAcmpClient(session).pushAcmpClientCommands({
+        pathParams: { viewId: viewId as string },
+        body: variables,
+      });
     },
   });
 
@@ -157,7 +158,7 @@ export default function PushClientCommandPopupStep3({
         <CheckCircle />
         <AlertDescription>
           <span className="font-medium">Ready to execute</span>
-          The command &quot;{clientCommand.name}&quot; will be pushed to {clients.length}{" "}
+          The command &quot;{clientCommand.name}&quot; will be pushed to {clients.length}
           client{clients.length !== 1 ? "s" : ""}
         </AlertDescription>
       </Alert>

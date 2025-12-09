@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Handshake } from "lucide-react";
-import { FeContract } from "@/types/weclapp/contract";
+import type { WeclappContractListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Badge,
   Button
@@ -11,7 +11,7 @@ import { formatDateDe } from "@/lib/utils/ui/date-format";
 
 
 export interface ColumnProps {
-  onViewDetails: (quotation: FeContract) => void;
+  onViewDetails: (contract: WeclappContractListItemReadModel) => void;
 }
 /*
 Cols
@@ -24,7 +24,7 @@ status
 actions
 */
 
-export const createColumns = ({onViewDetails}: ColumnProps): ColumnDef<FeContract>[] => {
+export const createColumns = ({onViewDetails}: ColumnProps): ColumnDef<WeclappContractListItemReadModel>[] => {
   return [
   {
     size: 20,

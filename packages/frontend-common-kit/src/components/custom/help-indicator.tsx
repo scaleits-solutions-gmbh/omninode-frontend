@@ -14,11 +14,19 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  Card,
+  CardContent,
+  Input,
+  Label,
+  Textarea,
 } from "@/components/ui";
-import { HelpCircle, MessageSquare, CircleHelp, Headphones, Mail, Phone, Clock } from "lucide-react";
-import { useState } from "react";
-import { getFeedbackUrl } from "@/utils/url-utils/get-feedback-url";
-import Link from "next/link";
+import { HelpCircle, MessageSquare, CircleHelp, Headphones, Mail, Phone, Clock, Plus, Bug } from "lucide-react";
+import { useState, useRef } from "react";
+import { cn } from "@/utils/ui/cn";
+import { useAuthedMutation } from "@/hooks";
+import { getFeedbackClient } from "@/utils/api-clients";
+import { FeedbackType } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { toast } from "sonner";
 
 function FAQsPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const faqs = [
@@ -32,7 +40,7 @@ function FAQsPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (open:
     },
     {
       question: "How do I update my profile information?",
-      answer: "Go to Personal Settings from your user menu in the top right corner. You can edit your profile information and save changes there."
+      answer: "Go to Account Settings from your user menu in the top right corner. You can edit your profile information and save changes there."
     },
     {
       question: "What should I do if I receive a company invitation?",
@@ -133,9 +141,167 @@ function SupportPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (op
   );
 }
 
+function FeedbackPopup({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  const [selectedFeedbackType, setSelectedFeedbackType] = useState<FeedbackType>(FeedbackType.Feature);
+  const [subject, setSubject] = useState("");
+  const [description, setDescription] = useState("");
+  const loadingToastIdRef = useRef<string | number | undefined>(undefined);
+
+  const isValid = subject.trim().length > 0 && description.trim().length > 0;
+
+  const handleKeySelect = (event: React.KeyboardEvent<HTMLDivElement>, type: FeedbackType) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setSelectedFeedbackType(type);
+    }
+  };
+
+  const publishFeedbackMutation = useAuthedMutation({
+    onMutate: () => {
+      loadingToastIdRef.current = toast.loading("Submitting feedback...");
+    },
+    mutationFn: async ({ session }) => {
+      const response = await getFeedbackClient(session).publishFeedback({
+        body: {
+          feedbackType: selectedFeedbackType,
+          title: subject.trim(),
+          description: description.trim(),
+        },
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Feedback submitted successfully", { id: loadingToastIdRef.current });
+      setSubject("");
+      setDescription("");
+      setSelectedFeedbackType(FeedbackType.Feature);
+      onOpenChange(false);
+    },
+    onError: (error) => {
+      toast.error(`Failed to submit feedback: ${error.message}`, { id: loadingToastIdRef.current });
+    },
+    onSettled: () => {
+      loadingToastIdRef.current = undefined;
+    },
+  });
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isValid) return;
+    publishFeedbackMutation.mutate();
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageSquare className="h-5 w-5" />
+            Give Feedback
+          </DialogTitle>
+          <DialogDescription>
+            Tell us what to improve, fix, or consider next.
+          </DialogDescription>
+        </DialogHeader>
+        <form className="flex flex-col gap-5 mt-4" onSubmit={onSubmit}>
+          <div className="flex flex-col gap-2">
+            <div id="type" className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <Card
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedFeedbackType === FeedbackType.Feature}
+                className={cn(
+                  "flex-1 cursor-pointer transition-all",
+                  selectedFeedbackType === FeedbackType.Feature
+                    ? "ring-2 ring-green-400 border-green-400"
+                    : "hover:border-foreground/30"
+                )}
+                onClick={() => setSelectedFeedbackType(FeedbackType.Feature)}
+                onKeyDown={(e) => handleKeySelect(e, FeedbackType.Feature)}
+              >
+                <CardContent className="h-full py-3 flex flex-col gap-3 items-center justify-center">
+                  <Plus className="size-6 text-green-400" />
+                  <span className="text-sm font-medium text-center">Feature Request</span>
+                </CardContent>
+              </Card>
+              <Card
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedFeedbackType === FeedbackType.Bug}
+                className={cn(
+                  "flex-1 cursor-pointer transition-all",
+                  selectedFeedbackType === FeedbackType.Bug
+                    ? "ring-2 ring-red-400 border-red-400"
+                    : "hover:border-foreground/30"
+                )}
+                onClick={() => setSelectedFeedbackType(FeedbackType.Bug)}
+                onKeyDown={(e) => handleKeySelect(e, FeedbackType.Bug)}
+              >
+                <CardContent className="h-full py-3 flex flex-col gap-3 items-center justify-center">
+                  <Bug className="size-6 text-red-400" />
+                  <span className="text-sm font-medium text-center">Bug Report</span>
+                </CardContent>
+              </Card>
+              <Card
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedFeedbackType === FeedbackType.Other}
+                className={cn(
+                  "flex-1 cursor-pointer transition-all",
+                  selectedFeedbackType === FeedbackType.Other
+                    ? "ring-2 ring-blue-400 border-blue-400"
+                    : "hover:border-foreground/30"
+                )}
+                onClick={() => setSelectedFeedbackType(FeedbackType.Other)}
+                onKeyDown={(e) => handleKeySelect(e, FeedbackType.Other)}
+              >
+                <CardContent className="h-full py-3 flex flex-col gap-3 items-center justify-center">
+                  <MessageSquare className="size-6 text-blue-400" />
+                  <span className="text-sm font-medium text-center">Other</span>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="subject">Subject</Label>
+            <Input
+              id="subject"
+              placeholder="Brief summary"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              placeholder="Share details, steps to reproduce, or ideas..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={6}
+            />
+            <div className="text-xs text-muted-foreground text-right">
+              {description.length} characters
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-end gap-3 items-center">
+            <Button className="w-full" type="submit" disabled={!isValid || publishFeedbackMutation.isPending}>
+              {publishFeedbackMutation.isPending ? "Submitting..." : "Submit"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function HelpIndicator() {
   const [faqsOpen, setFaqsOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   return (
     <>
@@ -146,12 +312,13 @@ export function HelpIndicator() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
-          <Link href={getFeedbackUrl()}>
-            <DropdownMenuItem className="cursor-pointer">
-              <MessageSquare className="mr-2 h-4 w-4" />
-              Give Feedback
-            </DropdownMenuItem>
-          </Link>
+          <DropdownMenuItem 
+            className="cursor-pointer"
+            onClick={() => setFeedbackOpen(true)}
+          >
+            <MessageSquare className="mr-2 h-4 w-4" />
+            Give Feedback
+          </DropdownMenuItem>
 
           <DropdownMenuItem 
             className="cursor-pointer"
@@ -170,6 +337,7 @@ export function HelpIndicator() {
         </DropdownMenuContent>
       </DropdownMenu>
 
+      <FeedbackPopup open={feedbackOpen} onOpenChange={setFeedbackOpen} />
       <FAQsPopup open={faqsOpen} onOpenChange={setFaqsOpen} />
       <SupportPopup open={supportOpen} onOpenChange={setSupportOpen} />
     </>

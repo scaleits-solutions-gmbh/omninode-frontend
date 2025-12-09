@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeQuotationItem } from "@/types/weclapp/quotation";
+import type { WeclappQuotationItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 // Extended type to include the calculated total
-type QuotationItemWithTotal = FeQuotationItem & {
+type QuotationItemWithTotal = WeclappQuotationItemReadModel & {
   total: string;
 };
 

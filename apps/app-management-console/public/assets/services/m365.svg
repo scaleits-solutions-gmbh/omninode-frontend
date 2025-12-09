@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Microsoft 4-square logo -->
+  <!-- Top-left (red) -->
+  <rect x="0%" y="0%" width="45%" height="45%" fill="#F25022"/>
+  <!-- Top-right (green) -->
+  <rect x="55%" y="0%" width="45%" height="45%" fill="#7FBA00"/>
+  <!-- Bottom-left (blue) -->
+  <rect x="0%" y="55%" width="45%" height="45%" fill="#00A4EF"/>
+  <!-- Bottom-right (yellow) -->
+  <rect x="55%" y="55%" width="45%" height="45%" fill="#FFB900"/>
+</svg>

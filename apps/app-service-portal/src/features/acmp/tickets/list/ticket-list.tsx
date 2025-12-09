@@ -15,8 +15,8 @@ import {
   DataTableViewOptions,
   DataTablePagination,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { ApiClient } from "@repo/lib-api-client";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -50,7 +50,6 @@ export const TicketList = () => {
     impactDe: false,
   });
 
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const { data: tickets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
       "tickets",
@@ -59,17 +58,21 @@ export const TicketList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpTickets(accessToken, {
-        serviceInstanceId: viewId as string,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search: search,
-      }),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceAcmpClient(session).getAcmpTickets({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
   const [isFetchingPage, setIsFetchingPage] = useState(false);
 
   const table = useReactTable({

@@ -5,7 +5,7 @@ import LayoutCenteredXY from '@/components/layouts/layout-centered-xy/layout-cen
 
 export default function NotFound() {
   return (
-    <LayoutCenteredXY>
+    <LayoutCenteredXY showHeader={false}>
       <Card className="w-full max-w-md">
         <CardContent className="pt-6">
           <div className="flex flex-col items-center text-center space-y-4">

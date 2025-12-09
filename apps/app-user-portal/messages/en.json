@@ -30,9 +30,9 @@
       },
       "companySwitcher": {
         "failedToLoad": "Failed to load",
-        "switchingCompany": "Switching company...",
-        "companySwitchedSuccessfully": "Company switched successfully",
-        "failedToSwitchCompany": "Failed to switch company"
+        "switchingOrganization": "Switching company...",
+        "companySwitchedSuccessfully": "Organization switched successfully",
+        "failedToSwitchOrganization": "Failed to switch company"
       },
       "mobileHeader": {
         "toggleMenu": "Toggle menu"
@@ -96,7 +96,7 @@
     },
     "personalSettings": {
       "pageContent": {
-        "title": "Personal Settings",
+        "title": "Account Settings",
         "subtitle": "Manage your profile information and account preferences"       
       },
       "profileCard": {
@@ -150,7 +150,7 @@
     "userInvite": {
       "pageContent": {},
       "userInviteStep1": {
-        "title": "Company Invitation",
+        "title": "Organization Invitation",
         "subtitle": "You've been invited to join a company",
         "noInvitationFound": "No invitation found",
         "unableToLoadInvitation": "Unable to load invitation details",
@@ -186,7 +186,7 @@
     "companyInvite": {
       "pageContent": {},
       "companyInviteCard": {
-        "title": "Company Invitation",
+        "title": "Organization Invitation",
         "subtitle": "Your company has invited for a collaboration",
         "customer": "Customer",
         "serviceProvider": "Service Provider",
@@ -265,8 +265,8 @@
     "expiredInviteDescription": "The invite link has expired",
     "incorrectUser": "Incorrect user",
     "incorrectUserDescription": "The invite link is not for you",
-    "incorrectCompany": "Incorrect company",
-    "incorrectCompanyDescription": "The invite link is not for your company",
+    "incorrectOrganization": "Incorrect company",
+    "incorrectOrganizationDescription": "The invite link is not for your company",
     "tokenExpired": "Token expired",
     "tokenExpiredDescription": "This reset link has expired",
     "tokenUsed": "Token already used",
@@ -286,7 +286,7 @@
       "description": "Reset your OmniNode account password"
     },
     "personalSettings": {
-      "title": "Personal Settings | OmniNode",
+      "title": "Account Settings | OmniNode",
       "description": "Manage your personal settings and preferences"
     },
     "userInvite": {
@@ -294,7 +294,7 @@
       "description": "Accept your user invitation to join OmniNode"
     },
     "companyInvite": {
-      "title": "Company Invitation | OmniNode",
+      "title": "Organization Invitation | OmniNode",
       "description": "Accept your company invitation to join OmniNode"
     },
     "resetPassword": {

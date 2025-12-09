@@ -2,6 +2,8 @@
 
 import { useMemo } from "react";
 import { useSession } from "next-auth/react";
+// Import module augmentation to ensure extended Session type is available
+import "../utils/next-auth-options";
 
 export type UseValidSessionResult = {
   accessToken?: string;

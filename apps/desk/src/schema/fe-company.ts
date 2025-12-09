@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-export const FeCompanySchema = z.object({
+export const FeOrganizationSchema = z.object({
   id: z.string(),
   name: z.string(),
   type: z.string().optional(),
 });
 
-export type FeCompany = z.infer<typeof FeCompanySchema>;
+export type FeOrganization = z.infer<typeof FeOrganizationSchema>;

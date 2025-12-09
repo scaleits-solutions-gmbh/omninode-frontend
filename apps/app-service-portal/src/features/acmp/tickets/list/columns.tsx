@@ -1,8 +1,8 @@
+import { Badge, Button } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpTicketListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Ticket } from "lucide-react";
-import { Badge, Button } from "@repo/pkg-frontend-common-kit/components";
 import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
-import { AcmpTicketListItem } from "@repo/lib-api-client";
 
 function ActionsColumn() {
   return (
@@ -18,7 +18,7 @@ function ActionsColumn() {
   );
 }
 
-export const createColumns = (): ColumnDef<AcmpTicketListItem>[] => [
+export const createColumns = (): ColumnDef<AcmpTicketListItemReadModel>[] => [
   {
     size: 20,
     minSize: 100,

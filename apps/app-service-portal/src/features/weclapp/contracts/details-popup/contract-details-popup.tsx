@@ -1,4 +1,4 @@
-import { FeContract } from "@/types/weclapp/contract";
+import type { WeclappContractListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 
 import { ContractItemsList } from "./contract-items-list";
@@ -21,7 +21,7 @@ import {
 
 
 interface ContractDetailsPopupProps {
-  contract?: FeContract;
+  contract?: WeclappContractListItemReadModel;
   onClose: () => void;
 }
 

@@ -19,13 +19,14 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { contractDocumentsColumns } from "./contract-documents-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchWeclappContractDocuments } from "@/lib/api-client/weclapp/contract";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 
 import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
+import { useParams } from "next/navigation";
 
 interface ContractDocumentsListProps {
   contractId: string;
@@ -34,6 +35,7 @@ interface ContractDocumentsListProps {
 export const ContractDocumentsList = ({
   contractId,
 }: ContractDocumentsListProps) => {
+  const { viewId } = useParams();
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -43,14 +45,24 @@ export const ContractDocumentsList = ({
     setPage(1); // Reset to first page when searching
   };
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["contractDocuments", contractId, searchText, page, pageSize],
-    queryFn: () =>
-      fetchWeclappContractDocuments(contractId, searchText, page, pageSize),
+  const { data, isLoading, error } = useAuthedQuery({
+    queryKey: ["contractDocuments", viewId, contractId, searchText, page, pageSize],
+    enabled: Boolean(viewId) && Boolean(contractId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceWeclappClient(session).getWeclappContractDocuments({
+        pathParams: { viewId: viewId as string, contractId },
+        queryParams: {
+          page,
+          pageSize,
+          search: searchText,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: contractDocumentsColumns,
     getCoreRowModel: getCoreRowModel(),
     pageCount: data?.totalPages || 0,
@@ -174,7 +186,7 @@ export const ContractDocumentsList = ({
           <DataTableViewOptions table={table} />
         </CardHeader>
         <CardContent className="space-y-4">
-          {data?.items && data.items.length > 0 ? (
+          {data?.data && data.data.length > 0 ? (
             <div className="border rounded-md">
               <Table>
                 <TableHeader>

@@ -30,9 +30,9 @@
       },
       "companySwitcher": {
         "failedToLoad": "Échec du chargement",
-        "switchingCompany": "Changement d'entreprise...",
+        "switchingOrganization": "Changement d'entreprise...",
         "companySwitchedSuccessfully": "Entreprise changée avec succès",
-        "failedToSwitchCompany": "Échec du changement d'entreprise"
+        "failedToSwitchOrganization": "Échec du changement d'entreprise"
       },
       "mobileHeader": {
         "toggleMenu": "Basculer le menu"
@@ -265,8 +265,8 @@
     "expiredInviteDescription": "Le lien d'invitation a expiré",
     "incorrectUser": "Utilisateur incorrect",
     "incorrectUserDescription": "Le lien d'invitation ne vous est pas destiné",
-    "incorrectCompany": "Entreprise incorrecte",
-    "incorrectCompanyDescription": "Le lien d'invitation ne s'adresse pas à votre entreprise",
+    "incorrectOrganization": "Entreprise incorrecte",
+    "incorrectOrganizationDescription": "Le lien d'invitation ne s'adresse pas à votre entreprise",
     "tokenExpired": "Jeton expiré",
     "tokenExpiredDescription": "Ce lien de réinitialisation a expiré",
     "tokenUsed": "Jeton déjà utilisé",

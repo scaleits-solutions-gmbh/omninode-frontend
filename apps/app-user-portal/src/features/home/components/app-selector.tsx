@@ -16,17 +16,17 @@ import {
   MANAGEMENT_CONSOLE_BASE_URL,
   SERVICE_PORTAL_BASE_URL,
 } from "@repo/pkg-frontend-common-kit/constants";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ArrowRight, Globe, Lock, Settings } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 export default function AppSelector() {
   const managementConsoleUrl = getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL;
   const servicePortalUrl = getOriginUrl() + SERVICE_PORTAL_BASE_URL;
 
-  const { selectedCompany, companies, isLoading } = useGetCurrentCompany();
+  const { organization, organizations, isLoading } =
+    usePersistedCurrentOrganization();
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -80,12 +80,11 @@ export default function AppSelector() {
           </>
         ) : (
           <>
-            {companies?.length === 0 ? (
+            {organizations?.length === 0 ? (
               <></>
             ) : (
               <>
-                {selectedCompany?.managementConsoleAccess !==
-                ManagementConsoleAccess.User ? (
+                {organization && organization.role !== OrganizationRole.Member ? (
                   <Card className="">
                     <CardHeader className="pb-4">
                       <div className="flex items-center gap-3">
@@ -103,7 +102,15 @@ export default function AppSelector() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <Link href={managementConsoleUrl} className="block">
+                      <Link
+                        href={
+                          managementConsoleUrl +
+                          "/" +
+                          organization.organizationId +
+                          "/dashboard"
+                        }
+                        className="block"
+                      >
                         <Button className="w-full cursor-pointer" size="lg">
                           Access Console
                           <ArrowRight className="ml-2 h-4 w-4" />
@@ -161,7 +168,13 @@ export default function AppSelector() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <Link href={servicePortalUrl} className="block">
+                    <Link 
+                      href={
+                        servicePortalUrl + 
+                        (organization?.organizationId ? `/${organization.organizationId}` : "")
+                      } 
+                      className="block"
+                    >
                       <Button className="w-full cursor-pointer" size="lg">
                         Access Portal
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -174,7 +187,7 @@ export default function AppSelector() {
           </>
         )}
       </div>
-      {!isLoading && companies?.length === 0 && (
+      {!isLoading && organizations?.length === 0 && (
         <Card className="w-full max-w-md mx-auto -mt-8">
           <CardHeader className="pb-4">
             <CardTitle className="">No companies found</CardTitle>

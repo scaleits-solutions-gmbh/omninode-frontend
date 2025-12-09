@@ -16,8 +16,8 @@ import {
   DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
 
-import { fetchWeclappContracts } from "@/lib/api-client/weclapp/contract";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -29,14 +29,14 @@ import { createColumns } from "./columns";
 import { useState } from "react";
 
 import { ContractDetailsPopup } from "../details-popup/contract-details-popup";
-import { FeContract } from "@/types/weclapp/contract";
+import type { WeclappContractListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
 
 export const ContractList = () => {
   const { viewId } = useParams();
-  const [contract, setContract] = useState<FeContract | undefined>(
+  const [contract, setContract] = useState<WeclappContractListItemReadModel | undefined>(
     undefined
   );
   const [search, setSearch] = useState("");
@@ -45,7 +45,7 @@ export const ContractList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "contracts",
       viewId,
@@ -53,18 +53,24 @@ export const ContractList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappContracts(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceWeclappClient(session).getWeclappContracts({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (contract: FeContract) => {
+      onViewDetails: (contract: WeclappContractListItemReadModel) => {
         setContract(contract);
       },
     }),

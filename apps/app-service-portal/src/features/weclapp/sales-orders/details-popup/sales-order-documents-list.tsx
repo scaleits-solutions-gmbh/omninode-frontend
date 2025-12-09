@@ -2,8 +2,8 @@
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { salesOrderDocumentsColumns } from "./sales-order-documents-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchWeclappSalesOrderDocuments } from "@/lib/api-client/weclapp/sales-order";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import { FileText, AlertCircle } from "lucide-react";
 
 import { useState } from "react";
@@ -25,12 +25,14 @@ import {
     DataTableViewOptions,
   DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
+import { useParams } from "next/navigation";
 
 interface SalesOrderDocumentsListProps {
   salesOrderId: string;
 }
 
 export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsListProps) => {
+  const { viewId } = useParams();
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -40,13 +42,24 @@ export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsLis
     setPage(1); // Reset to first page when searching
   };
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["salesOrderDocuments", salesOrderId, searchText, page, pageSize],
-    queryFn: () => fetchWeclappSalesOrderDocuments(salesOrderId, searchText, page, pageSize),
+  const { data, isLoading, error } = useAuthedQuery({
+    queryKey: ["salesOrderDocuments", viewId, salesOrderId, searchText, page, pageSize],
+    enabled: Boolean(viewId) && Boolean(salesOrderId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceWeclappClient(session).getWeclappSalesOrderDocuments({
+        pathParams: { viewId: viewId as string, salesOrderId },
+        queryParams: {
+          page,
+          pageSize,
+          search: searchText,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: salesOrderDocumentsColumns,
     getCoreRowModel: getCoreRowModel(),
     pageCount: data?.totalPages || 0,
@@ -169,7 +182,7 @@ export const SalesOrderDocumentsList = ({ salesOrderId }: SalesOrderDocumentsLis
             <DataTableViewOptions table={table} />
         </CardHeader>
         <CardContent className="space-y-4">
-      {data?.items && data.items.length > 0 ? (
+      {data?.data && data.data.length > 0 ? (
         <div className="border rounded-md">
           <Table>
             <TableHeader>

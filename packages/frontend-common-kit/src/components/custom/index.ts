@@ -7,5 +7,7 @@ export { DataTableViewOptions } from "./data-table-view-options";
 export { DataTableFacetedFilter } from "./data-table-faceted-filter";
 export { DataTablePagination } from "./data-table-pagination";
 export { DataTablePaginationLoading } from "./data-table-pagination-loading";
+export { GenericPagination } from "./generic-pagination";
 export { HelpIndicator } from "./help-indicator";
 export { BaseLocaleSelector } from "./base-locale-selector";
+export { NotificationsIndicator } from "./notifications-indicator";

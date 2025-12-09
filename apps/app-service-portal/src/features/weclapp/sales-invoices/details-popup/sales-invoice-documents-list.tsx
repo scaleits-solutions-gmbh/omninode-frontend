@@ -19,15 +19,14 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { salesInvoiceDocumentsColumns } from "./sales-invoice-documents-columns";
-import { useQuery } from "@tanstack/react-query";
-import { fetchWeclappSalesInvoiceDocuments } from "@/lib/api-client/weclapp/sales-invoice";
-
-
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 
 import { useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
+import { useParams } from "next/navigation";
 
 interface SalesInvoiceDocumentsListProps {
   salesInvoiceId: string;
@@ -36,6 +35,7 @@ interface SalesInvoiceDocumentsListProps {
 export const SalesInvoiceDocumentsList = ({
   salesInvoiceId,
 }: SalesInvoiceDocumentsListProps) => {
+  const { viewId } = useParams();
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -45,25 +45,31 @@ export const SalesInvoiceDocumentsList = ({
     setPage(1); // Reset to first page when searching
   };
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "salesInvoiceDocuments",
+      viewId,
       salesInvoiceId,
       searchText,
       page,
       pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappSalesInvoiceDocuments(
-        salesInvoiceId,
-        searchText,
-        page,
-        pageSize
-      ),
+    enabled: Boolean(viewId) && Boolean(salesInvoiceId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceWeclappClient(session).getWeclappSalesInvoiceDocuments({
+        pathParams: { viewId: viewId as string, salesInvoiceId },
+        queryParams: {
+          page,
+          pageSize,
+          search: searchText,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: salesInvoiceDocumentsColumns,
     getCoreRowModel: getCoreRowModel(),
     pageCount: data?.totalPages || 0,
@@ -186,7 +192,7 @@ export const SalesInvoiceDocumentsList = ({
           <DataTableViewOptions table={table} />
         </CardHeader>
         <CardContent className="space-y-4">
-          {data?.items && data.items.length > 0 ? (
+          {data?.data && data.data.length > 0 ? (
             <div className="border rounded-md">
               <Table>
                 <TableHeader>

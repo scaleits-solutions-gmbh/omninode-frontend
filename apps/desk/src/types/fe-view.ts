@@ -1,9 +1,9 @@
-import { ManagementConsoleAccess } from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export interface FeView {
   companyId: string;
   companyName: string;
   companyImageUrl: string;
   type: string;
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
 }

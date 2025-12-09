@@ -12,7 +12,7 @@ export default function LayoutCenteredX({
 }: LayoutCenteredXProps) {
   return (
     <BaseLayoutCenteredX showHeader={showHeader} header={<Header />}>
-      {children}
+      <div className="max-w-4xl w-full mx-auto">{children}</div>
     </BaseLayoutCenteredX>
   );
 }

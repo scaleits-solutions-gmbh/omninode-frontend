@@ -1,17 +1,17 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { AcmpRolloutTemplateListItem } from "@repo/lib-api-client";
 import {
   Badge,
   Checkbox
 } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpRolloutTemplateListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ColumnDef } from "@tanstack/react-table";
 
 
 // Define the table meta interface for proper typing
 interface TableMeta {
-  selectedRollout: AcmpRolloutTemplateListItem | undefined;
-  onSelectionChange: (rollout: AcmpRolloutTemplateListItem | undefined) => void;
+  selectedRollout: AcmpRolloutTemplateListItemReadModel | undefined;
+  onSelectionChange: (rollout: AcmpRolloutTemplateListItemReadModel | undefined) => void;
 }
-export const columns: ColumnDef<AcmpRolloutTemplateListItem>[] = [
+export const columns: ColumnDef<AcmpRolloutTemplateListItemReadModel>[] = [
   {
     size: 40,
     header: "Name",

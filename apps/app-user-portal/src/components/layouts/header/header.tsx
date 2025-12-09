@@ -1,6 +1,10 @@
 "use client";
 import { AppLogo } from "@/components/custom/app-logo";
-import { HelpIndicator, Skeleton } from "@repo/pkg-frontend-common-kit/components";
+import {
+  HelpIndicator,
+  NotificationsIndicator,
+  Skeleton,
+} from "@repo/pkg-frontend-common-kit/components";
 import {
   MANAGEMENT_CONSOLE_BASE_URL,
   SERVICE_PORTAL_BASE_URL,
@@ -9,16 +13,16 @@ import {
 import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 import { Lock } from "lucide-react";
 import Link from "next/link";
-import CompanySwitcher from "./company-switcher";
+import OrganizationSwitcher from "./organization-switcher";
 import MobileHeader from "./mobile-header";
 import UserIndicator from "./user-indicator";
-import { useGetCurrentCompany } from "@repo/pkg-frontend-common-kit/hooks";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export default function Header() {
-  const canAccessManagementConsole = false;
-
-
-  const { companies, selectedCompany, isLoading } = useGetCurrentCompany();
+  const { organizations, isLoading, organization } = usePersistedCurrentOrganization();
+  
+  const canAccessManagementConsole = organization ? organization.role !== OrganizationRole.Member : false;
 
   return (
     <>
@@ -34,10 +38,16 @@ export default function Header() {
                 <Skeleton className="h-4 w-40" />
                 <Skeleton className="h-4 w-32" />
               </>
-            ) : companies && companies.length > 0 ? (
+            ) : organizations && organizations.length > 0 ? (
               <>
-                {canAccessManagementConsole ? (
-                  <Link href={getOriginUrl() + MANAGEMENT_CONSOLE_BASE_URL}>
+                {canAccessManagementConsole && organization ? (
+                  <Link href={
+                    getOriginUrl() + 
+                    MANAGEMENT_CONSOLE_BASE_URL + 
+                    "/" + 
+                    organization.organizationId + 
+                    "/dashboard"
+                  }>
                     Management Console
                   </Link>
                 ) : (
@@ -46,14 +56,19 @@ export default function Header() {
                     <span className="">Management Console</span>
                   </div>
                 )}
-                <Link href={getOriginUrl() + SERVICE_PORTAL_BASE_URL}>
+                <Link href={
+                  getOriginUrl() + 
+                  SERVICE_PORTAL_BASE_URL + 
+                  (organization?.organizationId ? `/${organization.organizationId}` : "")
+                }>
                   Service Portal
                 </Link>
               </>
             ) : null}
-            <CompanySwitcher />
-            <div className="-ml-2">
+            <div className="flex items-center gap-4">
+              <OrganizationSwitcher />
               <HelpIndicator />
+              <NotificationsIndicator />
             </div>
             <UserIndicator />
           </div>

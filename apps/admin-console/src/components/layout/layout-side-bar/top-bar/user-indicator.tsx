@@ -1,5 +1,4 @@
 "use client";
-import { logout } from "@/lib/api-client/auth/login";
 import {
   Avatar,
   AvatarFallback,
@@ -14,59 +13,40 @@ import {
   Skeleton,
   Button,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
 
-const fetchUserProfile = async () => {
-  return {
-    id: "1",
-    firstName: "Admin",
-    lastName: "",
-    email: "admin@scaleits.com",
-    imageUrl: "https://github.com/shadcn.png",
-  };
-};
 
 export default function UserIndicator() {
-  const router = useRouter();
-  const queryClient = useQueryClient();
-
-  const { data: userData, isLoading } = useQuery({
-    queryKey: ["userProfile"],
-    queryFn: fetchUserProfile,
-  });
-
-  const logoutMutation = useMutation({
-    mutationFn: logout,
-    onSuccess: () => {
-      toast.success("Logged out successfully!");
-      queryClient.clear();
-      router.push("/login");
-    },
-    onError: (error: Error) => {
-      toast.error(`Logout failed: ${error.message}`);
-    },
-  });
+  const session = useSession();
 
   const handleLogout = () => {
-    logoutMutation.mutate();
+    toast.loading("Logging out...", { id: "logout" });
+    signOut({ callbackUrl: "/" });
   };
 
-  if (isLoading) return <Skeleton className="h-9 w-9 rounded-full" />;
-  if (!userData) return <div>Failed to fetch user data</div>;
+  if (session.status === "loading") return <Skeleton className="h-9 w-9 rounded-full" />;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-9 w-9">
             <AvatarImage
-              src={userData.imageUrl}
-              alt={userData.firstName + " " + userData.lastName}
+              src={""}
+              alt={session.data?.user.name}
             />
-            <AvatarFallback seed={userData.id}>
-              {userData.firstName.charAt(0) + userData.lastName.charAt(0)}
+            <AvatarFallback seed={session.data?.user.id}>
+              {`${
+                (session.data?.user?.given_name?.[0]
+                  ?? session.data?.user?.name?.split(" ")?.[0]?.[0]
+                  ?? session.data?.user?.email?.[0]
+                  ?? "").toUpperCase()
+              }${
+                (session.data?.user?.family_name?.[0]
+                  ?? session.data?.user?.name?.split(" ")?.[1]?.[0]
+                  ?? "").toUpperCase()
+              }`}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -75,10 +55,10 @@ export default function UserIndicator() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {userData.firstName + " " + userData.lastName}
+              {session.data?.user.name}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {userData.email}
+              {session.data?.user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -99,10 +79,9 @@ export default function UserIndicator() {
         <DropdownMenuItem
           className="cursor-pointer"
           onClick={handleLogout}
-          disabled={logoutMutation.isPending}
         >
           <LogOut className="mr-2 h-4 w-4" />
-          {logoutMutation.isPending ? "Logging out..." : "Log out"}
+          Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

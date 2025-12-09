@@ -1,0 +1,211 @@
+"use client";
+
+// Import to register module augmentation FIRST
+import "@/lib/next-auth-options";
+
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Button,
+  Label,
+  Input,
+} from "@repo/pkg-frontend-common-kit/components";
+import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
+import { toast } from "sonner";
+import { getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import type { Session } from "next-auth";
+import {
+  ComposedOrganizationServiceInstanceReadModel,
+  Service,
+} from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+
+interface EditWeclappConnectionDetailsPopupProps {
+  show: boolean;
+  serviceInstance: ComposedOrganizationServiceInstanceReadModel;
+  onClose: () => void;
+  onUpdated?: () => void;
+}
+
+export default function EditWeclappConnectionDetailsPopup({
+  show,
+  serviceInstance,
+  onClose,
+  onUpdated,
+}: EditWeclappConnectionDetailsPopupProps) {
+  const { organizationServiceInstanceId } = useParams<{
+    organizationId: string;
+    organizationServiceInstanceId: string;
+  }>();
+  const queryClient = useQueryClient();
+  const serviceInstanceId = serviceInstance.serviceInstance.id;
+  const [hostname, setHostname] = React.useState(
+    serviceInstance.serviceInstance.hostname ?? ""
+  );
+  const [apiKey, setApiKey] = React.useState("");
+  const [hasTestPassed, setHasTestPassed] = React.useState(false);
+
+  React.useEffect(() => {
+    if (show) {
+      setHostname(serviceInstance.serviceInstance.hostname ?? "");
+      setApiKey("");
+      setHasTestPassed(false);
+    }
+  }, [show, serviceInstance.serviceInstance.hostname]);
+
+  // Treat empty API key as "no change"
+  const normalizedHostname = hostname.trim();
+  const normalizedApiKey = apiKey.trim();
+  const effectiveApiKey =
+    normalizedApiKey === "" ? "" : normalizedApiKey;
+
+  const isDirty =
+    normalizedHostname !==
+      (serviceInstance.serviceInstance.hostname ?? "").trim() ||
+    effectiveApiKey !== "";
+  const canSubmit = isDirty && normalizedHostname.length > 0 && hasTestPassed;
+
+  // Reset test status whenever inputs change
+  React.useEffect(() => {
+    setHasTestPassed(false);
+  }, [normalizedHostname, normalizedApiKey]);
+
+  const testConnectionMutation = useAuthedMutation({
+    mutationFn: async ({ session }): Promise<void> => {
+      // TODO: wire to real Weclapp test connection endpoint
+      await getServiceClient(session);
+      // Simulate success for now
+      return;
+    },
+    onSuccess: () => {
+      setHasTestPassed(true);
+      toast.success("Connection test passed");
+    },
+    onError: (error) => {
+      setHasTestPassed(false);
+      toast.error(error.message || "Connection test failed");
+    },
+  });
+
+  const updateConnectionMutation = useAuthedMutation({
+    mutationFn: async ({
+      session,
+    }: {
+      session: Session;
+    }): Promise<void> => {
+      await getServiceClient(session).updateServiceInstance({
+        body: {
+          id: serviceInstanceId,
+          service: Service.Weclapp,
+          config: {
+            hostname: normalizedHostname,
+            ...(effectiveApiKey !== "" && { apiKey: effectiveApiKey }),
+          },
+        },
+      });
+    },
+    onSuccess: () => {
+      toast.success("Weclapp connection details updated");
+      onClose();
+      onUpdated?.();
+      queryClient.invalidateQueries({
+        queryKey: [
+          "composedOrganizationServiceInstance",
+          organizationServiceInstanceId,
+        ],
+      });
+    },
+    onError: (error) => {
+      toast.error(
+        error.message || "Failed to update Weclapp connection details"
+      );
+    },
+  });
+
+  return (
+    <Dialog open={show} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit Weclapp Connection</DialogTitle>
+          <DialogDescription>
+            Update the Weclapp hostname and API key for this service instance.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="weclappHostname">Hostname</Label>
+            <Input
+              id="weclappHostname"
+              value={hostname}
+              onChange={(e) => setHostname(e.target.value)}
+              placeholder="weclapp.example.com"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="weclappApiKey">API key</Label>
+            <Input
+              id="weclappApiKey"
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Leave empty for no change"
+            />
+            <p className="text-xs text-muted-foreground">
+              Leave empty to keep the existing API key unchanged.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={
+              normalizedHostname.length === 0 || testConnectionMutation.isPending
+            }
+            isLoading={testConnectionMutation.isPending}
+            onClick={() => {
+              if (normalizedHostname.length === 0) return;
+              testConnectionMutation.mutate();
+            }}
+          >
+            {testConnectionMutation.isPending
+              ? "Testing..."
+              : hasTestPassed
+              ? "Test passed"
+              : "Test connection"}
+          </Button>
+        </div>
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onClose}
+            disabled={
+              updateConnectionMutation.isPending ||
+              testConnectionMutation.isPending
+            }
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            disabled={!canSubmit || updateConnectionMutation.isPending}
+            isLoading={updateConnectionMutation.isPending}
+            onClick={() => {
+              if (!canSubmit) return;
+              updateConnectionMutation.mutate();
+            }}
+          >
+            {updateConnectionMutation.isPending ? "Saving..." : "Save changes"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+

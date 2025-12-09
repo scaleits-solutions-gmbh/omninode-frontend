@@ -1,13 +1,11 @@
 import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
-import {
-  ManagementConsoleAccess,
-  OmninodeLoginTokenPayload,
-} from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { OmninodeLoginTokenPayload } from "@scaleits-solutions-gmbh/services";
 
 // TODO: remove this once the session token payload is updated to include the management console access
 type OmninodeLoginTokenPayloadTemp = OmninodeLoginTokenPayload & {
-  managementConsoleAccess: ManagementConsoleAccess;
+  organizationRole: OrganizationRole;
 };
 
 /**
@@ -18,7 +16,7 @@ export async function getSessionTokenPayload(): Promise<OmninodeLoginTokenPayloa
   const sessionToken = await getSessionToken();
 
   const decoded = decodeJwt(sessionToken) as OmninodeLoginTokenPayloadTemp;
-  decoded.managementConsoleAccess = ManagementConsoleAccess.Admin;
+  decoded.organizationRole = OrganizationRole.Admin;
   return decoded;
 }
 

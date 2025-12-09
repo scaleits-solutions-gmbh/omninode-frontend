@@ -2,16 +2,15 @@
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { QueryKey, UseQueryResult } from "@tanstack/react-query";
-import { useValidSession } from "./use-valid-session";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+// Import module augmentation to ensure extended Session type is available
+import "../utils/next-auth-options";
 
-function isAuthError(err: unknown): boolean {
-  const message = String((err as any)?.message ?? "");
-  return message.includes(" 401 ") || message.includes(" 403 ");
-}
 
 type AuthedQueryOptions<TData, TQueryKey extends QueryKey = QueryKey> = {
   queryKey: TQueryKey;
-  queryFn: (ctx: { accessToken: string }) => Promise<TData>;
+  queryFn: (ctx: { session: Session}) => Promise<TData>;
   enabled?: boolean;
   retry?: any;
   refetchOnWindowFocus?: boolean;
@@ -22,25 +21,23 @@ type AuthedQueryOptions<TData, TQueryKey extends QueryKey = QueryKey> = {
 export function useAuthedQuery<TData = unknown, TQueryKey extends QueryKey = QueryKey>(
   options: AuthedQueryOptions<TData, TQueryKey>
 ): UseQueryResult<TData, Error> {
-  const { isValid, accessToken, refresh } = useValidSession();
+  const { data: session, status } = useSession();
 
-  return useQuery<TData, Error, TData, TQueryKey>({
+  const result = useQuery<TData, Error, TData, TQueryKey>({
     queryKey: options.queryKey,
-    enabled: isValid && (options.enabled ?? true),
-    queryFn: async () => {
-      const token = accessToken as string;
-      try {
-        return await options.queryFn({ accessToken: token });
-      } catch (err: unknown) {
-        if (isAuthError(err)) await refresh();
-        throw err;
-      }
-    },
-    retry: options.retry ?? ((failureCount: number, err: unknown) => isAuthError(err) && failureCount < 1),
+    enabled: (options.enabled ?? true) && status === "authenticated",
+    queryFn: () => options.queryFn({ session: session as Session}),
+    retry: options.retry,
     refetchOnWindowFocus: options.refetchOnWindowFocus ?? false,
     placeholderData: options.placeholderData ?? keepPreviousData,
     staleTime: options.staleTime,
-  } as any);
+  });
+
+  // While the NextAuth session is still loading, surface loading=true to consumers
+  return {
+    ...result,
+    isLoading: status === "loading" || result.isLoading,
+  } as UseQueryResult<TData, Error>;
 }
 
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "frontend-common-kit/styles/globals.css";
+import "@repo/pkg-frontend-common-kit/styles/globals.css";
 import "./globals.css";
 import ProvidersAggregate from "@/providers/providers-aggregate";
 

@@ -1,14 +1,14 @@
-import { CompanyRelationshipType } from "@scaleits-solutions-gmbh/services";
+import { OrganizationType } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
-export type feCompanyInvite = {
+export type feOrganizationInvite = {
   id: string;
   companyId: string;
   companyName: string;
-  inviteeCompanyId: string;
-  inviteeCompanyName: string;
-  leftCompanyId: string;
-  leftCompanyName: string;
-  rightCompanyId: string;
-  rightCompanyName: string;
-  relationship: CompanyRelationshipType;
+  inviteeOrganizationId: string;
+  inviteeOrganizationName: string;
+  leftOrganizationId: string;
+  leftOrganizationName: string;
+  rightOrganizationId: string;
+  rightOrganizationName: string;
+  relationship: OrganizationType;
 };

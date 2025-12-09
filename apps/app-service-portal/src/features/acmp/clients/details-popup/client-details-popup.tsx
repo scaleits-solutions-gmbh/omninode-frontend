@@ -1,4 +1,4 @@
-import { AcmpClientListItem } from "@repo/lib-api-client";
+import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Button,
   Dialog,
@@ -20,7 +20,7 @@ import { ClientHardwareTab } from "./client-hardware-tab";
 import { ClientNetworkTab } from "./client-network-tab";
 
 interface ClientDetailsPopupProps {
-  client?: AcmpClientListItem;
+  client?: AcmpClientListItemReadModel;
   onClose: () => void;
 }
 

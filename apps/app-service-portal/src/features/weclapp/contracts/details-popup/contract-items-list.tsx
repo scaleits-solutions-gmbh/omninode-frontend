@@ -1,6 +1,6 @@
 "use client";
 
-import { FeContract } from "@/types/weclapp/contract";
+import type { WeclappContractListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Card,
   CardContent,
@@ -29,7 +29,7 @@ import { useMemo, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 interface ContractItemsListProps {
-  contract: FeContract;
+  contract: WeclappContractListItemReadModel;
 }
 
 export const ContractItemsList = ({ contract }: ContractItemsListProps) => {

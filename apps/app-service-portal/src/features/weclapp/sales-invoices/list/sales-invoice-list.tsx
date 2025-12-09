@@ -16,8 +16,8 @@ import {
   DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
 
-import { fetchWeclappSalesInvoices } from "@/lib/api-client/weclapp/sales-invoice";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -29,14 +29,14 @@ import { createColumns } from "./columns";
 import { useState } from "react";
 
 import { SalesInvoiceDetailsPopup } from "../details-popup/sales-invoice-details-popup";
-import { FeSalesInvoice } from "@/types/weclapp/sales-invoice";
+import type { WeclappSalesInvoiceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
 
 export const SalesInvoiceList = () => {
   const { viewId } = useParams();
-  const [salesInvoice, setSalesInvoice] = useState<FeSalesInvoice | undefined>(
+  const [salesInvoice, setSalesInvoice] = useState<WeclappSalesInvoiceListItemReadModel | undefined>(
     undefined
   );
   const [search, setSearch] = useState("");
@@ -45,7 +45,7 @@ export const SalesInvoiceList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "salesInvoices",
       viewId,
@@ -53,18 +53,24 @@ export const SalesInvoiceList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappSalesInvoices(
-        search,
-        pagination.pageIndex + 1,
-        pagination.pageSize
-      ),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceWeclappClient(session).getWeclappSalesInvoices({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (salesInvoice: FeSalesInvoice) => {
+      onViewDetails: (salesInvoice: WeclappSalesInvoiceListItemReadModel) => {
         setSalesInvoice(salesInvoice);
       },
     }),

@@ -1,12 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { FeProjectMember } from "@/types/weclapp/project";
+import type { WeclappProjectMemberReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Avatar,
   AvatarFallback
 } from "@repo/pkg-frontend-common-kit/components";
 
 
-export const projectMembersColumns: ColumnDef<FeProjectMember>[] = [
+export const projectMembersColumns: ColumnDef<WeclappProjectMemberReadModel>[] = [
   {
     size: 40,
     minSize: 100,

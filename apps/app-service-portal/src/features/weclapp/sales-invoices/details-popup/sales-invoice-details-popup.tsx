@@ -1,4 +1,4 @@
-import { FeSalesInvoice } from "@/types/weclapp/sales-invoice";
+import type { WeclappSalesInvoiceListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 import { SalesInvoiceItemsList } from "./sales-invoice-items-list";
 import { SalesInvoiceDocumentsList } from "./sales-invoice-documents-list";
@@ -20,7 +20,7 @@ import {
 
 
 interface SalesInvoiceDetailsPopupProps {
-  salesInvoice?: FeSalesInvoice;
+  salesInvoice?: WeclappSalesInvoiceListItemReadModel;
   onClose: () => void;
 }
 

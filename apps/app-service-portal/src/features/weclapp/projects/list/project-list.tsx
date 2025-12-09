@@ -16,8 +16,8 @@ import {
   DataTablePagination
 } from "@repo/pkg-frontend-common-kit/components";
 
-import { fetchWeclappProjects } from "@/lib/api-client/weclapp/project";
-import { useQuery } from "@tanstack/react-query";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -29,21 +29,21 @@ import { createColumns } from "./columns";
 import { useState } from "react";
 
 import { ProjectDetailsPopup } from "../details-popup/project-details-popup";
-import { FeProject } from "@/types/weclapp/project";
+import type { WeclappProjectListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { useParams } from "next/navigation";
 
 export const ProjectList = () => {
   const { viewId } = useParams();
-  const [project, setProject] = useState<FeProject | undefined>(undefined);
+  const [project, setProject] = useState<WeclappProjectListItemReadModel | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useAuthedQuery({
     queryKey: [
       "projects",
       viewId,
@@ -51,14 +51,24 @@ export const ProjectList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    queryFn: () =>
-      fetchWeclappProjects(pagination.pageIndex + 1, pagination.pageSize),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceWeclappClient(session).getWeclappProjects({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
   const table = useReactTable({
-    data: data?.items || [],
+    data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (project: FeProject) => {
+      onViewDetails: (project: WeclappProjectListItemReadModel) => {
         setProject(project);
       },
     }),

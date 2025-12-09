@@ -1,4 +1,4 @@
-import { AcmpJobListItem } from "@repo/lib-api-client";
+import type { AcmpJobListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Button,
   Dialog,
@@ -18,7 +18,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 
 interface JobDetailsPopupProps {
-  job?: AcmpJobListItem;
+  job?: AcmpJobListItemReadModel;
   onClose: () => void;
 }
 

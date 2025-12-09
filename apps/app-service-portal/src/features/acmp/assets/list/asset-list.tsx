@@ -20,13 +20,12 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
   useReactTable,
-  ColumnDef,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { createColumns } from "./columns";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
-import { ApiClient } from "@repo/lib-api-client";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useParams } from "next/navigation";
 
 // removed mock data; using real API
@@ -53,7 +52,6 @@ export const AssetList = () => {
     isLent: true,
   });
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
   const [isFetchingPage, setIsFetchingPage] = useState(false);
   const { data: assets, isLoading: isQueryLoading, isFetching: isQueryFetching, error } = useAuthedQuery({
     queryKey: [
@@ -63,17 +61,21 @@ export const AssetList = () => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpAssets(accessToken, {
-        serviceInstanceId: viewId as string,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search: search,
-      }),
+    enabled: Boolean(viewId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceAcmpClient(session).getAcmpAssets({
+        pathParams: { viewId: viewId as string },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search: search,
+        },
+      });
+      return response.data;
+    },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
 
   const table = useReactTable({
     data: assets?.data || [],

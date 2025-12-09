@@ -1,10 +1,10 @@
+import { Button } from "@repo/pkg-frontend-common-kit/components";
+import type { AcmpAssetListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, HardDrive } from "lucide-react";
-import { Button } from "@repo/pkg-frontend-common-kit/components";
-import { formatDateDe, formatDateTimeDe } from "@/lib/utils/ui/date-format";
-import { AcmpAssetListItem } from "@repo/lib-api-client";
+import { formatDateTimeDe } from "@/lib/utils/ui/date-format";
 
-export const createColumns = (): ColumnDef<AcmpAssetListItem>[] => [
+export const createColumns = (): ColumnDef<AcmpAssetListItemReadModel>[] => [
   {
     size: 30,
     minSize: 100,

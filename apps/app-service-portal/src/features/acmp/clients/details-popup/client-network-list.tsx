@@ -15,13 +15,13 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/pkg-frontend-common-kit/components";
-import { useAuthedQuery, useValidSession } from "@repo/pkg-frontend-common-kit/hooks";
+import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import { getCoreRowModel, getPaginationRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
 import { clientNetworkColumns } from "./client-network-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-import { ApiClient } from "@repo/lib-api-client";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 
 interface ClientNetworkListProps {
   clientId: string;
@@ -31,7 +31,6 @@ export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const { viewId } = useParams();
-  const { isValid, isLoading: isSessionLoading } = useValidSession();
 
   const {
     data,
@@ -47,18 +46,21 @@ export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
       pagination.pageIndex,
       pagination.pageSize,
     ],
-    enabled: isValid && Boolean(viewId) && Boolean(clientId),
-    queryFn: async ({ accessToken }) =>
-      ApiClient.getAcmpClientNetworkCards(accessToken, {
-        serviceInstanceId: viewId as string,
-        clientId,
-        page: pagination.pageIndex + 1,
-        pageSize: pagination.pageSize,
-        search,
-      }),
+    enabled: Boolean(viewId) && Boolean(clientId),
+    queryFn: async ({ session }) => {
+      const response = await getServiceAcmpClient(session).getAcmpClientNetworkCards({
+        pathParams: { viewId: viewId as string, clientId },
+        queryParams: {
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          search,
+        },
+      });
+      return response.data;
+    },
   });
 
-  const isLoading = isSessionLoading || isQueryLoading;
+  const isLoading = isQueryLoading;
   const isFetchingPage = isQueryFetching;
 
   const table = useReactTable({

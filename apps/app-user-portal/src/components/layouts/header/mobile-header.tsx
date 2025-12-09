@@ -4,8 +4,11 @@ import { AppLogo } from "@/components/custom/app-logo";
 import Link from "next/link";
 import UserIndicator from "./user-indicator";
 import { Lock, Menu, X } from "lucide-react";
-import CompanySwitcher from "./company-switcher";
+import OrganizationSwitcher from "./organization-switcher";
 import { useState } from "react";
+import { MANAGEMENT_CONSOLE_BASE_URL, SERVICE_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
+import { usePersistedCurrentOrganization } from "@repo/pkg-frontend-common-kit/hooks";
 
 interface MobileHeaderProps {
   canAccessManagementConsole: boolean;
@@ -14,6 +17,7 @@ interface MobileHeaderProps {
 export default function MobileHeader({
   canAccessManagementConsole,
 }: MobileHeaderProps) {
+  const { organization } = usePersistedCurrentOrganization();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -23,9 +27,9 @@ export default function MobileHeader({
   return (
     <div className="md:hidden bg-card border-b relative">
       {/* Mobile Header Bar */}
-      <div className="p-4 flex justify-between items-center">
+      <div className="p-2 flex justify-between items-center">
         <Link href="/" onClick={() => setIsMenuOpen(false)}>
-          <AppLogo size="sm" />
+          <AppLogo customSize={32} />
         </Link>
         <button
           onClick={toggleMenu}
@@ -42,13 +46,19 @@ export default function MobileHeader({
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="border-t bg-card absolute top-full left-0 right-0">
-          <div className="px-4 py-2 space-y-4">
+        <div className="z-50 border-t bg-card absolute top-full left-0 right-0">
+          <div className="px-4 py-2 space-y-2">
             {/* Navigation Links */}
             <div className="space-y-3">
-              {canAccessManagementConsole ? (
+              {canAccessManagementConsole && organization ? (
                 <Link
-                  href={process.env.NEXT_PUBLIC_MANAGEMENT_CONSOLE_URL || ""}
+                  href={
+                    getOriginUrl() + 
+                    MANAGEMENT_CONSOLE_BASE_URL + 
+                    "/" + 
+                    organization.organizationId + 
+                    "/dashboard"
+                  }
                   className="block py-2 text-sm hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -61,7 +71,11 @@ export default function MobileHeader({
                 </div>
               )}
               <Link
-                href={process.env.NEXT_PUBLIC_SERVICE_PORTAL_URL || ""}
+                href={
+                  getOriginUrl() + 
+                  SERVICE_PORTAL_BASE_URL + 
+                  (organization?.organizationId ? `/${organization.organizationId}` : "")
+                }
                 className="block py-2 text-sm hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -69,14 +83,9 @@ export default function MobileHeader({
               </Link>
             </div>
 
-            {/* Company Switcher */}
-            <div className="py-2 border-t">
-              <CompanySwitcher />
-            </div>
-
-            {/* User Indicator */}
-            <div className="py-2 border-t">
-              <UserIndicator />
+            <div className="flex gap-2 items-center">
+            <UserIndicator />
+              <OrganizationSwitcher />
             </div>
           </div>
         </div>
