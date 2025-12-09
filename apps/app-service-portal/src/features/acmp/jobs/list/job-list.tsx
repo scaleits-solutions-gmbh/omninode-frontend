@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 import { JobDetailsPopup } from "../details-popup/job-details-popup";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpJobListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 export const JobList = () => {
   const { viewId } = useParams();
@@ -46,7 +46,7 @@ export const JobList = () => {
     ],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpJobs({
+      const response = await getServiceAcmpClient(session).getAcmpJobs({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,

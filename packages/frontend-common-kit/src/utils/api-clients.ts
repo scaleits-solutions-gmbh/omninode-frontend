@@ -4,14 +4,14 @@ import {
   createOrganizationClient,
   createFeedbackClient,
   createServiceClient,
-  createAcmpServiceClient,
-  createWeclappServiceClient,
+  createServiceAcmpClient,
+  createServiceWeclappClient,
   type UserClient,
   type OrganizationClient,
   type FeedbackClient,
   type ServiceClient,
-  type AcmpServiceClient,
-  type WeclappServiceClient,
+  type ServiceAcmpClient,
+  type ServiceWeclappClient,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 function getApiConfig(session: Session) {
@@ -50,11 +50,11 @@ export function getServiceClient(session: Session): ServiceClient {
   return createServiceClient(getApiConfig(session));
 }
 
-export function getAcmpServiceClient(session: Session): AcmpServiceClient {
-  return createAcmpServiceClient(getApiConfig(session));
+export function getServiceAcmpClient(session: Session): ServiceAcmpClient {
+  return createServiceAcmpClient(getApiConfig(session));
 }
 
-export function getWeclappServiceClient(session: Session): WeclappServiceClient {
-  return createWeclappServiceClient(getApiConfig(session));
+export function getServiceWeclappClient(session: Session): ServiceWeclappClient {
+  return createServiceWeclappClient(getApiConfig(session));
 }
 

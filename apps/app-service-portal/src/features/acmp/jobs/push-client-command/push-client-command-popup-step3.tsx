@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { FeClientCommand } from "@/types/acmp/client-command";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpClientListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
@@ -51,7 +51,7 @@ export default function PushClientCommandPopupStep3({
 
   const pushMutation = useAuthedMutation<void, { commandId: string; clientIds: string[] }>({
     mutationFn: async ({ session, variables }) => {
-      await getAcmpServiceClient(session).pushAcmpClientCommands({
+      await getServiceAcmpClient(session).pushAcmpClientCommands({
         pathParams: { viewId: viewId as string },
         body: variables,
       });

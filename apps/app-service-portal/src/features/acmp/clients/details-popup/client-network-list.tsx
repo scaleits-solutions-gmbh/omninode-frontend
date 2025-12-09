@@ -21,7 +21,7 @@ import { useState } from "react";
 import { clientNetworkColumns } from "./client-network-columns";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useParams } from "next/navigation";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 
 interface ClientNetworkListProps {
   clientId: string;
@@ -48,7 +48,7 @@ export const ClientNetworkList = ({ clientId }: ClientNetworkListProps) => {
     ],
     enabled: Boolean(viewId) && Boolean(clientId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpClientNetworkCards({
+      const response = await getServiceAcmpClient(session).getAcmpClientNetworkCards({
         pathParams: { viewId: viewId as string, clientId },
         queryParams: {
           page: pagination.pageIndex + 1,

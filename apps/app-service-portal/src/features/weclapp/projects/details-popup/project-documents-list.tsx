@@ -20,7 +20,7 @@ import {
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { projectDocumentsColumns } from "./project-documents-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 import { useState } from "react";
@@ -46,7 +46,7 @@ export const ProjectDocumentsList = ({ projectId }: ProjectDocumentsListProps) =
     queryKey: ["projectDocuments", viewId, projectId, searchText, page, pageSize],
     enabled: Boolean(viewId) && Boolean(projectId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappProjectDocuments({
+      const response = await getServiceWeclappClient(session).getWeclappProjectDocuments({
         pathParams: { viewId: viewId as string, projectId },
         queryParams: {
           page,

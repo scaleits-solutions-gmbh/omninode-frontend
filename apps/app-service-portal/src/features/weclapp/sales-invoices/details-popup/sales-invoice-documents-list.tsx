@@ -20,7 +20,7 @@ import {
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { salesInvoiceDocumentsColumns } from "./sales-invoice-documents-columns";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getWeclappServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceWeclappClient } from "@repo/pkg-frontend-common-kit/utils";
 
 import { FileText, AlertCircle } from "lucide-react";
 
@@ -56,7 +56,7 @@ export const SalesInvoiceDocumentsList = ({
     ],
     enabled: Boolean(viewId) && Boolean(salesInvoiceId),
     queryFn: async ({ session }) => {
-      const response = await getWeclappServiceClient(session).getWeclappSalesInvoiceDocuments({
+      const response = await getServiceWeclappClient(session).getWeclappSalesInvoiceDocuments({
         pathParams: { viewId: viewId as string, salesInvoiceId },
         queryParams: {
           page,

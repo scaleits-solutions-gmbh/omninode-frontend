@@ -26,7 +26,7 @@ import {
 } from "@tanstack/react-table";
 import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { getAcmpServiceClient } from "@repo/pkg-frontend-common-kit/utils";
+import { getServiceAcmpClient } from "@repo/pkg-frontend-common-kit/utils";
 import type { AcmpRolloutTemplateListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 
@@ -53,7 +53,7 @@ export default function PushRolloutPopupStep1({
     queryKey: ["rollout-templates", viewId, search, pagination.pageIndex, pagination.pageSize],
     enabled: Boolean(viewId),
     queryFn: async ({ session }) => {
-      const response = await getAcmpServiceClient(session).getAcmpRolloutTemplates({
+      const response = await getServiceAcmpClient(session).getAcmpRolloutTemplates({
         pathParams: { viewId: viewId as string },
         queryParams: {
           page: pagination.pageIndex + 1,
