@@ -75,8 +75,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251201235034
-        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.45-feat.dev.20251207041520
+        version: 0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@tanstack/react-form':
         specifier: ^1.23.8
         version: 1.23.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -281,8 +281,8 @@ importers:
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251201235034
-        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.45-feat.dev.20251207041520
+        version: 0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.12)
@@ -440,18 +440,12 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@repo/lib-api-client':
-        specifier: workspace:*
-        version: link:../../packages/api-client
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
         version: link:../../packages/frontend-common-kit
-      '@scaleits-solutions-gmbh/api-client':
-        specifier: 1.0.0-beta.20250601143734
-        version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251201235034
-        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.45-feat.dev.20251207041520
+        version: 0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250617100659
         version: 0.0.1-beta.20250617100659(typescript@5.9.3)(zod@4.1.12)
@@ -597,9 +591,6 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@repo/lib-api-client':
-        specifier: workspace:*
-        version: link:../../packages/api-client
       '@repo/pkg-frontend-common-kit':
         specifier: workspace:*
         version: link:../../packages/frontend-common-kit
@@ -607,8 +598,8 @@ importers:
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.6(react@19.2.0))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251201235034
-        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.45-feat.dev.20251207041520
+        version: 0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.12)
@@ -676,6 +667,163 @@ importers:
       '@eslint/eslintrc':
         specifier: latest
         version: 3.3.1
+      '@tailwindcss/postcss':
+        specifier: ^4.1.16
+        version: 4.1.16
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/node':
+        specifier: ^24.9.2
+        version: 24.9.2
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.2
+      '@types/react-dom':
+        specifier: ^19.2.2
+        version: 19.2.2(@types/react@19.2.2)
+      eslint:
+        specifier: ^9.39.0
+        version: 9.39.0(jiti@2.6.1)
+      eslint-config-next:
+        specifier: 15.5.6
+        version: 15.5.6(eslint-plugin-import-x@4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1)))(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3)
+      eslint-plugin-import:
+        specifier: ^2.32.0
+        version: 2.32.0(eslint@9.39.0(jiti@2.6.1))
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      tailwindcss:
+        specifier: ^4.1.16
+        version: 4.1.16
+      tw-animate-css:
+        specifier: ^1.4.0
+        version: 1.4.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  apps/auth:
+    dependencies:
+      '@aws-sdk/client-secrets-manager':
+        specifier: ^3.922.0
+        version: 3.922.0
+      '@radix-ui/react-avatar':
+        specifier: ^1.1.10
+        version: 1.1.10(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-checkbox':
+        specifier: ^1.3.3
+        version: 1.3.3(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-collapsible':
+        specifier: ^1.1.12
+        version: 1.1.12(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.15
+        version: 1.1.15(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-dropdown-menu':
+        specifier: ^2.1.16
+        version: 2.1.16(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-label':
+        specifier: ^2.1.7
+        version: 2.1.7(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-popover':
+        specifier: ^1.1.15
+        version: 1.1.15(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-progress':
+        specifier: ^1.1.7
+        version: 1.1.7(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-scroll-area':
+        specifier: ^1.2.10
+        version: 1.2.10(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-select':
+        specifier: ^2.2.6
+        version: 2.2.6(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-separator':
+        specifier: ^1.1.7
+        version: 1.1.7(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-slot':
+        specifier: ^1.2.3
+        version: 1.2.3(@types/react@19.2.2)(react@19.2.0)
+      '@radix-ui/react-switch':
+        specifier: ^1.2.6
+        version: 1.2.6(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-tabs':
+        specifier: ^1.1.13
+        version: 1.1.13(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@radix-ui/react-tooltip':
+        specifier: ^1.2.8
+        version: 1.2.8(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@repo/pkg-frontend-common-kit':
+        specifier: workspace:*
+        version: link:../../packages/frontend-common-kit
+      '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
+        specifier: 0.0.45-feat.dev.20251207041520
+        version: 0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+      '@tanstack/react-form':
+        specifier: ^1.23.8
+        version: 1.23.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.90.6
+        version: 5.90.6(react@19.2.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.90.2
+        version: 5.90.2(@tanstack/react-query@5.90.6(react@19.2.0))(react@19.2.0)
+      '@vercel/analytics':
+        specifier: ^1.5.0
+        version: 1.5.0(next@15.5.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      axios:
+        specifier: ^1.13.1
+        version: 1.13.1
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      cmdk:
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      jose:
+        specifier: ^6.1.0
+        version: 6.1.0
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
+      lucide-react:
+        specifier: ^0.546.0
+        version: 0.546.0(react@19.2.0)
+      next:
+        specifier: 15.5.6
+        version: 15.5.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next-auth:
+        specifier: ^4.24.13
+        version: 4.24.13(next@15.5.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.0(react@19.2.0)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      tailwind-merge:
+        specifier: ^3.3.1
+        version: 3.3.1
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
+      zustand:
+        specifier: ^5.0.8
+        version: 5.0.8(@types/react@19.2.2)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: latest
+        version: 3.3.3
       '@tailwindcss/postcss':
         specifier: ^4.1.16
         version: 4.1.16
@@ -910,37 +1058,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/api-client:
-    dependencies:
-      '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251201235034
-        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
-      '@scaleits-solutions-gmbh/org-lib-global-common-kit':
-        specifier: ^0.0.4
-        version: 0.0.4(drizzle-orm@0.44.5)
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@types/node':
-        specifier: ^24.9.2
-        version: 24.9.2
-      eslint:
-        specifier: ^9.39.0
-        version: 9.39.0(jiti@2.6.1)
-      rimraf:
-        specifier: ^6.1.0
-        version: 6.1.0
-      tsc-alias:
-        specifier: ^1.8.16
-        version: 1.8.16
-      typescript:
-        specifier: 5.9.2
-        version: 5.9.2
-
   packages/eslint-config:
     devDependencies:
       '@eslint/js':
@@ -1027,12 +1144,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@repo/lib-api-client':
-        specifier: workspace:*
-        version: link:../api-client
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: 0.0.44-feat.dev.20251201235034
-        version: 0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
+        specifier: 0.0.45-feat.dev.20251207041520
+        version: 0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.13)
@@ -1308,6 +1422,10 @@ packages:
 
   '@eslint/eslintrc@3.3.1':
     resolution: {integrity: sha512-gtF186CXhIl1p4pJNGZw8Yc6RlshoePRvE0X91oPGb3vZ8pM3qOS9W9NGPat9LziaBV7XrJWGylNQXkGcnM3IQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/eslintrc@3.3.3':
+    resolution: {integrity: sha512-Kr+LPIUVKz2qkx1HAMH8q1q6azbqBAsXJUxBl/ODDuVPX45Z9DfwB8tPjTi6nNZ8BuM3nbJxC5zCAg5elnBUTQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@9.39.0':
@@ -2132,22 +2250,18 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251201235034':
-    resolution: {integrity: sha512-NRzG5XsBXi3K9KZg/c9HKv7v2XicsMU3gFQW6wLRENjrrXVfJKhROMStGPNOaRxqlWMlET6tlkeRBSgL4gSZeA==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.44-feat.dev.20251201235034/e607feae5d67df9ed31ed7b06bb0e26b5ef98bf1}
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.45-feat.dev.20251207041520':
+    resolution: {integrity: sha512-HuChVa3otLNXZ120ti8WM9+sTK69kPVRdEEXuJpoPgZzBwOnSxWwSKTdwr7RnofsQNSIUKZYTzMFXpWBVMA7Hg==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.45-feat.dev.20251207041520/68c39dbf7191cc5fba99e6871eed3c178a0667ef}
 
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53':
-    resolution: {integrity: sha512-K5Z1vBm0RcNCgYDzd7xrZJur0LMzxOvnGaNvoh7LP4422VKb02xafpGCXG99LErKf2dpBNsuiukiTVL5DvCAyA==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.53/61b9e3db1035b0af467a126a86d19907265f0565}
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.59':
+    resolution: {integrity: sha512-CRKUZxfrwTCboWE8WiCGUTWx1ZctjpG8hp99O5urdMfKkzfIU7fIMpA8hhFztgKunj3UtWaUivDKK4e9hbliZw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.59/ce98ff56d61b59d6faba8ab300d66713ba11349d}
     peerDependencies:
+      '@types/aws-lambda': ^8.10.0
       drizzle-orm: ^0.44.3
       zod: ^4.0.14
 
-  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.4':
-    resolution: {integrity: sha512-zH2t6TFoAZHJ++wppdqTeDCnomcj3Y66hBLnMJqPpzY45c02BQR4L00+3YJ3LlFYSl9LUysaUU0v7k/YNzToOw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-global-common-kit/0.0.4/6d1c63458ce2c01a823ba0f7c28c7d10a553dc9b}
-    peerDependencies:
-      drizzle-orm: ^0.44.3
-
-  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.5':
-    resolution: {integrity: sha512-KedI7Dhb9X/VjeisePNVEhhpue5B47MSeMd4Enx6hL020b2OgBZPYglKlYrjqU4FlZWEO2oDCUamHtJQdEiYUw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-global-common-kit/0.0.5/ee3efb6a746e882aa827e55f612c8a45a81c8ca6}
+  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.7':
+    resolution: {integrity: sha512-XiRBXDFSg+z7hFlIU+XKht55vJhPmLWJ5UDe8Em/itSR/t0Zrg4Nt476CsElfzUnHzsPCsbfDFQ1DvB8/Jz+lQ==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-global-common-kit/0.0.7/3c62524ca6ce4df0b9aa9c18a29881d95195920a}
     peerDependencies:
       drizzle-orm: ^0.44.3
 
@@ -2490,6 +2604,9 @@ packages:
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
+
+  '@types/aws-lambda@8.10.159':
+    resolution: {integrity: sha512-SAP22WSGNN12OQ8PlCzGzRCZ7QDCwI85dQZbmpz7+mAk+L7j+wI7qnvmdKh+o7A5LaOp6QnOZ2NJphAZQTTHQg==}
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
@@ -3693,6 +3810,10 @@ packages:
 
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+    hasBin: true
+
+  js-yaml@4.1.1:
+    resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
     hasBin: true
 
   jsmin@1.0.1:
@@ -5126,6 +5247,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@eslint/eslintrc@3.3.3':
+    dependencies:
+      ajv: 6.12.6
+      debug: 4.4.3
+      espree: 10.4.0
+      globals: 14.0.0
+      ignore: 5.3.2
+      import-fresh: 3.3.1
+      js-yaml: 4.1.1
+      minimatch: 3.1.2
+      strip-json-comments: 3.1.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@eslint/js@9.39.0': {}
 
   '@eslint/object-schema@2.1.7': {}
@@ -5873,67 +6008,27 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.90.6(react@19.2.0)
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))':
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.45-feat.dev.20251207041520(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
-      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)
-      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.5(drizzle-orm@0.44.5)
+      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.59(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)(zod@4.1.13)
+      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.7(drizzle-orm@0.44.5)
       zod: 4.1.13
     transitivePeerDependencies:
-      - '@typescript-eslint/utils'
+      - '@types/aws-lambda'
       - drizzle-orm
-      - eslint
-      - eslint-import-resolver-node
-      - supports-color
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.44-feat.dev.20251201235034(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))':
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.59(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)(zod@4.1.13)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
-      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)
-      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.5(drizzle-orm@0.44.5)
-      zod: 4.1.13
-    transitivePeerDependencies:
-      - '@typescript-eslint/utils'
-      - drizzle-orm
-      - eslint
-      - eslint-import-resolver-node
-      - supports-color
-
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)':
-    dependencies:
-      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.4(drizzle-orm@0.44.5)
+      '@types/aws-lambda': 8.10.159
       drizzle-orm: 0.44.5
-      eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
       uuid: 13.0.0
       zod: 4.1.13
-    transitivePeerDependencies:
-      - '@typescript-eslint/utils'
-      - eslint
-      - eslint-import-resolver-node
-      - supports-color
 
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.53(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(drizzle-orm@0.44.5)(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))(zod@4.1.13)':
+  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.7(drizzle-orm@0.44.5)':
     dependencies:
-      '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.4(drizzle-orm@0.44.5)
       drizzle-orm: 0.44.5
-      eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1))
-      uuid: 13.0.0
       zod: 4.1.13
-    transitivePeerDependencies:
-      - '@typescript-eslint/utils'
-      - eslint
-      - eslint-import-resolver-node
-      - supports-color
-
-  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.4(drizzle-orm@0.44.5)':
-    dependencies:
-      drizzle-orm: 0.44.5
-      zod: 4.1.12
-
-  '@scaleits-solutions-gmbh/org-lib-global-common-kit@0.0.5(drizzle-orm@0.44.5)':
-    dependencies:
-      drizzle-orm: 0.44.5
-      zod: 4.1.12
 
   '@scaleits-solutions-gmbh/services@0.0.1-beta.20250617100659(typescript@5.9.3)(zod@4.1.12)':
     dependencies:
@@ -6362,6 +6457,8 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
+  '@types/aws-lambda@8.10.159': {}
+
   '@types/estree@1.0.8': {}
 
   '@types/js-cookie@3.0.6': {}
@@ -6432,16 +6529,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.46.2(typescript@5.9.2)':
-    dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.9.2)
-      '@typescript-eslint/types': 8.46.2
-      debug: 4.4.3
-      typescript: 5.9.2
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   '@typescript-eslint/project-service@8.46.2(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.9.3)
@@ -6455,11 +6542,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.46.2
       '@typescript-eslint/visitor-keys': 8.46.2
-
-  '@typescript-eslint/tsconfig-utils@8.46.2(typescript@5.9.2)':
-    dependencies:
-      typescript: 5.9.2
-    optional: true
 
   '@typescript-eslint/tsconfig-utils@8.46.2(typescript@5.9.3)':
     dependencies:
@@ -6479,23 +6561,6 @@ snapshots:
 
   '@typescript-eslint/types@8.46.2': {}
 
-  '@typescript-eslint/typescript-estree@8.46.2(typescript@5.9.2)':
-    dependencies:
-      '@typescript-eslint/project-service': 8.46.2(typescript@5.9.2)
-      '@typescript-eslint/tsconfig-utils': 8.46.2(typescript@5.9.2)
-      '@typescript-eslint/types': 8.46.2
-      '@typescript-eslint/visitor-keys': 8.46.2
-      debug: 4.4.3
-      fast-glob: 3.3.3
-      is-glob: 4.0.3
-      minimatch: 9.0.5
-      semver: 7.7.3
-      ts-api-utils: 2.1.0(typescript@5.9.2)
-      typescript: 5.9.2
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   '@typescript-eslint/typescript-estree@8.46.2(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/project-service': 8.46.2(typescript@5.9.3)
@@ -6511,18 +6576,6 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
-
-  '@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2)':
-    dependencies:
-      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.0(jiti@2.6.1))
-      '@typescript-eslint/scope-manager': 8.46.2
-      '@typescript-eslint/types': 8.46.2
-      '@typescript-eslint/typescript-estree': 8.46.2(typescript@5.9.2)
-      eslint: 9.39.0(jiti@2.6.1)
-      typescript: 5.9.2
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   '@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3)':
     dependencies:
@@ -6852,7 +6905,8 @@ snapshots:
 
   commander@9.5.0: {}
 
-  comment-parser@1.4.1: {}
+  comment-parser@1.4.1:
+    optional: true
 
   concat-map@0.0.1: {}
 
@@ -7169,24 +7223,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import-x@4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1)):
-    dependencies:
-      '@typescript-eslint/types': 8.46.2
-      comment-parser: 1.4.1
-      debug: 4.4.3
-      eslint: 9.39.0(jiti@2.6.1)
-      eslint-import-context: 0.1.9(unrs-resolver@1.11.1)
-      is-glob: 4.0.3
-      minimatch: 10.1.1
-      semver: 7.7.3
-      stable-hash-x: 0.2.0
-      unrs-resolver: 1.11.1
-    optionalDependencies:
-      '@typescript-eslint/utils': 8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.2)
-      eslint-import-resolver-node: 0.3.9
-    transitivePeerDependencies:
-      - supports-color
-
   eslint-plugin-import-x@4.16.1(@typescript-eslint/utils@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.0(jiti@2.6.1)):
     dependencies:
       '@typescript-eslint/types': 8.46.2
@@ -7204,6 +7240,7 @@ snapshots:
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.46.2(eslint@9.39.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.0(jiti@2.6.1)):
     dependencies:
@@ -7795,6 +7832,10 @@ snapshots:
   js-yaml@0.3.7: {}
 
   js-yaml@4.1.0:
+    dependencies:
+      argparse: 2.0.1
+
+  js-yaml@4.1.1:
     dependencies:
       argparse: 2.0.1
 
@@ -8602,11 +8643,6 @@ snapshots:
       is-number: 7.0.0
 
   triple-beam@1.4.1: {}
-
-  ts-api-utils@2.1.0(typescript@5.9.2):
-    dependencies:
-      typescript: 5.9.2
-    optional: true
 
   ts-api-utils@2.1.0(typescript@5.9.3):
     dependencies:

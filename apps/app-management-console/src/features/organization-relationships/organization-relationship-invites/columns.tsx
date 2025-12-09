@@ -41,6 +41,8 @@ export const createColumns = (
   }) {
     const queryClient = useQueryClient();
     const cancelToastIdRef = useRef<string | number | undefined>(undefined);
+    const acceptToastIdRef = useRef<string | number | undefined>(undefined);
+    const declineToastIdRef = useRef<string | number | undefined>(undefined);
 
     const cancelInviteMutation = useAuthedMutation({
       onMutate: () => {
@@ -70,7 +72,62 @@ export const createColumns = (
       },
     });
 
-    const isPending = cancelInviteMutation.isPending;
+    const acceptInviteMutation = useAuthedMutation({
+      onMutate: () => {
+        acceptToastIdRef.current = toast.loading("Accepting invite...");
+      },
+      mutationFn: async ({ session }) => {
+        await getOrganizationClient(session).acceptOrganizationRelationshipInvite({
+          pathParams: { id: invite.id },
+          body: {
+            relationshipId: invite.id,
+          },
+        });
+      },
+      onSuccess: () => {
+        toast.success("Invite accepted", { id: acceptToastIdRef.current });
+        queryClient.invalidateQueries({
+          queryKey: ["platformOrganizationRelationshipInvites"],
+          exact: false,
+        });
+      },
+      onError: (error) => {
+        toast.error(`Failed to accept invite: ${error.message}`, {
+          id: acceptToastIdRef.current,
+        });
+      },
+      onSettled: () => {
+        acceptToastIdRef.current = undefined;
+      },
+    });
+
+    const declineInviteMutation = useAuthedMutation({
+      onMutate: () => {
+        declineToastIdRef.current = toast.loading("Declining invite...");
+      },
+      mutationFn: async ({ session }) => {
+        await getOrganizationClient(session).rejectOrganizationRelationshipInvite({
+          pathParams: { id: invite.id },
+        });
+      },
+      onSuccess: () => {
+        toast.success("Invite declined", { id: declineToastIdRef.current });
+        queryClient.invalidateQueries({
+          queryKey: ["platformOrganizationRelationshipInvites"],
+          exact: false,
+        });
+      },
+      onError: (error) => {
+        toast.error(`Failed to decline invite: ${error.message}`, {
+          id: declineToastIdRef.current,
+        });
+      },
+      onSettled: () => {
+        declineToastIdRef.current = undefined;
+      },
+    });
+
+    const isPending = cancelInviteMutation.isPending || acceptInviteMutation.isPending || declineInviteMutation.isPending;
 
     return (
       <div className="flex justify-end">
@@ -106,8 +163,17 @@ export const createColumns = (
               )
             ) : (
               <>
-                <DropdownMenuItem>Accept invite</DropdownMenuItem>
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem
+                  disabled={acceptInviteMutation.isPending || invite.status !== OrganizationRelationshipInviteStatus.Pending}
+                  onClick={() => acceptInviteMutation.mutate()}
+                >
+                  Accept invite
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-destructive"
+                  disabled={declineInviteMutation.isPending || invite.status !== OrganizationRelationshipInviteStatus.Pending}
+                  onClick={() => declineInviteMutation.mutate()}
+                >
                   Decline invite
                 </DropdownMenuItem>
               </>

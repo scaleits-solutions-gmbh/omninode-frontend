@@ -106,6 +106,13 @@ export default function AcmpViewCard({
                 {" "}
                 · Tenant ID:{" "}
                 <span className="font-mono">{config.filterValue1}</span>
+                {config.filterValue2 && (
+                  <>
+                    {" "}
+                    · Group ID:{" "}
+                    <span className="font-mono">{config.filterValue2}</span>
+                  </>
+                )}
               </>
             )}
           </p>

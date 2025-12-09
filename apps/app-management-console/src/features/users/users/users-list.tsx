@@ -38,12 +38,14 @@ import { useParams } from "next/navigation";
 import ChangeRolePopup from "./change-role-popup";
 import RemoveUserPopup from "./remove-user-popup";
 import TransferOwnershipPopup from "./transfer-ownership-popup";
+import { UserDetailsPopup } from "./user-details-popup";
 
 export const UsersList = () => {
   const { organizationId } = useParams();
   const [selectedUser, setSelectedUser] = useState<
     ComposedOrganizationMembershipReadModel | undefined
   >(undefined);
+  const [showUserDetails, setShowUserDetails] = useState(false);
   const [showChangeRole, setShowChangeRole] = useState(false);
   const [showTransferOwnership, setShowTransferOwnership] = useState(false);
   const [showRemoveUser, setShowRemoveUser] = useState(false);
@@ -79,6 +81,7 @@ export const UsersList = () => {
     columns: createColumns({
       onViewDetails: (user: ComposedOrganizationMembershipReadModel) => {
         setSelectedUser(user);
+        setShowUserDetails(true);
       },
       onRemoveUser: (user: ComposedOrganizationMembershipReadModel) => {
         setSelectedUser(user);
@@ -112,6 +115,13 @@ export const UsersList = () => {
 
   return (
     <>
+      <UserDetailsPopup
+        user={showUserDetails ? selectedUser : undefined}
+        onClose={() => {
+          setShowUserDetails(false);
+          setSelectedUser(undefined);
+        }}
+      />
       {selectedUser && (
         <>
           <ChangeRolePopup
@@ -229,7 +239,12 @@ export const UsersList = () => {
                     table.getRowModel().rows.map((row) => (
                       <TableRow
                         key={row.id}
+                        className="hover:bg-accent/50 cursor-pointer"
                         data-state={row.getIsSelected() && "selected"}
+                        onClick={() => {
+                          setSelectedUser(row.original);
+                          setShowUserDetails(true);
+                        }}
                       >
                         {row.getVisibleCells().map((cell) => (
                           <TableCell

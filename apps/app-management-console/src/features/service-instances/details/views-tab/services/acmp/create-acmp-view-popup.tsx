@@ -78,8 +78,10 @@ export default function CreateAcmpViewPopup({
     }
   }, [show]);
 
+  const isTenantFilter = filterType === ACMPFilterType.Tenant;
   const isValidName = name.trim().length > 0;
-  const canSubmit = isValidName;
+  const isValidTenantFilter = !isTenantFilter || (isTenantFilter && tenantId.trim().length > 0 && groupId.trim().length > 0);
+  const canSubmit = isValidName && isValidTenantFilter;
 
   const createViewMutation = useAuthedMutation({
     mutationFn: async ({ session }: { session: Session }): Promise<void> => {

@@ -101,7 +101,7 @@ export default function InviteOrganizationPopup({ currentOrganizationId }: Invit
         <DialogHeader>
           <DialogTitle>Invite Organization</DialogTitle>
           <DialogDescription>
-            Enter the email address of the organization you want to invite. They will
+            Enter the ID of the organization you want to invite. They will
             receive an invitation to join.
           </DialogDescription>
         </DialogHeader>
