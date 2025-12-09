@@ -8,6 +8,8 @@ import { USER_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
 import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { Loader2 } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export default function RootPage() {
   const { organizationId, organizations, isLoading, error, setOrganizationId } = usePersistedCurrentOrganization();
   const router = useRouter();

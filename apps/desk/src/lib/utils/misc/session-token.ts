@@ -1,9 +1,7 @@
 import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
-import {
-  OrganizationRole,
-  OmninodeLoginTokenPayload,
-} from "@scaleits-solutions-gmbh/services";
+import { OrganizationRole } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { OmninodeLoginTokenPayload } from "@scaleits-solutions-gmbh/services";
 
 // TODO: remove this once the session token payload is updated to include the management console access
 type OmninodeLoginTokenPayloadTemp = OmninodeLoginTokenPayload & {
