@@ -21,7 +21,7 @@ export const createColumns = (props: ColumnProps): ColumnDef<OrganizationListIte
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-2">
-            <Avatar>
+            <Avatar className="rounded-md">
               <AvatarImage src={""} />
               <AvatarFallback seed={row.original.id}>{row.original.name.charAt(0)}</AvatarFallback>
             </Avatar>
@@ -35,6 +35,13 @@ export const createColumns = (props: ColumnProps): ColumnDef<OrganizationListIte
       minSize: 100,
       header: "Email",
       accessorKey: "email",
+      cell: ({ row }) => {
+        return (
+          <div className="text-sm text-muted-foreground">
+            {row.original.email || "—"}
+          </div>
+        );
+      },
     },
     {
       size: 20,

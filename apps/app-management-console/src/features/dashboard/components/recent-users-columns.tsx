@@ -8,7 +8,7 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import {
   Locale,
-  ComposedOrganizationMembershipReadModel,
+  ProjectionOrganizationUserListItemReadModel,
   OrganizationRole,
   organizationRoleLabel,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
@@ -22,7 +22,7 @@ function getInitials(name: string): string {
   return initials || "U";
 }
 
-export const recentUsersColumns: ColumnDef<ComposedOrganizationMembershipReadModel>[] =
+export const recentUsersColumns: ColumnDef<ProjectionOrganizationUserListItemReadModel>[] =
   [
     {
       accessorKey: "name",
