@@ -75,8 +75,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(@tanstack/react-query@5.90.12(react@19.2.1))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@tanstack/react-form':
         specifier: ^1.23.8
         version: 1.23.8(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -233,8 +233,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@tanstack/react-form':
         specifier: ^1.23.8
         version: 1.23.8(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -378,8 +378,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@tanstack/react-form':
         specifier: ^1.23.8
         version: 1.23.8(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -478,8 +478,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@tanstack/react-query':
         specifier: ^5.90.12
         version: 5.90.12(react@19.2.1)
@@ -608,8 +608,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/frontend-common-kit
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@tanstack/react-form':
         specifier: ^1.23.8
         version: 1.23.8(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -768,8 +768,8 @@ importers:
         specifier: 1.0.0-beta.20250601143734
         version: 1.0.0-beta.20250601143734(@tanstack/react-query@5.90.12(react@19.2.1))
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.13)
@@ -998,8 +998,8 @@ importers:
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       '@scaleits-solutions-gmbh/omninode-lib-global-common-kit':
-        specifier: ' 0.0.45-feat.dev.20251210162739'
-        version: 0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
+        specifier: ' 0.0.45-feat.dev.20251210233207'
+        version: 0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)
       '@scaleits-solutions-gmbh/services':
         specifier: 0.0.1-beta.20250630092238
         version: 0.0.1-beta.20250630092238(typescript@5.9.3)(zod@4.1.13)
@@ -2150,11 +2150,11 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.45-feat.dev.20251210162739':
-    resolution: {integrity: sha512-weIN7YPf/VzcZMlCEYwoe1Yafa5uWPADtIt4jwgwtlln485LkRAtnJPk6s+t4Nhf5rSJQ5+Iick9na7O7/vJRg==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.45-feat.dev.20251210162739/e42ec8088cbcdf4873d184eb0bfbb8021271e7e3}
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.45-feat.dev.20251210233207':
+    resolution: {integrity: sha512-Hd8m0d1FSb/seCamY+b/NTcBjQ85JItd+MlIHDxxop1F55XayBBwSgqVqYP6ytmtOnoALDw2hkt7amloL9hEmw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/omninode-lib-global-common-kit/0.0.45-feat.dev.20251210233207/86bf8d86be8d1b0a3e6a70ff6aed092d6522f4e4}
 
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.60':
-    resolution: {integrity: sha512-S8gDswAex2G2guo/nA8bqP0LauFa+obCuVO7mN6/mZ8WH66T0l5ND5lcq39ZBdpQ/qdxVgl5v80x+vmYzXat3w==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.60/566144e5ce5f9c0489cc202cb7e130b5dfad5320}
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.62':
+    resolution: {integrity: sha512-QrNrE2TbldUWF9/aOkfdQgZE8BbgfyB2fvSpfXBxDo3nvqmXDmOKFT17Uh2R8/UWjoMJo9bIAyjzcXp92kqpiw==, tarball: https://npm.pkg.github.com/download/@scaleits-solutions-gmbh/org-lib-backend-common-kit/0.0.62/f04101bc63acdadf36a5921f877f1a996363918b}
     peerDependencies:
       '@types/aws-lambda': ^8.10.0
       drizzle-orm: ^0.44.3
@@ -6005,17 +6005,17 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.90.12(react@19.2.1)
 
-  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.45-feat.dev.20251210162739(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)':
+  '@scaleits-solutions-gmbh/omninode-lib-global-common-kit@0.0.45-feat.dev.20251210233207(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
-      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.60(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)(zod@4.1.13)
+      '@scaleits-solutions-gmbh/org-lib-backend-common-kit': 0.0.62(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)(zod@4.1.13)
       '@scaleits-solutions-gmbh/org-lib-global-common-kit': 0.0.7(drizzle-orm@0.44.5)
       zod: 4.1.13
     transitivePeerDependencies:
       - '@types/aws-lambda'
       - drizzle-orm
 
-  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.60(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)(zod@4.1.13)':
+  '@scaleits-solutions-gmbh/org-lib-backend-common-kit@0.0.62(@types/aws-lambda@8.10.159)(drizzle-orm@0.44.5)(zod@4.1.13)':
     dependencies:
       '@types/aws-lambda': 8.10.159
       drizzle-orm: 0.44.5

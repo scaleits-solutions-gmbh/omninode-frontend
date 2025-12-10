@@ -20,7 +20,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarRail
+  SidebarRail,
 } from "@repo/pkg-frontend-common-kit/components";
 import * as React from "react";
 import { Service } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
@@ -32,12 +32,18 @@ import OrganizationSwitcher from "./company-switcher";
 import { AppLogoDescriptive } from "@/components/custom/app-logo-descriptive";
 import Link from "next/link";
 import { SidebarSkeleton } from "./side-bar-skeleton";
-import { getOriginUrl, getServiceClient } from "@repo/pkg-frontend-common-kit/utils";
-import { SERVICE_PORTAL_BASE_URL, USER_PORTAL_BASE_URL } from "@repo/pkg-frontend-common-kit/constants";
+import {
+  getOriginUrl,
+  getServiceClient,
+} from "@repo/pkg-frontend-common-kit/utils";
+import {
+  SERVICE_PORTAL_BASE_URL,
+  USER_PORTAL_BASE_URL,
+} from "@repo/pkg-frontend-common-kit/constants";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 import type { FindCurrentUserServiceViewsHttpBodyResponse } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
-export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const params = useParams<{ organizationId?: string }>();
   const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({});
@@ -54,10 +60,16 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const orgPrefix = organizationId ? `/${organizationId}` : "";
 
   // Fetch current user's service views for this organization
-  const { data: serviceViews, isLoading, error } = useAuthedQuery<FindCurrentUserServiceViewsHttpBodyResponse>({
+  const {
+    data: serviceViews,
+    isLoading,
+    error,
+  } = useAuthedQuery<FindCurrentUserServiceViewsHttpBodyResponse>({
     queryKey: ["currentUserServiceViews", organizationId],
     queryFn: async ({ session }) => {
-      const response = await getServiceClient(session).findCurrentUserServiceViews({
+      const response = await getServiceClient(
+        session
+      ).findCurrentUserServiceViews({
         pathParams: { organizationId },
       });
       return response.data;
@@ -85,7 +97,9 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         {/* Empty state when no services */}
-        {(!serviceViews || serviceViews.length === 0 || serviceViews.every(org => org.ServiceViews.length === 0)) && (
+        {(!serviceViews ||
+          serviceViews.length === 0 ||
+          serviceViews.every((org) => org.ServiceViews.length === 0)) && (
           <SidebarGroup className="p-4">
             <div className="border rounded-md flex flex-col items-center justify-center py-8 px-4 text-center">
               <div className="rounded-full bg-muted p-3 mb-3">
@@ -95,7 +109,8 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                 No Services Available
               </p>
               <p className="text-xs text-muted-foreground/70 mb-4">
-                You don&apos;t have access to any services for this organization yet.
+                You don&apos;t have access to any services for this organization
+                yet.
               </p>
               <a
                 href={getOriginUrl() + USER_PORTAL_BASE_URL}
@@ -128,23 +143,26 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                     open={openItems[view.id]}
                     onOpenChange={() => toggleItem(view.id)}
                     className="group/collapsible"
-                    defaultOpen={new RegExp(`${orgPrefix}/views/${view.id}(?:/|$)`).test(pathname)}
+                    defaultOpen={new RegExp(
+                      `${orgPrefix}/views/${view.id}(?:/|$)`
+                    ).test(pathname)}
                   >
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
-                          isActive={pathname.includes(
-                            `/views/${view.id}`
-                          )}
+                          isActive={pathname.includes(`/views/${view.id}`)}
                         >
                           <div className="flex items-center gap-2">
                             <Image
                               src={`${getOriginUrl() + SERVICE_PORTAL_BASE_URL}/assets/services/${view.service}.svg`}
-                              alt={view.serviceViewName}
+                              alt={view.serviceInstanceName}
                               width={16}
                               height={16}
                             />
-                            <span>{view.serviceViewName}</span>
+                            <span>{view.serviceInstanceName}</span>
+                            <span className="text-muted-foreground text-xs truncate">
+                              ({view.serviceViewName})
+                            </span>
                           </div>
                           <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
                           <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
