@@ -33,7 +33,7 @@ import { getColumnStyle } from "@/lib/utils/ui/table-utils";
 
 import { getOrganizationClient } from "@repo/pkg-frontend-common-kit/utils";
 import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
-import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ProjectionOrganizationUserListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useParams } from "next/navigation";
 import ChangeRolePopup from "./change-role-popup";
 import RemoveUserPopup from "./remove-user-popup";
@@ -43,7 +43,7 @@ import { UserDetailsPopup } from "./user-details-popup";
 export const UsersList = () => {
   const { organizationId } = useParams();
   const [selectedUser, setSelectedUser] = useState<
-    ComposedOrganizationMembershipReadModel | undefined
+    ProjectionOrganizationUserListItemReadModel | undefined
   >(undefined);
   const [showUserDetails, setShowUserDetails] = useState(false);
   const [showChangeRole, setShowChangeRole] = useState(false);
@@ -64,12 +64,12 @@ export const UsersList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      const response = await getOrganizationClient(session).findComposedOrganizationMemberships({
-        pathParams: { id: organizationId as string },
+      const response = await getOrganizationClient(session).findPaginatedProjectionOrganizationUserListItems({
         queryParams: {
           pageSize: pagination.pageSize,
           page: pagination.pageIndex + 1,
           searchTerm: search,
+          organizationId: organizationId as string,
         },
       });
       return response.data;
@@ -79,19 +79,19 @@ export const UsersList = () => {
   const table = useReactTable({
     data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (user: ComposedOrganizationMembershipReadModel) => {
+      onViewDetails: (user: ProjectionOrganizationUserListItemReadModel) => {
         setSelectedUser(user);
         setShowUserDetails(true);
       },
-      onRemoveUser: (user: ComposedOrganizationMembershipReadModel) => {
+      onRemoveUser: (user: ProjectionOrganizationUserListItemReadModel) => {
         setSelectedUser(user);
         setShowRemoveUser(true);
       },
-      onTransferOwnership: (user: ComposedOrganizationMembershipReadModel) => {
+      onTransferOwnership: (user: ProjectionOrganizationUserListItemReadModel) => {
         setSelectedUser(user);
         setShowTransferOwnership(true);
       },
-      onChangeRole: (user: ComposedOrganizationMembershipReadModel) => {
+      onChangeRole: (user: ProjectionOrganizationUserListItemReadModel) => {
         setSelectedUser(user);
         setShowChangeRole(true);
       },

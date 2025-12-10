@@ -11,9 +11,9 @@ import {
 } from "@repo/pkg-frontend-common-kit/components";
 import {
   Locale,
-  ComposedOrganizationMembershipReadModel,
   OrganizationRole,
   organizationRoleName,
+  ProjectionOrganizationUserListItemReadModel,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreVertical, Eye } from "lucide-react";
@@ -28,15 +28,15 @@ function getInitials(name: string): string {
 }
 
 export interface ColumnProps {
-  onViewDetails: (user: ComposedOrganizationMembershipReadModel) => void;
-  onRemoveUser: (user: ComposedOrganizationMembershipReadModel) => void;
-  onTransferOwnership: (user: ComposedOrganizationMembershipReadModel) => void;
-  onChangeRole: (user: ComposedOrganizationMembershipReadModel) => void;
+  onViewDetails: (user: ProjectionOrganizationUserListItemReadModel) => void;
+  onRemoveUser: (user: ProjectionOrganizationUserListItemReadModel) => void;
+  onTransferOwnership: (user: ProjectionOrganizationUserListItemReadModel) => void;
+  onChangeRole: (user: ProjectionOrganizationUserListItemReadModel) => void;
 }
 
 export const createColumns = (
   props: ColumnProps
-): ColumnDef<ComposedOrganizationMembershipReadModel>[] => {
+): ColumnDef<ProjectionOrganizationUserListItemReadModel>[] => {
   return [
     {
       size: 33,

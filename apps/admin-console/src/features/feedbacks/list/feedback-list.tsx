@@ -27,7 +27,7 @@ import {
 } from "@tanstack/react-table";
 import { createColumns } from "./columns";
 
-import { FeedbackListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ProjectionFeedbackListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useState } from "react";
 
 import { FeedbackDetailsPopup } from "../details-popup/feedback-details-popup";
@@ -40,7 +40,7 @@ import { useAuthedQuery } from "@repo/pkg-frontend-common-kit/hooks";
 
 export const FeedbackList = () => {
   const { viewId } = useParams();
-  const [feedback, setFeedback] = useState<FeedbackListItemReadModel | undefined>(
+  const [feedback, setFeedback] = useState<ProjectionFeedbackListItemReadModel | undefined>(
     undefined
   );
   const [search, setSearch] = useState("");
@@ -58,7 +58,7 @@ export const FeedbackList = () => {
       pagination.pageSize,
     ],
     queryFn: async ({ session }) => {
-      const response = await getFeedbackClient(session).findPaginatedFeedbackListItems({
+      const response = await getFeedbackClient(session).findPaginatedProjectionFeedbackListItems({
         queryParams: {
           pageSize: pagination.pageSize,
           page: pagination.pageIndex + 1,
@@ -72,10 +72,10 @@ export const FeedbackList = () => {
   const table = useReactTable({
     data: data?.data || [],
     columns: createColumns({
-      onViewDetails: (feedback: FeedbackListItemReadModel) => {
+      onViewDetails: (feedback: ProjectionFeedbackListItemReadModel) => {
         setFeedback(feedback);
       },
-    }),
+    }), 
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

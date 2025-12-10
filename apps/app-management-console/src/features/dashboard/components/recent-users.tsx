@@ -26,25 +26,25 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { recentUsersColumns } from "./recent-users-columns";
-import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ProjectionOrganizationUserListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { UserDetailsPopup } from "@/features/users/users/user-details-popup";
 
 export default function RecentUsers() {
   const [pagination] = useState({ pageIndex: 0, pageSize: 5 });
   const organizationId = useOrganizationId();
   const [selectedUser, setSelectedUser] = useState<
-    ComposedOrganizationMembershipReadModel | undefined
+    ProjectionOrganizationUserListItemReadModel | undefined
   >(undefined);
   const [showUserDetails, setShowUserDetails] = useState(false);
 
   const { data: queryData, isLoading } = useAuthedQuery({
     queryKey: ["recentOrganizationUsers", organizationId],
     queryFn: async ({ session }) => {
-      const response = await getOrganizationClient(session).findComposedOrganizationMemberships({
-        pathParams: { id: organizationId as string },
+      const response = await getOrganizationClient(session).findPaginatedProjectionOrganizationUserListItems({
         queryParams: {
           pageSize: pagination.pageSize,
           page: pagination.pageIndex + 1,
+          organizationId: organizationId as string,
         },
       });
       return response.data;
