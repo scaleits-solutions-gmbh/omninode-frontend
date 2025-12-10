@@ -20,7 +20,7 @@ import {
     Input,
 } from "@repo/pkg-frontend-common-kit/components";
 import { useAuthedMutation } from "@repo/pkg-frontend-common-kit/hooks";
-import { ComposedOrganizationMembershipReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ProjectionOrganizationUserListItemReadModel } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 import type { Session } from "next-auth";
@@ -30,7 +30,7 @@ import { toast } from "sonner";
 
 interface TransferOwnershipPopupProps {
   show: boolean;
-  user: ComposedOrganizationMembershipReadModel;
+  user: ProjectionOrganizationUserListItemReadModel;
   onClose: () => void;
 }
 

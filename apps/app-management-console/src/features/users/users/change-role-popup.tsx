@@ -3,7 +3,7 @@
 // Import to register module augmentation FIRST
 import "@/lib/next-auth-options";
 
-import { ComposedOrganizationMembershipReadModel, OrganizationRole, organizationRoleOptions, Locale } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
+import { ProjectionOrganizationUserListItemReadModel, OrganizationRole, organizationRoleOptions, Locale } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 import {
   Dialog,
   DialogContent,
@@ -32,7 +32,7 @@ import type { Session } from "next-auth";
 
 interface ChangeRolePopupProps {
   show: boolean;
-  user: ComposedOrganizationMembershipReadModel;
+  user: ProjectionOrganizationUserListItemReadModel;
   onClose: () => void;
 }
 

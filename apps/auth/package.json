@@ -26,7 +26,7 @@
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@repo/pkg-frontend-common-kit": "workspace:*",
-    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": " 0.0.45-feat.dev.20251209034823",
+    "@scaleits-solutions-gmbh/omninode-lib-global-common-kit": " 0.0.45-feat.dev.20251210162739",
     "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-query-devtools": "^5.91.1",

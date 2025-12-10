@@ -1,9 +1,12 @@
 import {
-  FeedbackListItemReadModel, feedbackTypeLabel,
+  ProjectionFeedbackListItemReadModel, feedbackTypeLabel,
   Locale
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Badge,
   Button,
   Dialog,
@@ -14,7 +17,7 @@ import {
   DialogTitle,
 } from "@repo/pkg-frontend-common-kit/components";
 interface FeedbackDetailsPopupProps {
-  feedback?: FeedbackListItemReadModel;
+  feedback?: ProjectionFeedbackListItemReadModel;
   onClose: () => void;
 }
 
@@ -60,6 +63,22 @@ export const FeedbackDetailsPopup = ({
                 {feedbackTypeLabel(feedback.feedbackType, Locale.En)}
               </Badge>
             </div>
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                User
+              </p>
+              <div className="flex items-center gap-2">
+                <Avatar>
+                  <AvatarImage src={""} />
+                  <AvatarFallback seed={feedback.user.id}>
+                    {feedback.user.firstName.charAt(0) + feedback.user.lastName.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-sm text-muted-foreground">
+                  {feedback.user.firstName} {feedback.user.lastName}
+                </span>
+              </div>
+            </div>
             <div className="space-y-2 col-span-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Description
@@ -78,6 +97,3 @@ export const FeedbackDetailsPopup = ({
     </Dialog>
   );
 };
-
-
-

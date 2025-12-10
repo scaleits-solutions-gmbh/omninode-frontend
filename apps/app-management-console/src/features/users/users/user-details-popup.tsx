@@ -14,14 +14,14 @@ import {
   Badge,
 } from "@repo/pkg-frontend-common-kit/components";
 import {
-  ComposedOrganizationMembershipReadModel,
+  ProjectionOrganizationUserListItemReadModel,
   OrganizationRole,
   organizationRoleName,
   Locale,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 interface UserDetailsPopupProps {
-  user?: ComposedOrganizationMembershipReadModel;
+  user?: ProjectionOrganizationUserListItemReadModel;
   onClose: () => void;
 }
 

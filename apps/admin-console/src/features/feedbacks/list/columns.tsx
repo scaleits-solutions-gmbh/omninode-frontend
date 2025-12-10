@@ -1,19 +1,19 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
-import { Button, Badge } from "@repo/pkg-frontend-common-kit/components";
+import { Eye, MessageSquare } from "lucide-react";
+import { Button, Badge, Avatar, AvatarImage, AvatarFallback } from "@repo/pkg-frontend-common-kit/components";
 import {
-  FeedbackListItemReadModel,
+  ProjectionFeedbackListItemReadModel,
   feedbackTypeLabel,
   Locale,
 } from "@scaleits-solutions-gmbh/omninode-lib-global-common-kit";
 
 export interface ColumnProps {
-  onViewDetails: (feedback: FeedbackListItemReadModel) => void;
+  onViewDetails: (feedback: ProjectionFeedbackListItemReadModel) => void;
 }
 
 const MAX_DESCRIPTION_LENGTH = 100;
 
-export const createColumns = (props: ColumnProps): ColumnDef<FeedbackListItemReadModel>[] => {
+export const createColumns = (props: ColumnProps): ColumnDef<ProjectionFeedbackListItemReadModel>[] => {
   return [
     {
       size: 30,
@@ -24,7 +24,7 @@ export const createColumns = (props: ColumnProps): ColumnDef<FeedbackListItemRea
         return (
           <div className="flex items-center gap-2">
             <div className="size-8 bg-muted rounded-md flex items-center justify-center">
-              <span className="text-xs">{row.original.feedbackType.charAt(0).toUpperCase()}</span>
+              <MessageSquare className="size-4" />
             </div>
             <span className="font-medium">{row.original.title}</span>
           </div>
@@ -49,17 +49,20 @@ export const createColumns = (props: ColumnProps): ColumnDef<FeedbackListItemRea
     {
       size: 40,
       minSize: 200,
-      header: "Description",
-      accessorKey: "description",
+      header: "User ",
+      accessorKey: "user",
       cell: ({ row }) => {
-        const description = row.original.description || "";
-        const truncated = description.length > MAX_DESCRIPTION_LENGTH 
-          ? description.substring(0, MAX_DESCRIPTION_LENGTH) + "..." 
-          : description;
+        const user = row.original.user;
         return (
-          <span className="text-sm text-muted-foreground" title={description}>
-            {truncated}
+          <div className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage src={""} />
+              <AvatarFallback seed={user.id}>{user.firstName.charAt(0) + user.lastName.charAt(0)}</AvatarFallback>
+            </Avatar>
+          <span className="text-sm text-muted-foreground">
+            {user.firstName} {user.lastName}
           </span>
+          </div>
         );
       },
     },
