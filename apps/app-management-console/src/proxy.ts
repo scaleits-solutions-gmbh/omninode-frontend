@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { getOriginUrl } from "@repo/pkg-frontend-common-kit/utils";
 
 export const config = {
   matcher: ["/", "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
@@ -23,7 +24,7 @@ export default async function proxy(request: NextRequest) {
 
   // Not authenticated or token expired → redirect to centralized auth app's signin
   // This will trigger a token refresh attempt via NextAuth's JWT callback
-  const signInUrl = new URL("/authflows/signin", request.url);
+  const signInUrl = new URL("/authflows/signin", getOriginUrl());
   signInUrl.searchParams.set("callbackUrl", request.nextUrl.href);
   return NextResponse.redirect(signInUrl);
 }
